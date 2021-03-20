@@ -133,8 +133,12 @@ namespace OsuAchievedOverlay
             if (File.Exists("Settings.ini"))
             {
                 IniData data = parser.ReadFile("Settings.ini");
+                data = FixIniData(parser, data);
                 OsuApiHelper.OsuApiKey.Key = data["api"]["key"];
                 osuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], OsuApiHelper.OsuMode.Standard);
+                labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
+                backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
+
                 return true;
             }
             else
@@ -142,6 +146,8 @@ namespace OsuAchievedOverlay
                 IniData newData = new IniData();
                 newData["api"]["key"] = "No key inserted";
                 newData["api"]["user"] = "Username here";
+
+                newData = FixIniData(parser, newData);
                 parser.WriteFile("Settings.ini", newData);
 
                 MessageBoxResult result = MessageBox.Show("No settings file was present yet. Generated one. Please enter leftover values in the file.\nPress 'OK' to open the settings location.", "No settings file", MessageBoxButton.OKCancel);
@@ -158,6 +164,16 @@ namespace OsuAchievedOverlay
             }
         }
 
+        private IniData FixIniData(FileIniDataParser parser, IniData data){
+            if (data["display"]["labelColor"] == null)
+                data["display"]["labelColor"] = Colors.Black.ToString();
+            if (data["display"]["background"] == null)
+                data["display"]["background"] = Colors.White.ToString();
+
+            parser.WriteFile("Settings.ini", data);
+            return data;
+        }
+
         public void OpenDisplay()
         {
             if (displayWin == null || !displayWin.IsLoaded)
@@ -171,6 +187,7 @@ namespace OsuAchievedOverlay
                 displayWin.WindowState = WindowState.Normal;
             }
             displayWin.Focus();
+            ApplySettingsToApp();
             RefreshTimer(null, null);
         }
 
@@ -183,6 +200,41 @@ namespace OsuAchievedOverlay
         private void ButtonHandler_OpenDisplay(object sender, RoutedEventArgs e)
         {
             OpenDisplay();
+        }
+
+        private void SettingsSave(object sender, RoutedEventArgs e)
+        {
+            FileIniDataParser parser = new FileIniDataParser();
+            IniData data = parser.ReadFile("Settings.ini");
+
+            data["display"]["labelColor"] = labelColorPicker.SelectedColor.ToString();
+            data["display"]["background"] = backgroundColorPicker.SelectedColor.ToString();
+
+            parser.WriteFile("Settings.ini", data);
+
+            ApplySettingsToApp();
+        }
+
+        private void ApplySettingsToApp(){
+            FileIniDataParser parser = new FileIniDataParser();
+            IniData data = parser.ReadFile("Settings.ini");
+
+            Brush labelColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]));
+
+            displayWin.LabelACurrent.Foreground = labelColor;
+            displayWin.LabelSCurrent.Foreground = labelColor;
+            displayWin.LabelSSCurrent.Foreground = labelColor;
+
+            displayWin.LabelANew.Foreground = labelColor;
+            displayWin.LabelSNew.Foreground = labelColor;
+            displayWin.LabelSSNew.Foreground = labelColor;
+
+            displayWin.LabelPlaycountCurrent.Foreground = labelColor;
+            displayWin.LabelPlaycountNew.Foreground = labelColor;
+            displayWin.LabelScoreCurrent.Foreground = labelColor;
+            displayWin.LabelScoreNew.Foreground = labelColor;
+
+            displayWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["background"]));
         }
     }
 }
