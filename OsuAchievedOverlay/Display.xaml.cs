@@ -33,17 +33,17 @@ namespace OsuAchievedOverlay
             this.DragMove();
         }
 
-        public void SetCurrentSS(string value) => LabelSSCurrent.Content = value;
-        public void SetCurrentS(string value) => LabelSCurrent.Content = value;
-        public void SetCurrentA(string value) => LabelACurrent.Content = value;
+        public void SetCurrentSS(int value) => LabelSSCurrent.Content = value.ToString("#,##0.###");
+        public void SetCurrentS(int value) => LabelSCurrent.Content = value.ToString("#,##0.###");
+        public void SetCurrentA(int value) => LabelACurrent.Content = value.ToString("#,##0.###");
 
-        public void SetNewSS(string value) => LabelSSNew.Content = "+" + value;
-        public void SetNewS(string value) => LabelSNew.Content = "+" + value;
-        public void SetNewA(string value) => LabelANew.Content = "+" + value;
+        public void SetNewSS(int value) => LabelSSNew.Content = (value >= 0 ? "+" : "-") + Math.Abs(value).ToString("#,##0.###");
+        public void SetNewS(int value) => LabelSNew.Content = (value >= 0 ? "+" : "-") + Math.Abs(value).ToString("#,##0.###");
+        public void SetNewA(int value) => LabelANew.Content = (value >= 0 ? "+" : "-") + Math.Abs(value).ToString("#,##0.###");
 
-        public void SetCurrentScore(string value) => LabelScoreCurrent.Content = "Score: " + value;
-        public void SetNewScore(string value) => LabelScoreNew.Content = "+" + value;
-        public void SetCurrentPlaycount(string value) => LabelPlaycountCurrent.Content = "Playcount: " + value;
-        public void SetNewPlaycount(string value) => LabelPlaycountNew.Content = "+" + value;
+        public void SetCurrentScore(long value) => LabelScoreCurrent.Content = "Score: " + Math.Abs(value).ToString("#,##0.###");
+        public void SetNewScore(long value) => LabelScoreNew.Content = (value >= 0 ? "+" : "-") + Math.Abs(value).ToString("#,##0.###");
+        public void SetCurrentPlaycount(int value) => LabelPlaycountCurrent.Content = "Playcount: " + Math.Abs(value).ToString("#,##0.###");
+        public void SetNewPlaycount(int value) => LabelPlaycountNew.Content = (value >= 0 ? "+" : "-") + Math.Abs(value).ToString("#,##0.###");
     }
 }

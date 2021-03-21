@@ -17,6 +17,15 @@
             <Label Content="Background Color:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
             <xctk:ColorPicker x:Name="backgroundColorPicker" Margin="73,0,0,0" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" />
         </Grid>
+        <Grid HorizontalAlignment="Left" Height="36" Margin="281,10,0,0" VerticalAlignment="Top" Width="501">
+            <Label Content="API Key:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
+            <PasswordBox x:Name="inputApiKey" Password="Insert API Key here" HorizontalAlignment="Left" Height="36" Margin="78,0,0,0" VerticalAlignment="Top" Width="423" VerticalContentAlignment="Center"/>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="36" Margin="281,51,0,0" VerticalAlignment="Top" Width="216">
+            <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
+            <TextBox x:Name="inputUserName" Text="Insert username here" HorizontalAlignment="Left" Height="36" Margin="78,0,0,0" VerticalAlignment="Top" Width="138" VerticalContentAlignment="Center"/>
+        </Grid>
         <Button Content="Save and apply" Click="SettingsSave" HorizontalAlignment="Left" Margin="10,389,0,0" VerticalAlignment="Top" Width="95"/>
+        <Button Content="Refresh session" Click="RefreshSession" HorizontalAlignment="Left" Margin="110,389,0,0" VerticalAlignment="Top" Width="95"/>
     </Grid>
 </Window>

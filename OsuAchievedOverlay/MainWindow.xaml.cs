@@ -29,11 +29,8 @@ namespace OsuAchievedOverlay
         private Display displayWin = null;
         private OsuApiHelper.OsuUser osuUser = null;
 
-        private long StartDataScore = -1;
-        private int StartDataPlaycount = -1;
-        private int StartDataSSCount = -1;
-        private int StartDataSCount = -1;
-        private int StartDataACount = -1;
+        private Session currentSession;
+        private IniData settings;
 
         private DispatcherTimer timer;
         private DispatcherTimer progressTimer;
@@ -67,18 +64,24 @@ namespace OsuAchievedOverlay
             {
                 OpenDisplay();
 
-                StartDataScore = Convert.ToInt64(osuUser.TotalScore);
-                StartDataPlaycount = osuUser.Playcount;
-                StartDataSSCount = osuUser.GetCountRankSS();
-                StartDataSCount = osuUser.GetCountRankS();
-                StartDataACount = osuUser.GetCountRankA();
+                if(osuUser==null)
+                    osuUser = OsuApiHelper.OsuApi.GetUser(settings["api"]["user"], OsuApiHelper.OsuMode.Standard);
+
+                currentSession = new Session()
+                {
+                    StartDataScore = Convert.ToInt64(osuUser.TotalScore),
+                    StartDataPlaycount = osuUser.Playcount,
+                    StartDataSSCount = osuUser.GetCountRankSS(),
+                    StartDataSCount = osuUser.GetCountRankS(),
+                    StartDataACount = osuUser.GetCountRankA()
+                };
 
                 RefreshTimer(null, null);
 
                 //Update every minute
                 timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
                 timer.Tick += new EventHandler(RefreshTimer);
-                timer.Interval = TimeSpan.FromSeconds(60);
+                timer.Interval = TimeSpan.FromSeconds(30);
                 timer.Start();
 
                 lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
@@ -97,28 +100,28 @@ namespace OsuAchievedOverlay
 
         private void RefreshTimer(object sender, EventArgs e)
         {
-            if (displayWin != null)
+            if (displayWin != null && currentSession!=null && osuUser!=null)
             {
                 osuUser = OsuApiHelper.OsuApi.GetUser(osuUser.Name, OsuApiHelper.OsuMode.Standard);
+                
+                displayWin.SetCurrentA(osuUser.GetCountRankA());
+                displayWin.SetCurrentS(osuUser.GetCountRankS());
+                displayWin.SetCurrentSS(osuUser.GetCountRankSS());
 
-                displayWin.SetCurrentA(osuUser.GetCountRankA().ToString("#,##0.###"));
-                displayWin.SetCurrentS(osuUser.GetCountRankS().ToString("#,##0.###"));
-                displayWin.SetCurrentSS(osuUser.GetCountRankSS().ToString("#,##0.###"));
+                displayWin.SetCurrentScore(Convert.ToInt64(osuUser.TotalScore));
+                displayWin.SetCurrentPlaycount(osuUser.Playcount);
 
-                displayWin.SetCurrentScore(Convert.ToInt64(osuUser.TotalScore).ToString("#,##0.###"));
-                displayWin.SetCurrentPlaycount(osuUser.Playcount.ToString("#,##0.###"));
+                int diffSS = osuUser.GetCountRankSS() - currentSession.StartDataSSCount;
+                int diffS = osuUser.GetCountRankS() - currentSession.StartDataSCount;
+                int diffA = osuUser.GetCountRankA() - currentSession.StartDataACount;
+                long diffScore = Convert.ToInt64(osuUser.TotalScore) - currentSession.StartDataScore;
+                int diffPC = osuUser.Playcount - currentSession.StartDataPlaycount;
 
-                int diffSS = osuUser.GetCountRankSS() - StartDataSSCount;
-                int diffS = osuUser.GetCountRankS() - StartDataSCount;
-                int diffA = osuUser.GetCountRankA() - StartDataACount;
-                long diffScore = Convert.ToInt64(osuUser.TotalScore) - StartDataScore;
-                int diffPC = osuUser.Playcount - StartDataPlaycount;
-
-                displayWin.SetNewSS(diffSS.ToString("#,##0.###"));
-                displayWin.SetNewS(diffS.ToString("#,##0.###"));
-                displayWin.SetNewA(diffA.ToString("#,##0.###"));
-                displayWin.SetNewScore(diffScore.ToString("#,##0.###"));
-                displayWin.SetNewPlaycount(diffPC.ToString("#,##0.###"));
+                displayWin.SetNewSS(diffSS);
+                displayWin.SetNewS(diffS);
+                displayWin.SetNewA(diffA);
+                displayWin.SetNewScore(diffScore);
+                displayWin.SetNewPlaycount(diffPC);
 
                 if (sender != null)
                 {
@@ -139,13 +142,15 @@ namespace OsuAchievedOverlay
                 labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
                 backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
 
+                inputApiKey.Password = data["api"]["key"];
+                inputUserName.Text = data["api"]["user"];
+
+                settings = data;
                 return true;
             }
             else
             {
                 IniData newData = new IniData();
-                newData["api"]["key"] = "No key inserted";
-                newData["api"]["user"] = "Username here";
 
                 newData = FixIniData(parser, newData);
                 parser.WriteFile("Settings.ini", newData);
@@ -165,8 +170,18 @@ namespace OsuAchievedOverlay
         }
 
         private IniData FixIniData(FileIniDataParser parser, IniData data){
+            if (data["api"]["key"] == null)
+                data["api"]["key"] = "No key inserted";
+
+            if (data["api"]["user"] == null)
+                data["api"]["user"] = "Username here";
+
+            if (data["api"]["updateRate"] == null)
+                data["api"]["updateRate"] = "60";
+
             if (data["display"]["labelColor"] == null)
                 data["display"]["labelColor"] = Colors.Black.ToString();
+
             if (data["display"]["background"] == null)
                 data["display"]["background"] = Colors.White.ToString();
 
@@ -210,8 +225,12 @@ namespace OsuAchievedOverlay
             data["display"]["labelColor"] = labelColorPicker.SelectedColor.ToString();
             data["display"]["background"] = backgroundColorPicker.SelectedColor.ToString();
 
+            data["api"]["key"] = inputApiKey.Password;
+            data["api"]["user"] = inputUserName.Text;
+
             parser.WriteFile("Settings.ini", data);
 
+            settings = data;
             ApplySettingsToApp();
         }
 
@@ -235,6 +254,26 @@ namespace OsuAchievedOverlay
             displayWin.LabelScoreNew.Foreground = labelColor;
 
             displayWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["background"]));
+
+            OsuApiHelper.OsuApiKey.Key = inputApiKey.Password;
+            osuUser = OsuApiHelper.OsuApi.GetUser(inputUserName.Text, OsuApiHelper.OsuMode.Standard);
+
+        }
+
+        private void RefreshSession(object sender, RoutedEventArgs e)
+        {
+            osuUser = OsuApiHelper.OsuApi.GetUser(settings["api"]["user"], OsuApiHelper.OsuMode.Standard);
+
+            currentSession = new Session()
+            {
+                StartDataScore = Convert.ToInt64(osuUser.TotalScore),
+                StartDataPlaycount = osuUser.Playcount,
+                StartDataSSCount = osuUser.GetCountRankSS(),
+                StartDataSCount = osuUser.GetCountRankS(),
+                StartDataACount = osuUser.GetCountRankA()
+            };
+
+            RefreshTimer(null, null);
         }
     }
 }

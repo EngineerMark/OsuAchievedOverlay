@@ -8,17 +8,17 @@
         WindowStyle="None"
         Title="Display" Height="260" Width="490" ResizeMode="NoResize">
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="32" Margin="10,5,0,0" VerticalAlignment="Top" Width="145">
+        <Grid HorizontalAlignment="Left" Height="32" Margin="10,5,0,0" VerticalAlignment="Top" Width="193">
             <Image HorizontalAlignment="Left" Height="32" VerticalAlignment="Center" Width="32" Source="Assets/SS.png"/>
             <Label Content="0" x:Name="LabelSSCurrent" HorizontalAlignment="Left" Margin="37,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16" Width="64"/>
             <Label Content="+0" x:Name="LabelSSNew" HorizontalAlignment="Right" Margin="69,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16"/>
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="32" Margin="10,42,0,0" VerticalAlignment="Top" Width="145">
+        <Grid HorizontalAlignment="Left" Height="32" Margin="10,42,0,0" VerticalAlignment="Top" Width="193">
             <Image HorizontalAlignment="Left" Height="32" VerticalAlignment="Center" Width="32" Source="Assets/S.png"/>
             <Label Content="0" x:Name="LabelSCurrent" HorizontalAlignment="Left" Margin="37,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16" Width="64"/>
             <Label Content="+0" x:Name="LabelSNew" HorizontalAlignment="Right" Margin="69,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16"/>
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="32" Margin="10,79,0,0" VerticalAlignment="Top" Width="145">
+        <Grid HorizontalAlignment="Left" Height="32" Margin="10,79,0,0" VerticalAlignment="Top" Width="193">
             <Image HorizontalAlignment="Left" Height="32" VerticalAlignment="Center" Width="32" Source="Assets/A.png"/>
             <Label Content="0" x:Name="LabelACurrent" HorizontalAlignment="Left" Margin="37,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16" Width="64"/>
             <Label Content="+0" x:Name="LabelANew" HorizontalAlignment="Right" Margin="69,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16"/>
