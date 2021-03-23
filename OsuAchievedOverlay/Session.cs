@@ -23,5 +23,12 @@ namespace OsuAchievedOverlay
 
         [JsonProperty("StartDataA")]
         public int StartDataACount { get; set; }
+
+        [JsonProperty("SessionDate")]
+        public long SessionDate { get; set; }
+
+        public Session(){
+            SessionDate = DateTimeOffset.Now.ToUnixTimeSeconds();
+        }
     }
 }

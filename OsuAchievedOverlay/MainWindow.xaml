@@ -25,7 +25,7 @@
             <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
             <TextBox x:Name="inputUserName" Text="Insert username here" HorizontalAlignment="Left" Height="36" Margin="78,0,0,0" VerticalAlignment="Top" Width="138" VerticalContentAlignment="Center"/>
         </Grid>
-        <Button Content="Save and apply" Click="SettingsSave" HorizontalAlignment="Left" Margin="10,389,0,0" VerticalAlignment="Top" Width="95"/>
-        <Button Content="Refresh session" Click="RefreshSession" HorizontalAlignment="Left" Margin="110,389,0,0" VerticalAlignment="Top" Width="95"/>
+        <Button Content="Save and apply" ToolTip="Applies visual changes and saves everything to settings file" Click="SettingsSave" HorizontalAlignment="Left" Margin="10,389,0,0" VerticalAlignment="Top" Width="95"/>
+        <Button Content="Restart session" ToolTip="Restart to reset session in case of user/api change or when in general." Click="RefreshSession" HorizontalAlignment="Left" Margin="110,389,0,0" VerticalAlignment="Top" Width="95"/>
     </Grid>
 </Window>
