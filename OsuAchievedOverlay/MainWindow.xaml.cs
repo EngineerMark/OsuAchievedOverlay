@@ -175,6 +175,8 @@ namespace OsuAchievedOverlay
                 data = FixIniData(parser, data);
                 OsuApiHelper.OsuApiKey.Key = data["api"]["key"];
                 osuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], OsuApiHelper.OsuMode.Standard);
+                //labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
+                //backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
                 labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
                 backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
 
@@ -289,7 +291,7 @@ namespace OsuAchievedOverlay
             displayWin.LabelScoreCurrent.Foreground = labelColor;
             displayWin.LabelScoreNew.Foreground = labelColor;
 
-            displayWin.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["background"]));
+            displayWin.RoundedBackground.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["background"]));
 
             OsuApiHelper.OsuApiKey.Key = inputApiKey.Password;
             osuUser = OsuApiHelper.OsuApi.GetUser(inputUserName.Text, OsuApiHelper.OsuMode.Standard);
