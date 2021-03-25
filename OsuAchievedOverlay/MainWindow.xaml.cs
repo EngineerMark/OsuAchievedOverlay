@@ -39,10 +39,28 @@ namespace OsuAchievedOverlay
 
         private long lastTimerFire = -1;
 
+        private IniData DefaultSettings{
+            get{
+                return new IniData()
+                {
+                    ["api"] = {
+                        ["key"] = "No key inserted",
+                        ["user"] = "Username here",
+                        ["updateRate"] = "60"
+                    },
+                    ["display"] = {
+                        ["labelColor"] = Colors.Black.ToString(),
+                        ["background"] = Colors.White.ToString(),
+                        ["chromakeyBackground"] = Colors.Green.ToString(),
+                        ["useChromaKey"] = "1"
+                    }
+                };
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
-            WindowState = WindowState.Minimized;
 
             Closed += (object sender, EventArgs e) =>
             {
@@ -55,7 +73,8 @@ namespace OsuAchievedOverlay
                 updateTimer.Stop();
                 updateTimer = null;
 
-                CloseDisplay();
+                displayWin.Close();
+                displayWin = null;
             };
 
             Start();
@@ -67,7 +86,7 @@ namespace OsuAchievedOverlay
 
             if (success)
             {
-                OpenDisplay();
+                ApplySettingsToApp(settings);
 
                 if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(settings["api"]["user"]))
                 {
@@ -177,8 +196,10 @@ namespace OsuAchievedOverlay
                 osuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], OsuApiHelper.OsuMode.Standard);
                 //labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
                 //backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
+                keyColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["chromakeyBackground"]);
                 labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
                 backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
+                boolUseChromaKey.IsChecked = data["display"]["useChromaKey"] == "1";
 
                 inputApiKey.Password = data["api"]["key"];
                 inputUserName.Text = data["api"]["user"];
@@ -208,46 +229,31 @@ namespace OsuAchievedOverlay
         }
 
         private IniData FixIniData(FileIniDataParser parser, IniData data){
-            if (data["api"]["key"] == null)
-                data["api"]["key"] = "No key inserted";
-
-            if (data["api"]["user"] == null)
-                data["api"]["user"] = "Username here";
-
-            if (data["api"]["updateRate"] == null)
-                data["api"]["updateRate"] = "60";
-
-            if (data["display"]["labelColor"] == null)
-                data["display"]["labelColor"] = Colors.Black.ToString();
-
-            if (data["display"]["background"] == null)
-                data["display"]["background"] = Colors.White.ToString();
+            foreach(SectionData section in DefaultSettings.Sections){
+                foreach(KeyData key in section.Keys){
+                    if (data[section.SectionName][key.KeyName] == null)
+                        data[section.SectionName][key.KeyName] = key.Value;
+                }
+            }
 
             parser.WriteFile("Settings.ini", data);
             return data;
         }
 
-        public void OpenDisplay()
+        public void OpenDisplay(bool closeCheck = true)
         {
-            if (displayWin == null || !displayWin.IsLoaded)
-            {
+            if(closeCheck)
                 CloseDisplay();
-                displayWin = new Display();
-                displayWin.Show();
-            }
-            else if (displayWin.WindowState == WindowState.Minimized)
-            {
-                displayWin.WindowState = WindowState.Normal;
-            }
+            displayWin = new Display();
+            displayWin.Show();
             displayWin.Focus();
-            ApplySettingsToApp();
+            //ApplySettingsToApp();
             RefreshTimer(null, null);
         }
 
         public void CloseDisplay()
         {
-            if (displayWin != null)
-                displayWin.Close();
+            displayWin?.Close();
         }
 
         private void ButtonHandler_OpenDisplay(object sender, RoutedEventArgs e)
@@ -262,6 +268,8 @@ namespace OsuAchievedOverlay
 
             data["display"]["labelColor"] = labelColorPicker.SelectedColor.ToString();
             data["display"]["background"] = backgroundColorPicker.SelectedColor.ToString();
+            data["display"]["chromakeyBackground"] = keyColorPicker.SelectedColor.ToString();
+            data["display"]["useChromaKey"] = (bool)boolUseChromaKey.IsChecked ? "1" : "0";
 
             data["api"]["key"] = inputApiKey.Password;
             data["api"]["user"] = inputUserName.Text;
@@ -269,14 +277,16 @@ namespace OsuAchievedOverlay
             parser.WriteFile("Settings.ini", data);
 
             settings = data;
-            ApplySettingsToApp();
+            ApplySettingsToApp(settings);
         }
 
-        private void ApplySettingsToApp(){
-            FileIniDataParser parser = new FileIniDataParser();
-            IniData data = parser.ReadFile("Settings.ini");
-
+        private void ApplySettingsToApp(IniData data){
             Brush labelColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]));
+
+            displayWin?.Close();
+            displayWin = new Display();
+            displayWin.AllowsTransparency = data["display"]["useChromaKey"] != "1";
+            OpenDisplay(false);
 
             displayWin.LabelACurrent.Foreground = labelColor;
             displayWin.LabelSCurrent.Foreground = labelColor;
@@ -292,6 +302,15 @@ namespace OsuAchievedOverlay
             displayWin.LabelScoreNew.Foreground = labelColor;
 
             displayWin.RoundedBackground.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["background"]));
+
+            if (data["display"]["useChromaKey"] == "1"){
+                Brush keyColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["chromakeyBackground"]));
+                displayWin.Background = keyColor;
+            }
+            else
+            {
+                displayWin.Background = new SolidColorBrush(Colors.Transparent);
+            }
 
             OsuApiHelper.OsuApiKey.Key = inputApiKey.Password;
             osuUser = OsuApiHelper.OsuApi.GetUser(inputUserName.Text, OsuApiHelper.OsuMode.Standard);
