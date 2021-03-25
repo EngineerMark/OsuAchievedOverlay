@@ -288,7 +288,9 @@ namespace OsuAchievedOverlay
             displayWin?.Close();
             displayWin = new Display();
             displayWin.AllowsTransparency = data["display"]["useChromaKey"] != "1";
-            OpenDisplay(false);
+            displayWin.Show();
+            displayWin.Focus();
+            RefreshTimer(null, null);
 
             displayWin.LabelACurrent.Foreground = labelColor;
             displayWin.LabelSCurrent.Foreground = labelColor;

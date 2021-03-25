@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:OsuAchievedOverlay"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="OsuAchievedOverlay.Display"
         mc:Ignorable="d"
-        AllowsTransparency="True"
+        AllowsTransparency="False"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Title="Display" Height="278" Width="490" ResizeMode="NoResize" Background="Green">
