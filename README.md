@@ -1,6 +1,8 @@
 # OsuAchievedOverlay
 Stream Overlay for osu! containing information on your session achievements
 
+This is still very experimental. Crashes can and will occur. If not reported yet, throw it into Issues.
+
 # Dependencies
 
 This project makes use of my OsuHelper library: https://github.com/EngineerMark/OsuHelper
