@@ -75,6 +75,8 @@ namespace OsuAchievedOverlay
 
                 displayWin.Close();
                 displayWin = null;
+
+                Environment.Exit(0);
             };
 
             Start();
