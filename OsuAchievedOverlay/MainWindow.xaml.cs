@@ -313,6 +313,8 @@ namespace OsuAchievedOverlay
             displayWin.LabelScoreCurrent.Foreground = labelColor;
             displayWin.LabelScoreNew.Foreground = labelColor;
 
+            displayWin.LabelTimeAgoStarted.Foreground = labelColor;
+
             displayWin.RoundedBackground.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["background"]));
 
             if (data["display"]["useChromaKey"] == "1"){
@@ -374,7 +376,8 @@ namespace OsuAchievedOverlay
                         bool validSession = true;
                         try{
                             newSession = JsonConvert.DeserializeObject<Session>(data);
-                        }catch(Exception _){
+                        }catch (Exception)
+                        {
                             validSession = false;
                             MessageBox.Show("Seems like the opened file is an invalid session file.", "Error opening session", MessageBoxButton.OK);
                         }
