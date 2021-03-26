@@ -18,6 +18,8 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using IniParser;
 using IniParser.Model;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using TimeAgo;
 
 namespace OsuAchievedOverlay
@@ -343,6 +345,43 @@ namespace OsuAchievedOverlay
                 };
 
                 RefreshTimer(null, null);
+            }
+        }
+
+        private void btnSaveSession_Click(object sender, RoutedEventArgs e)
+        {
+            string json = currentSession.ConvertToJson();
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+            if (saveFileDialog.ShowDialog() == true)
+                File.WriteAllText(saveFileDialog.FileName, json);
+        }
+
+        private void btnLoadSession_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+            if (openFileDialog.ShowDialog() == true){
+                //File.WriteAllText(saveFileDialog.FileName, json);
+                var fileStream = openFileDialog.OpenFile();
+
+                using (StreamReader reader = new StreamReader(fileStream))
+                {
+                    string data = reader.ReadToEnd();
+                    if(data.Length>0){
+                        Session newSession = null;
+                        bool validSession = true;
+                        try{
+                            newSession = JsonConvert.DeserializeObject<Session>(data);
+                        }catch(Exception _){
+                            validSession = false;
+                            MessageBox.Show("Seems like the opened file is an invalid session file.", "Error opening session", MessageBoxButton.OK);
+                        }
+                        if (validSession)
+                            currentSession = newSession;
+                    }
+                }
             }
         }
     }

@@ -37,5 +37,7 @@
         <Grid HorizontalAlignment="Left" Height="36" Margin="10,336,0,0" VerticalAlignment="Top" Width="216">
             <CheckBox Content="Use key color as background" ToolTip="Unchecked will make it transparent, otherwise it will have a opaque color for chroma keying." x:Name="boolUseChromaKey" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="216" Height="36"/>
         </Grid>
+        <Button Content="Load Session" Name="btnLoadSession" HorizontalAlignment="Left" Margin="657,326,0,0" VerticalAlignment="Top" Width="125" Click="btnLoadSession_Click"/>
+        <Button Content="Save Session" Name="btnSaveSession" HorizontalAlignment="Left" Margin="657,289,0,0" VerticalAlignment="Top" Width="125" Click="btnSaveSession_Click"/>
     </Grid>
 </Window>

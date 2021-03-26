@@ -30,5 +30,9 @@ namespace OsuAchievedOverlay
         public Session(){
             SessionDate = DateTimeOffset.Now.ToUnixTimeSeconds();
         }
+
+        public string ConvertToJson(){
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }
