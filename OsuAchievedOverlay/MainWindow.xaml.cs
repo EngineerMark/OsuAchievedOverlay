@@ -64,16 +64,16 @@ namespace OsuAchievedOverlay
 
             Closed += (object sender, EventArgs e) =>
             {
-                timer.Stop();
+                timer?.Stop();
                 timer = null;
 
-                progressTimer.Stop();
+                progressTimer?.Stop();
                 progressTimer = null;
 
-                updateTimer.Stop();
+                updateTimer?.Stop();
                 updateTimer = null;
 
-                displayWin.Close();
+                displayWin?.Close();
                 displayWin = null;
 
                 Environment.Exit(0);
@@ -247,6 +247,12 @@ namespace OsuAchievedOverlay
             if(closeCheck)
                 CloseDisplay();
             displayWin = new Display();
+            if (Display.displayPosition != null)
+            {
+                displayWin.WindowStartupLocation = WindowStartupLocation.Manual;
+                displayWin.Left = ((Vector)Display.displayPosition).X;
+                displayWin.Top = ((Vector)Display.displayPosition).Y;
+            }
             displayWin.Show();
             displayWin.Focus();
             //ApplySettingsToApp();

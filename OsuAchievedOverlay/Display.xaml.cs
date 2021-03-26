@@ -19,10 +19,17 @@ namespace OsuAchievedOverlay
     /// </summary>
     public partial class Display : Window
     {
+        public static Vector? displayPosition = null;
+
         public Display()
         {
             InitializeComponent();
             ShowInTaskbar = false;
+
+            Closed += (object sender, EventArgs e) =>
+            {
+                displayPosition = new Vector(Left, Top);
+            };
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
