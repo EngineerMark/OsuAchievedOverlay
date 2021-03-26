@@ -3,6 +3,10 @@ Stream Overlay for osu! containing information on your session achievements
 
 This is still very experimental. Crashes can and will occur. If not reported yet, throw it into Issues.
 
+# OBS Studio
+
+When capturing the window, set Window Match Priority to "Match title, otherwise find window of same executable", that way it automatically recaptures when you change settings.
+
 # Dependencies
 
 This project makes use of my OsuHelper library: https://github.com/EngineerMark/OsuHelper
