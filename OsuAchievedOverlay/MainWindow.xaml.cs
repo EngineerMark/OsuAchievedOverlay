@@ -315,6 +315,16 @@ namespace OsuAchievedOverlay
 
             displayWin.LabelTimeAgoStarted.Foreground = labelColor;
 
+            displayWin.labelUsername.Content = osuUser.Name;
+
+            string profilePic = @"https://a.ppy.sh/"+osuUser.ID;
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(profilePic, UriKind.Absolute);
+            bitmap.EndInit();
+
+            displayWin.imageProfilePicture.Source = bitmap;
+
             displayWin.RoundedBackground.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["background"]));
 
             if (data["display"]["useChromaKey"] == "1"){
