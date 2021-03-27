@@ -21,6 +21,12 @@ namespace OsuAchievedOverlay
     {
         public static Vector? displayPosition = null;
 
+        public enum DisplayType{
+            Preparing,
+            BanchoDown,
+            Stats
+        }
+
         public Display()
         {
             InitializeComponent();
@@ -30,6 +36,30 @@ namespace OsuAchievedOverlay
             {
                 displayPosition = new Vector(Left, Top);
             };
+
+            ScreenPreparing.Visibility = Visibility.Visible;
+            ScreenBanchoDown.Visibility = Visibility.Hidden;
+            ScreenRegular.Visibility = Visibility.Hidden;
+        }
+
+        public void SetDisplay(DisplayType displayType){
+            switch(displayType){
+                case DisplayType.Preparing:
+                    ScreenPreparing.Visibility = Visibility.Visible;
+                    ScreenBanchoDown.Visibility = Visibility.Hidden;
+                    ScreenRegular.Visibility = Visibility.Hidden;
+                    break;
+                case DisplayType.BanchoDown:
+                    ScreenPreparing.Visibility = Visibility.Hidden;
+                    ScreenBanchoDown.Visibility = Visibility.Visible;
+                    ScreenRegular.Visibility = Visibility.Hidden;
+                    break;
+                case DisplayType.Stats:
+                    ScreenPreparing.Visibility = Visibility.Hidden;
+                    ScreenBanchoDown.Visibility = Visibility.Hidden;
+                    ScreenRegular.Visibility = Visibility.Visible;
+                    break;
+            }
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

@@ -32,8 +32,8 @@
             <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
             <TextBox x:Name="inputUserName" Text="Insert username here" HorizontalAlignment="Left" Height="36" Margin="78,0,0,0" VerticalAlignment="Top" Width="138" VerticalContentAlignment="Center"/>
         </Grid>
-        <Button Content="Save and apply" ToolTip="Applies visual changes and saves everything to settings file" Click="SettingsSave" HorizontalAlignment="Left" Margin="10,377,0,0" VerticalAlignment="Top" Width="134"/>
-        <Button Content="Restart session" ToolTip="Restart to reset session in case of user/api change or when in general." Click="RefreshSession" HorizontalAlignment="Left" Margin="149,377,0,0" VerticalAlignment="Top" Width="127"/>
+        <Button Content="Save and apply" ToolTip="Applies visual changes and saves everything to settings file" Click="btnSaveSettings_Click" HorizontalAlignment="Left" Margin="10,377,0,0" VerticalAlignment="Top" Width="134"/>
+        <Button Content="Reset session" ToolTip="Restart to reset session in case of user/api change or when in general." Click="btnResetSession_Click" HorizontalAlignment="Left" Margin="149,377,0,0" VerticalAlignment="Top" Width="127"/>
         <Grid HorizontalAlignment="Left" Height="36" Margin="10,336,0,0" VerticalAlignment="Top" Width="216">
             <CheckBox Content="Use key color as background" ToolTip="Unchecked will make it transparent, otherwise it will have a opaque color for chroma keying." x:Name="boolUseChromaKey" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="216" Height="36"/>
         </Grid>
