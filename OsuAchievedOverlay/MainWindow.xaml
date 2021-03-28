@@ -20,6 +20,10 @@
             <Label Content="Background Color:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
             <xctk:ColorPicker x:Name="backgroundColorPicker" Margin="73,0,0,0" UsingAlphaChannel="False" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" />
         </Grid>
+        <Grid HorizontalAlignment="Left" Height="36" Margin="10,92,0,0" VerticalAlignment="Top" Width="266">
+            <Label Content="Text Font:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
+            <ComboBox Name="labelFontDropdown" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" HorizontalAlignment="Left" Margin="73,0,0,0" VerticalAlignment="Top" Width="193" Height="36"/>
+        </Grid>
         <Grid HorizontalAlignment="Left" Height="36" Margin="281,336,0,0" VerticalAlignment="Top" Width="266">
             <Label Content="Key Color:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
             <xctk:ColorPicker x:Name="keyColorPicker" Margin="73,0,0,0" UsingAlphaChannel="False" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" />

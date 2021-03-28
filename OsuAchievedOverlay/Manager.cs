@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OsuAchievedOverlay
 {
-    public class Manager<T> where T : class, new()
+    public abstract class Manager<T> : IManager where T : class, new()
     {
         private static T _instance;
         public static T Instance {
@@ -19,5 +19,14 @@ namespace OsuAchievedOverlay
                 return _instance;
             }
         }
+
+        public abstract void Start();
+
+        public abstract void Stop();
+    }
+
+    public interface IManager{
+        void Start();
+        void Stop();
     }
 }

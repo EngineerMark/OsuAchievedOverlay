@@ -52,7 +52,7 @@ namespace OsuAchievedOverlay
 
         private void ButtonHandler_OpenDisplay(object sender, RoutedEventArgs e)
         {
-            GameManager.Instance.OpenDisplay();
+            GameManager.Instance.FocusDisplay();
         }
 
         private void btnSaveSettings_Click(object sender, RoutedEventArgs e)

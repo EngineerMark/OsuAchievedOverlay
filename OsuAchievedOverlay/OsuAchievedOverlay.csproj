@@ -111,6 +111,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GameManager.cs" />
+    <Compile Include="InterfaceManager.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SessionManager.cs" />

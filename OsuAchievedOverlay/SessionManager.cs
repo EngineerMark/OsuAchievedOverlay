@@ -9,5 +9,15 @@ namespace OsuAchievedOverlay
     public class SessionManager : Manager<SessionManager>
     {
         public List<Session> sessions;
+
+        public override void Start()
+        {
+            //Not implemented
+        }
+
+        public override void Stop()
+        {
+            //Not implemented
+        }
     }
 }

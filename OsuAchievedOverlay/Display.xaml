@@ -13,10 +13,10 @@
     <Grid>
         <materialDesign:Chip Name="RoundedBackground" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" Height="278" Width="471" />
         <Grid x:Name="ScreenBanchoDown" Visibility="Hidden">
-            <Label Content="Unable to fetch data. Is Bancho down?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="258" Width="451" FontWeight="Bold" FontSize="18"/>
+            <Label Name="LabelBanchoDown" Content="Unable to fetch data. Is Bancho down?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="258" Width="451" FontWeight="Bold" FontSize="18"/>
         </Grid>
         <Grid x:Name="ScreenPreparing" Visibility="Visible">
-            <Label Content="Preparing display" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="258" Width="451" FontWeight="Bold" FontSize="18"/>
+            <Label Name="LabelPreparing" Content="Preparing display" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="258" Width="451" FontWeight="Bold" FontSize="18"/>
         </Grid>
         <Grid x:Name="ScreenRegular" Visibility="Hidden">
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,5,0,0" VerticalAlignment="Top" Width="193">
@@ -51,7 +51,7 @@
             </Grid>
             <Grid HorizontalAlignment="Left" Margin="275,10,0,106" Width="186">
                 <Image x:Name="imageProfilePicture" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Source="Assets/profilepicture_placeholder.png"/>
-                <Label Name="labelUsername" Content="username" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,105,0,0" VerticalAlignment="Top" Height="57" Width="186"/>
+                <Label Name="LabelUsername" Content="username" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,105,0,0" VerticalAlignment="Top" Height="57" Width="186"/>
             </Grid>
         </Grid>
     </Grid>

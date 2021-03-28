@@ -46,7 +46,8 @@ namespace OsuAchievedOverlay
                         ["labelColor"] = Colors.Black.ToString(),
                         ["background"] = Colors.White.ToString(),
                         ["chromakeyBackground"] = Colors.Green.ToString(),
-                        ["useChromaKey"] = "1"
+                        ["useChromaKey"] = "1",
+                        ["labelFont"] = "Arial"
                     }
                 };
             }
@@ -54,8 +55,10 @@ namespace OsuAchievedOverlay
 
         public Session CurrentSession { get => currentSession; set => currentSession = value; }
         public MainWindow MainWin { get => mainWin; set => mainWin = value; }
+        public Display DisplayWin { get => displayWin; set => displayWin = value; }
 
-        public void Start(){
+        public override void Start()
+        {
             bool success = LoadSettings();
 
             if (success)
@@ -92,7 +95,7 @@ namespace OsuAchievedOverlay
                 {
                     double interval = timer.Interval.TotalSeconds;
                     double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
-                    displayWin.NextUpdateProgress.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed / interval)));
+                    DisplayWin.NextUpdateProgress.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed / interval)));
                 });
                 progressTimer.Interval = new TimeSpan(0, 0, 1);
                 progressTimer.Start();
@@ -104,7 +107,8 @@ namespace OsuAchievedOverlay
             }
         }
 
-        public void Stop(){
+        public override void Stop()
+        {
             timer?.Stop();
             timer = null;
 
@@ -114,28 +118,30 @@ namespace OsuAchievedOverlay
             updateTimer?.Stop();
             updateTimer = null;
 
-            displayWin?.Close();
-            displayWin = null;
+            DisplayWin?.Close();
+            DisplayWin = null;
         }
 
-        public void Update(){
-            if (displayWin != null && CurrentSession != null)
+        public void Update()
+        {
+            if (DisplayWin != null && CurrentSession != null)
             {
-                displayWin.LabelTimeAgoStarted.Content = "Session started " + DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionDate).UtcDateTime.AddHours(1).TimeAgo();
+                DisplayWin.LabelTimeAgoStarted.Content = "Session started " + DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionDate).UtcDateTime.AddHours(1).TimeAgo();
             }
         }
 
         public void RefreshTimer(object sender, EventArgs e)
         {
-            if (displayWin != null && CurrentSession != null && osuUser != null)
+            if (DisplayWin != null && CurrentSession != null && osuUser != null)
             {
-                bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k="+settings["api"]["key"]+"&u=peppy")!="";
-                if (!apiReady){
-                    displayWin.SetDisplay(Display.DisplayType.BanchoDown);
+                bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k=" + settings["api"]["key"] + "&u=peppy") != "";
+                if (!apiReady)
+                {
+                    DisplayWin.SetDisplay(Display.DisplayType.BanchoDown);
                 }
                 else
                 {
-                    displayWin.SetDisplay(Display.DisplayType.Stats);
+                    DisplayWin.SetDisplay(Display.DisplayType.Stats);
                     bool _continue = true;
                     //if (!OsuApiHelper.OsuApi.IsKeyValid())
                     //{
@@ -155,12 +161,12 @@ namespace OsuAchievedOverlay
                     {
                         osuUser = OsuApiHelper.OsuApi.GetUser(osuUser.Name, OsuApiHelper.OsuMode.Standard);
 
-                        displayWin.SetCurrentA(osuUser.GetCountRankA());
-                        displayWin.SetCurrentS(osuUser.GetCountRankS());
-                        displayWin.SetCurrentSS(osuUser.GetCountRankSS());
+                        DisplayWin.SetCurrentA(osuUser.GetCountRankA());
+                        DisplayWin.SetCurrentS(osuUser.GetCountRankS());
+                        DisplayWin.SetCurrentSS(osuUser.GetCountRankSS());
 
-                        displayWin.SetCurrentScore(Convert.ToInt64(osuUser.TotalScore));
-                        displayWin.SetCurrentPlaycount(osuUser.Playcount);
+                        DisplayWin.SetCurrentScore(Convert.ToInt64(osuUser.TotalScore));
+                        DisplayWin.SetCurrentPlaycount(osuUser.Playcount);
 
                         int diffSS = osuUser.GetCountRankSS() - CurrentSession.StartDataSSCount;
                         int diffS = osuUser.GetCountRankS() - CurrentSession.StartDataSCount;
@@ -168,11 +174,11 @@ namespace OsuAchievedOverlay
                         long diffScore = Convert.ToInt64(osuUser.TotalScore) - CurrentSession.StartDataScore;
                         int diffPC = osuUser.Playcount - CurrentSession.StartDataPlaycount;
 
-                        displayWin.SetNewSS(diffSS);
-                        displayWin.SetNewS(diffS);
-                        displayWin.SetNewA(diffA);
-                        displayWin.SetNewScore(diffScore);
-                        displayWin.SetNewPlaycount(diffPC);
+                        DisplayWin.SetNewSS(diffSS);
+                        DisplayWin.SetNewS(diffS);
+                        DisplayWin.SetNewA(diffA);
+                        DisplayWin.SetNewScore(diffScore);
+                        DisplayWin.SetNewPlaycount(diffPC);
                     }
 
                     if (sender != null)
@@ -198,6 +204,7 @@ namespace OsuAchievedOverlay
                 MainWin.labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
                 MainWin.backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
                 MainWin.boolUseChromaKey.IsChecked = data["display"]["useChromaKey"] == "1";
+                MainWin.labelFontDropdown.Text = data["display"]["labelFont"];
 
                 MainWin.inputApiKey.Password = data["api"]["key"];
                 MainWin.inputUserName.Text = data["api"]["user"];
@@ -245,22 +252,26 @@ namespace OsuAchievedOverlay
         {
             if (closeCheck)
                 CloseDisplay();
-            displayWin = new Display();
+            DisplayWin = new Display();
             if (Display.displayPosition != null)
             {
-                displayWin.WindowStartupLocation = WindowStartupLocation.Manual;
-                displayWin.Left = ((Vector)Display.displayPosition).X;
-                displayWin.Top = ((Vector)Display.displayPosition).Y;
+                DisplayWin.WindowStartupLocation = WindowStartupLocation.Manual;
+                DisplayWin.Left = ((Vector)Display.displayPosition).X;
+                DisplayWin.Top = ((Vector)Display.displayPosition).Y;
             }
-            displayWin.Show();
-            displayWin.Focus();
+            DisplayWin.Show();
+            DisplayWin.Focus();
             //ApplySettingsToApp();
             RefreshTimer(null, null);
         }
 
+        public void FocusDisplay(){
+            DisplayWin.Focus();
+        }
+
         public void CloseDisplay()
         {
-            displayWin?.Close();
+            DisplayWin?.Close();
         }
 
         public void SettingsSave()
@@ -270,6 +281,7 @@ namespace OsuAchievedOverlay
 
             data["display"]["labelColor"] = MainWin.labelColorPicker.SelectedColor.ToString();
             data["display"]["background"] = MainWin.backgroundColorPicker.SelectedColor.ToString();
+            data["display"]["labelFont"] = MainWin.labelFontDropdown.Text;
             data["display"]["chromakeyBackground"] = MainWin.keyColorPicker.SelectedColor.ToString();
             data["display"]["useChromaKey"] = (bool)MainWin.boolUseChromaKey.IsChecked ? "1" : "0";
 
@@ -284,31 +296,36 @@ namespace OsuAchievedOverlay
 
         private void ApplySettingsToApp(IniData data)
         {
-            Brush labelColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]));
+            DisplayWin?.Close();
+            DisplayWin = new Display();
+            DisplayWin.AllowsTransparency = data["display"]["useChromaKey"] != "1";
+            DisplayWin.Show();
+            DisplayWin.Focus();
 
-            displayWin?.Close();
-            displayWin = new Display();
-            displayWin.AllowsTransparency = data["display"]["useChromaKey"] != "1";
-            displayWin.Show();
-            displayWin.Focus();
-            RefreshTimer(null, null);
+            if (data["display"]["useChromaKey"] == "1")
+            {
+                Brush keyColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["chromakeyBackground"]));
+                DisplayWin.Background = keyColor;
+            }
+            else
+            {
+                DisplayWin.Background = new SolidColorBrush(Colors.Transparent);
+            }
 
-            displayWin.LabelACurrent.Foreground = labelColor;
-            displayWin.LabelSCurrent.Foreground = labelColor;
-            displayWin.LabelSSCurrent.Foreground = labelColor;
+            if (OsuApiHelper.OsuApiKey.Key != MainWin.inputApiKey.Password || !osuUser.Name.Equals(MainWin.inputUserName.Text, StringComparison.CurrentCultureIgnoreCase))
+            {
+                OsuApiHelper.OsuApiKey.Key = MainWin.inputApiKey.Password;
+                //osuUser = OsuApiHelper.OsuApi.GetUser(MainWin.inputUserName.Text, OsuApiHelper.OsuMode.Standard);
 
-            displayWin.LabelANew.Foreground = labelColor;
-            displayWin.LabelSNew.Foreground = labelColor;
-            displayWin.LabelSSNew.Foreground = labelColor;
+                RefreshSession();
+            }
+            else
+                RefreshTimer(null, null);
 
-            displayWin.LabelPlaycountCurrent.Foreground = labelColor;
-            displayWin.LabelPlaycountNew.Foreground = labelColor;
-            displayWin.LabelScoreCurrent.Foreground = labelColor;
-            displayWin.LabelScoreNew.Foreground = labelColor;
+            InterfaceManager.Instance.SetLabelFont((FontFamily)new FontFamilyConverter().ConvertFromString(data["display"]["labelFont"]));
+            InterfaceManager.Instance.SetLabelColor((Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]));
 
-            displayWin.LabelTimeAgoStarted.Foreground = labelColor;
-
-            displayWin.labelUsername.Content = osuUser.Name;
+            DisplayWin.LabelUsername.Content = osuUser.Name;
 
             string profilePic = @"https://a.ppy.sh/" + osuUser.ID;
             BitmapImage bitmap = new BitmapImage();
@@ -316,23 +333,9 @@ namespace OsuAchievedOverlay
             bitmap.UriSource = new Uri(profilePic, UriKind.Absolute);
             bitmap.EndInit();
 
-            displayWin.imageProfilePicture.Source = bitmap;
+            DisplayWin.imageProfilePicture.Source = bitmap;
 
-            displayWin.RoundedBackground.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["background"]));
-
-            if (data["display"]["useChromaKey"] == "1")
-            {
-                Brush keyColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["chromakeyBackground"]));
-                displayWin.Background = keyColor;
-            }
-            else
-            {
-                displayWin.Background = new SolidColorBrush(Colors.Transparent);
-            }
-
-            OsuApiHelper.OsuApiKey.Key = MainWin.inputApiKey.Password;
-            osuUser = OsuApiHelper.OsuApi.GetUser(MainWin.inputUserName.Text, OsuApiHelper.OsuMode.Standard);
-
+            DisplayWin.RoundedBackground.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["background"]));
         }
 
         public void RefreshSession()
