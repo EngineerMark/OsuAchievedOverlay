@@ -47,7 +47,7 @@ namespace OsuAchievedOverlay
                         ["background"] = Colors.White.ToString(),
                         ["chromakeyBackground"] = Colors.Green.ToString(),
                         ["useChromaKey"] = "1",
-                        ["labelFont"] = "Arial"
+                        ["labelFont"] = "Segoe UI"
                     }
                 };
             }
@@ -72,7 +72,8 @@ namespace OsuAchievedOverlay
 
                     CurrentSession = new Session()
                     {
-                        StartDataScore = Convert.ToInt64(osuUser.TotalScore),
+                        StartDataTotalScore = Convert.ToInt64(osuUser.TotalScore),
+                        StartDataRankedScore = Convert.ToInt64(osuUser.RankedScore),
                         StartDataPlaycount = osuUser.Playcount,
                         StartDataSSCount = osuUser.GetCountRankSS(),
                         StartDataSCount = osuUser.GetCountRankS(),
@@ -143,19 +144,6 @@ namespace OsuAchievedOverlay
                 {
                     DisplayWin.SetDisplay(Display.DisplayType.Stats);
                     bool _continue = true;
-                    //if (!OsuApiHelper.OsuApi.IsKeyValid())
-                    //{
-                    //    CloseDisplay();
-                    //    _continue = false;
-                    //    //MessageBoxResult result = MessageBox.Show("Provided API key is invalid", "Error", MessageBoxButton.OK);
-                    //}
-
-                    //if (!OsuApiHelper.OsuApi.IsUserValid(settings["api"]["user"]))
-                    //{
-                    //    CloseDisplay();
-                    //    _continue = false;
-                    //    //MessageBoxResult result = MessageBox.Show("No account with that username exists", "Error", MessageBoxButton.OK);
-                    //}
 
                     if (_continue)
                     {
@@ -171,7 +159,7 @@ namespace OsuAchievedOverlay
                         int diffSS = osuUser.GetCountRankSS() - CurrentSession.StartDataSSCount;
                         int diffS = osuUser.GetCountRankS() - CurrentSession.StartDataSCount;
                         int diffA = osuUser.GetCountRankA() - CurrentSession.StartDataACount;
-                        long diffScore = Convert.ToInt64(osuUser.TotalScore) - CurrentSession.StartDataScore;
+                        long diffScore = Convert.ToInt64(osuUser.TotalScore) - CurrentSession.StartDataTotalScore;
                         int diffPC = osuUser.Playcount - CurrentSession.StartDataPlaycount;
 
                         DisplayWin.SetNewSS(diffSS);
@@ -346,7 +334,8 @@ namespace OsuAchievedOverlay
 
                 CurrentSession = new Session()
                 {
-                    StartDataScore = Convert.ToInt64(osuUser.TotalScore),
+                    StartDataTotalScore = Convert.ToInt64(osuUser.TotalScore),
+                    StartDataRankedScore = Convert.ToInt64(osuUser.RankedScore),
                     StartDataPlaycount = osuUser.Playcount,
                     StartDataSSCount = osuUser.GetCountRankSS(),
                     StartDataSCount = osuUser.GetCountRankS(),

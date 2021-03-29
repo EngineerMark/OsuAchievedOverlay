@@ -11,18 +11,12 @@ namespace OsuAchievedOverlay
     public class InterfaceManager : Manager<InterfaceManager>
     {
         public readonly string[] labelList = new string[]{
-            "LabelBanchoDown",
-            "LabelPreparing",
-            "LabelSSCurrent",
-            "LabelSSNew",
-            "LabelSCurrent",
-            "LabelSNew",
-            "LabelACurrent",
-            "LabelANew",
-            "LabelScoreCurrent",
-            "LabelScoreNew",
-            "LabelPlaycountCurrent",
-            "LabelPlaycountNew",
+            "LabelBanchoDown", "LabelPreparing",
+            "LabelSSCurrent", "LabelSSNew", 
+            "LabelSCurrent", "LabelSNew",
+            "LabelACurrent", "LabelANew",
+            "LabelScoreCurrent", "LabelScoreNew",
+            "LabelPlaycountCurrent", "LabelPlaycountNew",
             "LabelTimeAgoStarted",
             "LabelUsername"
         };

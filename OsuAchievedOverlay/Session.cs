@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace OsuAchievedOverlay
 {
-    public class Session
+    public class Session : ICloneable
     {
         [JsonProperty("StartDataScore")]
-        public long StartDataScore { get; set; }
+        public long StartDataTotalScore { get; set; }
+
+        [JsonProperty("StartDataScore")]
+        public long StartDataRankedScore { get; set; }
 
         [JsonProperty("StartDataPlaycount")]
         public int StartDataPlaycount { get; set; }
@@ -33,6 +36,20 @@ namespace OsuAchievedOverlay
 
         public string ConvertToJson(){
             return JsonConvert.SerializeObject(this);
+        }
+
+        public object Clone()
+        {
+            return new Session()
+            {
+                StartDataTotalScore = this.StartDataTotalScore,
+                StartDataRankedScore = this.StartDataRankedScore,
+                StartDataPlaycount = this.StartDataPlaycount,
+                StartDataSSCount = this.StartDataSSCount,
+                StartDataSCount = this.StartDataSCount,
+                StartDataACount = this.StartDataACount,
+                SessionDate = this.SessionDate
+            };
         }
     }
 }
