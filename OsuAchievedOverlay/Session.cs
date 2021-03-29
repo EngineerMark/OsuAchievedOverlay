@@ -12,7 +12,7 @@ namespace OsuAchievedOverlay
         [JsonProperty("StartDataScore")]
         public long StartDataTotalScore { get; set; }
 
-        [JsonProperty("StartDataScore")]
+        [JsonProperty("StartDataRankedScore")]
         public long StartDataRankedScore { get; set; }
 
         [JsonProperty("StartDataPlaycount")]

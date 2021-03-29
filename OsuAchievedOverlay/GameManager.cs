@@ -241,12 +241,6 @@ namespace OsuAchievedOverlay
             if (closeCheck)
                 CloseDisplay();
             DisplayWin = new Display();
-            if (Display.displayPosition != null)
-            {
-                DisplayWin.WindowStartupLocation = WindowStartupLocation.Manual;
-                DisplayWin.Left = ((Vector)Display.displayPosition).X;
-                DisplayWin.Top = ((Vector)Display.displayPosition).Y;
-            }
             DisplayWin.Show();
             DisplayWin.Focus();
             //ApplySettingsToApp();

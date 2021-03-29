@@ -9,11 +9,11 @@
         x:Class="OsuAchievedOverlay.MainWindow"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Settings" Height="644.21" Width="800" Background="White">
+        Title="Osu Achieved" Height="644.21" Width="800" Background="White">
     <Grid>
-        <Grid Margin="0,0,0,423">
-            <Image Source="Assets/background.jpg" Margin="0,-307,0,-186" />
-            <Grid Background="White" Margin="0,186,0,-186"></Grid>
+        <Grid Margin="0,45,0,423">
+            <Image Source="Assets/background.jpg" Margin="0,-320,0,-173"/>
+            <Grid Background="White" Margin="0,139,0,-186"></Grid>
         </Grid>
         <Grid Margin="0,179,0,10">
             <Button Content="Open Display" HorizontalAlignment="Left" Margin="657,377,0,0" VerticalAlignment="Top" Width="125" Click="ButtonHandler_OpenDisplay"/>

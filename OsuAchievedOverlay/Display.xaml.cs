@@ -37,6 +37,13 @@ namespace OsuAchievedOverlay
                 displayPosition = new Vector(Left, Top);
             };
 
+            if (displayPosition != null)
+            {
+                WindowStartupLocation = WindowStartupLocation.Manual;
+                Left = ((Vector)displayPosition).X;
+                Top = ((Vector)displayPosition).Y;
+            }
+
             ScreenPreparing.Visibility = Visibility.Visible;
             ScreenBanchoDown.Visibility = Visibility.Hidden;
             ScreenRegular.Visibility = Visibility.Hidden;
