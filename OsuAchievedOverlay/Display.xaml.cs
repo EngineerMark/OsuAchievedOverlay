@@ -37,6 +37,18 @@ namespace OsuAchievedOverlay
                 displayPosition = new Vector(Left, Top);
             };
 
+            Activated += (object sender, EventArgs e) =>
+            {
+                Topmost = GameManager.Instance.Settings["display"]["alwaysOnTop"] == "1";
+            };
+
+            Deactivated += (object sender, EventArgs e) =>
+            {
+                Topmost = GameManager.Instance.Settings["display"]["alwaysOnTop"] == "1";
+                if(Topmost)
+                    Activate();
+            };
+
             if (displayPosition != null)
             {
                 WindowStartupLocation = WindowStartupLocation.Manual;

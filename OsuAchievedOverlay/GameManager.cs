@@ -47,6 +47,7 @@ namespace OsuAchievedOverlay
                         ["background"] = Colors.White.ToString(),
                         ["chromakeyBackground"] = Colors.Green.ToString(),
                         ["useChromaKey"] = "1",
+                        ["alwaysOnTop"] = "1",
                         ["labelFont"] = "Segoe UI"
                     }
                 };
@@ -56,6 +57,7 @@ namespace OsuAchievedOverlay
         public Session CurrentSession { get => currentSession; set => currentSession = value; }
         public MainWindow MainWin { get => mainWin; set => mainWin = value; }
         public Display DisplayWin { get => displayWin; set => displayWin = value; }
+        public IniData Settings { get => settings; set => settings = value; }
 
         public override void Start()
         {
@@ -63,12 +65,12 @@ namespace OsuAchievedOverlay
 
             if (success)
             {
-                ApplySettingsToApp(settings);
+                ApplySettingsToApp(Settings);
 
-                if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(settings["api"]["user"]))
+                if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(Settings["api"]["user"]))
                 {
                     if (osuUser == null)
-                        osuUser = OsuApiHelper.OsuApi.GetUser(settings["api"]["user"], OsuApiHelper.OsuMode.Standard);
+                        osuUser = OsuApiHelper.OsuApi.GetUser(Settings["api"]["user"], OsuApiHelper.OsuMode.Standard);
 
                     CurrentSession = new Session()
                     {
@@ -135,7 +137,7 @@ namespace OsuAchievedOverlay
         {
             if (DisplayWin != null && CurrentSession != null && osuUser != null)
             {
-                bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k=" + settings["api"]["key"] + "&u=peppy") != "";
+                bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k=" + Settings["api"]["key"] + "&u=peppy") != "";
                 if (!apiReady)
                 {
                     DisplayWin.SetDisplay(Display.DisplayType.BanchoDown);
@@ -192,12 +194,13 @@ namespace OsuAchievedOverlay
                 MainWin.labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
                 MainWin.backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
                 MainWin.boolUseChromaKey.IsChecked = data["display"]["useChromaKey"] == "1";
+                MainWin.boolAlwaysOnTop.IsChecked = data["display"]["alwaysOnTop"] == "1";
                 MainWin.labelFontDropdown.Text = data["display"]["labelFont"];
 
                 MainWin.inputApiKey.Password = data["api"]["key"];
                 MainWin.inputUserName.Text = data["api"]["user"];
 
-                settings = data;
+                Settings = data;
                 return true;
             }
             else
@@ -266,14 +269,15 @@ namespace OsuAchievedOverlay
             data["display"]["labelFont"] = MainWin.labelFontDropdown.Text;
             data["display"]["chromakeyBackground"] = MainWin.keyColorPicker.SelectedColor.ToString();
             data["display"]["useChromaKey"] = (bool)MainWin.boolUseChromaKey.IsChecked ? "1" : "0";
+            data["display"]["alwaysOnTop"] = (bool)MainWin.boolAlwaysOnTop.IsChecked ? "1" : "0";
 
             data["api"]["key"] = MainWin.inputApiKey.Password;
             data["api"]["user"] = MainWin.inputUserName.Text;
 
             parser.WriteFile("Settings.ini", data);
 
-            settings = data;
-            ApplySettingsToApp(settings);
+            Settings = data;
+            ApplySettingsToApp(Settings);
         }
 
         private void ApplySettingsToApp(IniData data)
@@ -322,9 +326,9 @@ namespace OsuAchievedOverlay
 
         public void RefreshSession()
         {
-            if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(settings["api"]["user"]))
+            if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(Settings["api"]["user"]))
             {
-                osuUser = OsuApiHelper.OsuApi.GetUser(settings["api"]["user"], OsuApiHelper.OsuMode.Standard);
+                osuUser = OsuApiHelper.OsuApi.GetUser(Settings["api"]["user"], OsuApiHelper.OsuMode.Standard);
 
                 CurrentSession = new Session()
                 {
