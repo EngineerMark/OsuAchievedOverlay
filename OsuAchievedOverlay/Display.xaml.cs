@@ -101,5 +101,6 @@ namespace OsuAchievedOverlay
         public void SetNewScore(long value) => LabelScoreNew.Content = (value >= 0 ? "+" : "-") + Math.Abs(value).ToString("#,##0.###");
         public void SetCurrentPlaycount(int value) => LabelPlaycountCurrent.Content = "Playcount: " + Math.Abs(value).ToString("#,##0.###");
         public void SetNewPlaycount(int value) => LabelPlaycountNew.Content = (value >= 0 ? "+" : "-") + Math.Abs(value).ToString("#,##0.###");
+        public void SetAverageScore(long value) => LabelAveragePlayScore.Content = Math.Abs(Math.Round((double)value)).ToString("#,##0.###")+" score/play";
     }
 }

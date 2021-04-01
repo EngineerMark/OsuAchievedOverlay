@@ -18,7 +18,8 @@ namespace OsuAchievedOverlay
             "LabelScoreCurrent", "LabelScoreNew",
             "LabelPlaycountCurrent", "LabelPlaycountNew",
             "LabelTimeAgoStarted",
-            "LabelUsername"
+            "LabelUsername",
+            "LabelAveragePlayScore"
         };
 
         public override void Start()

@@ -169,6 +169,9 @@ namespace OsuAchievedOverlay
                         DisplayWin.SetNewA(diffA);
                         DisplayWin.SetNewScore(diffScore);
                         DisplayWin.SetNewPlaycount(diffPC);
+
+                        long averageScore = (diffPC > 0 ? (diffScore / diffPC) : 0);
+                        DisplayWin.SetAverageScore(averageScore);
                     }
 
                     if (sender != null)
@@ -250,7 +253,8 @@ namespace OsuAchievedOverlay
             RefreshTimer(null, null);
         }
 
-        public void FocusDisplay(){
+        public void FocusDisplay()
+        {
             DisplayWin.Focus();
         }
 
