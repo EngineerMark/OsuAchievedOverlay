@@ -1,4 +1,5 @@
-﻿using IniParser;
+﻿using Humanizer;
+using IniParser;
 using IniParser.Model;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using TimeAgo;
+
 
 namespace OsuAchievedOverlay
 {
@@ -129,7 +130,8 @@ namespace OsuAchievedOverlay
         {
             if (DisplayWin != null && CurrentSession != null)
             {
-                DisplayWin.LabelTimeAgoStarted.Content = "Session started " + DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionDate).UtcDateTime.AddHours(1).TimeAgo();
+                DisplayWin.LabelTimeAgoStarted.Content = "Session started " + 
+                    DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionDate).UtcDateTime.Humanize();
             }
         }
 
