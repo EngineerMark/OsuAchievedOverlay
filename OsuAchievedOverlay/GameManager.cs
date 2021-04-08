@@ -45,7 +45,8 @@ namespace OsuAchievedOverlay
                         ["chromakeyBackground"] = Colors.Green.ToString(),
                         ["useChromaKey"] = "1",
                         ["alwaysOnTop"] = "1",
-                        ["labelFont"] = "Segoe UI"
+                        ["labelFont"] = "Segoe UI",
+                        ["useRankedScore"] = "0"
                     }
                 };
             }
@@ -153,13 +154,15 @@ namespace OsuAchievedOverlay
                         DisplayWin.SetCurrentS(osuUser.GetCountRankS());
                         DisplayWin.SetCurrentSS(osuUser.GetCountRankSS());
 
-                        DisplayWin.SetCurrentScore(Convert.ToInt64(osuUser.TotalScore));
+                        DisplayWin.SetCurrentScore((settings["display"]["useRankedScore"]=="0"?Convert.ToInt64(osuUser.TotalScore): Convert.ToInt64(osuUser.RankedScore)));
                         DisplayWin.SetCurrentPlaycount(osuUser.Playcount);
 
                         int diffSS = osuUser.GetCountRankSS() - CurrentSession.StartDataSSCount;
                         int diffS = osuUser.GetCountRankS() - CurrentSession.StartDataSCount;
                         int diffA = osuUser.GetCountRankA() - CurrentSession.StartDataACount;
-                        long diffScore = Convert.ToInt64(osuUser.TotalScore) - CurrentSession.StartDataTotalScore;
+                        long diffScore = (settings["display"]["useRankedScore"]=="0"?
+                            Convert.ToInt64(osuUser.TotalScore) - CurrentSession.StartDataTotalScore:
+                            Convert.ToInt64(osuUser.RankedScore) - CurrentSession.StartDataRankedScore);
                         int diffPC = osuUser.Playcount - CurrentSession.StartDataPlaycount;
 
                         DisplayWin.SetNewSS(diffSS);
@@ -196,6 +199,7 @@ namespace OsuAchievedOverlay
                 MainWin.backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
                 MainWin.boolUseChromaKey.IsChecked = data["display"]["useChromaKey"] == "1";
                 MainWin.boolAlwaysOnTop.IsChecked = data["display"]["alwaysOnTop"] == "1";
+                MainWin.boolShowRankedScore.IsChecked = data["display"]["useRankedScore"] == "1";
                 MainWin.labelFontDropdown.Text = data["display"]["labelFont"];
 
                 MainWin.inputApiKey.Password = data["api"]["key"];
@@ -272,6 +276,7 @@ namespace OsuAchievedOverlay
             data["display"]["chromakeyBackground"] = MainWin.keyColorPicker.SelectedColor.ToString();
             data["display"]["useChromaKey"] = (bool)MainWin.boolUseChromaKey.IsChecked ? "1" : "0";
             data["display"]["alwaysOnTop"] = (bool)MainWin.boolAlwaysOnTop.IsChecked ? "1" : "0";
+            data["display"]["useRankedScore"] = (bool)MainWin.boolShowRankedScore.IsChecked ? "1" : "0";
 
             data["api"]["key"] = MainWin.inputApiKey.Password;
             data["api"]["user"] = MainWin.inputUserName.Text;

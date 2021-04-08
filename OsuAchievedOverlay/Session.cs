@@ -26,6 +26,12 @@ namespace OsuAchievedOverlay
         [JsonProperty("SessionDate")]
         public long SessionDate { get; set; }
 
+        [JsonProperty("StartPlayTime")]
+        public long StartPlaytime{ get; set; }
+
+        [JsonProperty("ApplicationVersion")]
+        public string Version { get; set; } = "Legacy"; //Unknown version gets Legacy tag. Does not work with newer version of the app
+
         public Session(){
             SessionDate = DateTimeOffset.Now.ToUnixTimeSeconds();
         }
@@ -44,7 +50,8 @@ namespace OsuAchievedOverlay
                 StartDataSSCount = this.StartDataSSCount,
                 StartDataSCount = this.StartDataSCount,
                 StartDataACount = this.StartDataACount,
-                SessionDate = this.SessionDate
+                SessionDate = this.SessionDate,
+                StartPlaytime = this.StartPlaytime
             };
         }
     }
