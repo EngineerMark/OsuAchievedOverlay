@@ -4,6 +4,7 @@ using IniParser.Model;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -38,7 +39,8 @@ namespace OsuAchievedOverlay
                     ["api"] = {
                         ["key"] = "No key inserted",
                         ["user"] = "Username here",
-                        ["updateRate"] = "60"
+                        ["updateRate"] = "60",
+                        ["gamemode"] = ""+OsuApiHelper.OsuMode.Standard
                     },
                     ["display"] = {
                         ["labelColor"] = Colors.Black.ToString(),
@@ -61,8 +63,9 @@ namespace OsuAchievedOverlay
 
         public override void Start()
         {
-            bool success = LoadSettings();
+            MainWin.dropdownGameMode.ItemsSource = Enum.GetValues(typeof(OsuApiHelper.OsuMode)).Cast<OsuApiHelper.OsuMode>();
 
+            bool success = LoadSettings();
             if (success)
             {
                 ApplySettingsToApp(Settings);
@@ -70,7 +73,7 @@ namespace OsuAchievedOverlay
                 if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(Settings["api"]["user"]))
                 {
                     if (osuUser == null)
-                        osuUser = OsuApiHelper.OsuApi.GetUser(Settings["api"]["user"], OsuApiHelper.OsuMode.Standard);
+                        osuUser = OsuApiHelper.OsuApi.GetUser(Settings["api"]["user"], (OsuApiHelper.OsuMode)MainWin.dropdownGameMode.SelectedIndex);
 
                     CurrentSession = new Session()
                     {
@@ -129,7 +132,7 @@ namespace OsuAchievedOverlay
         {
             if (DisplayWin != null && CurrentSession != null)
             {
-                DisplayWin.LabelTimeAgoStarted.Content = "Session started " + 
+                DisplayWin.LabelTimeAgoStarted.Content = "Session started " +
                     DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionDate).UtcDateTime.Humanize();
             }
         }
@@ -150,20 +153,20 @@ namespace OsuAchievedOverlay
 
                     if (_continue)
                     {
-                        osuUser = OsuApiHelper.OsuApi.GetUser(osuUser.Name, OsuApiHelper.OsuMode.Standard);
+                        osuUser = OsuApiHelper.OsuApi.GetUser(osuUser.Name, (OsuApiHelper.OsuMode)MainWin.dropdownGameMode.SelectedIndex);
 
                         DisplayWin.SetCurrentA(osuUser.GetCountRankA());
                         DisplayWin.SetCurrentS(osuUser.GetCountRankS());
                         DisplayWin.SetCurrentSS(osuUser.GetCountRankSS());
 
-                        DisplayWin.SetCurrentScore((settings["display"]["useRankedScore"]=="0"?Convert.ToInt64(osuUser.TotalScore): Convert.ToInt64(osuUser.RankedScore)));
+                        DisplayWin.SetCurrentScore((settings["display"]["useRankedScore"] == "0" ? Convert.ToInt64(osuUser.TotalScore) : Convert.ToInt64(osuUser.RankedScore)));
                         DisplayWin.SetCurrentPlaycount(osuUser.Playcount);
 
                         int diffSS = osuUser.GetCountRankSS() - CurrentSession.StartDataSSCount;
                         int diffS = osuUser.GetCountRankS() - CurrentSession.StartDataSCount;
                         int diffA = osuUser.GetCountRankA() - CurrentSession.StartDataACount;
-                        long diffScore = (settings["display"]["useRankedScore"]=="0"?
-                            Convert.ToInt64(osuUser.TotalScore) - CurrentSession.StartDataTotalScore:
+                        long diffScore = (settings["display"]["useRankedScore"] == "0" ?
+                            Convert.ToInt64(osuUser.TotalScore) - CurrentSession.StartDataTotalScore :
                             Convert.ToInt64(osuUser.RankedScore) - CurrentSession.StartDataRankedScore);
                         int diffPC = osuUser.Playcount - CurrentSession.StartDataPlaycount;
 
@@ -193,7 +196,7 @@ namespace OsuAchievedOverlay
                 IniData data = parser.ReadFile("Settings.ini");
                 data = FixIniData(parser, data);
                 OsuApiHelper.OsuApiKey.Key = data["api"]["key"];
-                osuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], OsuApiHelper.OsuMode.Standard);
+                osuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], (OsuApiHelper.OsuMode)MainWin.dropdownGameMode.SelectedIndex);
                 //labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
                 //backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
                 MainWin.keyColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["chromakeyBackground"]);
@@ -206,6 +209,7 @@ namespace OsuAchievedOverlay
 
                 MainWin.inputApiKey.Password = data["api"]["key"];
                 MainWin.inputUserName.Text = data["api"]["user"];
+                MainWin.dropdownGameMode.SelectedIndex = (int)Enum.Parse(typeof(OsuApiHelper.OsuMode),data["api"]["gamemode"]);
 
                 Settings = data;
                 return true;
@@ -282,6 +286,7 @@ namespace OsuAchievedOverlay
 
             data["api"]["key"] = MainWin.inputApiKey.Password;
             data["api"]["user"] = MainWin.inputUserName.Text;
+            data["api"]["gamemode"] = "" + ((OsuApiHelper.OsuMode)MainWin.dropdownGameMode.SelectedIndex);
 
             parser.WriteFile("Settings.ini", data);
 
@@ -337,7 +342,7 @@ namespace OsuAchievedOverlay
         {
             if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(Settings["api"]["user"]))
             {
-                osuUser = OsuApiHelper.OsuApi.GetUser(Settings["api"]["user"], OsuApiHelper.OsuMode.Standard);
+                osuUser = OsuApiHelper.OsuApi.GetUser(Settings["api"]["user"], (OsuApiHelper.OsuMode)MainWin.dropdownGameMode.SelectedIndex);
 
                 CurrentSession = new Session()
                 {
