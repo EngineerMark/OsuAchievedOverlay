@@ -19,10 +19,10 @@ namespace OsuAchievedOverlay
             Start();
         }
 
-        public List<SessionFileData> GetList(){
+        public List<SessionFileData> GetSortedList(){
             SessionFiles.Sort(delegate (SessionFileData a, SessionFileData b)
             {
-                return a.FileDate.CompareTo(b.FileDate);
+                return b.FileDate.CompareTo(a.FileDate);
             });
 
             return SessionFiles;

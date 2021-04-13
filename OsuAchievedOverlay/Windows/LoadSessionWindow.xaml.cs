@@ -50,7 +50,7 @@ namespace OsuAchievedOverlay
             SessionList.Children.Clear();
 
             int id = 0;
-            foreach (SessionFileData sessionData in SessionManager.Instance.GetList())
+            foreach (SessionFileData sessionData in SessionManager.Instance.GetSortedList())
             {
                 Grid clonedPrefab = (Grid)SessionPrefab;
                 foreach (UIElement child in clonedPrefab.Children)
