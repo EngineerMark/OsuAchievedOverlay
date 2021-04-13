@@ -1,5 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Media;
+using System.Xml;
 
 namespace OsuAchievedOverlay
 {
@@ -45,6 +49,35 @@ namespace OsuAchievedOverlay
         public void SetLabelFont(FontFamily font){
             for (int i = 0; i < labelList.Length; i++)
                 FindLabel(labelList[i]).FontFamily = font;
+        }
+
+        public UIElement CloneElement(UIElement orig)
+        {
+            if (orig == null)
+                return (null);
+            string s = XamlWriter.Save(orig);
+            StringReader stringReader = new StringReader(s);
+            XmlReader xmlReader = XmlTextReader.Create(stringReader, new XmlReaderSettings());
+            return (UIElement)XamlReader.Load(xmlReader);
+        }
+
+        public static T FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        return (T)child;
+                    }
+
+                    T childItem = FindVisualChild<T>(child);
+                    if (childItem != null) return childItem;
+                }
+            }
+            return null;
         }
     }
 }

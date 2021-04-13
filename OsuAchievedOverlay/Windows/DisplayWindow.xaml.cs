@@ -7,7 +7,7 @@ namespace OsuAchievedOverlay
     /// <summary>
     /// Interaction logic for Display.xaml
     /// </summary>
-    public partial class Display : Window
+    public partial class DisplayWindow : Window
     {
         public static Vector? displayPosition = null;
 
@@ -17,7 +17,7 @@ namespace OsuAchievedOverlay
             Stats
         }
 
-        public Display()
+        public DisplayWindow()
         {
             InitializeComponent();
             ShowInTaskbar = false;

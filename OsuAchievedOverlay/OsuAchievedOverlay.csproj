@@ -114,14 +114,23 @@
     </ApplicationDefinition>
     <Compile Include="GameManager.cs" />
     <Compile Include="InterfaceManager.cs" />
+    <Compile Include="SessionFileData.cs" />
+    <Compile Include="StringHelper.cs" />
+    <Compile Include="Windows\LoadSessionWindow.xaml.cs">
+      <DependentUpon>LoadSessionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Manager.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SessionManager.cs" />
-    <Page Include="Display.xaml">
+    <Page Include="Windows\DisplayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\LoadSessionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -129,10 +138,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Display.xaml.cs">
-      <DependentUpon>Display.xaml</DependentUpon>
+    <Compile Include="Windows\DisplayWindow.xaml.cs">
+      <DependentUpon>DisplayWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>

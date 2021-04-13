@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OsuAchievedOverlay"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="OsuAchievedOverlay.Display"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="OsuAchievedOverlay.DisplayWindow"
         mc:Ignorable="d"
         AllowsTransparency="False"
         WindowStyle="None"
@@ -21,19 +21,19 @@
         </Grid>
         <Grid x:Name="ScreenRegular" Visibility="Visible">
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,5,0,0" VerticalAlignment="Top" Width="193">
-                <Image Margin="10,0,0,0" HorizontalAlignment="Left" Height="32" VerticalAlignment="Center" Width="32" Source="Assets/SS.png"/>
+                <Image Margin="10,0,0,0" HorizontalAlignment="Left" Height="32" VerticalAlignment="Center" Width="32" Source="../Assets/SS.png"/>
                 <Label Content="0" x:Name="LabelSSCurrent" HorizontalAlignment="Left" Margin="47,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16" Width="64"/>
                 <Label Content="+0" x:Name="LabelSSNew" HorizontalAlignment="Right" Margin="69,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16"/>
                 <materialDesign:Chip HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="193"/>
             </Grid>
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,42,0,0" VerticalAlignment="Top" Width="193">
-                <Image Margin="10,0,0,0" HorizontalAlignment="Left" Height="32" VerticalAlignment="Center" Width="32" Source="Assets/S.png"/>
+                <Image Margin="10,0,0,0" HorizontalAlignment="Left" Height="32" VerticalAlignment="Center" Width="32" Source="../Assets/S.png"/>
                 <Label Content="0" x:Name="LabelSCurrent" HorizontalAlignment="Left" Margin="47,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16" Width="64"/>
                 <Label Content="+0" x:Name="LabelSNew" HorizontalAlignment="Right" Margin="69,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16"/>
                 <materialDesign:Chip HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="193"/>
             </Grid>
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,79,0,0" VerticalAlignment="Top" Width="193">
-                <Image Margin="10,0,0,0" HorizontalAlignment="Left" Height="32" VerticalAlignment="Center" Width="32" Source="Assets/A.png"/>
+                <Image Margin="10,0,0,0" HorizontalAlignment="Left" Height="32" VerticalAlignment="Center" Width="32" Source="../Assets/A.png"/>
                 <Label Content="0" x:Name="LabelACurrent" HorizontalAlignment="Left" Margin="47,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16" Width="64"/>
                 <Label Content="+0" x:Name="LabelANew" HorizontalAlignment="Right" Margin="69,0,0,0" VerticalAlignment="Center" Height="32" FontWeight="Bold" FontSize="16"/>
                 <materialDesign:Chip HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="193"/>

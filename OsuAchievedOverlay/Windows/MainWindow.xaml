@@ -12,7 +12,7 @@
         Title="Osu Achieved" Height="644.21" Width="800" Background="White">
     <Grid>
         <Grid Margin="0,45,0,423">
-            <Image Source="Assets/background.jpg" Margin="0,-307,0,-186"/>
+            <Image Source="../Assets/background.jpg" Margin="0,-307,0,-186"/>
             <Grid Background="White" Margin="0,139,0,-186"></Grid>
         </Grid>
         <Grid Margin="0,179,0,10">

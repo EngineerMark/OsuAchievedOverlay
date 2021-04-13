@@ -20,6 +20,7 @@ namespace OsuAchievedOverlay
             Closed += (object sender, EventArgs e) =>
             {
                 GameManager.Instance.Stop();
+                SessionManager.Instance.Stop();
                 Environment.Exit(0);
             };
 
@@ -59,32 +60,10 @@ namespace OsuAchievedOverlay
 
         private void btnLoadSession_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
-            if (openFileDialog.ShowDialog() == true){
-                //File.WriteAllText(saveFileDialog.FileName, json);
-                var fileStream = openFileDialog.OpenFile();
-
-                using (StreamReader reader = new StreamReader(fileStream))
-                {
-                    string data = reader.ReadToEnd();
-                    if(data.Length>0){
-                        Session newSession = null;
-                        bool validSession = true;
-                        try{
-                            newSession = JsonConvert.DeserializeObject<Session>(data);
-                        }catch (Exception)
-                        {
-                            validSession = false;
-                            MessageBox.Show("Seems like the opened file is an invalid session file.", "Error opening session", MessageBoxButton.OK);
-                        }
-                        if (validSession)
-                        {
-                            GameManager.Instance.CurrentSession = newSession;
-                            GameManager.Instance.RefreshTimer(null, null);
-                        }
-                    }
-                }
+            if(GameManager.Instance.SessionWin==null){
+                GameManager.Instance.SessionWin = new LoadSessionWindow();
+                GameManager.Instance.SessionWin.Show();
+                GameManager.Instance.SessionWin.Focus();
             }
         }
     }

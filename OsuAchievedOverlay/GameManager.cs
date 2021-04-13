@@ -15,8 +15,9 @@ namespace OsuAchievedOverlay
     //This is clearly not a game, but I work in such industry, its standard for me..
     public class GameManager : Manager<GameManager>
     {
-        private Display displayWin = null;
+        private DisplayWindow displayWin = null;
         private MainWindow mainWin = null;
+        private LoadSessionWindow sessionWin = null;
         private OsuApiHelper.OsuUser osuUser = null;
 
         private Session currentSession;
@@ -54,8 +55,9 @@ namespace OsuAchievedOverlay
 
         public Session CurrentSession { get => currentSession; set => currentSession = value; }
         public MainWindow MainWin { get => mainWin; set => mainWin = value; }
-        public Display DisplayWin { get => displayWin; set => displayWin = value; }
+        public DisplayWindow DisplayWin { get => displayWin; set => displayWin = value; }
         public IniData Settings { get => settings; set => settings = value; }
+        public LoadSessionWindow SessionWin { get => sessionWin; set => sessionWin = value; }
 
         public override void Start()
         {
@@ -139,11 +141,11 @@ namespace OsuAchievedOverlay
                 bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k=" + Settings["api"]["key"] + "&u=peppy") != "";
                 if (!apiReady)
                 {
-                    DisplayWin.SetDisplay(Display.DisplayType.BanchoDown);
+                    DisplayWin.SetDisplay(DisplayWindow.DisplayType.BanchoDown);
                 }
                 else
                 {
-                    DisplayWin.SetDisplay(Display.DisplayType.Stats);
+                    DisplayWin.SetDisplay(DisplayWindow.DisplayType.Stats);
                     bool _continue = true;
 
                     if (_continue)
@@ -248,7 +250,7 @@ namespace OsuAchievedOverlay
         {
             if (closeCheck)
                 CloseDisplay();
-            DisplayWin = new Display();
+            DisplayWin = new DisplayWindow();
             DisplayWin.Show();
             DisplayWin.Focus();
             //ApplySettingsToApp();
@@ -290,7 +292,7 @@ namespace OsuAchievedOverlay
         private void ApplySettingsToApp(IniData data)
         {
             DisplayWin?.Close();
-            DisplayWin = new Display();
+            DisplayWin = new DisplayWindow();
             DisplayWin.AllowsTransparency = data["display"]["useChromaKey"] != "1";
             DisplayWin.Show();
             DisplayWin.Focus();
