@@ -32,6 +32,20 @@ namespace OsuAchievedOverlay
             return SessionFiles.Find(a => a.Identifier == identifier);
         }
 
+        public SessionFileData BuildSessionFile(string file){
+            return new SessionFileData()
+            {
+                FileName = System.IO.Path.GetFileNameWithoutExtension(file),
+                FileExtension = System.IO.Path.GetExtension(file),
+                FileLocation = System.IO.Path.GetDirectoryName(file),
+                FileDate = DateTimeOffset.Now.ToUnixTimeSeconds()
+            };
+        }
+
+        public void AddFile(string file){
+            AddFile(BuildSessionFile(file));
+        }
+
         public void AddFile(SessionFileData fileData){
             if (SessionFiles == null)
                 SessionFiles = new List<SessionFileData>();

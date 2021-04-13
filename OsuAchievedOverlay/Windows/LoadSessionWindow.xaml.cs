@@ -172,13 +172,7 @@ namespace OsuAchievedOverlay
                     if (validSession)
                     {
 
-                        SessionManager.Instance.AddFile(new SessionFileData()
-                        {
-                            FileName = System.IO.Path.GetFileNameWithoutExtension(path),
-                            FileExtension = System.IO.Path.GetExtension(path),
-                            FileLocation = System.IO.Path.GetDirectoryName(path),
-                            FileDate = DateTimeOffset.Now.ToUnixTimeSeconds()
-                        });
+                        SessionManager.Instance.AddFile(path);
 
                         GameManager.Instance.CurrentSession = newSession;
                         GameManager.Instance.RefreshTimer(null, null);
