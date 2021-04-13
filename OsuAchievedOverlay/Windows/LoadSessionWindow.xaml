@@ -22,6 +22,15 @@
                     <Button Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10"/>
                     <Button Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10"/>
                 </Grid>
+                <Grid x:Name="PrefabSeperator" Height="5" />
+                <Grid Height="50" Background="#FFE8E8E8">
+                    <TextBlock Text=" {label_filename}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" FontWeight="Bold" Width="225"/>
+                    <TextBlock Text=" {label_filepath}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,24,0,0" Width="357"/>
+                    <TextBlock Text=" {label_date}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Margin="230,0,0,0"/>
+                    <TextBlock Visibility="Hidden" Tag="SessionIdentifier" Text=" {label_fullpath}" HorizontalAlignment="Left" Margin="321,30,0,-3" VerticalAlignment="Top"/>
+                    <Button Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10"/>
+                    <Button Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10"/>
+                </Grid>
             </StackPanel>
         </ScrollViewer>
 

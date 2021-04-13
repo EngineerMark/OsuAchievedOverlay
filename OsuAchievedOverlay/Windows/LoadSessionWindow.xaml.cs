@@ -24,6 +24,7 @@ namespace OsuAchievedOverlay
     public partial class LoadSessionWindow : Window
     {
         private UIElement _sessionPrefab;
+        private UIElement _seperatorPrefab;
 
         public UIElement SessionPrefab
         {
@@ -33,10 +34,19 @@ namespace OsuAchievedOverlay
             }
         }
 
+        public UIElement SeperatorPrefab
+        {
+            get
+            {
+                return InterfaceManager.Instance.CloneElement(_seperatorPrefab);
+            }
+        }
+
         public LoadSessionWindow()
         {
             InitializeComponent();
             _sessionPrefab = InterfaceManager.Instance.CloneElement(PrefabSessionListItem);
+            _seperatorPrefab = InterfaceManager.Instance.CloneElement(PrefabSeperator);
 
             RebuildList();
 
@@ -101,6 +111,7 @@ namespace OsuAchievedOverlay
                 }
                 id++;
                 SessionList.Children.Add(clonedPrefab);
+                SessionList.Children.Add(SeperatorPrefab);
             }
         }
 
