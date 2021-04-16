@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="LoadSessionWindow" Height="413.636" Width="400">
+        Title="LoadSessionWindow" Height="413.636" Width="400" Icon="/OsuAchievedOverlay;component/Assets/icon.png">
     <Grid>
         <Button Content="Open from File" Click="Btn_LoadFromFile" HorizontalAlignment="Left" Margin="10,329,0,0" VerticalAlignment="Top" Width="133"/>
         <ScrollViewer HorizontalAlignment="Left" Height="314" VerticalAlignment="Top" Width="374" Margin="10,10,0,0">
@@ -28,7 +28,7 @@
                     <TextBlock Text=" {label_filepath}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,24,0,0" Width="357"/>
                     <TextBlock Text=" {label_date}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Margin="230,0,0,0"/>
                     <TextBlock Visibility="Hidden" Tag="SessionIdentifier" Text=" {label_fullpath}" HorizontalAlignment="Left" Margin="321,30,0,-3" VerticalAlignment="Top"/>
-                    <Button Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10"/>
+                    <Button ToolTipService.ShowOnDisabled="True" Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10"/>
                     <Button Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10"/>
                 </Grid>
             </StackPanel>

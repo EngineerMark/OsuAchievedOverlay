@@ -56,12 +56,14 @@ namespace OsuAchievedOverlay
             };
         }
 
-        private void RebuildList(){
+        private void RebuildList()
+        {
             SessionList.Children.Clear();
 
             int id = 0;
             foreach (SessionFileData sessionData in SessionManager.Instance.GetSortedList())
             {
+                Session temp = LoadSession(System.IO.Path.Combine(sessionData.FileLocation, sessionData.FileName + sessionData.FileExtension));
                 Grid clonedPrefab = (Grid)SessionPrefab;
                 foreach (UIElement child in clonedPrefab.Children)
                 {
@@ -95,6 +97,12 @@ namespace OsuAchievedOverlay
                     {
                         if ((string)button.Tag == "SessionOpen")
                         {
+                            if (temp.Version != Session.CurrentVersion)
+                            {   
+                                //Tooltip doesn't display when button is disabled... why wpf?
+                                //button.IsEnabled = false;
+                                button.ToolTip = "This session is made in a different version than supported (Session is " + temp.Version + ", but you are running " + Session.CurrentVersion + ")";
+                            }
                             button.Click += (object sender, RoutedEventArgs e) =>
                             {
                                 Btn_ClickSessionItem(sessionData.Identifier);
@@ -117,21 +125,6 @@ namespace OsuAchievedOverlay
 
         private void Btn_ClickSessionItem(string identifier)
         {
-            //Button b = (Button)sender;
-            //Grid parentGrid = (Grid)b.Parent;
-            //string base64Path = "";
-            //foreach (UIElement child in parentGrid.Children)
-            //{
-            //    if (child is TextBlock textblock)
-            //    {
-            //        if ((string)textblock.Tag == "SessionIdentifier")
-            //        {
-            //            base64Path = textblock.Text;
-            //            break;
-            //        }
-            //    }
-            //}
-
             if (!string.IsNullOrEmpty(identifier))
             {
                 SessionFileData sessionFileData = SessionManager.Instance.FindByIdentifier(identifier);
@@ -161,37 +154,38 @@ namespace OsuAchievedOverlay
 
         private void OpenSessionFile(string path)
         {
-            //var fileStream = openFileDialog.OpenFile();
+            Session newSession = null;
+            bool validSession = true;
+            try
+            {
+                newSession = LoadSession(path);
+            }
+            catch (Exception)
+            {
+                validSession = false;
+                MessageBox.Show("Seems like the opened file is an invalid session file.", "Error opening session", MessageBoxButton.OK);
+            }
+            if (validSession)
+            {
+
+                SessionManager.Instance.AddFile(path);
+
+                GameManager.Instance.CurrentSession = newSession;
+                GameManager.Instance.RefreshTimer(null, null);
+
+                Close();
+                GameManager.Instance.SessionWin = null;
+            }
+        }
+
+        public Session LoadSession(string path)
+        {
             var fileStream = new FileStream(path, FileMode.Open);
 
             using (StreamReader reader = new StreamReader(fileStream))
             {
                 string data = reader.ReadToEnd();
-                if (data.Length > 0)
-                {
-                    Session newSession = null;
-                    bool validSession = true;
-                    try
-                    {
-                        newSession = JsonConvert.DeserializeObject<Session>(data);
-                    }
-                    catch (Exception)
-                    {
-                        validSession = false;
-                        MessageBox.Show("Seems like the opened file is an invalid session file.", "Error opening session", MessageBoxButton.OK);
-                    }
-                    if (validSession)
-                    {
-
-                        SessionManager.Instance.AddFile(path);
-
-                        GameManager.Instance.CurrentSession = newSession;
-                        GameManager.Instance.RefreshTimer(null, null);
-
-                        Close();
-                        GameManager.Instance.SessionWin = null;
-                    }
-                }
+                return JsonConvert.DeserializeObject<Session>(data);
             }
         }
 

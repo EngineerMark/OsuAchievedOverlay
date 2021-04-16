@@ -9,7 +9,7 @@
         x:Class="OsuAchievedOverlay.MainWindow"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Osu Achieved" Height="644.21" Width="800" Background="White">
+        Title="Osu Achieved" Height="644.21" Width="800" Background="White" Icon="/OsuAchievedOverlay;component/Assets/icon.png">
     <Grid>
         <Grid Margin="0,45,0,423">
             <Image Source="../Assets/background.jpg" Margin="0,-307,0,-186"/>

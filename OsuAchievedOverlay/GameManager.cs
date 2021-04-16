@@ -162,7 +162,7 @@ namespace OsuAchievedOverlay
                         DisplayWin.SetCurrentScore((settings["display"]["useRankedScore"] == "0" ? Convert.ToInt64(osuUser.TotalScore) : Convert.ToInt64(osuUser.RankedScore)));
                         DisplayWin.SetCurrentPlaycount(osuUser.Playcount);
 
-                        int diffSS = osuUser.GetCountRankSS() - CurrentSession.StartDataSSCount;
+                        int diffTotalSS = osuUser.GetCountRankSS() - CurrentSession.StartDataSSCount;
                         int diffS = osuUser.GetCountRankS() - CurrentSession.StartDataSCount;
                         int diffA = osuUser.GetCountRankA() - CurrentSession.StartDataACount;
                         long diffScore = (settings["display"]["useRankedScore"] == "0" ?
@@ -170,7 +170,12 @@ namespace OsuAchievedOverlay
                             Convert.ToInt64(osuUser.RankedScore) - CurrentSession.StartDataRankedScore);
                         int diffPC = osuUser.Playcount - CurrentSession.StartDataPlaycount;
 
-                        DisplayWin.SetNewSS(diffSS);
+                        //DirectoryInfo di = Directory.CreateDirectory("api");
+                        //FileStream fs = File.Create("api/ss.txt");
+                        //fs.Close();
+                        //File.WriteAllText("api/ss.txt", (diffSS>=0?"+":"-") + diffSS);
+
+                        DisplayWin.SetNewSS(diffTotalSS);
                         DisplayWin.SetNewS(diffS);
                         DisplayWin.SetNewA(diffA);
                         DisplayWin.SetNewScore(diffScore);

@@ -5,6 +5,8 @@ namespace OsuAchievedOverlay
 {
     public class Session : ICloneable
     {
+        public const string CurrentVersion = "Legacy";
+
         [JsonProperty("StartDataScore")]
         public long StartDataTotalScore { get; set; }
 
@@ -30,7 +32,7 @@ namespace OsuAchievedOverlay
         public long StartPlaytime{ get; set; }
 
         [JsonProperty("ApplicationVersion")]
-        public string Version { get; set; } = "Legacy"; //Unknown version gets Legacy tag. Does not work with newer version of the app
+        public string Version { get; set; } = CurrentVersion; //Unknown version gets Legacy tag. Does not work with newer version of the app
 
         public Session(){
             SessionDate = DateTimeOffset.Now.ToUnixTimeSeconds();
