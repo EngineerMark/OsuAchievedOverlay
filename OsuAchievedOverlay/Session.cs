@@ -5,34 +5,22 @@ namespace OsuAchievedOverlay
 {
     public class Session : ICloneable
     {
-        public const string CurrentVersion = "Legacy";
+        public const string CurrentVersion = "APIv1";
 
-        [JsonProperty("StartDataScore")]
-        public long StartDataTotalScore { get; set; }
+        [JsonProperty("SessionDataInitial")]
+        public SessionData InitialData { get; set; } = null;
 
-        [JsonProperty("StartDataRankedScore")]
-        public long StartDataRankedScore { get; set; }
+        [JsonProperty("SessionDataDifference")]
+        public SessionData DifferenceData { get; set; } = null;
 
-        [JsonProperty("StartDataPlaycount")]
-        public int StartDataPlaycount { get; set; }
-
-        [JsonProperty("StartDataSS")]
-        public int StartDataSSCount { get; set; }
-
-        [JsonProperty("StartDataS")]
-        public int StartDataSCount { get; set; }
-
-        [JsonProperty("StartDataA")]
-        public int StartDataACount { get; set; }
+        [JsonProperty("SessionDataCurrent")]
+        public SessionData CurrentData { get; set; } = null;
 
         [JsonProperty("SessionDate")]
         public long SessionDate { get; set; }
 
-        [JsonProperty("StartPlayTime")]
-        public long StartPlaytime{ get; set; }
-
         [JsonProperty("ApplicationVersion")]
-        public string Version { get; set; } = CurrentVersion; //Unknown version gets Legacy tag. Does not work with newer version of the app
+        public string Version { get; set; } = CurrentVersion;
 
         public Session(){
             SessionDate = DateTimeOffset.Now.ToUnixTimeSeconds();
@@ -46,14 +34,82 @@ namespace OsuAchievedOverlay
         {
             return new Session()
             {
-                StartDataTotalScore = this.StartDataTotalScore,
-                StartDataRankedScore = this.StartDataRankedScore,
-                StartDataPlaycount = this.StartDataPlaycount,
-                StartDataSSCount = this.StartDataSSCount,
-                StartDataSCount = this.StartDataSCount,
-                StartDataACount = this.StartDataACount,
-                SessionDate = this.SessionDate,
-                StartPlaytime = this.StartPlaytime
+                InitialData = (SessionData)InitialData.Clone(),
+                DifferenceData = (SessionData)DifferenceData.Clone(),
+                CurrentData = (SessionData)CurrentData.Clone(),
+                SessionDate = SessionDate
+            };
+        }
+    }
+
+    public class SessionData : ICloneable
+    {
+        [JsonProperty("DataTotalScore")] 
+        public long TotalScore;
+        [JsonProperty("DataRankedScore")]
+        public long RankedScore;
+        [JsonProperty("DataPlaycount")]
+        public int Playcount;
+        [JsonProperty("DataRankSSH")]
+        public int RankSilverSS;
+        [JsonProperty("DataRankSS")]
+        public int RankGoldSS;
+        [JsonProperty("DataRankSH")]
+        public int RankSilverS;
+        [JsonProperty("DataRankS")]
+        public int RankGoldS;
+        [JsonProperty("DataRankA")]
+        public int RankA;
+        [JsonProperty("DataPlaytime")]
+        public long Playtime;
+
+        public static void FromUser(OsuApiHelper.OsuUser user, ref SessionData output){
+            output = FromUser(user);
+        }
+
+        public static SessionData FromUser(OsuApiHelper.OsuUser user){
+            return new SessionData()
+            {
+                TotalScore = Convert.ToInt64(user.TotalScore),
+                RankedScore = Convert.ToInt64(user.RankedScore),
+                Playcount = user.Playcount,
+                RankSilverSS = user.CountRankSSH,
+                RankGoldSS = user.CountRankSS,
+                RankSilverS = user.CountRankSH,
+                RankGoldS = user.CountRankS,
+                RankA = user.CountRankA,
+                Playtime = user.Playtime
+            };
+        }
+
+        public static SessionData CalculateDifference(SessionData a, SessionData b){
+            SessionData output = new SessionData
+            {
+                TotalScore = a.TotalScore - b.TotalScore,
+                RankedScore = a.RankedScore - b.RankedScore,
+                Playcount = a.Playcount - b.Playcount,
+                RankSilverSS = a.RankSilverSS - b.RankSilverSS,
+                RankGoldSS = a.RankGoldSS - b.RankGoldSS,
+                RankSilverS = a.RankSilverS - b.RankSilverS,
+                RankGoldS = a.RankGoldS - b.RankGoldS,
+                RankA = a.RankA - b.RankA,
+                Playtime = a.Playtime - b.Playtime
+            };
+            return output;
+        }
+
+        public object Clone(){
+            return new SessionData()
+            {
+                TotalScore = TotalScore,
+                RankedScore = RankedScore,
+                RankSilverSS = RankSilverSS,
+                RankGoldSS = RankGoldSS,
+                RankSilverS = RankSilverS,
+                RankGoldS = RankGoldS,
+                RankA = RankA,
+                Playtime = Playtime,
+                Playcount = Playcount,
             };
         }
     }

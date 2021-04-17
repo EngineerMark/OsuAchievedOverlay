@@ -77,12 +77,13 @@ namespace OsuAchievedOverlay
 
                     CurrentSession = new Session()
                     {
-                        StartDataTotalScore = Convert.ToInt64(osuUser.TotalScore),
-                        StartDataRankedScore = Convert.ToInt64(osuUser.RankedScore),
-                        StartDataPlaycount = osuUser.Playcount,
-                        StartDataSSCount = osuUser.GetCountRankSS(),
-                        StartDataSCount = osuUser.GetCountRankS(),
-                        StartDataACount = osuUser.GetCountRankA()
+                        InitialData = SessionData.FromUser(osuUser)
+                        //StartDataTotalScore = Convert.ToInt64(osuUser.TotalScore),
+                        //StartDataRankedScore = Convert.ToInt64(osuUser.RankedScore),
+                        //StartDataPlaycount = osuUser.Playcount,
+                        //StartDataSSCount = osuUser.GetCountRankSS(),
+                        //StartDataSCount = osuUser.GetCountRankS(),
+                        //StartDataACount = osuUser.GetCountRankA()
                     };
 
                 }
@@ -155,6 +156,9 @@ namespace OsuAchievedOverlay
                     {
                         osuUser = OsuApiHelper.OsuApi.GetUser(osuUser.Name, (OsuApiHelper.OsuMode)MainWin.dropdownGameMode.SelectedIndex);
 
+                        CurrentSession.CurrentData = SessionData.FromUser(osuUser);
+                        CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
+
                         DisplayWin.SetCurrentA(osuUser.GetCountRankA());
                         DisplayWin.SetCurrentS(osuUser.GetCountRankS());
                         DisplayWin.SetCurrentSS(osuUser.GetCountRankSS());
@@ -162,26 +166,26 @@ namespace OsuAchievedOverlay
                         DisplayWin.SetCurrentScore((settings["display"]["useRankedScore"] == "0" ? Convert.ToInt64(osuUser.TotalScore) : Convert.ToInt64(osuUser.RankedScore)));
                         DisplayWin.SetCurrentPlaycount(osuUser.Playcount);
 
-                        int diffTotalSS = osuUser.GetCountRankSS() - CurrentSession.StartDataSSCount;
-                        int diffS = osuUser.GetCountRankS() - CurrentSession.StartDataSCount;
-                        int diffA = osuUser.GetCountRankA() - CurrentSession.StartDataACount;
-                        long diffScore = (settings["display"]["useRankedScore"] == "0" ?
-                            Convert.ToInt64(osuUser.TotalScore) - CurrentSession.StartDataTotalScore :
-                            Convert.ToInt64(osuUser.RankedScore) - CurrentSession.StartDataRankedScore);
-                        int diffPC = osuUser.Playcount - CurrentSession.StartDataPlaycount;
+                        //int diffTotalSS = osuUser.GetCountRankSS() - CurrentSession.StartDataSSCount;
+                        //int diffS = osuUser.GetCountRankS() - CurrentSession.StartDataSCount;
+                        //int diffA = osuUser.GetCountRankA() - CurrentSession.StartDataACount;
+                        //long diffScore = (settings["display"]["useRankedScore"] == "0" ?
+                        //    Convert.ToInt64(osuUser.TotalScore) - CurrentSession.StartDataTotalScore :
+                        //    Convert.ToInt64(osuUser.RankedScore) - CurrentSession.StartDataRankedScore);
+                        //int diffPC = osuUser.Playcount - CurrentSession.StartDataPlaycount;
 
                         //DirectoryInfo di = Directory.CreateDirectory("api");
                         //FileStream fs = File.Create("api/ss.txt");
                         //fs.Close();
                         //File.WriteAllText("api/ss.txt", (diffSS>=0?"+":"-") + diffSS);
 
-                        DisplayWin.SetNewSS(diffTotalSS);
-                        DisplayWin.SetNewS(diffS);
-                        DisplayWin.SetNewA(diffA);
-                        DisplayWin.SetNewScore(diffScore);
-                        DisplayWin.SetNewPlaycount(diffPC);
+                        DisplayWin.SetNewSS(CurrentSession.DifferenceData.RankSilverSS+ CurrentSession.DifferenceData.RankGoldSS);
+                        DisplayWin.SetNewS(CurrentSession.DifferenceData.RankSilverS + CurrentSession.DifferenceData.RankGoldS);
+                        DisplayWin.SetNewA(CurrentSession.DifferenceData.RankA);
+                        DisplayWin.SetNewScore((settings["display"]["useRankedScore"] == "0"? CurrentSession.DifferenceData.TotalScore: CurrentSession.DifferenceData.RankedScore));
+                        DisplayWin.SetNewPlaycount(CurrentSession.DifferenceData.Playcount);
 
-                        long averageScore = (diffPC > 0 ? (diffScore / diffPC) : 0);
+                        long averageScore = (CurrentSession.DifferenceData.Playcount > 0 ? ((settings["display"]["useRankedScore"] == "0" ? CurrentSession.DifferenceData.TotalScore : CurrentSession.DifferenceData.RankedScore) / CurrentSession.DifferenceData.Playcount) : 0);
                         DisplayWin.SetAverageScore(averageScore);
                     }
 
@@ -351,12 +355,13 @@ namespace OsuAchievedOverlay
 
                 CurrentSession = new Session()
                 {
-                    StartDataTotalScore = Convert.ToInt64(osuUser.TotalScore),
-                    StartDataRankedScore = Convert.ToInt64(osuUser.RankedScore),
-                    StartDataPlaycount = osuUser.Playcount,
-                    StartDataSSCount = osuUser.GetCountRankSS(),
-                    StartDataSCount = osuUser.GetCountRankS(),
-                    StartDataACount = osuUser.GetCountRankA()
+                    InitialData = SessionData.FromUser(osuUser)
+                    //StartDataTotalScore = Convert.ToInt64(osuUser.TotalScore),
+                    //StartDataRankedScore = Convert.ToInt64(osuUser.RankedScore),
+                    //StartDataPlaycount = osuUser.Playcount,
+                    //StartDataSSCount = osuUser.GetCountRankSS(),
+                    //StartDataSCount = osuUser.GetCountRankS(),
+                    //StartDataACount = osuUser.GetCountRankA()
                 };
 
                 RefreshTimer(null, null);
