@@ -29,7 +29,7 @@ namespace OsuAchievedOverlay
 
         public void Start()
         {
-            GameManager.Instance.MainWin = this;
+            WindowManager.Instance.MainWin = this;
             GameManager.Instance.Start();
         }
 
@@ -63,10 +63,20 @@ namespace OsuAchievedOverlay
 
         private void btnLoadSession_Click(object sender, RoutedEventArgs e)
         {
-            if(GameManager.Instance.SessionWin==null){
-                GameManager.Instance.SessionWin = new LoadSessionWindow();
-                GameManager.Instance.SessionWin.Show();
-                GameManager.Instance.SessionWin.Focus();
+            if(WindowManager.Instance.SessionWin==null){
+                WindowManager.Instance.SessionWin = new LoadSessionWindow();
+                WindowManager.Instance.SessionWin.Show();
+                WindowManager.Instance.SessionWin.Focus();
+            }
+        }
+
+        private void btnOpenApiManager_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowManager.Instance.ApiWin == null)
+            {
+                WindowManager.Instance.ApiWin = new LocalApiWindow();
+                WindowManager.Instance.ApiWin.Show();
+                WindowManager.Instance.ApiWin.Focus();
             }
         }
     }

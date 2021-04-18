@@ -32,7 +32,7 @@ namespace OsuAchievedOverlay
         }
 
         private object FindItem(string name){
-            return GameManager.Instance.DisplayWin.FindName(name);
+            return WindowManager.Instance.DisplayWin.FindName(name);
         }
 
         private Label FindLabel(string name){

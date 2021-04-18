@@ -82,7 +82,7 @@ namespace OsuAchievedOverlay
             };
         }
 
-        public static SessionData CalculateDifference(SessionData a, SessionData b){
+        public static SessionData operator -(SessionData a, SessionData b){
             SessionData output = new SessionData
             {
                 TotalScore = a.TotalScore - b.TotalScore,
@@ -96,6 +96,27 @@ namespace OsuAchievedOverlay
                 Playtime = a.Playtime - b.Playtime
             };
             return output;
+        }
+
+        public static SessionData operator +(SessionData a, SessionData b)
+        {
+            SessionData output = new SessionData
+            {
+                TotalScore = a.TotalScore + b.TotalScore,
+                RankedScore = a.RankedScore + b.RankedScore,
+                Playcount = a.Playcount + b.Playcount,
+                RankSilverSS = a.RankSilverSS + b.RankSilverSS,
+                RankGoldSS = a.RankGoldSS + b.RankGoldSS,
+                RankSilverS = a.RankSilverS + b.RankSilverS,
+                RankGoldS = a.RankGoldS + b.RankGoldS,
+                RankA = a.RankA + b.RankA,
+                Playtime = a.Playtime + b.Playtime
+            };
+            return output;
+        }
+
+        public static SessionData CalculateDifference(SessionData a, SessionData b){
+            return a - b;
         }
 
         public object Clone(){

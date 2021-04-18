@@ -52,7 +52,7 @@ namespace OsuAchievedOverlay
 
             Closed += (object sender, EventArgs e) =>
             {
-                GameManager.Instance.SessionWin = null;
+                WindowManager.Instance.SessionWin = null;
             };
         }
 
@@ -174,7 +174,7 @@ namespace OsuAchievedOverlay
                 GameManager.Instance.RefreshTimer(null, null);
 
                 Close();
-                GameManager.Instance.SessionWin = null;
+                WindowManager.Instance.SessionWin = null;
             }
         }
 

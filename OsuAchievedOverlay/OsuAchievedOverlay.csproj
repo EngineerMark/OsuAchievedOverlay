@@ -17,6 +17,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -31,8 +33,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -112,10 +112,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LocalApiFile.cs" />
+    <Compile Include="LocalAPIManager.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="InterfaceManager.cs" />
     <Compile Include="SessionFileData.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="WindowManager.cs" />
     <Compile Include="Windows\LoadSessionWindow.xaml.cs">
       <DependentUpon>LoadSessionWindow.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\LocalApiWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -140,6 +147,9 @@
     </Compile>
     <Compile Include="Windows\DisplayWindow.xaml.cs">
       <DependentUpon>DisplayWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\LocalApiWindow.xaml.cs">
+      <DependentUpon>LocalApiWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
