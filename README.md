@@ -20,6 +20,9 @@ You can create your own formatting strings and files. It dumps it in pure text f
 Files are (created and) written to every update iteration (when the progress bar in display is full).\
 They are never deleted. (Maybe something to consider next update, or later down the line).
 
+The location of these files is ./api/file.extension\
+The api folder is next to the exe file.
+
 ## Reference
 
 | Key  | Description |
