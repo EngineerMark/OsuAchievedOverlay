@@ -36,7 +36,9 @@ namespace OsuAchievedOverlay
                 if (tempApiDataList != null)
                     apiDataList = new List<LocalApiFile>(tempApiDataList);
             }
+        }
 
+        public void LoadItems(){
             foreach (LocalApiFile apiFile in ApiDataList)
             {
                 WindowManager.Instance.ApiWin.AddItem(apiFile);
@@ -48,40 +50,46 @@ namespace OsuAchievedOverlay
             //throw new NotImplementedException();
         }
 
+        public void SaveData(LocalApiFile apiFile){
+            string data = Parse(apiFile, GameManager.Instance.CurrentSession);
+            string file = Path.Combine(ApiFolder, apiFile.FileName);
+            File.WriteAllText(file, data);
+        }
+
         public string Parse(LocalApiFile apiFile, Session session)
         {
-            string input = apiFile.StringData;
-            input = ParsePartial(apiFile, "{new_ssh}", session.DifferenceData.RankSilverSS);
-            input = ParsePartial(apiFile, "{new_ss}", session.DifferenceData.RankGoldSS);
-            input = ParsePartial(apiFile, "{new_sh}", session.DifferenceData.RankSilverS);
-            input = ParsePartial(apiFile, "{new_s}", session.DifferenceData.RankGoldS);
-            input = ParsePartial(apiFile, "{new_a}", session.DifferenceData.RankA);
-            input = ParsePartial(apiFile, "{new_totalscore}", session.DifferenceData.TotalScore);
-            input = ParsePartial(apiFile, "{new_rankedscore}", session.DifferenceData.RankedScore);
-            input = ParsePartial(apiFile, "{new_playtime}", session.DifferenceData.Playtime);
-            input = ParsePartial(apiFile, "{new_pc}", session.DifferenceData.Playcount);
+            LocalApiFile input = (LocalApiFile)apiFile.Clone();
+            input.StringData = ParsePartial(input, "{new_ssh}", session.DifferenceData.RankSilverSS);
+            input.StringData = ParsePartial(input, "{new_ss}", session.DifferenceData.RankGoldSS);
+            input.StringData = ParsePartial(input, "{new_sh}", session.DifferenceData.RankSilverS);
+            input.StringData = ParsePartial(input, "{new_s}", session.DifferenceData.RankGoldS);
+            input.StringData = ParsePartial(input, "{new_a}", session.DifferenceData.RankA);
+            input.StringData = ParsePartial(input, "{new_totalscore}", session.DifferenceData.TotalScore);
+            input.StringData = ParsePartial(input, "{new_rankedscore}", session.DifferenceData.RankedScore);
+            input.StringData = ParsePartial(input, "{new_playtime}", session.DifferenceData.Playtime);
+            input.StringData = ParsePartial(input, "{new_pc}", session.DifferenceData.Playcount);
 
-            input = ParsePartial(apiFile, "{current_ssh}", session.CurrentData.RankSilverSS);
-            input = ParsePartial(apiFile, "{current_ss}", session.CurrentData.RankGoldSS);
-            input = ParsePartial(apiFile, "{current_sh}", session.CurrentData.RankSilverS);
-            input = ParsePartial(apiFile, "{current_s}", session.CurrentData.RankGoldS);
-            input = ParsePartial(apiFile, "{current_a}", session.CurrentData.RankA);
-            input = ParsePartial(apiFile, "{current_totalscore}", session.CurrentData.TotalScore);
-            input = ParsePartial(apiFile, "{current_rankedscore}", session.CurrentData.RankedScore);
-            input = ParsePartial(apiFile, "{current_playtime}", session.CurrentData.Playtime);
-            input = ParsePartial(apiFile, "{current_pc}", session.CurrentData.Playcount);
+            input.StringData = ParsePartial(input, "{current_ssh}", session.CurrentData.RankSilverSS);
+            input.StringData = ParsePartial(input, "{current_ss}", session.CurrentData.RankGoldSS);
+            input.StringData = ParsePartial(input, "{current_sh}", session.CurrentData.RankSilverS);
+            input.StringData = ParsePartial(input, "{current_s}", session.CurrentData.RankGoldS);
+            input.StringData = ParsePartial(input, "{current_a}", session.CurrentData.RankA);
+            input.StringData = ParsePartial(input, "{current_totalscore}", session.CurrentData.TotalScore);
+            input.StringData = ParsePartial(input, "{current_rankedscore}", session.CurrentData.RankedScore);
+            input.StringData = ParsePartial(input, "{current_playtime}", session.CurrentData.Playtime);
+            input.StringData = ParsePartial(input, "{current_pc}", session.CurrentData.Playcount);
 
-            input = ParsePartial(apiFile, "{initial_ssh}", session.InitialData.RankSilverSS);
-            input = ParsePartial(apiFile, "{initial_ss}", session.InitialData.RankGoldSS);
-            input = ParsePartial(apiFile, "{initial_sh}", session.InitialData.RankSilverS);
-            input = ParsePartial(apiFile, "{initial_s}", session.InitialData.RankGoldS);
-            input = ParsePartial(apiFile, "{initial_a}", session.InitialData.RankA);
-            input = ParsePartial(apiFile, "{initial_totalscore}", session.InitialData.TotalScore);
-            input = ParsePartial(apiFile, "{initial_rankedscore}", session.InitialData.RankedScore);
-            input = ParsePartial(apiFile, "{initial_playtime}", session.InitialData.Playtime);
-            input = ParsePartial(apiFile, "{initial_pc}", session.InitialData.Playcount);
+            input.StringData = ParsePartial(input, "{initial_ssh}", session.InitialData.RankSilverSS);
+            input.StringData = ParsePartial(input, "{initial_ss}", session.InitialData.RankGoldSS);
+            input.StringData = ParsePartial(input, "{initial_sh}", session.InitialData.RankSilverS);
+            input.StringData = ParsePartial(input, "{initial_s}", session.InitialData.RankGoldS);
+            input.StringData = ParsePartial(input, "{initial_a}", session.InitialData.RankA);
+            input.StringData = ParsePartial(input, "{initial_totalscore}", session.InitialData.TotalScore);
+            input.StringData = ParsePartial(input, "{initial_rankedscore}", session.InitialData.RankedScore);
+            input.StringData = ParsePartial(input, "{initial_playtime}", session.InitialData.Playtime);
+            input.StringData = ParsePartial(input, "{initial_pc}", session.InitialData.Playcount);
 
-            return input;
+            return input.StringData;
         }
 
         private string ParsePartial(LocalApiFile apiFile, string check, long data){

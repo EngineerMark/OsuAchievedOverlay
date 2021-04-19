@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OsuAchievedOverlay
 {
-    public class LocalApiFile
+    public class LocalApiFile : ICloneable
     {
         [JsonProperty("FileName")]
         public string FileName { get; set; }
@@ -20,5 +20,16 @@ namespace OsuAchievedOverlay
 
         [JsonProperty("NegativePrefix")]
         public string NegativePrefix { get; set; } = "-";
+
+        public object Clone()
+        {
+            return new LocalApiFile()
+            {
+                FileName = FileName,
+                StringData = StringData,
+                PositivePrefix = PositivePrefix,
+                NegativePrefix = NegativePrefix
+            };
+        }
     }
 }

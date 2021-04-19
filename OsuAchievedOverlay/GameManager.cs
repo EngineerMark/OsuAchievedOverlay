@@ -109,6 +109,8 @@ namespace OsuAchievedOverlay
                 updateTimer.Tick += new EventHandler((object s, EventArgs e) => Update());
                 updateTimer.Interval = TimeSpan.FromMilliseconds(1 / 60);
                 updateTimer.Start();
+
+                LocalAPIManager.Instance.Start();
             }
         }
 
@@ -124,6 +126,12 @@ namespace OsuAchievedOverlay
             updateTimer = null;
 
             LocalAPIManager.Instance.Stop();
+
+            WindowManager.Instance.ApiWin?.Close();
+            WindowManager.Instance.ApiWin = null;
+
+            WindowManager.Instance.SessionWin?.Close();
+            WindowManager.Instance.SessionWin = null;
 
             WindowManager.Instance.DisplayWin?.Close();
             WindowManager.Instance.DisplayWin = null;
@@ -187,6 +195,9 @@ namespace OsuAchievedOverlay
 
                         long averageScore = (CurrentSession.DifferenceData.Playcount > 0 ? ((settings["display"]["useRankedScore"] == "0" ? CurrentSession.DifferenceData.TotalScore : CurrentSession.DifferenceData.RankedScore) / CurrentSession.DifferenceData.Playcount) : 0);
                         WindowManager.Instance.DisplayWin.SetAverageScore(averageScore);
+
+                        foreach (LocalApiFile apiFile in LocalAPIManager.Instance.ApiDataList)
+                            LocalAPIManager.Instance.SaveData(apiFile);
                     }
 
                     if (sender != null)

@@ -76,8 +76,8 @@ namespace OsuAchievedOverlay
             {
                 WindowManager.Instance.ApiWin = new LocalApiWindow();
                 WindowManager.Instance.ApiWin.Show();
-                WindowManager.Instance.ApiWin.Focus();
             }
+            WindowManager.Instance.ApiWin.Focus();
         }
     }
 }

@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:OsuAchievedOverlay"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Local API Manager" Height="400" Width="554">
+        Title="Local API Manager" Height="410" Width="569">
     <Grid>
         <ScrollViewer HorizontalAlignment="Left" Height="294" Margin="10,30,0,0" VerticalAlignment="Top" Width="528">
             <StackPanel x:Name="ListAPIFiles">
                 <Grid x:Name="PrefabAPIFilesItem" Height="50">
-                    <TextBox MaxLength="20" MaxLines="1" Text="file.txt" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="94"/>
-                    <TextBox MaxLength="100" MaxLines="1" Text="Example for showing {new_ssh} Silver SS" ToolTip="Test tooltip" TextChanged="Input_ChangeStringData" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="239" Margin="99,0,0,0"/>
+                    <TextBox MaxLength="20" MaxLines="1" Text="file.txt" ToolTip="This file is created under the /api/ folder next to the exe" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="94"/>
+                    <TextBox MaxLength="100" MaxLines="1" Text="Example for showing {new_ssh} Silver SS" ToolTip="This data is parsed to contain wanted stats and put in the file" TextChanged="Input_ChangeStringData" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="239" Margin="99,0,0,0"/>
                     <Button Content="X" HorizontalAlignment="Left" Margin="469,0,0,0" VerticalAlignment="Top" Width="42" Height="28" Click="Btn_RemoveItem"/>
                     <TextBox ToolTip="Positive value prefix" Text="+" MaxLength="2" MaxLines="1" HorizontalContentAlignment="Center" TextChanged="Input_ChangeStringData" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Margin="358,0,0,0" RenderTransformOrigin="-0.118,0.467"/>
                     <TextBox ToolTip="Negative value prefix" Text="-" MaxLength="2" MaxLines="1" HorizontalContentAlignment="Center" TextChanged="Input_ChangeStringData" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Margin="413,0,0,0"/>

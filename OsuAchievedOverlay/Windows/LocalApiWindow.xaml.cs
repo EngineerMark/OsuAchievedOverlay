@@ -39,45 +39,6 @@ namespace OsuAchievedOverlay
             PrefixNegative = 4
         }
 
-        private Session ExampleSession = new Session()
-        {
-            InitialData = new SessionData(){
-                RankSilverSS = 10,
-                RankGoldSS = 15,
-                RankSilverS = 100,
-                RankGoldS = 300,
-                RankA = 1100,
-                TotalScore = 5000000,
-                RankedScore = 1000000,
-                Playcount = 550,
-                Playtime = 200
-            },
-            CurrentData = new SessionData()
-            {
-                RankSilverSS = 40,
-                RankGoldSS = 19,
-                RankSilverS = 150,
-                RankGoldS = 320,
-                RankA = 1200,
-                TotalScore = 5900000,
-                RankedScore = 1400000,
-                Playcount = 950,
-                Playtime = 400
-            },
-            DifferenceData = new SessionData()
-            {
-                RankSilverSS = 10,
-                RankGoldSS = 4,
-                RankSilverS = 50,
-                RankGoldS = 20,
-                RankA = 100,
-                TotalScore = 900000,
-                RankedScore = 400000,
-                Playcount = 400,
-                Playtime = 200
-            },
-        };
-
         public LocalApiWindow()
         {
             InitializeComponent();
@@ -91,31 +52,19 @@ namespace OsuAchievedOverlay
                 WindowManager.Instance.ApiWin = null;
             };
 
-            LocalAPIManager.Instance.Start();
+            LocalAPIManager.Instance.LoadItems();
         }
 
         public void AddItem(LocalApiFile apiFile){
-            AddItem(apiFile.FileName, apiFile.StringData, apiFile.PositivePrefix, apiFile.NegativePrefix);
-        }
-
-        public void AddItem(string fileName, string stringData, string positive, string negative){
             UIElement newFile = ApiFilePrefab;
-            ((TextBox)((Grid)newFile).Children[(int)FileItemId.FileName]).Text = fileName;
-            ((TextBox)((Grid)newFile).Children[(int)FileItemId.StringData]).Text = stringData;
-            ((TextBox)((Grid)newFile).Children[(int)FileItemId.PrefixPositive]).Text = positive;
-            ((TextBox)((Grid)newFile).Children[(int)FileItemId.PrefixNegative]).Text = negative;
+            ((TextBox)((Grid)newFile).Children[(int)FileItemId.FileName]).Text = apiFile.FileName;
+            ((TextBox)((Grid)newFile).Children[(int)FileItemId.StringData]).Text = apiFile.StringData;
+            ((TextBox)((Grid)newFile).Children[(int)FileItemId.PrefixPositive]).Text = apiFile.PositivePrefix;
+            ((TextBox)((Grid)newFile).Children[(int)FileItemId.PrefixNegative]).Text = apiFile.NegativePrefix;
             ((TextBox)((Grid)newFile).Children[(int)FileItemId.StringData]).TextChanged += Input_ChangeStringData;
             ((Button)((Grid)newFile).Children[(int)FileItemId.RemovalButton]).Click += Btn_RemoveItem;
-            ListAPIFiles.Children.Add(newFile);
             Input_ChangeStringData(((TextBox)((Grid)newFile).Children[(int)FileItemId.StringData]), null);
-
-            ((Grid)newFile).Tag = new LocalApiFile()
-            {
-                FileName = fileName,
-                StringData = stringData,
-                PositivePrefix = positive,
-                NegativePrefix = negative
-            };
+            ListAPIFiles.Children.Add(newFile);
         }
 
         private void Btn_NewItem(object sender, RoutedEventArgs e)
@@ -134,14 +83,9 @@ namespace OsuAchievedOverlay
 
         private void Input_ChangeStringData(object sender, TextChangedEventArgs e)
         {
-            TextBox src = (TextBox)sender;
-            Grid currentGridItem = (Grid)src.Parent;
-            LocalApiFile fileObject = (LocalApiFile)currentGridItem.Tag;
-            if (fileObject != null)
-            {
-                TextBox stringData = (TextBox)currentGridItem.Children[(int)FileItemId.StringData];
-                stringData.ToolTip = LocalAPIManager.Instance.Parse(fileObject, ExampleSession);
-            }
+            //TextBox src = (TextBox)sender;
+            //Grid currentGridItem = (Grid)src.Parent;
+            //TextBox stringData = (TextBox)currentGridItem.Children[(int)FileItemId.StringData];
         }
 
         private void Btn_SaveData(object sender, RoutedEventArgs e)
@@ -163,8 +107,6 @@ namespace OsuAchievedOverlay
                     PositivePrefix = positivePrefix.Text,
                     NegativePrefix = negativePrefix.Text
                 };
-
-                APIFileItemGrid.Tag = fileObject;
 
                 LocalAPIManager.Instance.ApiDataList.Add(fileObject);
             }
