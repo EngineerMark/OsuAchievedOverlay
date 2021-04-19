@@ -51,6 +51,7 @@ namespace OsuAchievedOverlay
         }
 
         public void SaveData(LocalApiFile apiFile){
+            Directory.CreateDirectory(ApiFolder);
             string data = Parse(apiFile, GameManager.Instance.CurrentSession);
             string file = Path.Combine(ApiFolder, apiFile.FileName);
             File.WriteAllText(file, data);
