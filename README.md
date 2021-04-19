@@ -7,7 +7,7 @@ I only work on Windows builds.
 If you have experience in other OS, feel free to make it possible to compile for them. Test it and if it's working perfectly, I will probably merge it in.
 
 # Sessions
-You only need to save an session once, the current and difference data are calculated automatically.
+You only need to save a session once, the current and difference data are calculated automatically when opened.
 
 Currently, incompatible session files (older versions for example), can still cause the program to crash instead of notify you.\
 This will be fixed in the future.
@@ -16,6 +16,9 @@ This will be fixed in the future.
 
 Local API in this context means the seperate files for certain stat data.
 You can create your own formatting strings and files. It dumps it in pure text files ready to be read by other software.
+
+Files are (created and) written to every update iteration (when the progress bar in display is full).\
+They are never deleted. (Maybe something to consider next update, or later down the line).
 
 ## Reference
 
