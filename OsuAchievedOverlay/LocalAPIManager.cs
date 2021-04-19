@@ -62,8 +62,10 @@ namespace OsuAchievedOverlay
             LocalApiFile input = (LocalApiFile)apiFile.Clone();
             input.StringData = ParsePartial(input, "{new_ssh}", session.DifferenceData.RankSilverSS);
             input.StringData = ParsePartial(input, "{new_ss}", session.DifferenceData.RankGoldSS);
+            input.StringData = ParsePartial(input, "{new_totalss}", session.DifferenceData.RankSilverSS+session.DifferenceData.RankGoldSS);
             input.StringData = ParsePartial(input, "{new_sh}", session.DifferenceData.RankSilverS);
             input.StringData = ParsePartial(input, "{new_s}", session.DifferenceData.RankGoldS);
+            input.StringData = ParsePartial(input, "{new_totals}", session.DifferenceData.RankSilverS+session.DifferenceData.RankGoldS);
             input.StringData = ParsePartial(input, "{new_a}", session.DifferenceData.RankA);
             input.StringData = ParsePartial(input, "{new_totalscore}", session.DifferenceData.TotalScore);
             input.StringData = ParsePartial(input, "{new_rankedscore}", session.DifferenceData.RankedScore);
@@ -72,8 +74,10 @@ namespace OsuAchievedOverlay
 
             input.StringData = ParsePartial(input, "{current_ssh}", session.CurrentData.RankSilverSS);
             input.StringData = ParsePartial(input, "{current_ss}", session.CurrentData.RankGoldSS);
+            input.StringData = ParsePartial(input, "{current_totalss}", session.CurrentData.RankSilverSS+session.CurrentData.RankGoldSS);
             input.StringData = ParsePartial(input, "{current_sh}", session.CurrentData.RankSilverS);
             input.StringData = ParsePartial(input, "{current_s}", session.CurrentData.RankGoldS);
+            input.StringData = ParsePartial(input, "{current_totalss}", session.CurrentData.RankSilverSS+session.CurrentData.RankGoldSS);
             input.StringData = ParsePartial(input, "{current_a}", session.CurrentData.RankA);
             input.StringData = ParsePartial(input, "{current_totalscore}", session.CurrentData.TotalScore);
             input.StringData = ParsePartial(input, "{current_rankedscore}", session.CurrentData.RankedScore);
@@ -82,8 +86,10 @@ namespace OsuAchievedOverlay
 
             input.StringData = ParsePartial(input, "{initial_ssh}", session.InitialData.RankSilverSS);
             input.StringData = ParsePartial(input, "{initial_ss}", session.InitialData.RankGoldSS);
+            input.StringData = ParsePartial(input, "{initial_totalss}", session.InitialData.RankSilverSS+session.InitialData.RankGoldSS);
             input.StringData = ParsePartial(input, "{initial_sh}", session.InitialData.RankSilverS);
             input.StringData = ParsePartial(input, "{initial_s}", session.InitialData.RankGoldS);
+            input.StringData = ParsePartial(input, "{initial_totalss}", session.InitialData.RankSilverSS+session.InitialData.RankGoldSS);
             input.StringData = ParsePartial(input, "{initial_a}", session.InitialData.RankA);
             input.StringData = ParsePartial(input, "{initial_totalscore}", session.InitialData.TotalScore);
             input.StringData = ParsePartial(input, "{initial_rankedscore}", session.InitialData.RankedScore);
