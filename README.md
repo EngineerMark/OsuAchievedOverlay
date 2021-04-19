@@ -29,8 +29,10 @@ The api folder is next to the exe file.
 | ------------- | ------------- |
 | `{new_ssh}` | Gained Silver SS Ranks |
 | `{new_ss}` | Gained Golden SS Ranks |
+| `{new_total_ss}` | Gained Total SS Ranks |
 | `{new_sh}` | Gained Silver S Ranks |
 | `{new_s}` | Gained Golden S Ranks
+| `{new_total_s}` | Gained Total S Ranks
 | `{new_a}` | Gained A Ranks |
 | `{new_totalscore}` | Gained Total Score |
 | `{new_rankedscore}` | Gained Ranked Score |
@@ -39,8 +41,10 @@ The api folder is next to the exe file.
 |  |  |
 | `{current_ssh}` | Current Silver SS Ranks |
 | `{current_ss}` | Current Golden SS Ranks |
+| `{current_total_ss}` | Current Total SS Ranks |
 | `{current_sh}` | Current Silver S Ranks |
 | `{current_s}` | Current Golden S Ranks
+| `{current_total_s}` | Current Total S Ranks
 | `{current_a}` | Current A Ranks |
 | `{current_totalscore}` | Current Total Score |
 | `{current_rankedscore}` | Current Ranked Score |
@@ -49,8 +53,10 @@ The api folder is next to the exe file.
 |  |  |
 | `{initial_ssh}` | Starting Silver SS Ranks |
 | `{initial_ss}` | Starting Golden SS Ranks |
+| `{initial_total_ss}` | Starting Total SS Ranks |
 | `{initial_sh}` | Starting Silver S Ranks |
 | `{initial_s}` | Starting Golden S Ranks
+| `{initial_total_s}` | Starting Total S Ranks
 | `{initial_a}` | Starting A Ranks |
 | `{initial_totalscore}` | Starting Total Score |
 | `{initial_rankedscore}` | Starting Ranked Score |
