@@ -40,19 +40,6 @@ namespace OsuAchievedOverlay
                         ["updateRate"] = "60",
                         ["gamemode"] = ""+OsuApiHelper.OsuMode.Standard
                     },
-                    //["display"] = {
-                        //["labelColor"] = Colors.Black.ToString(),
-                        //["background"] = Colors.White.ToString(),
-                        //["chromakeyBackground"] = Colors.Green.ToString(),
-                        //["useChromaKey"] = "1",
-                        //["alwaysOnTop"] = "1",
-                        //["labelFont"] = "Segoe UI",
-                        //["useRankedScore"] = "0"
-                    //},
-                    //["fileapi"] = {
-                        //["prefixPositive"] = "+",
-                        //["prefixNegative"] = "-",
-                    //}
                 };
             }
         }
@@ -80,12 +67,6 @@ namespace OsuAchievedOverlay
                     CurrentSession = new Session()
                     {
                         InitialData = SessionData.FromUser(osuUser)
-                        //StartDataTotalScore = Convert.ToInt64(osuUser.TotalScore),
-                        //StartDataRankedScore = Convert.ToInt64(osuUser.RankedScore),
-                        //StartDataPlaycount = osuUser.Playcount,
-                        //StartDataSSCount = osuUser.GetCountRankSS(),
-                        //StartDataSCount = osuUser.GetCountRankS(),
-                        //StartDataACount = osuUser.GetCountRankA()
                     };
 
                 }
@@ -172,35 +153,6 @@ namespace OsuAchievedOverlay
                     {
                         UpdateSession();
 
-                        //WindowManager.Instance.DisplayWin.SetCurrentA(osuUser.GetCountRankA());
-                        //WindowManager.Instance.DisplayWin.SetCurrentS(osuUser.GetCountRankS());
-                        //WindowManager.Instance.DisplayWin.SetCurrentSS(osuUser.GetCountRankSS());
-
-                        //WindowManager.Instance.DisplayWin.SetCurrentScore((settings["display"]["useRankedScore"] == "0" ? Convert.ToInt64(osuUser.TotalScore) : Convert.ToInt64(osuUser.RankedScore)));
-                        //WindowManager.Instance.DisplayWin.SetCurrentPlaycount(osuUser.Playcount);
-
-                        //int diffTotalSS = osuUser.GetCountRankSS() - CurrentSession.StartDataSSCount;
-                        //int diffS = osuUser.GetCountRankS() - CurrentSession.StartDataSCount;
-                        //int diffA = osuUser.GetCountRankA() - CurrentSession.StartDataACount;
-                        //long diffScore = (settings["display"]["useRankedScore"] == "0" ?
-                        //    Convert.ToInt64(osuUser.TotalScore) - CurrentSession.StartDataTotalScore :
-                        //    Convert.ToInt64(osuUser.RankedScore) - CurrentSession.StartDataRankedScore);
-                        //int diffPC = osuUser.Playcount - CurrentSession.StartDataPlaycount;
-
-                        //DirectoryInfo di = Directory.CreateDirectory("api");
-                        //FileStream fs = File.Create("api/ss.txt");
-                        //fs.Close();
-                        //File.WriteAllText("api/ss.txt", (diffSS>=0?"+":"-") + diffSS);
-
-                        //WindowManager.Instance.DisplayWin.SetNewSS(CurrentSession.DifferenceData.RankSilverSS+ CurrentSession.DifferenceData.RankGoldSS);
-                        //WindowManager.Instance.DisplayWin.SetNewS(CurrentSession.DifferenceData.RankSilverS + CurrentSession.DifferenceData.RankGoldS);
-                        //WindowManager.Instance.DisplayWin.SetNewA(CurrentSession.DifferenceData.RankA);
-                        //WindowManager.Instance.DisplayWin.SetNewScore((settings["display"]["useRankedScore"] == "0"? CurrentSession.DifferenceData.TotalScore: CurrentSession.DifferenceData.RankedScore));
-                        //WindowManager.Instance.DisplayWin.SetNewPlaycount(CurrentSession.DifferenceData.Playcount);
-
-                        //long averageScore = (CurrentSession.DifferenceData.Playcount > 0 ? ((settings["display"]["useRankedScore"] == "0" ? CurrentSession.DifferenceData.TotalScore : CurrentSession.DifferenceData.RankedScore) / CurrentSession.DifferenceData.Playcount) : 0);
-                        //WindowManager.Instance.DisplayWin.SetAverageScore(averageScore);
-
                         foreach (LocalApiFile apiFile in LocalAPIManager.Instance.ApiDataList)
                             LocalAPIManager.Instance.SaveData(apiFile);
                     }
@@ -236,15 +188,6 @@ namespace OsuAchievedOverlay
                 OsuApiHelper.OsuApiKey.Key = data["api"]["key"];
                 osuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], (OsuApiHelper.OsuMode)WindowManager.Instance.MainWin.dropdownGameMode.SelectedIndex);
                 WindowManager.Instance.MainWin.inputUpdateRate.Text = int.TryParse(data["api"]["updateRate"], out _)?data["api"]["updateRate"]:"60";
-                //labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
-                //backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
-                //WindowManager.Instance.MainWin.keyColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["chromakeyBackground"]);
-                //WindowManager.Instance.MainWin.labelColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]);
-                //WindowManager.Instance.MainWin.backgroundColorPicker.SelectedColor = (Color)ColorConverter.ConvertFromString(data["display"]["background"]);
-                //WindowManager.Instance.MainWin.boolUseChromaKey.IsChecked = data["display"]["useChromaKey"] == "1";
-                //WindowManager.Instance.MainWin.boolAlwaysOnTop.IsChecked = data["display"]["alwaysOnTop"] == "1";
-                //WindowManager.Instance.MainWin.boolShowRankedScore.IsChecked = data["display"]["useRankedScore"] == "1";
-                //WindowManager.Instance.MainWin.labelFontDropdown.Text = data["display"]["labelFont"];
 
                 WindowManager.Instance.MainWin.inputApiKey.Password = data["api"]["key"];
                 WindowManager.Instance.MainWin.inputUserName.Text = data["api"]["user"];
@@ -315,14 +258,6 @@ namespace OsuAchievedOverlay
             FileIniDataParser parser = new FileIniDataParser();
             IniData data = parser.ReadFile("Settings.ini");
 
-            //data["display"]["labelColor"] = WindowManager.Instance.MainWin.labelColorPicker.SelectedColor.ToString();
-            //data["display"]["background"] = WindowManager.Instance.MainWin.backgroundColorPicker.SelectedColor.ToString();
-            //data["display"]["labelFont"] = WindowManager.Instance.MainWin.labelFontDropdown.Text;
-            //data["display"]["chromakeyBackground"] = WindowManager.Instance.MainWin.keyColorPicker.SelectedColor.ToString();
-            //data["display"]["useChromaKey"] = (bool)WindowManager.Instance.MainWin.boolUseChromaKey.IsChecked ? "1" : "0";
-            //data["display"]["alwaysOnTop"] = (bool)WindowManager.Instance.MainWin.boolAlwaysOnTop.IsChecked ? "1" : "0";
-            //data["display"]["useRankedScore"] = (bool)WindowManager.Instance.MainWin.boolShowRankedScore.IsChecked ? "1" : "0";
-
             data["api"]["key"] = WindowManager.Instance.MainWin.inputApiKey.Password;
             data["api"]["user"] = WindowManager.Instance.MainWin.inputUserName.Text;
             data["api"]["gamemode"] = "" + ((OsuApiHelper.OsuMode)WindowManager.Instance.MainWin.dropdownGameMode.SelectedIndex);
@@ -336,27 +271,6 @@ namespace OsuAchievedOverlay
 
         private void ApplySettingsToApp(IniData data)
         {
-            //WindowManager.Instance.DisplayWin?.Close();
-            //WindowManager.Instance.DisplayWin = new DisplayWindow();
-            //WindowManager.Instance.DisplayWin.AllowsTransparency = data["display"]["useChromaKey"] != "1";
-            //WindowManager.Instance.DisplayWin.Show();
-            //WindowManager.Instance.DisplayWin.Focus();
-
-            //WindowManager.Instance.BetaDisplayWin?.Close();
-            //WindowManager.Instance.BetaDisplayWin = new BetaDisplayWindow();
-            //WindowManager.Instance.BetaDisplayWin.Show();
-            //WindowManager.Instance.BetaDisplayWin.Focus();
-
-            //if (data["display"]["useChromaKey"] == "1")
-            //{
-            //    Brush keyColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["chromakeyBackground"]));
-            //    WindowManager.Instance.DisplayWin.Background = keyColor;
-            //}
-            //else
-            //{
-            //    WindowManager.Instance.DisplayWin.Background = new SolidColorBrush(Colors.Transparent);
-            //}
-
             bool cv = int.TryParse(data["api"]["updateRate"], out int updateRate);
             if (!cv)
                 updateRate = 60;
@@ -380,21 +294,6 @@ namespace OsuAchievedOverlay
             }
             else
                 RefreshTimer(null, null);
-
-            //InterfaceManager.Instance.SetLabelFont((FontFamily)new FontFamilyConverter().ConvertFromString(data["display"]["labelFont"]));
-            //InterfaceManager.Instance.SetLabelColor((Color)ColorConverter.ConvertFromString(data["display"]["labelColor"]));
-
-            //WindowManager.Instance.DisplayWin.LabelUsername.Content = osuUser.Name;
-
-            //string profilePic = @"https://a.ppy.sh/" + osuUser.ID;
-            //BitmapImage bitmap = new BitmapImage();
-            //bitmap.BeginInit();
-            //bitmap.UriSource = new Uri(profilePic, UriKind.Absolute);
-            //bitmap.EndInit();
-
-            //WindowManager.Instance.DisplayWin.imageProfilePicture.Source = bitmap;
-
-            //WindowManager.Instance.DisplayWin.RoundedBackground.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(data["display"]["background"]));
         }
 
         public void RefreshSession()
@@ -406,12 +305,6 @@ namespace OsuAchievedOverlay
                 CurrentSession = new Session()
                 {
                     InitialData = SessionData.FromUser(osuUser),
-                    //StartDataTotalScore = Convert.ToInt64(osuUser.TotalScore),
-                    //StartDataRankedScore = Convert.ToInt64(osuUser.RankedScore),
-                    //StartDataPlaycount = osuUser.Playcount,
-                    //StartDataSSCount = osuUser.GetCountRankSS(),
-                    //StartDataSCount = osuUser.GetCountRankS(),
-                    //StartDataACount = osuUser.GetCountRankA()
                 };
 
                 UpdateSession();
