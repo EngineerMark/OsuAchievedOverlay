@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -78,6 +79,12 @@ namespace OsuAchievedOverlay
                 WindowManager.Instance.ApiWin.Show();
             }
             WindowManager.Instance.ApiWin.Focus();
+        }
+
+        private void InputNumericOnly(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

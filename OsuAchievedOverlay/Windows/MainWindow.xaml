@@ -9,57 +9,35 @@
         x:Class="OsuAchievedOverlay.MainWindow"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Osu Achieved" Height="644.21" Width="800" Background="White" Icon="/OsuAchievedOverlay;component/Assets/icon.png">
+        Title="Osu Achieved" Height="644.21" Width="812" Background="White" Icon="/OsuAchievedOverlay;component/Assets/Images/icon.png">
     <Grid>
         <Grid Margin="0,45,0,423">
-            <Image Source="../Assets/background.jpg" Margin="0,-307,0,-186"/>
+            <Image Source="../Assets/Images/background.jpg" Margin="0,-307,0,-186"/>
             <Grid Background="White" Margin="0,139,0,-186"></Grid>
         </Grid>
         <Grid Margin="0,179,0,10">
-            <Button Content="Open Display" HorizontalAlignment="Left" Margin="657,377,0,0" VerticalAlignment="Top" Width="125" Click="ButtonHandler_OpenDisplay"/>
             <Grid HorizontalAlignment="Left" Height="36" Margin="10,10,0,0" VerticalAlignment="Top" Width="266">
-                <Label Content="Text Color:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
-                <xctk:ColorPicker x:Name="labelColorPicker" Margin="73,0,0,0" UsingAlphaChannel="False" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" />
+                <Label Content="API Key:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
+                <PasswordBox x:Name="inputApiKey" MaxLength="200" Password="Insert API Key here" Height="36" Margin="78,0,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
             </Grid>
             <Grid HorizontalAlignment="Left" Height="36" Margin="10,51,0,0" VerticalAlignment="Top" Width="266">
-                <Label Content="Background Color:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
-                <xctk:ColorPicker x:Name="backgroundColorPicker" Margin="73,0,0,0" UsingAlphaChannel="False" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" />
-            </Grid>
-            <Grid HorizontalAlignment="Left" Height="36" Margin="10,92,0,0" VerticalAlignment="Top" Width="266">
-                <Label Content="Text Font:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
-                <ComboBox Name="labelFontDropdown" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" HorizontalAlignment="Left" Margin="73,0,0,0" VerticalAlignment="Top" Width="193" Height="36"/>
-            </Grid>
-            <Grid HorizontalAlignment="Left" Height="36" Margin="281,336,0,0" VerticalAlignment="Top" Width="266">
-                <Label Content="Key Color:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
-                <xctk:ColorPicker x:Name="keyColorPicker" Margin="73,0,0,0" UsingAlphaChannel="False" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" />
-            </Grid>
-            <Grid HorizontalAlignment="Left" Height="36" Margin="281,10,0,0" VerticalAlignment="Top" Width="501">
-                <Label Content="API Key:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
-                <PasswordBox x:Name="inputApiKey" Password="Insert API Key here" HorizontalAlignment="Left" Height="36" Margin="78,0,0,0" VerticalAlignment="Top" Width="423" VerticalContentAlignment="Center"/>
-            </Grid>
-            <Grid HorizontalAlignment="Left" Height="36" Margin="281,51,0,0" VerticalAlignment="Top" Width="216">
                 <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
-                <TextBox x:Name="inputUserName" Text="Insert username here" HorizontalAlignment="Left" Height="36" Margin="78,0,0,0" VerticalAlignment="Top" Width="138" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="inputUserName" MaxLength="70" Text="Insert username here" HorizontalAlignment="Left" Height="36" Margin="78,0,0,0" VerticalAlignment="Top" Width="188" VerticalContentAlignment="Center"/>
             </Grid>
-            <Grid HorizontalAlignment="Left" Height="36" Margin="281,92,0,0" VerticalAlignment="Top" Width="266">
+            <Grid HorizontalAlignment="Left" Height="36" Margin="10,87,0,0" VerticalAlignment="Top" Width="266">
+                <Label Content="Update rate:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
+                <TextBox x:Name="inputUpdateRate" PreviewTextInput="InputNumericOnly" ToolTip="Value is in seconds" Text="60" HorizontalAlignment="Left" Height="36" Margin="78,0,0,0" VerticalAlignment="Top" Width="188" VerticalContentAlignment="Center"/>
+            </Grid>
+            <Grid HorizontalAlignment="Left" Height="36" Margin="10,128,0,0" VerticalAlignment="Top" Width="266">
                 <Label Content="Gamemode:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="73"/>
-                <ComboBox Name="dropdownGameMode" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="78,0,0,0" VerticalAlignment="Top" Width="178" Height="36"/>
+                <ComboBox Name="dropdownGameMode" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="78,0,0,0" VerticalAlignment="Top" Width="188" Height="36"/>
             </Grid>
             <Button Content="Save and apply" ToolTip="Applies visual changes and saves everything to settings file" Click="btnSaveSettings_Click" HorizontalAlignment="Left" Margin="10,377,0,0" VerticalAlignment="Top" Width="134"/>
             <Button Content="Reset session" ToolTip="Restart to reset session in case of user/api change or when in general." Click="btnResetSession_Click" HorizontalAlignment="Left" Margin="149,377,0,0" VerticalAlignment="Top" Width="127"/>
-            <Grid HorizontalAlignment="Left" Height="32" Margin="10,133,0,0" VerticalAlignment="Top" Width="266">
-                <CheckBox Content="Show ranked instead of total score" ToolTip="When ticked, the display will show ranked instead of the total score (and the achieved amount)" x:Name="boolShowRankedScore" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="216" Height="36"/>
-            </Grid>
-            <Grid HorizontalAlignment="Left" Height="32" Margin="10,304,0,0" VerticalAlignment="Top" Width="216">
-                <CheckBox Content="Display always on top" ToolTip="When ticked, the display is always on top" x:Name="boolAlwaysOnTop" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="216" Height="36"/>
-            </Grid>
-            <Grid HorizontalAlignment="Left" Height="32" Margin="10,336,0,0" VerticalAlignment="Top" Width="216">
-                <CheckBox Content="Use key color as background" ToolTip="Unchecked will make it transparent, otherwise it will have a opaque color for chroma keying." x:Name="boolUseChromaKey" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="216" Height="36"/>
-            </Grid>
-            <Button Content="Load Session" Name="btnLoadSession" HorizontalAlignment="Left" Margin="657,326,0,0" VerticalAlignment="Top" Width="125" Click="btnLoadSession_Click"/>
-            <Button Content="Save Session" Name="btnSaveSession" HorizontalAlignment="Left" Margin="657,289,0,0" VerticalAlignment="Top" Width="125" Click="btnSaveSession_Click"/>
-            <Button Content="Local API" Name="btnOpenApiManager" HorizontalAlignment="Left" Margin="657,252,0,0" VerticalAlignment="Top" Width="125" Click="btnOpenApiManager_Click"/>
-            <Label Content="Made by Amayakase" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="281,377,0,0" VerticalAlignment="Top" Height="32" Width="266"/>
+            <Button Content="Load Session" Name="btnLoadSession" HorizontalAlignment="Left" Margin="657,377,0,0" VerticalAlignment="Top" Width="125" Click="btnLoadSession_Click"/>
+            <Button Content="Save Session" Name="btnSaveSession" HorizontalAlignment="Left" Margin="657,340,0,0" VerticalAlignment="Top" Width="125" Click="btnSaveSession_Click"/>
+            <Button Content="Local API" Name="btnOpenApiManager" HorizontalAlignment="Left" Margin="657,294,0,0" VerticalAlignment="Top" Width="125" Click="btnOpenApiManager_Click"/>
+            <Label Content="Made by Amayakase" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="281,377,0,0" VerticalAlignment="Top" Height="32" Width="371"/>
         </Grid>
     </Grid>
 </Window>

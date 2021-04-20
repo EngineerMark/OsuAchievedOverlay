@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace OsuAchievedOverlay
 {
@@ -22,11 +23,28 @@ namespace OsuAchievedOverlay
         [JsonProperty("ApplicationVersion")]
         public string Version { get; set; } = CurrentVersion;
 
-        public Session(){
+        [JsonProperty("GainedTopPlays")]
+        public List<OsuApiHelper.OsuPlay> GainedPlays { get; set; } = new List<OsuApiHelper.OsuPlay>();
+
+        public Session()
+        {
             SessionDate = DateTimeOffset.Now.ToUnixTimeSeconds();
         }
 
-        public string ConvertToJson(){
+        public void AddNewPlays(List<OsuApiHelper.OsuPlay> plays)
+        {
+            // For the future, once we secured a safe way to get Performance data without basically killing the program for data retrieval.
+            //foreach (OsuApiHelper.OsuPlay play in plays)
+            //{
+            //    if (!play.Rank.Equals("F", StringComparison.InvariantCultureIgnoreCase) && GainedPlays.Find(a => a.DateAchieved == play.DateAchieved) == null)
+            //    {
+            //        GainedPlays.Add(play);
+            //    }
+            //}
+        }
+
+        public string ConvertToJson()
+        {
             return JsonConvert.SerializeObject(this);
         }
 
@@ -37,14 +55,15 @@ namespace OsuAchievedOverlay
                 InitialData = (SessionData)InitialData.Clone(),
                 DifferenceData = (SessionData)DifferenceData.Clone(),
                 CurrentData = (SessionData)CurrentData.Clone(),
-                SessionDate = SessionDate
+                SessionDate = SessionDate,
+                GainedPlays = new List<OsuApiHelper.OsuPlay>(GainedPlays)
             };
         }
     }
 
     public class SessionData : ICloneable
     {
-        [JsonProperty("DataTotalScore")] 
+        [JsonProperty("DataTotalScore")]
         public long TotalScore;
         [JsonProperty("DataRankedScore")]
         public long RankedScore;
@@ -62,12 +81,24 @@ namespace OsuAchievedOverlay
         public int RankA;
         [JsonProperty("DataPlaytime")]
         public long Playtime;
+        [JsonProperty("DataPerformance")]
+        public float Performance;
+        [JsonProperty("DataLevel")]
+        public float Level;
+        [JsonProperty("DataPPRank")]
+        public float WorldRank;
+        [JsonProperty("DataCountryRank")]
+        public float CountryRank;
+        [JsonProperty("DataAccuracy")]
+        public float Accuracy;
 
-        public static void FromUser(OsuApiHelper.OsuUser user, ref SessionData output){
+        public static void FromUser(OsuApiHelper.OsuUser user, ref SessionData output)
+        {
             output = FromUser(user);
         }
 
-        public static SessionData FromUser(OsuApiHelper.OsuUser user){
+        public static SessionData FromUser(OsuApiHelper.OsuUser user)
+        {
             return new SessionData()
             {
                 TotalScore = Convert.ToInt64(user.TotalScore),
@@ -78,11 +109,17 @@ namespace OsuAchievedOverlay
                 RankSilverS = user.CountRankSH,
                 RankGoldS = user.CountRankS,
                 RankA = user.CountRankA,
-                Playtime = user.Playtime
+                Playtime = user.Playtime,
+                Performance = user.Performance,
+                Level = user.Level,
+                WorldRank = user.Globalrank,
+                CountryRank = user.Countryrank,
+                Accuracy = user.Accuracy
             };
         }
 
-        public static SessionData operator -(SessionData a, SessionData b){
+        public static SessionData operator -(SessionData a, SessionData b)
+        {
             SessionData output = new SessionData
             {
                 TotalScore = a.TotalScore - b.TotalScore,
@@ -93,7 +130,12 @@ namespace OsuAchievedOverlay
                 RankSilverS = a.RankSilverS - b.RankSilverS,
                 RankGoldS = a.RankGoldS - b.RankGoldS,
                 RankA = a.RankA - b.RankA,
-                Playtime = a.Playtime - b.Playtime
+                Playtime = a.Playtime - b.Playtime,
+                Performance = a.Performance - b.Performance,
+                Level = a.Level - b.Level,
+                WorldRank = a.WorldRank-b.WorldRank,
+                CountryRank = a.CountryRank-b.CountryRank,
+                Accuracy = a.Accuracy - b.Accuracy
             };
             return output;
         }
@@ -110,16 +152,23 @@ namespace OsuAchievedOverlay
                 RankSilverS = a.RankSilverS + b.RankSilverS,
                 RankGoldS = a.RankGoldS + b.RankGoldS,
                 RankA = a.RankA + b.RankA,
-                Playtime = a.Playtime + b.Playtime
+                Playtime = a.Playtime + b.Playtime,
+                Performance = a.Performance + b.Performance,
+                Level = a.Level + b.Level,
+                WorldRank = a.WorldRank + b.WorldRank,
+                CountryRank = a.CountryRank + b.CountryRank,
+                Accuracy = a.Accuracy + b.Accuracy
             };
             return output;
         }
 
-        public static SessionData CalculateDifference(SessionData a, SessionData b){
+        public static SessionData CalculateDifference(SessionData a, SessionData b)
+        {
             return a - b;
         }
 
-        public object Clone(){
+        public object Clone()
+        {
             return new SessionData()
             {
                 TotalScore = TotalScore,
@@ -131,6 +180,11 @@ namespace OsuAchievedOverlay
                 RankA = RankA,
                 Playtime = Playtime,
                 Playcount = Playcount,
+                Performance = Performance,
+                Level = Level,
+                WorldRank = WorldRank,
+                CountryRank = CountryRank,
+                Accuracy = Accuracy
             };
         }
     }

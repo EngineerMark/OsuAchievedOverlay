@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Xml;
 
 namespace OsuAchievedOverlay
@@ -31,8 +33,17 @@ namespace OsuAchievedOverlay
             //Not implemented
         }
 
+        public BitmapImage LoadImage(string url){
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(url, UriKind.Absolute);
+            bitmap.EndInit();
+            return bitmap;
+        }
+
         private object FindItem(string name){
-            return WindowManager.Instance.DisplayWin.FindName(name);
+            //return WindowManager.Instance.DisplayWin.FindName(name);
+            return WindowManager.Instance.BetaDisplayWin.FindName(name);
         }
 
         private Label FindLabel(string name){

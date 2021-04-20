@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="LoadSessionWindow" Height="413.636" Width="400" Icon="/OsuAchievedOverlay;component/Assets/icon.png">
+        Title="LoadSessionWindow" Height="413.636" Width="400" Icon="/OsuAchievedOverlay;component/Assets/Images/icon.png">
     <Grid>
         <Button Content="Open from File" Click="Btn_LoadFromFile" HorizontalAlignment="Left" Margin="10,329,0,0" VerticalAlignment="Top" Width="133"/>
         <ScrollViewer HorizontalAlignment="Left" Height="314" VerticalAlignment="Top" Width="374" Margin="10,10,0,0">

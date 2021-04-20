@@ -74,8 +74,8 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OsuHelper, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Amayakase.OsuHelper.1.0.2\lib\netstandard2.0\OsuHelper.dll</HintPath>
+    <Reference Include="OsuHelper, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Amayakase.OsuHelper.1.0.5\lib\netstandard2.0\OsuHelper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -119,12 +119,19 @@
     <Compile Include="SessionFileData.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="WindowManager.cs" />
+    <Compile Include="Windows\BetaDisplayWindow.xaml.cs">
+      <DependentUpon>BetaDisplayWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoadSessionWindow.xaml.cs">
       <DependentUpon>LoadSessionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Manager.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SessionManager.cs" />
+    <Page Include="Windows\BetaDisplayWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\DisplayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -175,6 +182,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Assets\Fonts\AllerDisplay.ttf" />
+    <Resource Include="Assets\Fonts\Aller_Bd.ttf" />
+    <Resource Include="Assets\Fonts\Aller_BdIt.ttf" />
+    <Resource Include="Assets\Fonts\Aller_It.ttf" />
+    <Resource Include="Assets\Fonts\Aller_Lt.ttf" />
+    <Resource Include="Assets\Fonts\Aller_LtIt.ttf" />
+    <Resource Include="Assets\Fonts\Aller_Rg.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -185,13 +199,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\SS.png" />
+    <Resource Include="Assets\Images\SS.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\S.png" />
+    <Resource Include="Assets\Images\S.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\A.png" />
+    <Resource Include="Assets\Images\A.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -206,13 +220,20 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\profilepicture_placeholder.png" />
+    <Resource Include="Assets\Images\profilepicture_placeholder.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\background.jpg" />
+    <Resource Include="Assets\Images\background.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\icon.png" />
+    <Resource Include="Assets\Images\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\NL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\SH.png" />
+    <Resource Include="Assets\Images\SSH.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets')" />
