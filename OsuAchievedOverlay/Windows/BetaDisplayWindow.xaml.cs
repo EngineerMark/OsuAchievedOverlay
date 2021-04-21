@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +28,7 @@ namespace OsuAchievedOverlay
 
             Closed += (object sender, EventArgs e) =>
             {
-                WindowManager.Instance.MainWin.Close();
+                GameManager.Instance.Stop();
             };
         }
 
@@ -101,6 +103,53 @@ namespace OsuAchievedOverlay
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void Btn_OpenSettings(object sender, RoutedEventArgs e)
+        {
+            if(WindowManager.Instance.SettingsWin==null){
+                WindowManager.Instance.SettingsWin = new SettingsWindow();
+                WindowManager.Instance.SettingsWin.Show();
+                WindowManager.Instance.SettingsWin.Focus();
+            }
+        }
+
+        private void btnSaveSession_Click(object sender, RoutedEventArgs e)
+        {
+            string json = GameManager.Instance.CurrentSession.ConvertToJson();
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, json);
+                SessionManager.Instance.AddFile(saveFileDialog.FileName);
+            }
+        }
+
+        private void btnLoadSession_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowManager.Instance.SessionWin == null)
+            {
+                WindowManager.Instance.SessionWin = new LoadSessionWindow();
+                WindowManager.Instance.SessionWin.Show();
+                WindowManager.Instance.SessionWin.Focus();
+            }
+        }
+
+        private void btnResetSession_Click(object sender, RoutedEventArgs e)
+        {
+            GameManager.Instance.RefreshSession();
+        }
+
+        private void btnOpenApiManager_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowManager.Instance.ApiWin == null)
+            {
+                WindowManager.Instance.ApiWin = new LocalApiWindow();
+                WindowManager.Instance.ApiWin.Show();
+            }
+            WindowManager.Instance.ApiWin.Focus();
         }
     }
 }

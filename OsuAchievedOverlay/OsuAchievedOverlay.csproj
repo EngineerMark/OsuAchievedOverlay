@@ -123,13 +123,26 @@
     <Compile Include="Windows\BetaDisplayWindow.xaml.cs">
       <DependentUpon>BetaDisplayWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\LaunchWindow.xaml.cs">
+      <DependentUpon>LaunchWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoadSessionWindow.xaml.cs">
       <DependentUpon>LoadSessionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Manager.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SessionManager.cs" />
+    <Compile Include="Windows\PopupSetAPI.xaml.cs">
+      <DependentUpon>PopupSetAPI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Windows\BetaDisplayWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\LaunchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,6 +169,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\PopupSetAPI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ProgressBarExtensions.cs" />
@@ -228,6 +249,27 @@
   <ItemGroup>
     <Resource Include="Assets\Images\SH.png" />
     <Resource Include="Assets\Images\SSH.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\icon_32.png" />
+    <Resource Include="Assets\Images\icon_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\load_32.png" />
+    <Resource Include="Assets\Images\load_64.png" />
+    <Resource Include="Assets\Images\save_32.png" />
+    <Resource Include="Assets\Images\save_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\new_32.png" />
+    <Resource Include="Assets\Images\new_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\api_32.png" />
+    <Resource Include="Assets\Images\api_64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets')" />

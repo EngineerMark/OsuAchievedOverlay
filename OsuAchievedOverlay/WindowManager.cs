@@ -9,11 +9,11 @@ namespace OsuAchievedOverlay
     public class WindowManager : Manager<WindowManager>
     {
         private BetaDisplayWindow betaDisplayWin = null;
-        private MainWindow mainWin = null;
+        private SettingsWindow settingsWin = null;
         private LoadSessionWindow sessionWin = null;
         private LocalApiWindow apiWin = null;
 
-        public MainWindow MainWin { get => mainWin; set => mainWin = value; }
+        public SettingsWindow SettingsWin { get => settingsWin; set => settingsWin = value; }
         public BetaDisplayWindow BetaDisplayWin { get => betaDisplayWin; set => betaDisplayWin = value; }
         public LoadSessionWindow SessionWin { get => sessionWin; set => sessionWin = value; }
         public LocalApiWindow ApiWin { get => apiWin; set => apiWin = value; }

@@ -12,8 +12,6 @@ namespace OsuAchievedOverlay
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-
         public MainWindow()
         {
             InitializeComponent();
@@ -30,7 +28,7 @@ namespace OsuAchievedOverlay
 
         public void Start()
         {
-            WindowManager.Instance.MainWin = this;
+            //WindowManager.Instance.MainWin = this;
             GameManager.Instance.Start();
         }
 
