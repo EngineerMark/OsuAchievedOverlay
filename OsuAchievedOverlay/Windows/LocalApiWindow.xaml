@@ -5,24 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OsuAchievedOverlay"
         mc:Ignorable="d"
+        AllowsTransparency="False"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Title="Local API Manager" Height="410" Width="569" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
+        Title="Local API Manager" Height="368" Width="547" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
     <Grid>
-        <ScrollViewer HorizontalAlignment="Left" Height="294" Margin="10,30,0,0" VerticalAlignment="Top" Width="528">
-            <StackPanel x:Name="ListAPIFiles">
-                <Grid x:Name="PrefabAPIFilesItem" Height="50">
-                    <TextBox MaxLength="20" MaxLines="1" Text="file.txt" ToolTip="This file is created under the /api/ folder next to the exe" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="94"/>
-                    <TextBox MaxLength="100" MaxLines="1" Text="Example for showing {new_ssh} Silver SS" ToolTip="This data is parsed to contain wanted stats and put in the file" TextChanged="Input_ChangeStringData" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="239" Margin="99,0,0,0"/>
-                    <Button Content="X" HorizontalAlignment="Left" Margin="469,0,0,0" VerticalAlignment="Top" Width="42" Height="28" Click="Btn_RemoveItem"/>
-                    <TextBox ToolTip="Positive value prefix" Text="+" MaxLength="2" MaxLines="1" HorizontalContentAlignment="Center" TextChanged="Input_ChangeStringData" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Margin="358,0,0,0" RenderTransformOrigin="-0.118,0.467"/>
-                    <TextBox ToolTip="Negative value prefix" Text="-" MaxLength="2" MaxLines="1" HorizontalContentAlignment="Center" TextChanged="Input_ChangeStringData" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Margin="413,0,0,0"/>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
-        <Button Content="Save" Click="Btn_SaveData" HorizontalAlignment="Left" Margin="10,329,0,0" VerticalAlignment="Top" Width="400"/>
-        <Button Content="New" Click="Btn_NewItem" HorizontalAlignment="Left" Margin="415,329,0,0" VerticalAlignment="Top" Width="123"/>
-        <Label Content="Filename" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Width="94"/>
-        <Label Content="Format" HorizontalAlignment="Left" Margin="109,6,0,0" VerticalAlignment="Top" Width="239"/>
-        <Label Content="Prefixes (+, -)" HorizontalAlignment="Left" Margin="366,6,0,0" VerticalAlignment="Top" Width="108"/>
+        <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="547">
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="-" Click="Btn_Minimize" HorizontalAlignment="Left" Margin="454,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="X" Click="Btn_Close" HorizontalAlignment="Left" Margin="503,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
+            <Label Content="osu!Achieved API Manager" Foreground="#553A46" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="29" Width="231" Margin="34,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+            <Grid HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="29">
+                <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/icon_32.png"/>
+            </Grid>
+        </Grid>
+        <Grid Background="#3D2932" Margin="0,29,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="278*"/>
+                <ColumnDefinition Width="269*"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer HorizontalAlignment="Left" Height="262" Margin="10,30,0,0" VerticalAlignment="Top" Width="528" Grid.ColumnSpan="2">
+                <StackPanel x:Name="ListAPIFiles">
+                    <Grid x:Name="PrefabAPIFilesItem" Height="50">
+                        <TextBox Foreground="White" MaxLength="20" MaxLines="1" Text="file.txt" ToolTip="This file is created under the /api/ folder next to the exe" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <TextBox Foreground="White" MaxLength="100" MaxLines="1" Text="Example for showing {new_ssh} Silver SS" ToolTip="This data is parsed to contain wanted stats and put in the file" TextChanged="Input_ChangeStringData" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="239" Margin="99,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="X" HorizontalAlignment="Left" Margin="469,0,0,0" VerticalAlignment="Top" Width="42" Height="28" Click="Btn_RemoveItem" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <TextBox Foreground="White" ToolTip="Positive value prefix" Text="+" MaxLength="2" MaxLines="1" HorizontalContentAlignment="Center" TextChanged="Input_ChangeStringData" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Margin="358,0,0,0" RenderTransformOrigin="-0.118,0.467" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <TextBox Foreground="White" ToolTip="Negative value prefix" Text="-" MaxLength="2" MaxLines="1" HorizontalContentAlignment="Center" TextChanged="Input_ChangeStringData" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Margin="413,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Save" Click="Btn_SaveData" HorizontalAlignment="Left" Margin="10,297,0,0" VerticalAlignment="Top" Width="400" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Grid.ColumnSpan="2"/>
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="New" Click="Btn_NewItem" HorizontalAlignment="Left" Margin="137,297,0,0" VerticalAlignment="Top" Width="123" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Grid.Column="1"/>
+            <Label Content="Filename" Foreground="White" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Width="94" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+            <Label Content="Format" Foreground="White" HorizontalAlignment="Left" Margin="109,6,0,0" VerticalAlignment="Top" Width="239" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Grid.ColumnSpan="2"/>
+            <Label Content="Prefixes (+, -)" Foreground="White" HorizontalAlignment="Left" Margin="88,6,0,0" VerticalAlignment="Top" Width="108" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Grid.Column="1"/>
+        </Grid>
     </Grid>
 </Window>

@@ -116,5 +116,21 @@ namespace OsuAchievedOverlay
 
             File.WriteAllText(LocalAPIManager.ApiDataFile, JsonConvert.SerializeObject(LocalAPIManager.Instance.ApiDataList));
         }
+
+        private void Btn_Close(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Btn_Minimize(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
     }
 }
