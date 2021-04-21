@@ -49,8 +49,6 @@ namespace OsuAchievedOverlay
 
         public override void Start()
         {
-            //WindowManager.Instance.MainWin.dropdownGameMode.ItemsSource = Enum.GetValues(typeof(OsuApiHelper.OsuMode)).Cast<OsuApiHelper.OsuMode>();
-
             bool success = LoadSettings();
             if (success)
             {
@@ -100,7 +98,6 @@ namespace OsuAchievedOverlay
             {
                 double interval = updateRate;
                 double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
-                //WindowManager.Instance.DisplayWin.NextUpdateProgress.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed / interval)));
                 WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate+1) / interval)));
             });
             progressTimer.Interval = new TimeSpan(0, 0, 1);
@@ -129,14 +126,8 @@ namespace OsuAchievedOverlay
             WindowManager.Instance.BetaDisplayWin?.Close();
             WindowManager.Instance.BetaDisplayWin = null;
 
-            //WindowManager.Instance.MainWin?.Close();
-            //WindowManager.Instance.MainWin = null;
-
             WindowManager.Instance.SettingsWin?.Close();
             WindowManager.Instance.SettingsWin = null;
-
-            //WindowManager.Instance.DisplayWin?.Close();
-            //WindowManager.Instance.DisplayWin = null;
         }
 
         public void Update()
@@ -150,16 +141,11 @@ namespace OsuAchievedOverlay
 
         public void RefreshTimer(object sender, EventArgs e)
         {
-            if (WindowManager.Instance.BetaDisplayWin != null /*WindowManager.Instance.DisplayWin != null*/ && CurrentSession != null && osuUser != null)
+            if (WindowManager.Instance.BetaDisplayWin != null && CurrentSession != null && osuUser != null)
             {
                 bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k=" + Settings["api"]["key"] + "&u=peppy") != "";
-                if (!apiReady)
+                if (apiReady)
                 {
-                    //WindowManager.Instance.DisplayWin.SetDisplay(DisplayWindow.DisplayType.BanchoDown);
-                }
-                else
-                {
-                    //WindowManager.Instance.DisplayWin.SetDisplay(DisplayWindow.DisplayType.Stats);
                     bool _continue = true;
 
                     if (_continue)
