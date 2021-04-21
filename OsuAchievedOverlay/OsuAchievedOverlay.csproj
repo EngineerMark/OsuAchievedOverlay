@@ -116,6 +116,7 @@
     <Compile Include="LocalAPIManager.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="InterfaceManager.cs" />
+    <Compile Include="MathHelper.cs" />
     <Compile Include="SessionFileData.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="WindowManager.cs" />

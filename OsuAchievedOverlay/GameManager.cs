@@ -73,23 +73,8 @@ namespace OsuAchievedOverlay
 
                 RefreshTimer(null, null);
                 //Update every minute
-                timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                timer.Tick += new EventHandler(RefreshTimer);
-                timer.Interval = TimeSpan.FromSeconds(30);
-                timer.Start();
 
-                lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
-
-                progressTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                progressTimer.Tick += new EventHandler((object s, EventArgs e) =>
-                {
-                    double interval = timer.Interval.TotalSeconds;
-                    double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
-                    //WindowManager.Instance.DisplayWin.NextUpdateProgress.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed / interval)));
-                    WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed / interval)));
-                });
-                progressTimer.Interval = new TimeSpan(0, 0, 1);
-                progressTimer.Start();
+                RestartTimers(Convert.ToInt32(Settings["api"]["updateRate"]));
 
                 updateTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
                 updateTimer.Tick += new EventHandler((object s, EventArgs e) => Update());
@@ -98,6 +83,28 @@ namespace OsuAchievedOverlay
 
                 LocalAPIManager.Instance.Start();
             }
+        }
+
+        public void RestartTimers(int updateRate){
+            timer?.Stop();
+            timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+            timer.Tick += new EventHandler(RefreshTimer);
+            timer.Interval = TimeSpan.FromSeconds(updateRate);
+            timer.Start();
+
+            lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
+
+            progressTimer?.Stop();
+            progressTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+            progressTimer.Tick += new EventHandler((object s, EventArgs e) =>
+            {
+                double interval = updateRate;
+                double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
+                //WindowManager.Instance.DisplayWin.NextUpdateProgress.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed / interval)));
+                WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate+1) / interval)));
+            });
+            progressTimer.Interval = new TimeSpan(0, 0, 1);
+            progressTimer.Start();
         }
 
         public override void Stop()
@@ -121,6 +128,9 @@ namespace OsuAchievedOverlay
 
             WindowManager.Instance.BetaDisplayWin?.Close();
             WindowManager.Instance.BetaDisplayWin = null;
+
+            WindowManager.Instance.MainWin?.Close();
+            WindowManager.Instance.MainWin = null;
 
             //WindowManager.Instance.DisplayWin?.Close();
             //WindowManager.Instance.DisplayWin = null;
@@ -276,14 +286,7 @@ namespace OsuAchievedOverlay
                 updateRate = 60;
 
             if (timer?.Interval.TotalSeconds != updateRate)
-            {
-                timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                timer.Tick += new EventHandler(RefreshTimer);
-                timer.Interval = TimeSpan.FromSeconds(updateRate);
-                timer.Start();
-
-                lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
-            }
+                RestartTimers(updateRate);
 
             if (OsuApiHelper.OsuApiKey.Key != WindowManager.Instance.MainWin.inputApiKey.Password)
             {
