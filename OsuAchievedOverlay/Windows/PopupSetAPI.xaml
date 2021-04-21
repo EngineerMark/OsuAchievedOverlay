@@ -24,7 +24,7 @@
             <TextBox x:Name="InputUsername" Foreground="White" HorizontalAlignment="Left" Height="23" Margin="105,89,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="254" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
             <Label Foreground="White" Content="API Key" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="90" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
             <Label Foreground="White" Content="Username" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="90" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-            <Button Content="Apply" Click="Btn_Apply" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="349" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Apply" Click="Btn_Apply" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="349" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
             <TextBlock Foreground="White" Text="Since this is your first launch (or you messed with the settings file), you have to enter your API key and username here" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="349" Height="46" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
         </Grid>
     </Grid>

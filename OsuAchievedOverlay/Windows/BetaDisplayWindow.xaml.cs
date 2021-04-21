@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Humanizer;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -80,6 +81,13 @@ namespace OsuAchievedOverlay
 
             SetLabelStat(LabelTotalPerformance, session.CurrentData.Performance, false, false);
             SetLabelStat(LabelGainedPerformance, session.DifferenceData.Performance);
+
+            TimeSpan totalPlayTime = TimeSpan.FromSeconds(session.CurrentData.Playtime);
+            TimeSpan gainedPlayTime = TimeSpan.FromSeconds(session.DifferenceData.Playtime);
+            LabelTotalPlaytime.Content = totalPlayTime.Humanize(maxUnit: Humanizer.Localisation.TimeUnit.Hour);
+
+            LabelGainedPlaytime.Content = (session.DifferenceData.Playtime >= 0 ? "+" : "") + gainedPlayTime.Humanize(maxUnit: Humanizer.Localisation.TimeUnit.Hour);
+            LabelGainedPlaytime.Foreground = session.DifferenceData.Playtime >= 0 ? Brushes.LightGreen : Brushes.Pink;
         }
 
         private void SetLabelStat(Label label, double value, bool usePrefix = true, bool recolor = true)

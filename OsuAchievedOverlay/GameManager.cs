@@ -27,6 +27,7 @@ namespace OsuAchievedOverlay
         private DispatcherTimer updateTimer;
 
         private long lastTimerFire = -1;
+        private long lastRefresh = -1;
 
         public static IniData DefaultSettings
         {
@@ -83,7 +84,8 @@ namespace OsuAchievedOverlay
             }
         }
 
-        public void RestartTimers(int updateRate){
+        public void RestartTimers(int updateRate)
+        {
             timer?.Stop();
             timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
             timer.Tick += new EventHandler(RefreshTimer);
@@ -98,7 +100,7 @@ namespace OsuAchievedOverlay
             {
                 double interval = updateRate;
                 double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
-                WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate+1) / interval)));
+                WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)));
             });
             progressTimer.Interval = new TimeSpan(0, 0, 1);
             progressTimer.Start();
@@ -164,14 +166,15 @@ namespace OsuAchievedOverlay
             }
         }
 
-        private void UpdateSession(){
+        private void UpdateSession()
+        {
             osuUser = OsuApiHelper.OsuApi.GetUser(settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]));
 
             CurrentSession.CurrentData = SessionData.FromUser(osuUser);
             CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
 
-            List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
-            CurrentSession.AddNewPlays(newPlays);
+            //List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
+            //CurrentSession.AddNewPlays(newPlays);
 
             WindowManager.Instance.BetaDisplayWin.ApplyUser(osuUser);
             WindowManager.Instance.BetaDisplayWin.ApplySession(CurrentSession);
@@ -284,16 +287,24 @@ namespace OsuAchievedOverlay
 
         public void RefreshSession()
         {
-            if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(Settings["api"]["user"]))
+            if (lastRefresh == -1 || DateTimeOffset.Now.ToUnixTimeSeconds() - lastRefresh > 15)
             {
-                osuUser = OsuApiHelper.OsuApi.GetUser(Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]));
-
-                CurrentSession = new Session()
+                if (OsuApiHelper.OsuApi.IsKeyValid())
                 {
-                    InitialData = SessionData.FromUser(osuUser),
-                };
+                    //osuUser = ApiHelper<OsuApiHelper.OsuUser>.GetUser(Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]));
 
-                UpdateSession();
+                    //if (osuUser != null)
+                    //{
+                        CurrentSession = new Session()
+                        {
+                            InitialData = SessionData.FromUser(osuUser),
+                        };
+                        RestartTimers((int)timer.Interval.TotalSeconds);
+                    //}
+
+
+                    lastRefresh = DateTimeOffset.Now.ToUnixTimeSeconds();
+                }
             }
         }
     }
