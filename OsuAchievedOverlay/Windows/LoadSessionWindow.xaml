@@ -7,32 +7,43 @@
         xmlns:local="clr-namespace:OsuAchievedOverlay"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        AllowsTransparency="False"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="LoadSessionWindow" Height="413.636" Width="400" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
     <Grid>
-        <Button Content="Open from File" Click="Btn_LoadFromFile" HorizontalAlignment="Left" Margin="10,329,0,0" VerticalAlignment="Top" Width="133"/>
-        <ScrollViewer HorizontalAlignment="Left" Height="314" VerticalAlignment="Top" Width="374" Margin="10,10,0,0">
-            <StackPanel x:Name="SessionList">
-                <Label Content="No sessions saved here"/>
-                <Grid Height="50" x:Name="PrefabSessionListItem" Background="#FFE8E8E8">
-                    <TextBlock Text=" {label_filename}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" FontWeight="Bold" Width="225"/>
-                    <TextBlock Text=" {label_filepath}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,24,0,0" Width="357"/>
-                    <TextBlock Text=" {label_date}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Margin="230,0,0,0"/>
-                    <TextBlock Visibility="Hidden" Tag="SessionIdentifier" Text=" {label_fullpath}" HorizontalAlignment="Left" Margin="321,30,0,-3" VerticalAlignment="Top"/>
-                    <Button Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10"/>
-                    <Button Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10"/>
-                </Grid>
-                <Grid x:Name="PrefabSeperator" Height="5" />
-                <Grid Height="50" Background="#FFE8E8E8">
-                    <TextBlock Text=" {label_filename}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" FontWeight="Bold" Width="225"/>
-                    <TextBlock Text=" {label_filepath}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,24,0,0" Width="357"/>
-                    <TextBlock Text=" {label_date}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Margin="230,0,0,0"/>
-                    <TextBlock Visibility="Hidden" Tag="SessionIdentifier" Text=" {label_fullpath}" HorizontalAlignment="Left" Margin="321,30,0,-3" VerticalAlignment="Top"/>
-                    <Button ToolTipService.ShowOnDisabled="True" Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10"/>
-                    <Button Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10"/>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
-
+        <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="400">
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="-" Click="Btn_Minimize" HorizontalAlignment="Left" Margin="307,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="X" Click="Btn_Close" HorizontalAlignment="Left" Margin="356,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
+            <Label Content="osu!Achieved" Foreground="#553A46" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="29" Width="231" Margin="34,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+            <Grid HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="29">
+                <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/icon_32.png"/>
+            </Grid>
+        </Grid>
+        <Grid Background="#3D2932" Margin="0,29,0,0">
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Open from File" Click="Btn_LoadFromFile" HorizontalAlignment="Left" Margin="10,343,0,0" VerticalAlignment="Top" Width="133"/>
+            <ScrollViewer HorizontalAlignment="Left" Height="328" VerticalAlignment="Top" Width="380" Margin="10,10,0,0">
+                <StackPanel x:Name="SessionList">
+                    <Grid Height="50" x:Name="PrefabSessionListItem" Background="#2E1F25">
+                        <TextBlock Foreground="White" Text=" {label_filename}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" FontWeight="Bold" Width="225"/>
+                        <TextBlock Foreground="White" Text=" {label_filepath}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,24,0,0" Width="357"/>
+                        <TextBlock Foreground="White" Text=" {label_date}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Margin="230,0,0,0"/>
+                        <TextBlock Visibility="Hidden" Tag="SessionIdentifier" Text=" {label_fullpath}" HorizontalAlignment="Left" Margin="321,30,0,-3" VerticalAlignment="Top"/>
+                        <Button Background="#3D2932" BorderBrush="#3D2932" Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10"/>
+                        <Button Background="#3D2932" BorderBrush="#3D2932" Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10"/>
+                    </Grid>
+                    <Grid x:Name="PrefabSeperator" Height="5" />
+                    <Grid Height="50" Background="#2E1F25">
+                        <TextBlock Foreground="White" Text=" {label_filename}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" FontWeight="Bold" Width="225"/>
+                        <TextBlock Foreground="White" Text=" {label_filepath}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,24,0,0" Width="357"/>
+                        <TextBlock Foreground="White" Text=" {label_date}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Margin="230,0,0,0"/>
+                        <TextBlock Visibility="Hidden" Tag="SessionIdentifier" Text=" {label_fullpath}" HorizontalAlignment="Left" Margin="321,30,0,-3" VerticalAlignment="Top"/>
+                        <Button Background="#3D2932" BorderBrush="#3D2932" ToolTipService.ShowOnDisabled="True" Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10"/>
+                        <Button Background="#3D2932" BorderBrush="#3D2932" Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>
