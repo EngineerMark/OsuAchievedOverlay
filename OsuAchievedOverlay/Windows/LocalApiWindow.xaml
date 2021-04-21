@@ -37,9 +37,9 @@
             </ScrollViewer>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Save" Click="Btn_SaveData" HorizontalAlignment="Left" Margin="10,297,0,0" VerticalAlignment="Top" Width="400" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Grid.ColumnSpan="2"/>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="New" Click="Btn_NewItem" HorizontalAlignment="Left" Margin="137,297,0,0" VerticalAlignment="Top" Width="123" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Grid.Column="1"/>
-            <Label Content="Filename" Foreground="White" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Width="94" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-            <Label Content="Format" Foreground="White" HorizontalAlignment="Left" Margin="109,6,0,0" VerticalAlignment="Top" Width="239" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Grid.ColumnSpan="2"/>
-            <Label Content="Prefixes (+, -)" Foreground="White" HorizontalAlignment="Left" Margin="88,6,0,0" VerticalAlignment="Top" Width="108" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Grid.Column="1"/>
+            <Label Content="Filename" Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Width="94" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+            <Label Content="Format" Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="109,6,0,0" VerticalAlignment="Top" Width="239" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Grid.ColumnSpan="2"/>
+            <Label Content="Prefixes (+, -)" Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="88,6,0,0" VerticalAlignment="Top" Width="108" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Grid.Column="1"/>
         </Grid>
     </Grid>
 </Window>
