@@ -42,7 +42,9 @@ namespace OsuAchievedOverlay
             GameManager.Instance.Settings["api"]["key"] = WindowManager.Instance.SettingsWin.InputApiKey.Password;
             GameManager.Instance.Settings["api"]["user"] = WindowManager.Instance.SettingsWin.InputUsername.Text;
             GameManager.Instance.Settings["api"]["gamemode"] = "" + ((OsuApiHelper.OsuMode)WindowManager.Instance.SettingsWin.DropdownGamemode.SelectedIndex);
-            GameManager.Instance.Settings["api"]["updateRate"] = WindowManager.Instance.SettingsWin.InputUpdaterate.Text;
+            int updateRate = int.Parse(WindowManager.Instance.SettingsWin.InputUpdaterate.Text);
+            updateRate = Math.Min(120, Math.Max(5, updateRate));
+            GameManager.Instance.Settings["api"]["updateRate"] = "" + updateRate;
             GameManager.Instance.SettingsSave();
         }
 

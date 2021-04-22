@@ -196,6 +196,10 @@ namespace OsuAchievedOverlay.Managers
                 OsuApiHelper.OsuApiKey.Key = data["api"]["key"];
                 osuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), data["api"]["gamemode"]));
 
+                int updateRate = int.Parse(data["api"]["updateRate"]);
+                updateRate = Math.Min(120, Math.Max(5, updateRate));
+                data["api"]["updateRate"] = "" + updateRate;
+
                 Settings = data;
                 return true;
             }
