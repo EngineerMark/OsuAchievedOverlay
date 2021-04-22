@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OsuAchievedOverlay
+namespace OsuAchievedOverlay.Managers
 {
     public class WindowManager : Manager<WindowManager>
     {

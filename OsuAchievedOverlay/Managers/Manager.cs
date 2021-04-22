@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace OsuAchievedOverlay
+namespace OsuAchievedOverlay.Managers
 {
+    //Base singleton class for all Managers in the app
     public abstract class Manager<T> : IManager where T : class, new()
     {
         private static T _instance;

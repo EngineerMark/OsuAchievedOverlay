@@ -1,5 +1,6 @@
 ﻿using Humanizer;
 using Microsoft.Win32;
+using OsuAchievedOverlay.Managers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -68,10 +69,10 @@ namespace OsuAchievedOverlay
             SetLabelStat(LabelGainedRankedScore, session.DifferenceData.RankedScore);
 
             SetLabelStat(LabelTotalRank, session.CurrentData.WorldRank, false, false);
-            SetLabelStat(LabelGainedRank, session.DifferenceData.WorldRank);
+            SetLabelStat(LabelGainedRank, -session.DifferenceData.WorldRank);
 
             SetLabelStat(LabelTotalCountryRank, session.CurrentData.CountryRank, false, false);
-            SetLabelStat(LabelGainedCountryRank, session.DifferenceData.CountryRank);
+            SetLabelStat(LabelGainedCountryRank, -session.DifferenceData.CountryRank);
 
             SetLabelStat(LabelTotalPlaycount, session.CurrentData.Playcount, false, false);
             SetLabelStat(LabelGainedPlaycount, session.DifferenceData.Playcount);

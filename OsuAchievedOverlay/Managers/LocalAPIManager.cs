@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OsuAchievedOverlay
+namespace OsuAchievedOverlay.Managers
 {
     //Takes care of the files containing session data for stream usage or for other software to read
     public class LocalAPIManager : Manager<LocalAPIManager>

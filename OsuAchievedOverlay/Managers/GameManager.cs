@@ -11,8 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
-
-namespace OsuAchievedOverlay
+namespace OsuAchievedOverlay.Managers
 {
     //This is clearly not a game, but I work in such industry, its standard for me..
     public class GameManager : Manager<GameManager>
@@ -41,6 +40,10 @@ namespace OsuAchievedOverlay
                         ["updateRate"] = "60",
                         ["gamemode"] = ""+OsuApiHelper.OsuMode.Standard
                     },
+                    ["rpc"] = {
+                        ["enabled"] = "0",
+                        ["status"] = ""+DiscordManager.DiscordDisplay.GainedSS
+                    }
                 };
             }
         }
@@ -81,6 +84,7 @@ namespace OsuAchievedOverlay
                 updateTimer.Start();
 
                 LocalAPIManager.Instance.Start();
+                DiscordManager.Instance.Start();
             }
         }
 
@@ -118,6 +122,7 @@ namespace OsuAchievedOverlay
             updateTimer = null;
 
             LocalAPIManager.Instance.Stop();
+            DiscordManager.Instance.Stop();
 
             WindowManager.Instance.ApiWin?.Close();
             WindowManager.Instance.ApiWin = null;
@@ -130,6 +135,7 @@ namespace OsuAchievedOverlay
 
             WindowManager.Instance.SettingsWin?.Close();
             WindowManager.Instance.SettingsWin = null;
+
         }
 
         public void Update()

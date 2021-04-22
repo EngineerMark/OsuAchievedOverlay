@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OsuAchievedOverlay.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;

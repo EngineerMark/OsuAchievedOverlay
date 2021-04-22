@@ -9,7 +9,7 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Title="osu!Achieved Settings" Height="217" Width="459" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
+        Title="osu!Achieved Settings" Height="433" Width="459" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
     <Grid>
         <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="459">
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="-" Click="Btn_Minimize" HorizontalAlignment="Left" Margin="366,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
@@ -19,7 +19,7 @@
                 <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/icon_32.png"/>
             </Grid>
         </Grid>
-        <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Left" Height="188" Margin="0,29,0,0" VerticalAlignment="Top" Width="459">
+        <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Left" Height="404" Margin="0,29,0,0" VerticalAlignment="Top" Width="459">
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,10,0,0" VerticalAlignment="Top" Width="439">
                 <Label Content="API Key" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
                 <PasswordBox Name="InputApiKey" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="33" Margin="85,0,0,-1" Password="TextBox" VerticalAlignment="Top" Width="354" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
@@ -36,7 +36,11 @@
                 <Label Content="Gamemode" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
                 <ComboBox Name="DropdownGamemode" Foreground="White" HorizontalAlignment="Left" Margin="85,0,0,0" VerticalAlignment="Top" Width="354" Height="32"/>
             </Grid>
-            <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_SaveSettings" Content="Save &#38; Apply" HorizontalAlignment="Left" Margin="10,143,0,0" VerticalAlignment="Top" Width="439"/>
+            <Grid HorizontalAlignment="Left" Height="32" Margin="10,138,0,0" VerticalAlignment="Top" Width="439">
+                <Label Content="Discord RPC" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                <CheckBox Content="" Name="ToggleDiscordRPC" Foreground="White" FlowDirection="RightToLeft" HorizontalAlignment="Left" Margin="85,0,0,0" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Height="32" Width="18"/>
+            </Grid>
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_SaveSettings" Content="Save &#38; Apply" HorizontalAlignment="Left" Margin="10,362,0,0" VerticalAlignment="Top" Width="439"/>
         </Grid>
     </Grid>
 </Window>

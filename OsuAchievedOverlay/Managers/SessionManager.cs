@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OsuAchievedOverlay
+namespace OsuAchievedOverlay.Managers
 {
     public class SessionManager : Manager<SessionManager>
     {

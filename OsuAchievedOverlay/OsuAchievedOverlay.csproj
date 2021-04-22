@@ -59,6 +59,9 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DiscordRPC, Version=1.0.175.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DiscordRichPresence.1.0.175\lib\net35\DiscordRPC.dll</HintPath>
+    </Reference>
     <Reference Include="Humanizer, Version=2.8.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
       <HintPath>..\packages\Humanizer.Core.2.8.26\lib\netstandard2.0\Humanizer.dll</HintPath>
     </Reference>
@@ -112,14 +115,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Managers\DiscordManager.cs" />
     <Compile Include="LocalApiFile.cs" />
-    <Compile Include="LocalAPIManager.cs" />
-    <Compile Include="GameManager.cs" />
-    <Compile Include="InterfaceManager.cs" />
+    <Compile Include="Managers\LocalAPIManager.cs" />
+    <Compile Include="Managers\GameManager.cs" />
+    <Compile Include="Managers\InterfaceManager.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="SessionFileData.cs" />
     <Compile Include="StringHelper.cs" />
-    <Compile Include="WindowManager.cs" />
+    <Compile Include="Managers\WindowManager.cs" />
     <Compile Include="Windows\BetaDisplayWindow.xaml.cs">
       <DependentUpon>BetaDisplayWindow.xaml</DependentUpon>
     </Compile>
@@ -129,9 +133,9 @@
     <Compile Include="Windows\LoadSessionWindow.xaml.cs">
       <DependentUpon>LoadSessionWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Manager.cs" />
+    <Compile Include="Managers\Manager.cs" />
     <Compile Include="Session.cs" />
-    <Compile Include="SessionManager.cs" />
+    <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Windows\PopupSetAPI.xaml.cs">
       <DependentUpon>PopupSetAPI.xaml</DependentUpon>
     </Compile>

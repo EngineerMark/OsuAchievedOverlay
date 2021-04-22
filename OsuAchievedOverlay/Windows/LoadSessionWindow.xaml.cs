@@ -1,6 +1,7 @@
 ﻿using Humanizer;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using OsuAchievedOverlay.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
