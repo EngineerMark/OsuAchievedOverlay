@@ -37,7 +37,7 @@ namespace OsuAchievedOverlay
         {
             LabelUserName.Content = user.Name;
 
-            ImageProfilePicture.Source = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
+            ImageProfilePicture.ImageSource = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
             ImageCountryFlag.Source = InterfaceManager.Instance.LoadImage(@"https://osu.ppy.sh/images/flags/" + user.CountryCode + ".png");
 
             RegionInfo countryInfo = new RegionInfo(user.CountryCode);

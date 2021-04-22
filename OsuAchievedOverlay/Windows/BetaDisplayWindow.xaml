@@ -22,7 +22,13 @@
         <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Left" Height="682" Margin="0,29,0,0" VerticalAlignment="Top" Width="423">
             <UniformGrid Columns="2" HorizontalAlignment="Left" Height="128" Margin="10,38,0,0" VerticalAlignment="Top" Width="403">
                 <Grid>
-                    <Image x:Name="ImageProfilePicture" HorizontalAlignment="Left" VerticalAlignment="Top" Height="128" Width="128" Source="../Assets/Images/profilepicture_placeholder.png" Margin="64,0,0,0"/>
+                    <Grid Height="128" Width="128" Margin="64,0,10,0">
+                        <Rectangle RadiusX="20" RadiusY="20">
+                            <Rectangle.Fill>
+                                <ImageBrush x:Name="ImageProfilePicture" ImageSource="../Assets/Images/profilepicture_placeholder.png"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Grid>
                 </Grid>
                 <Grid >
                     <Grid HorizontalAlignment="Left" Height="66" VerticalAlignment="Top">
