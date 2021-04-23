@@ -9,6 +9,8 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
+        BorderBrush="#2E1F25"
+        BorderThickness="1"
         Title="osu!Achieved" Height="711" Width="423" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
     <Grid>
         <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="423">

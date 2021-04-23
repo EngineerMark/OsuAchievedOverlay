@@ -190,11 +190,6 @@ namespace OsuAchievedOverlay
             }
         }
 
-        private void Btn_LoadFromList(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Btn_Close(object sender, RoutedEventArgs e)
         {
             Close();

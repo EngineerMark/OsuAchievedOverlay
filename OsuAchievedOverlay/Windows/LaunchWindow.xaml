@@ -9,6 +9,8 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
+        BorderBrush="#2E1F25"
+        BorderThickness="1"
         Title="Launching osu!Achieved" Height="308.268" Width="590.945" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
     <Grid>
         <Grid Background="#3D2932" HorizontalAlignment="Left" Height="308" VerticalAlignment="Top" Width="591">

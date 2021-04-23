@@ -88,26 +88,36 @@ namespace OsuAchievedOverlay.Managers
             }
         }
 
+        private void ProgressTick(int updateRate)
+        {
+            double interval = updateRate;
+            double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
+            WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)));
+        }
+
         public void RestartTimers(int updateRate)
         {
             timer?.Stop();
-            timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-            timer.Tick += new EventHandler(RefreshTimer);
+            if (timer == null)
+            {
+                timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+                timer.Tick += new EventHandler(RefreshTimer);
+            }
             timer.Interval = TimeSpan.FromSeconds(updateRate);
             timer.Start();
+            RefreshTimer(null, null);
 
             lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
 
             progressTimer?.Stop();
-            progressTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-            progressTimer.Tick += new EventHandler((object s, EventArgs e) =>
+            if (progressTimer == null)
             {
-                double interval = updateRate;
-                double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
-                WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)));
-            });
-            progressTimer.Interval = new TimeSpan(0, 0, 1);
+                progressTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+                progressTimer.Tick += (object s, EventArgs e) => ProgressTick(updateRate);
+                progressTimer.Interval = new TimeSpan(0, 0, 1);
+            }
             progressTimer.Start();
+            ProgressTick(updateRate);
         }
 
         public override void Stop()
@@ -123,6 +133,7 @@ namespace OsuAchievedOverlay.Managers
 
             LocalAPIManager.Instance.Stop();
             DiscordManager.Instance.Stop();
+            SessionManager.Instance.Stop();
 
             WindowManager.Instance.ApiWin?.Close();
             WindowManager.Instance.ApiWin = null;
@@ -176,6 +187,8 @@ namespace OsuAchievedOverlay.Managers
         {
             osuUser = OsuApiHelper.OsuApi.GetUser(settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]));
 
+            if (CurrentSession.InitialData == null)
+                CurrentSession.InitialData = SessionData.FromUser(osuUser);
             CurrentSession.CurrentData = SessionData.FromUser(osuUser);
             CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
 
@@ -299,22 +312,10 @@ namespace OsuAchievedOverlay.Managers
         {
             if (lastRefresh == -1 || DateTimeOffset.Now.ToUnixTimeSeconds() - lastRefresh > 15)
             {
-                if (OsuApiHelper.OsuApi.IsKeyValid())
-                {
-                    //osuUser = ApiHelper<OsuApiHelper.OsuUser>.GetUser(Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]));
+                CurrentSession = new Session();
+                RestartTimers((int)timer.Interval.TotalSeconds);
 
-                    //if (osuUser != null)
-                    //{
-                        CurrentSession = new Session()
-                        {
-                            InitialData = SessionData.FromUser(osuUser),
-                        };
-                        RestartTimers((int)timer.Interval.TotalSeconds);
-                    //}
-
-
-                    lastRefresh = DateTimeOffset.Now.ToUnixTimeSeconds();
-                }
+                lastRefresh = DateTimeOffset.Now.ToUnixTimeSeconds();
             }
         }
     }
