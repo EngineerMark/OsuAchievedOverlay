@@ -32,6 +32,9 @@ namespace OsuAchievedOverlay.Managers
             //{
             //    Details = "Test",
             //    State = "test2",
+            //    Assets = new Assets(){
+            //        LargeImageText = "Tracking "+GameManager.Instance.Settings["api"]["user"]   
+            //    }
             //});
         }
 

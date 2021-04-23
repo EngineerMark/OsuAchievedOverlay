@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace OsuAchievedOverlay
         {
             get
             {
-                return StringHelper.Base64Encode(FileLocation+FileName+FileExtension);
+                return StringHelper.Base64Encode(Path.Combine(FileLocation, FileName+FileExtension));
             }
         }
 

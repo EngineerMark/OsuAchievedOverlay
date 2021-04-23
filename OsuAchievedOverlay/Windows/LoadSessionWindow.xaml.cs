@@ -141,7 +141,8 @@ namespace OsuAchievedOverlay
                 SessionFileData sessionFileData = SessionManager.Instance.FindByIdentifier(identifier);
                 if (sessionFileData != null)
                 {
-                    OpenSessionFile(StringHelper.Base64Decode(identifier));
+                    string path = StringHelper.Base64Decode(identifier);
+                    OpenSessionFile(path);
                 }
             }
         }
