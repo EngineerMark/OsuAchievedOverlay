@@ -38,7 +38,7 @@
                     </Grid>
                     <Grid HorizontalAlignment="Left" Height="62" Margin="0,66,0,0" VerticalAlignment="Top">
                         <Grid HorizontalAlignment="Left" Height="66" VerticalAlignment="Top" Width="41" Margin="0,0,0,-4">
-                            <Image Name="ImageCountryFlag" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="31" Source="/OsuAchievedOverlay;component/Assets/Images/NL.png" Margin="3,2,0,0"/>
+                            <Image Name="ImageCountryFlag" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="31" Source="/OsuAchievedOverlay;component/Assets/Images/Flags/NL.png" Margin="3,2,0,0"/>
                         </Grid>
                         <Grid HorizontalAlignment="Left" Height="66" Margin="41,0,0,-4" VerticalAlignment="Top" Width="154">
                             <Label Name="LabelCountryName" Content="Netherlands" Foreground="#DBB4C5" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" HorizontalAlignment="Left" VerticalAlignment="Top" Height="66" Width="145" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller Light" FontSize="16"/>
