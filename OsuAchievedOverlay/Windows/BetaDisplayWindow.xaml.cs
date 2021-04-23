@@ -133,7 +133,14 @@ namespace OsuAchievedOverlay
 
         private void btnSaveSession_Click(object sender, RoutedEventArgs e)
         {
-            string json = GameManager.Instance.CurrentSession.ConvertToJson();
+            MessageBoxResult res = MessageBox.Show("Do you want to save this session as read-only?", "Read-only mode", MessageBoxButton.YesNo);
+
+            Session clonedSession = (Session)GameManager.Instance.CurrentSession.Clone();
+            if (res== MessageBoxResult.Yes){
+                clonedSession.ReadOnly = true;
+            }
+
+            string json = clonedSession.ConvertToJson();
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";

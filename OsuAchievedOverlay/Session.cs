@@ -26,6 +26,9 @@ namespace OsuAchievedOverlay
         [JsonProperty("GainedTopPlays")]
         public List<OsuApiHelper.OsuPlay> GainedPlays { get; set; } = new List<OsuApiHelper.OsuPlay>();
 
+        [JsonProperty("ReadOnly")]
+        public bool ReadOnly { get; set; } = false;
+
         public Session()
         {
             SessionDate = DateTimeOffset.Now.ToUnixTimeSeconds();
@@ -52,9 +55,9 @@ namespace OsuAchievedOverlay
         {
             return new Session()
             {
-                InitialData = (SessionData)InitialData.Clone(),
-                DifferenceData = (SessionData)DifferenceData.Clone(),
-                CurrentData = (SessionData)CurrentData.Clone(),
+                InitialData = (SessionData)InitialData?.Clone(),
+                DifferenceData = (SessionData)DifferenceData?.Clone(),
+                CurrentData = (SessionData)CurrentData?.Clone(),
                 SessionDate = SessionDate,
                 GainedPlays = new List<OsuApiHelper.OsuPlay>(GainedPlays)
             };

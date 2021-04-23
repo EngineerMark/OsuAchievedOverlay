@@ -187,14 +187,23 @@ namespace OsuAchievedOverlay.Managers
         {
             osuUser = OsuApiHelper.OsuApi.GetUser(settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]));
 
-            if (CurrentSession.InitialData == null)
-                CurrentSession.InitialData = SessionData.FromUser(osuUser);
-            CurrentSession.CurrentData = SessionData.FromUser(osuUser);
+            if (!CurrentSession.ReadOnly)
+            {
+                if (CurrentSession.InitialData == null)
+                    CurrentSession.InitialData = SessionData.FromUser(osuUser);
+                CurrentSession.CurrentData = SessionData.FromUser(osuUser);
+
+                //List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
+                //CurrentSession.AddNewPlays(newPlays);
+                WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Hidden;
+            }
+            else{
+                if (CurrentSession.CurrentData == null)
+                    CurrentSession.CurrentData = (SessionData)CurrentSession.InitialData.Clone();
+
+                WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Visible;
+            }
             CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
-
-            //List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
-            //CurrentSession.AddNewPlays(newPlays);
-
             WindowManager.Instance.BetaDisplayWin.ApplyUser(osuUser);
             WindowManager.Instance.BetaDisplayWin.ApplySession(CurrentSession);
         }
