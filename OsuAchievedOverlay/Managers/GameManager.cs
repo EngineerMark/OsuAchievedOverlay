@@ -136,6 +136,7 @@ namespace OsuAchievedOverlay.Managers
             LocalAPIManager.Instance.Stop();
             DiscordManager.Instance.Stop();
             SessionManager.Instance.Stop();
+            FileManager.Instance.Stop();
 
             WindowManager.Instance.ApiWin?.Close();
             WindowManager.Instance.ApiWin = null;

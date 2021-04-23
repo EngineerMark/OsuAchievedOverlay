@@ -115,7 +115,7 @@ namespace OsuAchievedOverlay
             if (File.Exists(LocalAPIManager.ApiDataFile))
                 File.Delete(LocalAPIManager.ApiDataFile);
 
-            File.WriteAllText(LocalAPIManager.ApiDataFile, JsonConvert.SerializeObject(LocalAPIManager.Instance.ApiDataList));
+            FileManager.Instance.WriteAllText(LocalAPIManager.ApiDataFile, JsonConvert.SerializeObject(LocalAPIManager.Instance.ApiDataList));
         }
 
         private void Btn_Close(object sender, RoutedEventArgs e)

@@ -118,6 +118,7 @@
     <Compile Include="Managers\FileManager.cs" />
     <Compile Include="Managers\DiscordManager.cs" />
     <Compile Include="LocalApiFile.cs" />
+    <Compile Include="Interfaces\IThreaded.cs" />
     <Compile Include="Managers\LocalAPIManager.cs" />
     <Compile Include="Managers\GameManager.cs" />
     <Compile Include="Managers\InterfaceManager.cs" />

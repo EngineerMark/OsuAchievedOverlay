@@ -146,7 +146,7 @@ namespace OsuAchievedOverlay
             saveFileDialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
             if (saveFileDialog.ShowDialog() == true)
             {
-                File.WriteAllText(saveFileDialog.FileName, json);
+                FileManager.Instance.WriteAllText(saveFileDialog.FileName, json);
                 SessionManager.Instance.AddFile(saveFileDialog.FileName);
             }
         }

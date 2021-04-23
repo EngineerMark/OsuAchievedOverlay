@@ -54,8 +54,8 @@ namespace OsuAchievedOverlay.Managers
             Directory.CreateDirectory(ApiFolder);
             string data = Parse(apiFile, GameManager.Instance.CurrentSession);
             string file = Path.Combine(ApiFolder, apiFile.FileName);
-            File.WriteAllText(file, data);
-            //FileManager.Instance.WriteTextAsync(file, data);
+            //File.WriteAllText(file, data);
+            FileManager.Instance.WriteAllText(file, data);
         }
 
         public string Parse(LocalApiFile apiFile, Session session)
