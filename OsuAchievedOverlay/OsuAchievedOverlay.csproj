@@ -115,6 +115,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Managers\FileManager.cs" />
     <Compile Include="Managers\DiscordManager.cs" />
     <Compile Include="LocalApiFile.cs" />
     <Compile Include="Managers\LocalAPIManager.cs" />

@@ -45,6 +45,12 @@ namespace OsuAchievedOverlay
             int updateRate = int.Parse(WindowManager.Instance.SettingsWin.InputUpdaterate.Text);
             updateRate = Math.Min(120, Math.Max(5, updateRate));
             GameManager.Instance.Settings["api"]["updateRate"] = "" + updateRate;
+            GameManager.Instance.Settings["rpc"]["enabled"] = (bool)WindowManager.Instance.SettingsWin.ToggleDiscordRPC.IsChecked ? "1" : "0";
+            if (GameManager.Instance.Settings["rpc"]["enabled"] == "1")
+                DiscordManager.Instance.Start();
+            else
+                DiscordManager.Instance.Stop();
+
             GameManager.Instance.SettingsSave();
         }
 

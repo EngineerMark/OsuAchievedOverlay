@@ -55,6 +55,7 @@ namespace OsuAchievedOverlay.Managers
             string data = Parse(apiFile, GameManager.Instance.CurrentSession);
             string file = Path.Combine(ApiFolder, apiFile.FileName);
             File.WriteAllText(file, data);
+            //FileManager.Instance.WriteTextAsync(file, data);
         }
 
         public string Parse(LocalApiFile apiFile, Session session)

@@ -84,7 +84,9 @@ namespace OsuAchievedOverlay.Managers
                 updateTimer.Start();
 
                 LocalAPIManager.Instance.Start();
-                DiscordManager.Instance.Start();
+
+                if(Settings["rpc"]["enabled"]=="1")
+                    DiscordManager.Instance.Start();
             }
         }
 
