@@ -64,63 +64,73 @@ namespace OsuAchievedOverlay
             int id = 0;
             foreach (SessionFileData sessionData in SessionManager.Instance.GetSortedList())
             {
-                Session temp = LoadSession(System.IO.Path.Combine(sessionData.FileLocation, sessionData.FileName + sessionData.FileExtension));
-                Grid clonedPrefab = (Grid)SessionPrefab;
-                foreach (UIElement child in clonedPrefab.Children)
+                Session temp = null;
+                try
                 {
-                    if (child is TextBlock textblock)
-                    {
-                        switch (textblock.Text)
-                        {
-                            case " {label_filename}":
-                                textblock.Text = sessionData.FileName + sessionData.FileExtension;
-                                break;
-                            case " {label_filepath}":
-                                textblock.Text = sessionData.FileLocation;
-                                break;
-                            case " {label_date}":
-                                textblock.Text = "" + DateTimeOffset.FromUnixTimeSeconds(sessionData.FileDate).UtcDateTime.Humanize();
-                                break;
-                            case " {label_fullpath}":
-                                textblock.Text = System.IO.Path.Combine(sessionData.FileLocation, sessionData.FileName + sessionData.FileExtension);
-                                break;
-                            default:
-                                textblock.Text = "";
-                                break;
-                        }
-
-                        if ((string)textblock.Tag == "SessionIdentifier")
-                        {
-                            textblock.Text = sessionData.Identifier;
-                        }
-                    }
-                    else if (child is Button button)
-                    {
-                        if ((string)button.Tag == "SessionOpen")
-                        {
-                            if (temp.Version != Session.CurrentVersion)
-                            {   
-                                //Tooltip doesn't display when button is disabled... why wpf?
-                                //button.IsEnabled = false;
-                                button.ToolTip = "This session is made in a different version than supported (Session is " + temp.Version + ", but you are running " + Session.CurrentVersion + ")";
-                            }
-                            button.Click += (object sender, RoutedEventArgs e) =>
-                            {
-                                Btn_ClickSessionItem(sessionData.Identifier);
-                            };
-                        }
-                        else if ((string)button.Tag == "SessionRemove")
-                        {
-                            button.Click += (object sender, RoutedEventArgs e) =>
-                            {
-                                Btn_RemoveSessionItem(sessionData.Identifier);
-                            };
-                        }
-                    }
+                    temp = LoadSession(System.IO.Path.Combine(sessionData.FileLocation, sessionData.FileName + sessionData.FileExtension));
+                }catch(Exception e){
+                    
                 }
-                id++;
-                SessionList.Children.Add(clonedPrefab);
-                SessionList.Children.Add(SeperatorPrefab);
+
+                if (temp != null)
+                {
+                    Grid clonedPrefab = (Grid)SessionPrefab;
+                    foreach (UIElement child in clonedPrefab.Children)
+                    {
+                        if (child is TextBlock textblock)
+                        {
+                            switch (textblock.Text)
+                            {
+                                case " {label_filename}":
+                                    textblock.Text = sessionData.FileName + sessionData.FileExtension;
+                                    break;
+                                case " {label_filepath}":
+                                    textblock.Text = sessionData.FileLocation;
+                                    break;
+                                case " {label_date}":
+                                    textblock.Text = "" + DateTimeOffset.FromUnixTimeSeconds(sessionData.FileDate).UtcDateTime.Humanize();
+                                    break;
+                                case " {label_fullpath}":
+                                    textblock.Text = System.IO.Path.Combine(sessionData.FileLocation, sessionData.FileName + sessionData.FileExtension);
+                                    break;
+                                default:
+                                    textblock.Text = "";
+                                    break;
+                            }
+
+                            if ((string)textblock.Tag == "SessionIdentifier")
+                            {
+                                textblock.Text = sessionData.Identifier;
+                            }
+                        }
+                        else if (child is Button button)
+                        {
+                            if ((string)button.Tag == "SessionOpen")
+                            {
+                                if (temp.Version != Session.CurrentVersion)
+                                {
+                                    //Tooltip doesn't display when button is disabled... why wpf?
+                                    //button.IsEnabled = false;
+                                    button.ToolTip = "This session is made in a different version than supported (Session is " + temp.Version + ", but you are running " + Session.CurrentVersion + ")";
+                                }
+                                button.Click += (object sender, RoutedEventArgs e) =>
+                                {
+                                    Btn_ClickSessionItem(sessionData.Identifier);
+                                };
+                            }
+                            else if ((string)button.Tag == "SessionRemove")
+                            {
+                                button.Click += (object sender, RoutedEventArgs e) =>
+                                {
+                                    Btn_RemoveSessionItem(sessionData.Identifier);
+                                };
+                            }
+                        }
+                    }
+                    id++;
+                    SessionList.Children.Add(clonedPrefab);
+                    SessionList.Children.Add(SeperatorPrefab);
+                }
             }
         }
 
@@ -161,10 +171,10 @@ namespace OsuAchievedOverlay
             {
                 newSession = LoadSession(path);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 validSession = false;
-                MessageBox.Show("Seems like the opened file is an invalid session file.", "Error opening session", MessageBoxButton.OK);
+                MessageBox.Show("Seems like the opened file is an invalid session file.\n\n"+e.Message, "Error opening session", MessageBoxButton.OK);
             }
             if (validSession)
             {
