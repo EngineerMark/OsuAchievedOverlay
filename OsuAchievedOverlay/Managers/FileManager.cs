@@ -9,13 +9,9 @@ using System.Threading.Tasks;
 
 namespace OsuAchievedOverlay.Managers
 {
-    public class FileManager : Manager<FileManager>, IThreaded
+    public class FileManager : ThreadedManager<FileManager>
     {
-        private bool running;
-        private Thread thread;
         private Queue<KeyValuePair<string, string>> FileWriteQueue { get; set; }
-
-        public Thread Thread { get => thread; set => thread = value; }
 
         public FileManager(){
             Start();
@@ -25,21 +21,15 @@ namespace OsuAchievedOverlay.Managers
         {
             FileWriteQueue = new Queue<KeyValuePair<string, string>>();
 
-            Thread = new Thread(new ThreadStart(ThreadStep))
-            {
-                IsBackground = true
-            };
-            running = true;
-            Thread.Start();
+            base.Start();
         }
 
         public override void Stop()
         {
-            running = false;
-            Thread?.Join();
+            base.Stop();
         }
 
-        private void ThreadStep(){
+        protected override void ThreadStep(){
             while(running)
             {
                 if(FileWriteQueue.Count>0){
