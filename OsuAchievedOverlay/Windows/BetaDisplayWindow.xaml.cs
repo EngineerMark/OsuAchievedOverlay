@@ -133,6 +133,7 @@ namespace OsuAchievedOverlay
             if (res== MessageBoxResult.Yes){
                 clonedSession.ReadOnly = true;
             }
+            clonedSession.Username = GameManager.Instance.OsuUser.Name;
 
             string json = clonedSession.ConvertToJson();
 

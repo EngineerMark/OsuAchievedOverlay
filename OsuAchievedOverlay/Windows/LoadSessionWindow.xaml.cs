@@ -174,6 +174,12 @@ namespace OsuAchievedOverlay
                 SessionManager.Instance.AddFile(path);
 
                 GameManager.Instance.CurrentSession = newSession;
+                if (newSession.Username != null && newSession.Username != GameManager.Instance.OsuUser.Name)
+                {
+                    SettingsManager.Instance.Settings["api"]["user"] = newSession.Username;
+                    GameManager.Instance.OsuUser = OsuApiHelper.OsuApi.GetUser(newSession.Username, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
+                }
+
                 GameManager.Instance.RefreshTimer(null, null);
 
                 Close();

@@ -29,6 +29,9 @@ namespace OsuAchievedOverlay
         [JsonProperty("ReadOnly")]
         public bool ReadOnly { get; set; } = false;
 
+        [JsonProperty("User")]
+        public string Username { get; set; } = null;
+
         public Session()
         {
             SessionDate = DateTimeOffset.Now.ToUnixTimeSeconds();
