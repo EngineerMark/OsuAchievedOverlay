@@ -34,7 +34,7 @@
                 </Grid>
                 <Grid >
                     <Grid HorizontalAlignment="Left" Height="66" VerticalAlignment="Top">
-                        <Label Content="Amayakase" Name="LabelUserName" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Height="66" Width="195" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller Light" FontSize="20"/>
+                        <Label Content=" {Username}" Name="LabelUserName" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Height="66" Width="195" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller Light" FontSize="20"/>
                     </Grid>
                     <Grid HorizontalAlignment="Left" Height="62" Margin="0,66,0,0" VerticalAlignment="Top">
                         <Grid HorizontalAlignment="Left" Height="66" VerticalAlignment="Top" Width="41" Margin="0,0,0,-4">

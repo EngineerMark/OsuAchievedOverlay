@@ -28,20 +28,23 @@ namespace OsuAchievedOverlay
 
         public void ApplyUser(OsuApiHelper.OsuUser user)
         {
-            LabelUserName.Content = user.Name;
+            if (!LabelUserName.Content.Equals(user.Name))
+            {
+                LabelUserName.Content = user.Name;
 
-            ImageProfilePicture.ImageSource = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
-            //ImageCountryFlag.Source = InterfaceManager.Instance.LoadImage(@"https://osu.ppy.sh/images/flags/" + user.CountryCode + ".png");
-            try
-            {
-                ImageCountryFlag.Source = new BitmapImage(new Uri("pack://application:,,,/OsuAchievedOverlay;component/Assets/Images/Flags/" + user.CountryCode + ".png"));
+                ImageProfilePicture.ImageSource = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
+                //ImageCountryFlag.Source = InterfaceManager.Instance.LoadImage(@"https://osu.ppy.sh/images/flags/" + user.CountryCode + ".png");
+                try
+                {
+                    ImageCountryFlag.Source = new BitmapImage(new Uri("pack://application:,,,/OsuAchievedOverlay;component/Assets/Images/Flags/" + user.CountryCode + ".png"));
+                }
+                catch (Exception e)
+                {
+                    ImageCountryFlag.Source = new BitmapImage(new Uri("pack://application:,,,/OsuAchievedOverlay;component/Assets/Images/Flags/__.png"));
+                }
+                RegionInfo countryInfo = new RegionInfo(user.CountryCode);
+                LabelCountryName.Content = countryInfo.DisplayName;
             }
-            catch (Exception e)
-            {
-                ImageCountryFlag.Source = new BitmapImage(new Uri("pack://application:,,,/OsuAchievedOverlay;component/Assets/Images/Flags/__.png"));
-            }
-            RegionInfo countryInfo = new RegionInfo(user.CountryCode);
-            LabelCountryName.Content = countryInfo.DisplayName;
         }
 
         public void ApplySession(Session session)
