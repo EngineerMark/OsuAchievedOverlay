@@ -11,6 +11,7 @@ namespace OsuAchievedOverlay.Managers
 {
     public class FileManager : Manager<FileManager>, IThreaded
     {
+        private bool running;
         private Thread thread;
         private Queue<KeyValuePair<string, string>> FileWriteQueue { get; set; }
 
@@ -28,16 +29,19 @@ namespace OsuAchievedOverlay.Managers
             {
                 IsBackground = true
             };
+            running = true;
             Thread.Start();
         }
 
         public override void Stop()
         {
+            running = false;
             Thread?.Join();
         }
 
         private void ThreadStep(){
-            while(true){
+            while(running)
+            {
                 if(FileWriteQueue.Count>0){
                     KeyValuePair<string, string> fileProcess = FileWriteQueue.Dequeue();
                     File.WriteAllText(fileProcess.Key, fileProcess.Value);
