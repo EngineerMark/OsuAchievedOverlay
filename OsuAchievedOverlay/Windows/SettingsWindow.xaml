@@ -12,9 +12,9 @@
         ResizeMode="NoResize"
         BorderBrush="#2E1F25"
         BorderThickness="1"
-        Title="osu!Achieved Settings" Height="232" Width="459" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
+        Title="osu!Achieved Settings" Height="232" Width="460" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
     <Grid>
-        <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="459">
+        <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="459" Margin="0,0,0,0">
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="-" Click="Btn_Minimize" HorizontalAlignment="Left" Margin="366,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="X" Click="Btn_Close" HorizontalAlignment="Left" Margin="415,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
             <Label Content="osu!Achieved Settings" Foreground="#553A46" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="29" Width="231" Margin="34,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
@@ -22,7 +22,7 @@
                 <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/icon_32.png"/>
             </Grid>
         </Grid>
-        <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Left" Height="201" Margin="0,29,-2,0" VerticalAlignment="Top" Width="459">
+        <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Left" Height="201" Margin="0,29,0,0" VerticalAlignment="Top" Width="459">
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,10,0,0" VerticalAlignment="Top" Width="439">
                 <Label Content="API Key" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
                 <PasswordBox x:Name="InputApiKey" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="33" Margin="85,0,0,-1" Password="TextBox" VerticalAlignment="Top" Width="354" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
