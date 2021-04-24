@@ -1,14 +1,8 @@
 ﻿using Humanizer;
-using IniParser;
 using IniParser.Model;
+using OsuApiHelper;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace OsuAchievedOverlay.Managers
@@ -19,7 +13,6 @@ namespace OsuAchievedOverlay.Managers
         private OsuApiHelper.OsuUser osuUser = null;
 
         private Session currentSession;
-        private IniData settings;
 
         private DispatcherTimer timer;
         private DispatcherTimer progressTimer;
@@ -28,47 +21,27 @@ namespace OsuAchievedOverlay.Managers
         private long lastTimerFire = -1;
         private long lastRefresh = -1;
 
-        public static IniData DefaultSettings
-        {
-            get
-            {
-                return new IniData()
-                {
-                    ["api"] = {
-                        ["key"] = "No key inserted",
-                        ["user"] = "Username here",
-                        ["updateRate"] = "60",
-                        ["gamemode"] = ""+OsuApiHelper.OsuMode.Standard
-                    },
-                    ["rpc"] = {
-                        ["enabled"] = "0",
-                        ["status"] = ""+DiscordManager.DiscordDisplay.GainedSS
-                    }
-                };
-            }
-        }
-
         public Session CurrentSession { get => currentSession; set => currentSession = value; }
-        public IniData Settings { get => settings; set => settings = value; }
+        public OsuUser OsuUser { get => osuUser; set => osuUser = value; }
 
         public override void Start()
         {
-            bool success = LoadSettings();
+            bool success = SettingsManager.Instance.LoadSettings();
             if (success)
             {
                 WindowManager.Instance.BetaDisplayWin = new BetaDisplayWindow();
                 WindowManager.Instance.BetaDisplayWin.Show();
                 WindowManager.Instance.BetaDisplayWin.Focus();
-                ApplySettingsToApp(Settings);
+                ApplySettingsToApp(SettingsManager.Instance.Settings);
 
-                if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(Settings["api"]["user"]))
+                if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(SettingsManager.Instance.Settings["api"]["user"]))
                 {
-                    if (osuUser == null)
-                        osuUser = OsuApiHelper.OsuApi.GetUser(Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]));
+                    if (OsuUser == null)
+                        OsuUser = OsuApiHelper.OsuApi.GetUser(SettingsManager.Instance.Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
 
                     CurrentSession = new Session()
                     {
-                        InitialData = SessionData.FromUser(osuUser)
+                        InitialData = SessionData.FromUser(OsuUser)
                     };
 
                 }
@@ -76,7 +49,7 @@ namespace OsuAchievedOverlay.Managers
                 RefreshTimer(null, null);
                 //Update every minute
 
-                RestartTimers(Convert.ToInt32(Settings["api"]["updateRate"]));
+                RestartTimers(Convert.ToInt32(SettingsManager.Instance.Settings["api"]["updateRate"]));
 
                 updateTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
                 updateTimer.Tick += new EventHandler((object s, EventArgs e) => Update());
@@ -84,9 +57,6 @@ namespace OsuAchievedOverlay.Managers
                 updateTimer.Start();
 
                 LocalAPIManager.Instance.Start();
-
-                if(Settings["rpc"]["enabled"]=="1")
-                    DiscordManager.Instance.Start();
             }
         }
 
@@ -134,7 +104,6 @@ namespace OsuAchievedOverlay.Managers
             updateTimer = null;
 
             LocalAPIManager.Instance.Stop();
-            DiscordManager.Instance.Stop();
             SessionManager.Instance.Stop();
             FileManager.Instance.Stop();
 
@@ -163,9 +132,9 @@ namespace OsuAchievedOverlay.Managers
 
         public void RefreshTimer(object sender, EventArgs e)
         {
-            if (WindowManager.Instance.BetaDisplayWin != null && CurrentSession != null && osuUser != null)
+            if (WindowManager.Instance.BetaDisplayWin != null && CurrentSession != null && OsuUser != null)
             {
-                bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k=" + Settings["api"]["key"] + "&u=peppy") != "";
+                bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k=" + SettingsManager.Instance.Settings["api"]["key"] + "&u=peppy") != "";
                 if (apiReady)
                 {
                     bool _continue = true;
@@ -188,13 +157,13 @@ namespace OsuAchievedOverlay.Managers
 
         private void UpdateSession()
         {
-            osuUser = OsuApiHelper.OsuApi.GetUser(settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]));
+            OsuUser = OsuApiHelper.OsuApi.GetUser(SettingsManager.Instance.Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
 
             if (!CurrentSession.ReadOnly)
             {
                 if (CurrentSession.InitialData == null)
-                    CurrentSession.InitialData = SessionData.FromUser(osuUser);
-                CurrentSession.CurrentData = SessionData.FromUser(osuUser);
+                    CurrentSession.InitialData = SessionData.FromUser(OsuUser);
+                CurrentSession.CurrentData = SessionData.FromUser(OsuUser);
 
                 //List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
                 //CurrentSession.AddNewPlays(newPlays);
@@ -207,61 +176,8 @@ namespace OsuAchievedOverlay.Managers
                 WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Visible;
             }
             CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
-            WindowManager.Instance.BetaDisplayWin.ApplyUser(osuUser);
+            WindowManager.Instance.BetaDisplayWin.ApplyUser(OsuUser);
             WindowManager.Instance.BetaDisplayWin.ApplySession(CurrentSession);
-        }
-
-        public bool LoadSettings()
-        {
-            FileIniDataParser parser = new FileIniDataParser();
-            if (File.Exists("Settings.ini"))
-            {
-                IniData data = parser.ReadFile("Settings.ini");
-                data = FixIniData(parser, data);
-                OsuApiHelper.OsuApiKey.Key = data["api"]["key"];
-                osuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), data["api"]["gamemode"]));
-
-                int updateRate = int.Parse(data["api"]["updateRate"]);
-                updateRate = Math.Min(120, Math.Max(5, updateRate));
-                data["api"]["updateRate"] = "" + updateRate;
-
-                Settings = data;
-                return true;
-            }
-            else
-            {
-                //IniData newData = new IniData();
-
-                //newData = FixIniData(parser, newData);
-                //parser.WriteFile("Settings.ini", newData);
-
-                //MessageBoxResult result = MessageBox.Show("No settings file was present yet. Generated one. Please enter leftover values in the file.\nPress 'OK' to open the settings location.", "No settings file", MessageBoxButton.OKCancel);
-                //if (result == MessageBoxResult.OK)
-                //{
-                //    Process.Start(new ProcessStartInfo()
-                //    {
-                //        Arguments = Directory.GetCurrentDirectory(),
-                //        FileName = "explorer.exe"
-                //    });
-                //}
-                //WindowManager.Instance.MainWin.Close();
-                return false;
-            }
-        }
-
-        public static IniData FixIniData(FileIniDataParser parser, IniData data)
-        {
-            foreach (SectionData section in DefaultSettings.Sections)
-            {
-                foreach (KeyData key in section.Keys)
-                {
-                    if (data[section.SectionName][key.KeyName] == null)
-                        data[section.SectionName][key.KeyName] = key.Value;
-                }
-            }
-
-            parser.WriteFile("Settings.ini", data);
-            return data;
         }
 
         public void OpenDisplay(bool closeCheck = true)
@@ -285,22 +201,7 @@ namespace OsuAchievedOverlay.Managers
             WindowManager.Instance.BetaDisplayWin?.Close();
         }
 
-        public void SettingsSave()
-        {
-            //FileIniDataParser parser = new FileIniDataParser();
-            //IniData data = parser.ReadFile("Settings.ini");
-
-            //parser.WriteFile("Settings.ini", data);
-
-            //Settings = data;
-            //ApplySettingsToApp(Settings);
-            FileIniDataParser parser = new FileIniDataParser();
-            parser.WriteFile("Settings.ini", Settings);
-
-            ApplySettingsToApp(Settings);
-        }
-
-        private void ApplySettingsToApp(IniData data)
+        public void ApplySettingsToApp(IniData data)
         {
             bool cv = int.TryParse(data["api"]["updateRate"], out int updateRate);
             if (!cv)
@@ -312,7 +213,7 @@ namespace OsuAchievedOverlay.Managers
             if (OsuApiHelper.OsuApiKey.Key != data["api"]["key"])
             {
                 OsuApiHelper.OsuApiKey.Key = data["api"]["key"];
-                osuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), data["api"]["gamemode"]));
+                OsuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), data["api"]["gamemode"]));
 
                 RefreshSession();
             }

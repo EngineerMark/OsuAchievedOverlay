@@ -60,7 +60,7 @@ namespace OsuAchievedOverlay
             {
                 IniData newData = new IniData();
 
-                newData = GameManager.FixIniData(parser, newData);
+                newData = SettingsManager.FixIniData(parser, newData);
 
                 newData["api"]["key"] = InputApiKey.Password;
                 newData["api"]["user"] = InputUsername.Text;

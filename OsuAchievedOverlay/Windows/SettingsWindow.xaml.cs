@@ -1,18 +1,9 @@
 ﻿using OsuAchievedOverlay.Managers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace OsuAchievedOverlay
 {
@@ -31,27 +22,22 @@ namespace OsuAchievedOverlay
         private void PopulateData(){
             DropdownGamemode.ItemsSource = Enum.GetValues(typeof(OsuApiHelper.OsuMode)).Cast<OsuApiHelper.OsuMode>();
 
-            InputApiKey.Password = GameManager.Instance.Settings["api"]["key"];
-            InputUsername.Text = GameManager.Instance.Settings["api"]["user"];
-            InputUpdaterate.Text = int.TryParse(GameManager.Instance.Settings["api"]["updateRate"], out _) ? GameManager.Instance.Settings["api"]["updateRate"] : "60";
-            DropdownGamemode.SelectedIndex = (int)Enum.Parse(typeof(OsuApiHelper.OsuMode), GameManager.Instance.Settings["api"]["gamemode"]);
+            InputApiKey.Password = SettingsManager.Instance.Settings["api"]["key"];
+            InputUsername.Text = SettingsManager.Instance.Settings["api"]["user"];
+            InputUpdaterate.Text = int.TryParse(SettingsManager.Instance.Settings["api"]["updateRate"], out _) ? SettingsManager.Instance.Settings["api"]["updateRate"] : "60";
+            DropdownGamemode.SelectedIndex = (int)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]);
         }
 
         private void Btn_SaveSettings(object sender, RoutedEventArgs e)
         {
-            GameManager.Instance.Settings["api"]["key"] = WindowManager.Instance.SettingsWin.InputApiKey.Password;
-            GameManager.Instance.Settings["api"]["user"] = WindowManager.Instance.SettingsWin.InputUsername.Text;
-            GameManager.Instance.Settings["api"]["gamemode"] = "" + ((OsuApiHelper.OsuMode)WindowManager.Instance.SettingsWin.DropdownGamemode.SelectedIndex);
+            SettingsManager.Instance.Settings["api"]["key"] = WindowManager.Instance.SettingsWin.InputApiKey.Password;
+            SettingsManager.Instance.Settings["api"]["user"] = WindowManager.Instance.SettingsWin.InputUsername.Text;
+            SettingsManager.Instance.Settings["api"]["gamemode"] = "" + ((OsuApiHelper.OsuMode)WindowManager.Instance.SettingsWin.DropdownGamemode.SelectedIndex);
             int updateRate = int.Parse(WindowManager.Instance.SettingsWin.InputUpdaterate.Text);
             updateRate = Math.Min(120, Math.Max(5, updateRate));
-            GameManager.Instance.Settings["api"]["updateRate"] = "" + updateRate;
-            GameManager.Instance.Settings["rpc"]["enabled"] = (bool)WindowManager.Instance.SettingsWin.ToggleDiscordRPC.IsChecked ? "1" : "0";
-            if (GameManager.Instance.Settings["rpc"]["enabled"] == "1")
-                DiscordManager.Instance.Start();
-            else
-                DiscordManager.Instance.Stop();
+            SettingsManager.Instance.Settings["api"]["updateRate"] = "" + updateRate;
 
-            GameManager.Instance.SettingsSave();
+            SettingsManager.Instance.SettingsSave();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

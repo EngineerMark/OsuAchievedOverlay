@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OsuAchievedOverlay
+﻿namespace OsuAchievedOverlay
 {
     public static class MathHelper
     {

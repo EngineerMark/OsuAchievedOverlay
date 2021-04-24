@@ -52,7 +52,7 @@ namespace OsuAchievedOverlay
             {
                 IniData newData = new IniData();
 
-                newData = GameManager.FixIniData(parser, newData);
+                newData = SettingsManager.FixIniData(parser, newData);
                 parser.WriteFile("Settings.ini", newData);
 
                 OpenPopup();

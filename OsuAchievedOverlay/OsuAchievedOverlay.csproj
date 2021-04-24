@@ -59,9 +59,6 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DiscordRPC, Version=1.0.175.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DiscordRichPresence.1.0.175\lib\net35\DiscordRPC.dll</HintPath>
-    </Reference>
     <Reference Include="Humanizer, Version=2.8.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
       <HintPath>..\packages\Humanizer.Core.2.8.26\lib\netstandard2.0\Humanizer.dll</HintPath>
     </Reference>
@@ -116,12 +113,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Managers\FileManager.cs" />
-    <Compile Include="Managers\DiscordManager.cs" />
     <Compile Include="LocalApiFile.cs" />
     <Compile Include="Interfaces\IThreaded.cs" />
     <Compile Include="Managers\LocalAPIManager.cs" />
     <Compile Include="Managers\GameManager.cs" />
     <Compile Include="Managers\InterfaceManager.cs" />
+    <Compile Include="Managers\SettingsManager.cs" />
     <Compile Include="Managers\ThreadedManager.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="SessionFileData.cs" />
