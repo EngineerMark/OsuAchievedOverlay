@@ -2,12 +2,15 @@
 using Microsoft.Win32;
 using OsuAchievedOverlay.Managers;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace OsuAchievedOverlay
 {
@@ -16,14 +19,43 @@ namespace OsuAchievedOverlay
     /// </summary>
     public partial class BetaDisplayWindow : Window
     {
+        public DispatcherTimer Timer { get; set; }
+        public KeyValuePair<long, Session> UpdateSession { get; set; }
+        public long LastSessionUpdate { get; private set; }
+
+        public KeyValuePair<long, BitmapImage> UpdateProfileImage { get; set; }
+        public long LastProfileImageUpdate { get; private set; }
+
         public BetaDisplayWindow()
         {
             InitializeComponent();
 
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(5);
+            Timer.Tick += (object s, EventArgs e) => Update();
+            Timer.Start();
+
             Closed += (object sender, EventArgs e) =>
             {
+                Timer?.Stop();
+
                 GameManager.Instance.Stop();
             };
+        }
+
+        private void Update()
+        {
+            if (LastSessionUpdate != UpdateSession.Key)
+            {
+                ApplySession(UpdateSession.Value);
+                LastSessionUpdate = UpdateSession.Key;
+            }
+
+            if (LastProfileImageUpdate != UpdateProfileImage.Key)
+            {
+                ImageProfilePicture.ImageSource = UpdateProfileImage.Value;
+                LastProfileImageUpdate = UpdateProfileImage.Key;
+            }
         }
 
         public void ApplyUser(OsuApiHelper.OsuUser user)
@@ -32,7 +64,13 @@ namespace OsuAchievedOverlay
             {
                 LabelUserName.Content = user.Name;
 
-                ImageProfilePicture.ImageSource = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
+                //ImageProfilePicture.ImageSource = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
+                new Thread(() =>
+                {
+                    BitmapImage img = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
+                    UpdateProfileImage = new KeyValuePair<long, BitmapImage>(DateTimeOffset.Now.ToUnixTimeSeconds(), img);
+                }).Start();
+
                 //ImageCountryFlag.Source = InterfaceManager.Instance.LoadImage(@"https://osu.ppy.sh/images/flags/" + user.CountryCode + ".png");
                 try
                 {
@@ -118,7 +156,8 @@ namespace OsuAchievedOverlay
 
         private void Btn_OpenSettings(object sender, RoutedEventArgs e)
         {
-            if(WindowManager.Instance.SettingsWin==null){
+            if (WindowManager.Instance.SettingsWin == null)
+            {
                 WindowManager.Instance.SettingsWin = new SettingsWindow();
                 WindowManager.Instance.SettingsWin.Show();
             }
@@ -130,7 +169,8 @@ namespace OsuAchievedOverlay
             MessageBoxResult res = MessageBox.Show("Do you want to save this session as read-only?", "Read-only mode", MessageBoxButton.YesNo);
 
             Session clonedSession = (Session)GameManager.Instance.CurrentSession.Clone();
-            if (res== MessageBoxResult.Yes){
+            if (res == MessageBoxResult.Yes)
+            {
                 clonedSession.ReadOnly = true;
             }
             clonedSession.Username = GameManager.Instance.OsuUser.Name;

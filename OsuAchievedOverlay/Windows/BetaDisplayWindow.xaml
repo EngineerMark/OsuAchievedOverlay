@@ -173,15 +173,17 @@
                     </Button.Background>
                 </Button>
             </Grid>
-            <Grid x:Name="GridNonReadonly" Visibility="Hidden" HorizontalAlignment="Left" Height="46" Margin="10,626,0,0" VerticalAlignment="Top" Width="403">
-                <Label Content="Next update..." Foreground="#DBB4C5" HorizontalAlignment="Left" VerticalAlignment="Top" Width="201" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontStyle="Italic" FontSize="10" Margin="0,5,0,0"/>
-                <Label Content="Session started x ago" x:Name="LabelSessionTime" Foreground="#DBB4C5" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="201,5,0,0" VerticalAlignment="Top" Width="201" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontStyle="Italic" FontSize="10"/>
-                <ProgressBar Name="ProgressNextUpdate" HorizontalAlignment="Left" Value="0" Maximum="1" Background="#3D2932" Foreground="#4c343d" BorderBrush="Transparent" VerticalAlignment="Top" Height="19" Margin="0,25,0,0" Width="403" />
-                <Border Height="19" Margin="0,25,0,2" Width="403" BorderBrush="#2E1F25" BorderThickness="2" />
-            </Grid>
-            <Grid x:Name="GridReadonly" Visibility="Visible" HorizontalAlignment="Left" Height="46" Margin="10,626,0,0" VerticalAlignment="Top" Width="403">
-                <Label Content="Session from" Foreground="#DBB4C5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="403" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
-                <Label Name="LabelReadonlySessionDate" Content="a-b" Foreground="#DBB4C5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="403" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" Margin="0,23,0,0"/>
+            <Grid HorizontalAlignment="Left" Height="46" Margin="10,626,0,0" VerticalAlignment="Top" Width="403">
+                <Grid x:Name="GridNonReadonly" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Label Content="Next update..." Foreground="#DBB4C5" HorizontalAlignment="Left" VerticalAlignment="Top" Width="201" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontStyle="Italic" FontSize="10" Margin="0,5,0,0"/>
+                    <Label Content="Session started x ago" x:Name="LabelSessionTime" Foreground="#DBB4C5" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="201,5,0,0" VerticalAlignment="Top" Width="201" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontStyle="Italic" FontSize="10"/>
+                    <ProgressBar Name="ProgressNextUpdate" HorizontalAlignment="Left" Value="0" Maximum="1" Background="#3D2932" Foreground="#4c343d" BorderBrush="Transparent" VerticalAlignment="Top" Height="19" Margin="0,25,0,0" Width="403" />
+                    <Border Height="19" Margin="0,25,0,2" Width="403" BorderBrush="#2E1F25" BorderThickness="2" />
+                </Grid>
+                <Grid x:Name="GridReadonly" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Label Content="Session from" Foreground="#DBB4C5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="403" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                    <Label Name="LabelReadonlySessionDate" Content="a-b" Foreground="#DBB4C5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="403" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" Margin="0,23,0,0"/>
+                </Grid>
             </Grid>
             <!--</Border>-->
         </Grid>

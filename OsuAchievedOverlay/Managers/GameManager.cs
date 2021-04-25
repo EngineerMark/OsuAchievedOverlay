@@ -2,6 +2,7 @@
 using IniParser.Model;
 using OsuApiHelper;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -184,7 +185,8 @@ namespace OsuAchievedOverlay.Managers
             }
             CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
             WindowManager.Instance.BetaDisplayWin.ApplyUser(OsuUser);
-            WindowManager.Instance.BetaDisplayWin.ApplySession(CurrentSession);
+            WindowManager.Instance.BetaDisplayWin.UpdateSession = new KeyValuePair<long, Session>(DateTimeOffset.Now.ToUnixTimeSeconds(), (Session)CurrentSession.Clone());
+            //WindowManager.Instance.BetaDisplayWin.ApplySession(WindowManager.Instance.BetaDisplayWin.UpdateSession.Value);
         }
 
         public void OpenDisplay(bool closeCheck = true)

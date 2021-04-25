@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -34,10 +35,15 @@ namespace OsuAchievedOverlay.Managers
         }
 
         public BitmapImage LoadImage(string url){
+            var webClient = new WebClient();
+            byte[] imageBytes = webClient.DownloadData(url);
+            MemoryStream memStream = new MemoryStream(imageBytes);
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = new Uri(url, UriKind.Absolute);
+            bitmap.StreamSource = memStream;
+            //bitmap.UriSource = new Uri(url, UriKind.Absolute);
             bitmap.EndInit();
+            bitmap.Freeze();
             return bitmap;
         }
 
