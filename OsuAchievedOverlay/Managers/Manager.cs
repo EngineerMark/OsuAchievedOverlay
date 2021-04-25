@@ -6,7 +6,7 @@ namespace OsuAchievedOverlay.Managers
     public abstract class Manager<T> : IManager where T : class, new()
     {
         private static T _instance;
-        public static List<T> List = new List<T>();
+
         public static T Instance {
             get
             {
@@ -14,7 +14,6 @@ namespace OsuAchievedOverlay.Managers
                     return _instance;
 
                 _instance = new T();
-                List.Add(_instance);
                 return _instance;
             }
         }

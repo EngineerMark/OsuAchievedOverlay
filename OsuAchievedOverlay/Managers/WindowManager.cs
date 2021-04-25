@@ -18,6 +18,17 @@ namespace OsuAchievedOverlay.Managers
         public LoadSessionWindow SessionWin { get => sessionWin; set => sessionWin = value; }
         public LocalApiWindow ApiWin { get => apiWin; set => apiWin = value; }
 
+        public void CloseAll(){
+            SettingsWin?.Close();
+            SettingsWin = null;
+            BetaDisplayWin?.Close();
+            BetaDisplayWin = null;
+            SessionWin?.Close();
+            SessionWin = null;
+            ApiWin?.Close();
+            ApiWin = null;
+        }
+
         public override void Start()
         {
         }

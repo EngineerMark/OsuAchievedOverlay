@@ -203,6 +203,12 @@
     <Resource Include="Assets\Fonts\Aller_Lt.ttf" />
     <Resource Include="Assets\Fonts\Aller_LtIt.ttf" />
     <Resource Include="Assets\Fonts\Aller_Rg.ttf" />
+    <Resource Include="Assets\Fonts\Torus Bold.otf" />
+    <Resource Include="Assets\Fonts\Torus Heavy.otf" />
+    <Resource Include="Assets\Fonts\Torus Light.otf" />
+    <Resource Include="Assets\Fonts\Torus Regular.otf" />
+    <Resource Include="Assets\Fonts\Torus SemiBold.otf" />
+    <Resource Include="Assets\Fonts\Torus Thin.otf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

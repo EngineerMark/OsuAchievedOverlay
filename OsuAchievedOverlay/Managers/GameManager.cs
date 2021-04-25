@@ -107,18 +107,7 @@ namespace OsuAchievedOverlay.Managers
             SessionManager.Instance.Stop();
             FileManager.Instance.Stop();
 
-            WindowManager.Instance.ApiWin?.Close();
-            WindowManager.Instance.ApiWin = null;
-
-            WindowManager.Instance.SessionWin?.Close();
-            WindowManager.Instance.SessionWin = null;
-
-            WindowManager.Instance.BetaDisplayWin?.Close();
-            WindowManager.Instance.BetaDisplayWin = null;
-
-            WindowManager.Instance.SettingsWin?.Close();
-            WindowManager.Instance.SettingsWin = null;
-
+            WindowManager.Instance.CloseAll();
         }
 
         public void Update()
