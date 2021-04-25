@@ -25,6 +25,7 @@ namespace OsuAchievedOverlay
 
         public KeyValuePair<long, BitmapImage> UpdateProfileImage { get; set; }
         public long LastProfileImageUpdate { get; private set; }
+        private Thread UpdateProfileImageThread = null;
 
         public BetaDisplayWindow()
         {
@@ -64,20 +65,22 @@ namespace OsuAchievedOverlay
             {
                 LabelUserName.Content = user.Name;
 
-                //ImageProfilePicture.ImageSource = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
-                new Thread(() =>
+                if(UpdateProfileImageThread!=null && UpdateProfileImageThread.IsAlive)
+                    UpdateProfileImageThread?.Join();
+                UpdateProfileImageThread = new Thread(() =>
                 {
                     BitmapImage img = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
                     UpdateProfileImage = new KeyValuePair<long, BitmapImage>(DateTimeOffset.Now.ToUnixTimeSeconds(), img);
-                }).Start();
+                });
+                UpdateProfileImageThread.Start();
 
-                //ImageCountryFlag.Source = InterfaceManager.Instance.LoadImage(@"https://osu.ppy.sh/images/flags/" + user.CountryCode + ".png");
                 try
                 {
                     ImageCountryFlag.Source = new BitmapImage(new Uri("pack://application:,,,/OsuAchievedOverlay;component/Assets/Images/Flags/" + user.CountryCode + ".png"));
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
+                    //Its fine to go here without any issue, try-catch is pretty much for non-existing flag files
                     ImageCountryFlag.Source = new BitmapImage(new Uri("pack://application:,,,/OsuAchievedOverlay;component/Assets/Images/Flags/__.png"));
                 }
                 RegionInfo countryInfo = new RegionInfo(user.CountryCode);
