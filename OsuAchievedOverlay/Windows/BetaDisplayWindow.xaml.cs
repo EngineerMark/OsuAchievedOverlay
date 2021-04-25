@@ -23,9 +23,17 @@ namespace OsuAchievedOverlay
         public KeyValuePair<long, Session> UpdateSession { get; set; }
         public long LastSessionUpdate { get; private set; }
 
+        #region Stuff for profile picture
         public KeyValuePair<long, BitmapImage> UpdateProfileImage { get; set; }
         public long LastProfileImageUpdate { get; private set; }
         private Thread UpdateProfileImageThread = null;
+        #endregion
+
+        #region Stuff for profile header
+        public KeyValuePair<long, BitmapImage> UpdateHeaderImage { get; set; }
+        public long LastHeaderImageUpdate { get; private set; }
+        private Thread UpdateHeaderImageThread = null;
+        #endregion
 
         public BetaDisplayWindow()
         {
@@ -57,6 +65,12 @@ namespace OsuAchievedOverlay
                 ImageProfilePicture.ImageSource = UpdateProfileImage.Value;
                 LastProfileImageUpdate = UpdateProfileImage.Key;
             }
+
+            if (LastHeaderImageUpdate != UpdateHeaderImage.Key)
+            {
+                ImageProfileHeader.ImageSource = UpdateHeaderImage.Value;
+                LastHeaderImageUpdate = UpdateHeaderImage.Key;
+            }
         }
 
         public void ApplyUser(OsuApiHelper.OsuUser user)
@@ -65,7 +79,9 @@ namespace OsuAchievedOverlay
             {
                 LabelUserName.Content = user.Name;
 
-                if(UpdateProfileImageThread!=null && UpdateProfileImageThread.IsAlive)
+                string t = ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/"+user.ID);
+
+                if (UpdateProfileImageThread!=null && UpdateProfileImageThread.IsAlive)
                     UpdateProfileImageThread?.Join();
                 UpdateProfileImageThread = new Thread(() =>
                 {
@@ -73,6 +89,15 @@ namespace OsuAchievedOverlay
                     UpdateProfileImage = new KeyValuePair<long, BitmapImage>(DateTimeOffset.Now.ToUnixTimeSeconds(), img);
                 });
                 UpdateProfileImageThread.Start();
+
+                if (UpdateHeaderImageThread != null && UpdateHeaderImageThread.IsAlive)
+                    UpdateHeaderImageThread?.Join();
+                UpdateHeaderImageThread = new Thread(() =>
+                {
+                    BitmapImage img = InterfaceManager.Instance.LoadImage(ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/" + user.ID));
+                    UpdateHeaderImage = new KeyValuePair<long, BitmapImage>(DateTimeOffset.Now.ToUnixTimeSeconds(), img);
+                });
+                UpdateHeaderImageThread.Start();
 
                 try
                 {
