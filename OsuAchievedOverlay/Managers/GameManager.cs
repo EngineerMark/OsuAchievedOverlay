@@ -123,7 +123,7 @@ namespace OsuAchievedOverlay.Managers
 
         public void Update()
         {
-            if (WindowManager.Instance.BetaDisplayWin != null && CurrentSession != null)
+            if (WindowManager.Instance.BetaDisplayWin != null && CurrentSession != null && !CurrentSession.ReadOnly)
             {
                 WindowManager.Instance.BetaDisplayWin.LabelSessionTime.Content = "Session started " +
                     DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionDate).UtcDateTime.Humanize();
@@ -167,13 +167,31 @@ namespace OsuAchievedOverlay.Managers
 
                 //List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
                 //CurrentSession.AddNewPlays(newPlays);
-                WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Hidden;
+                if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Hidden)
+                    WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Hidden;
+
+                if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Visible)
+                    WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Visible;
+                if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Hidden)
+                    WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Hidden;
             }
-            else{
+            else
+            {
                 if (CurrentSession.CurrentData == null)
                     CurrentSession.CurrentData = (SessionData)CurrentSession.InitialData.Clone();
 
-                WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Visible;
+                if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Visible)
+                    WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Visible;
+
+                if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Hidden)
+                    WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Hidden;
+                if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Visible)
+                    WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Visible;
+
+                DateTime sessionStart = DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionDate).UtcDateTime;
+                DateTime sessionEnd = DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionEndDate).UtcDateTime;
+
+                WindowManager.Instance.BetaDisplayWin.LabelReadonlySessionDate.Content = sessionStart.ToString("g") + " - " + sessionEnd.ToString("g");
             }
             CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
             WindowManager.Instance.BetaDisplayWin.ApplyUser(OsuUser);

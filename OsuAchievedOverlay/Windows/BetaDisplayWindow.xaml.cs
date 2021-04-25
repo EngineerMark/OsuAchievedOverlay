@@ -121,8 +121,8 @@ namespace OsuAchievedOverlay
             if(WindowManager.Instance.SettingsWin==null){
                 WindowManager.Instance.SettingsWin = new SettingsWindow();
                 WindowManager.Instance.SettingsWin.Show();
-                WindowManager.Instance.SettingsWin.Focus();
             }
+            WindowManager.Instance.SettingsWin.Focus();
         }
 
         private void btnSaveSession_Click(object sender, RoutedEventArgs e)
@@ -134,6 +134,10 @@ namespace OsuAchievedOverlay
                 clonedSession.ReadOnly = true;
             }
             clonedSession.Username = GameManager.Instance.OsuUser.Name;
+            if (clonedSession.ReadOnly && clonedSession.SessionEndDate == -1)
+            {
+                clonedSession.SessionEndDate = DateTimeOffset.Now.ToUnixTimeSeconds();
+            }
 
             string json = clonedSession.ConvertToJson();
 
@@ -152,8 +156,8 @@ namespace OsuAchievedOverlay
             {
                 WindowManager.Instance.SessionWin = new LoadSessionWindow();
                 WindowManager.Instance.SessionWin.Show();
-                WindowManager.Instance.SessionWin.Focus();
             }
+            WindowManager.Instance.SessionWin.Focus();
         }
 
         private void btnResetSession_Click(object sender, RoutedEventArgs e)

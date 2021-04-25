@@ -20,6 +20,9 @@ namespace OsuAchievedOverlay
         [JsonProperty("SessionDate")]
         public long SessionDate { get; set; }
 
+        [JsonProperty("SessionEndDate")]
+        public long SessionEndDate { get; set; } = -1;
+
         [JsonProperty("ApplicationVersion")]
         public string Version { get; set; } = CurrentVersion;
 
