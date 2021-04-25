@@ -24,25 +24,25 @@
             </Grid>
         </Grid>
         <Grid Background="#3D2932" Margin="0,29,0,0">
-            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Open from File" Click="Btn_LoadFromFile" HorizontalAlignment="Left" Margin="10,343,0,0" VerticalAlignment="Top" Width="133"/>
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Open from File" Click="Btn_LoadFromFile" HorizontalAlignment="Left" Margin="10,343,0,0" VerticalAlignment="Top" Width="133" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <ScrollViewer HorizontalAlignment="Left" Height="328" VerticalAlignment="Top" Width="380" Margin="10,10,0,0">
                 <StackPanel x:Name="SessionList">
                     <Grid Height="50" x:Name="PrefabSessionListItem" Background="#2E1F25">
-                        <TextBlock Foreground="White" Text=" {label_filename}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" FontWeight="Bold" Width="225"/>
-                        <TextBlock Foreground="#DBB4C5" Text=" {label_filepath}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,24,0,0" Width="357"/>
-                        <TextBlock Foreground="#DBB4C5" Text=" {label_date}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Margin="230,0,0,0"/>
+                        <TextBlock Foreground="White" Text=" {label_filename}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" FontWeight="Bold" Width="225" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light"/>
+                        <TextBlock Foreground="#DBB4C5" Text=" {label_filepath}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,24,0,0" Width="357" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light"/>
+                        <TextBlock Foreground="#DBB4C5" Text=" {label_date}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Margin="230,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light"/>
                         <TextBlock Visibility="Hidden" Tag="SessionIdentifier" Text=" {label_fullpath}" HorizontalAlignment="Left" Margin="321,30,0,-3" VerticalAlignment="Top"/>
-                        <Button Background="#3D2932" BorderBrush="#3D2932" Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10"/>
-                        <Button Background="#3D2932" BorderBrush="#3D2932" Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10"/>
+                        <Button Background="#3D2932" BorderBrush="#3D2932" Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light"/>
+                        <Button Background="#3D2932" BorderBrush="#3D2932" Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light"/>
                     </Grid>
                     <Grid x:Name="PrefabSeperator" Height="5" />
                     <Grid Height="50" Background="#2E1F25">
-                        <TextBlock Foreground="White" Text=" {label_filename}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" FontWeight="Bold" Width="225"/>
-                        <TextBlock Foreground="#DBB4C5" Text=" {label_filepath}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,24,0,0" Width="357"/>
-                        <TextBlock Foreground="#DBB4C5" Text=" {label_date}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Margin="230,0,0,0"/>
+                        <TextBlock Foreground="White" Text=" {label_filename}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" FontWeight="Bold" Width="225" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light"/>
+                        <TextBlock Foreground="#DBB4C5" Text=" {label_filepath}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,24,0,0" Width="357" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light"/>
+                        <TextBlock Foreground="#DBB4C5" Text=" {label_date}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Margin="230,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light"/>
                         <TextBlock Visibility="Hidden" Tag="SessionIdentifier" Text=" {label_fullpath}" HorizontalAlignment="Left" Margin="321,30,0,-3" VerticalAlignment="Top"/>
-                        <Button Background="#3D2932" BorderBrush="#3D2932" ToolTipService.ShowOnDisabled="True" Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10"/>
-                        <Button Background="#3D2932" BorderBrush="#3D2932" Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10"/>
+                        <Button Background="#3D2932" BorderBrush="#3D2932" ToolTipService.ShowOnDisabled="True" Tag="SessionOpen" Content="Open" HorizontalAlignment="Left" Margin="293,28,0,0" VerticalAlignment="Top" Width="64" Height="20" FontSize="10" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light"/>
+                        <Button Background="#3D2932" BorderBrush="#3D2932" Tag="SessionRemove" Content="Remove" HorizontalAlignment="Left" Margin="219,28,0,0" VerticalAlignment="Top" Width="69" Height="20" FontSize="10" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>

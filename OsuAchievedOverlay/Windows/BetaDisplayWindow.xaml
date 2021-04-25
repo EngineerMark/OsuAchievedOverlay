@@ -34,14 +34,14 @@
                 </Grid>
                 <Grid >
                     <Grid HorizontalAlignment="Left" Height="66" VerticalAlignment="Top">
-                        <Label Content=" {Username}" Name="LabelUserName" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Height="66" Width="195" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller Light" FontSize="20"/>
+                        <Label Content=" {Username}" Name="LabelUserName" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Height="66" Width="195" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="20"/>
                     </Grid>
                     <Grid HorizontalAlignment="Left" Height="62" Margin="0,66,0,0" VerticalAlignment="Top">
                         <Grid HorizontalAlignment="Left" Height="66" VerticalAlignment="Top" Width="41" Margin="0,0,0,-4">
                             <Image Name="ImageCountryFlag" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="31" Source="/OsuAchievedOverlay;component/Assets/Images/Flags/NL.png" Margin="3,2,0,0"/>
                         </Grid>
                         <Grid HorizontalAlignment="Left" Height="66" Margin="41,0,0,-4" VerticalAlignment="Top" Width="154">
-                            <Label Name="LabelCountryName" Content="Netherlands" Foreground="#DBB4C5" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" HorizontalAlignment="Left" VerticalAlignment="Top" Height="66" Width="145" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller Light" FontSize="16"/>
+                            <Label Name="LabelCountryName" Content="Netherlands" Foreground="#DBB4C5" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" HorizontalAlignment="Left" VerticalAlignment="Top" Height="66" Width="145" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus Light" FontSize="16"/>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -49,28 +49,28 @@
             <UniformGrid Columns="5" HorizontalAlignment="Left" Height="101" Margin="10,171,0,0" VerticalAlignment="Top" Width="403">
                 <Grid>
                     <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/SSH.png" Margin="2,10,1,0"/>
-                    <Label Name="LabelSSHCount" Foreground="White" Content="12,500" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                    <Label Name="LabelGainedSSHCount" Foreground="LightGreen" Content="+1,593" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
+                    <Label Name="LabelSSHCount" Foreground="White" Content="12,500" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                    <Label Name="LabelGainedSSHCount" Foreground="LightGreen" Content="+1,593" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                 </Grid>
                 <Grid>
                     <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/SS.png" Margin="2,10,1,0"/>
-                    <Label Name="LabelSSCount" Foreground="White" Content="12,500" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                    <Label Name="LabelGainedSSCount" Foreground="LightGreen" Content="+1,593" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
+                    <Label Name="LabelSSCount" Foreground="White" Content="12,500" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                    <Label Name="LabelGainedSSCount" Foreground="LightGreen" Content="+1,593" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                 </Grid>
                 <Grid>
                     <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/SH.png" Margin="2,10,1,0"/>
-                    <Label Name="LabelSHCount" Foreground="White" Content="12,500" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                    <Label Name="LabelGainedSHCount" Foreground="LightGreen" Content="+1,593" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
+                    <Label Name="LabelSHCount" Foreground="White" Content="12,500" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                    <Label Name="LabelGainedSHCount" Foreground="LightGreen" Content="+1,593" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                 </Grid>
                 <Grid>
                     <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/S.png" Margin="2,10,1,0"/>
-                    <Label Name="LabelSCount" Foreground="White" Content="12,500" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                    <Label Name="LabelGainedSCount" Foreground="LightGreen" Content="+1,593" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
+                    <Label Name="LabelSCount" Foreground="White" Content="12,500" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                    <Label Name="LabelGainedSCount" Foreground="LightGreen" Content="+1,593" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                 </Grid>
                 <Grid>
                     <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/A.png" Margin="2,10,1,0"/>
-                    <Label Name="LabelACount" Foreground="White" Content="12,500" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                    <Label Name="LabelGainedACount" Foreground="LightGreen" Content="+1,593" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
+                    <Label Name="LabelACount" Foreground="White" Content="12,500" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                    <Label Name="LabelGainedACount" Foreground="LightGreen" Content="+1,593" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                 </Grid>
             </UniformGrid>
             <Grid HorizontalAlignment="Left" Height="321" Margin="10,300,0,0" VerticalAlignment="Top" Width="403">
@@ -82,57 +82,57 @@
                         </Style>
                     </StackPanel.Resources>
                     <Grid>
-                        <Label Foreground="White" Content="Level" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="129" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                        <Label Foreground="White" Content="0" Name="LabelTotalLevel" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="134,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                        <Label Foreground="White" Content="+0" Name="LabelGainedLevel" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <Label Foreground="White" Content="Level" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="129" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                        <Label Foreground="White" Content="0" Name="LabelTotalLevel" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="134,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                        <Label Foreground="White" Content="+0" Name="LabelGainedLevel" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     </Grid>
 
                     <Grid>
-                        <Label Foreground="White" Content="Total Score" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                        <Label Foreground="White" Content="0" Name="LabelTotalScore" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                        <Label Foreground="White" Content="+0" Name="LabelGainedScore" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <Label Foreground="White" Content="Total Score" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                        <Label Foreground="White" Content="0" Name="LabelTotalScore" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                        <Label Foreground="White" Content="+0" Name="LabelGainedScore" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     </Grid>
 
                     <Grid>
-                        <Label Foreground="White" Content="Ranked Score" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                        <Label Foreground="White" Content="0" Name="LabelTotalRankedScore" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                        <Label Foreground="White" Content="+0" Name="LabelGainedRankedScore" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <Label Foreground="White" Content="Ranked Score" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                        <Label Foreground="White" Content="0" Name="LabelTotalRankedScore" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                        <Label Foreground="White" Content="+0" Name="LabelGainedRankedScore" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     </Grid>
 
                     <Grid>
-                        <Label Foreground="White" Content="World Rank" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                        <Label Foreground="White" Content="0" Name="LabelTotalRank" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                        <Label Foreground="White" Content="+0" Name="LabelGainedRank" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <Label Foreground="White" Content="World Rank" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                        <Label Foreground="White" Content="0" Name="LabelTotalRank" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                        <Label Foreground="White" Content="+0" Name="LabelGainedRank" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     </Grid>
 
                     <Grid>
-                        <Label Foreground="White" Content="Country Rank" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                        <Label Foreground="White" Content="0" Name="LabelTotalCountryRank" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                        <Label Foreground="White" Content="+0" Name="LabelGainedCountryRank" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <Label Foreground="White" Content="Country Rank" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                        <Label Foreground="White" Content="0" Name="LabelTotalCountryRank" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                        <Label Foreground="White" Content="+0" Name="LabelGainedCountryRank" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     </Grid>
 
                     <Grid>
-                        <Label Foreground="White" Content="Playcount" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                        <Label Foreground="White" Content="0" Name="LabelTotalPlaycount" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                        <Label Foreground="White" Content="+0" Name="LabelGainedPlaycount" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <Label Foreground="White" Content="Playcount" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                        <Label Foreground="White" Content="0" Name="LabelTotalPlaycount" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                        <Label Foreground="White" Content="+0" Name="LabelGainedPlaycount" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     </Grid>
 
                     <Grid>
-                        <Label Foreground="White" Content="Playtime" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                        <Label Foreground="White" Content="0" Name="LabelTotalPlaytime" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                        <Label Foreground="White" Content="+0" Name="LabelGainedPlaytime" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <Label Foreground="White" Content="Playtime" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                        <Label Foreground="White" Content="0" Name="LabelTotalPlaytime" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                        <Label Foreground="White" Content="+0" Name="LabelGainedPlaytime" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     </Grid>
 
                     <Grid>
-                        <Label Foreground="White" Content="Accuracy" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                        <Label Foreground="White" Content="0" Name="LabelTotalAccuracy" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                        <Label Foreground="White" Content="+0" Name="LabelGainedAccuracy" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <Label Foreground="White" Content="Accuracy" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                        <Label Foreground="White" Content="0" Name="LabelTotalAccuracy" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                        <Label Foreground="White" Content="+0" Name="LabelGainedAccuracy" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     </Grid>
 
                     <Grid>
-                        <Label Foreground="White" Content="Performance" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontSize="16"/>
-                        <Label Foreground="White" Content="0" Name="LabelTotalPerformance" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                        <Label Foreground="White" Content="+0" Name="LabelGainedPerformance" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                        <Label Foreground="White" Content="Performance" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
+                        <Label Foreground="White" Content="0" Name="LabelTotalPerformance" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Height="30" Width="150" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                        <Label Foreground="White" Content="+0" Name="LabelGainedPerformance" BorderBrush="#2E1F25" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="288,0,0,0" VerticalAlignment="Top" Height="30" Width="115" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     </Grid>
                 </StackPanel>
             </Grid>
@@ -174,14 +174,14 @@
                 </Button>
             </Grid>
             <Grid x:Name="GridNonReadonly" Visibility="Hidden" HorizontalAlignment="Left" Height="46" Margin="10,626,0,0" VerticalAlignment="Top" Width="403">
-                <Label Content="Next update..." Foreground="#DBB4C5" HorizontalAlignment="Left" VerticalAlignment="Top" Width="201" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontStyle="Italic" FontSize="10" Margin="0,5,0,0"/>
-                <Label Content="Session started x ago" x:Name="LabelSessionTime" Foreground="#DBB4C5" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="201,5,0,0" VerticalAlignment="Top" Width="201" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" FontStyle="Italic" FontSize="10"/>
+                <Label Content="Next update..." Foreground="#DBB4C5" HorizontalAlignment="Left" VerticalAlignment="Top" Width="201" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontStyle="Italic" FontSize="10" Margin="0,5,0,0"/>
+                <Label Content="Session started x ago" x:Name="LabelSessionTime" Foreground="#DBB4C5" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="201,5,0,0" VerticalAlignment="Top" Width="201" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontStyle="Italic" FontSize="10"/>
                 <ProgressBar Name="ProgressNextUpdate" HorizontalAlignment="Left" Value="0" Maximum="1" Background="#3D2932" Foreground="#4c343d" BorderBrush="Transparent" VerticalAlignment="Top" Height="19" Margin="0,25,0,0" Width="403" />
                 <Border Height="19" Margin="0,25,0,2" Width="403" BorderBrush="#2E1F25" BorderThickness="2" />
             </Grid>
             <Grid x:Name="GridReadonly" Visibility="Visible" HorizontalAlignment="Left" Height="46" Margin="10,626,0,0" VerticalAlignment="Top" Width="403">
-                <Label Content="Session from" Foreground="#DBB4C5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="403" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                <Label Name="LabelReadonlySessionDate" Content="a-b" Foreground="#DBB4C5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="403" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller" Margin="0,23,0,0"/>
+                <Label Content="Session from" Foreground="#DBB4C5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="403" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <Label Name="LabelReadonlySessionDate" Content="a-b" Foreground="#DBB4C5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="403" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" Margin="0,23,0,0"/>
             </Grid>
             <!--</Border>-->
         </Grid>

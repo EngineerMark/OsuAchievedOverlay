@@ -24,20 +24,20 @@
         </Grid>
         <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Left" Height="201" Margin="0,29,0,0" VerticalAlignment="Top" Width="459">
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,10,0,0" VerticalAlignment="Top" Width="439">
-                <Label Content="API Key" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                <PasswordBox x:Name="InputApiKey" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="33" Margin="85,0,0,-1" Password="TextBox" VerticalAlignment="Top" Width="354" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                <Label Content="API Key" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <PasswordBox x:Name="InputApiKey" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="33" Margin="85,0,0,-1" Password="TextBox" VerticalAlignment="Top" Width="354" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             </Grid>
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,47,0,0" VerticalAlignment="Top" Width="439">
-                <Label Content="Username" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                <TextBox x:Name="InputUsername" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="33" Margin="85,0,0,-1" Text="peppy" VerticalAlignment="Top" Width="354" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                <Label Content="Username" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <TextBox x:Name="InputUsername" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="33" Margin="85,0,0,-1" Text="peppy" VerticalAlignment="Top" Width="354" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             </Grid>
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,84,0,0" VerticalAlignment="Top" Width="439">
-                <Label Content="Update rate" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                <TextBox x:Name="InputUpdaterate" PreviewTextInput="InputNumericOnly" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="33" Margin="85,0,0,-1" Text="60" VerticalAlignment="Top" Width="354" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
+                <Label Content="Update rate" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <TextBox x:Name="InputUpdaterate" PreviewTextInput="InputNumericOnly" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="33" Margin="85,0,0,-1" Text="60" VerticalAlignment="Top" Width="354" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             </Grid>
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,121,0,0" VerticalAlignment="Top" Width="439">
-                <Label Content="Gamemode" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
-                <ComboBox x:Name="DropdownGamemode" Foreground="White" Background="#3D2932" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="85,0,0,0" VerticalAlignment="Top" Width="354" Height="32" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller">
+                <Label Content="Gamemode" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <ComboBox x:Name="DropdownGamemode" Foreground="White" Background="#3D2932" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="85,0,0,0" VerticalAlignment="Top" Width="354" Height="32" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus">
                     <ComboBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ComboBoxItem}">
                             <Style.Triggers>
@@ -58,7 +58,7 @@
                     </ComboBox.ItemContainerStyle>
                 </ComboBox>
             </Grid>
-            <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_SaveSettings" Content="Save &amp; Apply" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="439"/>
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_SaveSettings" Content="Save &amp; Apply" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="439" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
         </Grid>
     </Grid>
 </Window>
