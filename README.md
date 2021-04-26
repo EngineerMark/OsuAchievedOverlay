@@ -1,3 +1,5 @@
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/engineermark/osuachievedoverlay?include_prereleases)](https://github.com/EngineerMark/OsuAchievedOverlay/releases/latest)
+
 # OsuAchievedOverlay
 Stream Overlay for osu! containing information on your session achievements
 
