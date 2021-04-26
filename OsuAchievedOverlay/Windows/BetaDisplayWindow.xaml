@@ -32,7 +32,7 @@
                         </LinearGradientBrush>
                     </Rectangle.OpacityMask>
                     <Rectangle.Fill>
-                        <ImageBrush RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="placeholder_banner.jpeg"/>
+                        <ImageBrush RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/placeholder_banner.jpeg"/>
                     </Rectangle.Fill>
                 </Rectangle>
             </Grid>

@@ -504,8 +504,5 @@
   <ItemGroup>
     <Resource Include="Assets\Images\placeholder_banner.jpeg" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Windows\placeholder_banner.jpeg" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
