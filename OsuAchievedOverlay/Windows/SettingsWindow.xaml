@@ -60,7 +60,7 @@
             </Grid>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_SaveSettings" Content="Save &amp; Apply" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="439" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <TextBlock Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="10,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="439">
-                Click <Hyperlink NavigateUri="https://osu.ppy.sh/p/api" RequestNavigate="Link_OpenURL">here</Hyperlink> to get your API key
+                Click <Hyperlink NavigateUri="https://old.ppy.sh/p/api" RequestNavigate="Link_OpenURL">here</Hyperlink> to get your API key
             </TextBlock>
         </Grid>
     </Grid>

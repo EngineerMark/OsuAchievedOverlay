@@ -28,7 +28,7 @@
             <Label Foreground="White" Content="Username" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="90" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Apply" Click="Btn_Apply" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="349" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <TextBlock Foreground="White" Text="Since this is your first launch (or you messed with the settings file), you have to enter your API key and username here" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="349" Height="46" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
-            <TextBlock Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="10,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="349"><Run Text="Click "/><Hyperlink NavigateUri="https://osu.ppy.sh/p/api" RequestNavigate="Link_OpenURL"><Run Text="here"/></Hyperlink><Run Text=" to get your API key"/></TextBlock>
+            <TextBlock Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="10,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="349"><Run Text="Click "/><Hyperlink NavigateUri="https://old.ppy.sh/p/api" RequestNavigate="Link_OpenURL"><Run Text="here"/></Hyperlink><Run Text=" to get your API key"/></TextBlock>
         </Grid>
     </Grid>
 </Window>
