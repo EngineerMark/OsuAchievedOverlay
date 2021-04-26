@@ -68,11 +68,8 @@ namespace OsuAchievedOverlay.Managers
         public void RestartTimers(int updateRate)
         {
             timer?.Stop();
-            if (timer == null)
-            {
-                timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                timer.Tick += new EventHandler(RefreshTimer);
-            }
+            timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+            timer.Tick += new EventHandler(RefreshTimer);
             timer.Interval = TimeSpan.FromSeconds(updateRate);
             timer.Start();
             RefreshTimer(null, null);
@@ -80,12 +77,9 @@ namespace OsuAchievedOverlay.Managers
             lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
 
             progressTimer?.Stop();
-            if (progressTimer == null)
-            {
-                progressTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                progressTimer.Tick += (object s, EventArgs e) => ProgressTick(updateRate);
-                progressTimer.Interval = new TimeSpan(0, 0, 1);
-            }
+            progressTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+            progressTimer.Tick += (object s, EventArgs e) => ProgressTick(updateRate);
+            progressTimer.Interval = new TimeSpan(0, 0, 1);
             progressTimer.Start();
             ProgressTick(updateRate);
         }
