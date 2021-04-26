@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        targetplatform: [x86, x64]
+        targetplatform: [Debug|AnyCPU, Release|AnyCPU]
 
     runs-on: windows-latest
 
