@@ -38,7 +38,7 @@
             <Grid HorizontalAlignment="Left" Height="32" Margin="10,121,0,0" VerticalAlignment="Top" Width="439">
                 <Label Content="Gamemode" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="80" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 <ComboBox x:Name="DropdownGamemode" Foreground="White" Background="#3D2932" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="85,0,0,0" VerticalAlignment="Top" Width="354" Height="32" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus">
-                    <ComboBox.ItemContainerStyle>
+                    <!--<ComboBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ComboBoxItem}">
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="False">
@@ -55,7 +55,7 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </ComboBox.ItemContainerStyle>
+                    </ComboBox.ItemContainerStyle>-->
                 </ComboBox>
             </Grid>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_SaveSettings" Content="Save &amp; Apply" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="439" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
