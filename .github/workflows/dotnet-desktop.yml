@@ -9,10 +9,12 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - ci
+      - main
+      - dev
   pull_request:
     branches:
-      - ci
+      - main
+      - dev
 
 jobs:
 
