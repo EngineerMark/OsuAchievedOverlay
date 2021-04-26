@@ -13,8 +13,6 @@ namespace OsuAchievedOverlay.Managers
     {
         private OsuApiHelper.OsuUser osuUser = null;
 
-        private Session currentSession;
-
         private DispatcherTimer timer;
         private DispatcherTimer progressTimer;
         private DispatcherTimer updateTimer;
@@ -22,7 +20,6 @@ namespace OsuAchievedOverlay.Managers
         private long lastTimerFire = -1;
         private long lastRefresh = -1;
 
-        public Session CurrentSession { get => currentSession; set => currentSession = value; }
         public OsuUser OsuUser { get => osuUser; set => osuUser = value; }
 
         public override void Start()
@@ -40,7 +37,7 @@ namespace OsuAchievedOverlay.Managers
                     if (OsuUser == null)
                         OsuUser = OsuApiHelper.OsuApi.GetUser(SettingsManager.Instance.Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
 
-                    CurrentSession = new Session()
+                    SessionManager.Instance.CurrentSession = new Session()
                     {
                         InitialData = SessionData.FromUser(OsuUser)
                     };
@@ -113,16 +110,16 @@ namespace OsuAchievedOverlay.Managers
 
         public void Update()
         {
-            if (WindowManager.Instance.BetaDisplayWin != null && CurrentSession != null && !CurrentSession.ReadOnly)
+            if (WindowManager.Instance.BetaDisplayWin != null && SessionManager.Instance.CurrentSession != null && !SessionManager.Instance.CurrentSession.ReadOnly)
             {
                 WindowManager.Instance.BetaDisplayWin.LabelSessionTime.Content = "Session started " +
-                    DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionDate).UtcDateTime.Humanize();
+                    DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime.Humanize();
             }
         }
 
         public void RefreshTimer(object sender, EventArgs e)
         {
-            if (WindowManager.Instance.BetaDisplayWin != null && CurrentSession != null && OsuUser != null)
+            if (WindowManager.Instance.BetaDisplayWin != null && SessionManager.Instance.CurrentSession != null && OsuUser != null)
             {
                 bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k=" + SettingsManager.Instance.Settings["api"]["key"] + "&u=peppy") != "";
                 if (apiReady)
@@ -131,7 +128,7 @@ namespace OsuAchievedOverlay.Managers
 
                     if (_continue)
                     {
-                        UpdateSession();
+                        SessionManager.Instance.UpdateSession();
 
                         foreach (LocalApiFile apiFile in LocalAPIManager.Instance.ApiDataList)
                             LocalAPIManager.Instance.SaveData(apiFile);
@@ -143,50 +140,6 @@ namespace OsuAchievedOverlay.Managers
                     }
                 }
             }
-        }
-
-        private void UpdateSession()
-        {
-            OsuUser = OsuApiHelper.OsuApi.GetUser(SettingsManager.Instance.Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
-
-            if (!CurrentSession.ReadOnly)
-            {
-                if (CurrentSession.InitialData == null)
-                    CurrentSession.InitialData = SessionData.FromUser(OsuUser);
-                CurrentSession.CurrentData = SessionData.FromUser(OsuUser);
-
-                //List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
-                //CurrentSession.AddNewPlays(newPlays);
-                if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Hidden)
-                    WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Hidden;
-
-                if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Visible)
-                    WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Visible;
-                if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Hidden)
-                    WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                if (CurrentSession.CurrentData == null)
-                    CurrentSession.CurrentData = (SessionData)CurrentSession.InitialData.Clone();
-
-                if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Visible)
-                    WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Visible;
-
-                if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Hidden)
-                    WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Hidden;
-                if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Visible)
-                    WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Visible;
-
-                DateTime sessionStart = DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionDate).UtcDateTime;
-                DateTime sessionEnd = DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionEndDate).UtcDateTime;
-
-                WindowManager.Instance.BetaDisplayWin.LabelReadonlySessionDate.Content = sessionStart.ToString("g") + " - " + sessionEnd.ToString("g");
-            }
-            CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
-            WindowManager.Instance.BetaDisplayWin.ApplyUser(OsuUser);
-            WindowManager.Instance.BetaDisplayWin.UpdateSession = new KeyValuePair<long, Session>(DateTimeOffset.Now.ToUnixTimeSeconds(), (Session)CurrentSession.Clone());
-            //WindowManager.Instance.BetaDisplayWin.ApplySession(WindowManager.Instance.BetaDisplayWin.UpdateSession.Value);
         }
 
         public void OpenDisplay(bool closeCheck = true)
@@ -234,7 +187,7 @@ namespace OsuAchievedOverlay.Managers
         {
             if (lastRefresh == -1 || DateTimeOffset.Now.ToUnixTimeSeconds() - lastRefresh > 15)
             {
-                CurrentSession = new Session();
+                SessionManager.Instance.CurrentSession = new Session();
                 RestartTimers((int)timer.Interval.TotalSeconds);
 
                 lastRefresh = DateTimeOffset.Now.ToUnixTimeSeconds();

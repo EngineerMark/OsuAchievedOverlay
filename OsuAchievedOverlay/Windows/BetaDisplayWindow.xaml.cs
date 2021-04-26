@@ -26,13 +26,11 @@ namespace OsuAchievedOverlay
         #region Stuff for profile picture
         public KeyValuePair<long, BitmapImage> UpdateProfileImage { get; set; }
         public long LastProfileImageUpdate { get; private set; }
-        private Thread UpdateProfileImageThread = null;
         #endregion
 
         #region Stuff for profile header
         public KeyValuePair<long, BitmapImage> UpdateHeaderImage { get; set; }
         public long LastHeaderImageUpdate { get; private set; }
-        private Thread UpdateHeaderImageThread = null;
         #endregion
 
         public BetaDisplayWindow()
@@ -81,23 +79,17 @@ namespace OsuAchievedOverlay
 
                 string t = ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/"+user.ID);
 
-                if (UpdateProfileImageThread!=null && UpdateProfileImageThread.IsAlive)
-                    UpdateProfileImageThread?.Join();
-                UpdateProfileImageThread = new Thread(() =>
+                ThreadPool.QueueUserWorkItem((Object stateInfo) =>
                 {
                     BitmapImage img = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
                     UpdateProfileImage = new KeyValuePair<long, BitmapImage>(DateTimeOffset.Now.ToUnixTimeSeconds(), img);
                 });
-                UpdateProfileImageThread.Start();
 
-                if (UpdateHeaderImageThread != null && UpdateHeaderImageThread.IsAlive)
-                    UpdateHeaderImageThread?.Join();
-                UpdateHeaderImageThread = new Thread(() =>
+                ThreadPool.QueueUserWorkItem((Object stateInfo) =>
                 {
                     BitmapImage img = InterfaceManager.Instance.LoadImage(ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/" + user.ID));
                     UpdateHeaderImage = new KeyValuePair<long, BitmapImage>(DateTimeOffset.Now.ToUnixTimeSeconds(), img);
                 });
-                UpdateHeaderImageThread.Start();
 
                 try
                 {
@@ -115,6 +107,38 @@ namespace OsuAchievedOverlay
 
         public void ApplySession(Session session)
         {
+            if (!session.ReadOnly)
+            {
+                
+
+                //List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
+                //CurrentSession.AddNewPlays(newPlays);
+                if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Hidden)
+                    WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Hidden;
+
+                if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Visible)
+                    WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Visible;
+                if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Hidden)
+                    WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Visible)
+                    WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Visible;
+
+                if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Hidden)
+                    WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Hidden;
+                if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Visible)
+                    WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Visible;
+
+                DateTime sessionStart = DateTimeOffset.FromUnixTimeSeconds(session.SessionDate).UtcDateTime;
+                DateTime sessionEnd = DateTimeOffset.FromUnixTimeSeconds(session.SessionEndDate).UtcDateTime;
+
+                WindowManager.Instance.BetaDisplayWin.LabelReadonlySessionDate.Content = sessionStart.ToString("g") + " - " + sessionEnd.ToString("g");
+            }
+
+            WindowManager.Instance.BetaDisplayWin.ApplyUser(GameManager.Instance.OsuUser);
+
             LabelSSHCount.Content = session.CurrentData.RankSilverSS;
             LabelSSCount.Content = session.CurrentData.RankGoldSS;
             LabelSHCount.Content = session.CurrentData.RankSilverS;
@@ -196,7 +220,7 @@ namespace OsuAchievedOverlay
         {
             MessageBoxResult res = MessageBox.Show("Do you want to save this session as read-only?", "Read-only mode", MessageBoxButton.YesNo);
 
-            Session clonedSession = (Session)GameManager.Instance.CurrentSession.Clone();
+            Session clonedSession = (Session)SessionManager.Instance.CurrentSession.Clone();
             if (res == MessageBoxResult.Yes)
             {
                 clonedSession.ReadOnly = true;

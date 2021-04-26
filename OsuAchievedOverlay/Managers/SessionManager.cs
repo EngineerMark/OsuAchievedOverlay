@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace OsuAchievedOverlay.Managers
 {
@@ -12,6 +14,8 @@ namespace OsuAchievedOverlay.Managers
     {
         public List<Session> sessions;
         public List<SessionFileData> SessionFiles { get; set; }
+
+        public Session CurrentSession { get; set; }
 
         private const string sessionListFilename = "stored_sessions.json";
 
@@ -87,6 +91,28 @@ namespace OsuAchievedOverlay.Managers
                 sw.Write(data);
                 sw.Close();
             }
+        }
+
+        public void UpdateSession()
+        {
+            ThreadPool.QueueUserWorkItem((Object stateInfo) =>
+            {
+                GameManager.Instance.OsuUser = OsuApiHelper.OsuApi.GetUser(SettingsManager.Instance.Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
+                if (!CurrentSession.ReadOnly)
+                {
+                    if (CurrentSession.InitialData == null)
+                        CurrentSession.InitialData = SessionData.FromUser(GameManager.Instance.OsuUser);
+                    CurrentSession.CurrentData = SessionData.FromUser(GameManager.Instance.OsuUser);
+                }
+                else
+                {
+                    if (CurrentSession.CurrentData == null)
+                        CurrentSession.CurrentData = (SessionData)CurrentSession.InitialData.Clone();
+                }
+                CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
+                WindowManager.Instance.BetaDisplayWin.UpdateSession = new KeyValuePair<long, Session>(DateTimeOffset.Now.ToUnixTimeSeconds(), (Session)CurrentSession.Clone());
+                //WindowManager.Instance.BetaDisplayWin.ApplySession(WindowManager.Instance.BetaDisplayWin.UpdateSession.Value);
+            });
         }
     }
 }

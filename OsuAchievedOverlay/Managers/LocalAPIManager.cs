@@ -52,7 +52,7 @@ namespace OsuAchievedOverlay.Managers
 
         public void SaveData(LocalApiFile apiFile){
             Directory.CreateDirectory(ApiFolder);
-            string data = Parse(apiFile, GameManager.Instance.CurrentSession);
+            string data = Parse(apiFile, SessionManager.Instance.CurrentSession);
             string file = Path.Combine(ApiFolder, apiFile.FileName);
             //File.WriteAllText(file, data);
             FileManager.Instance.WriteAllText(file, data);
