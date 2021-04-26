@@ -11,6 +11,14 @@ This is still very experimental. Crashes can and will occur. If not reported yet
 I only work on Windows builds.
 If you have experience in other OS, feel free to make it possible to compile for them. Test it and if it's working perfectly, I will probably merge it in.
 
+## osu! API key
+
+URLs to request an api key: https://osu.ppy.sh/p/api, https://old.ppy.sh/p/api
+
+For some reason, they sometimes redirect you to the community forum. When that happens, retry later again, chances are you do get to the api page.
+
+I don't know what causes this nor do I know a solution. Try with peppy maybe.
+
 # Sessions
 You only need to save a session once, the current and difference data are calculated automatically when opened.
 
