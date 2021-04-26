@@ -52,7 +52,7 @@ namespace OsuAchievedOverlay.Managers
 
         public void SaveData(LocalApiFile apiFile){
             Directory.CreateDirectory(ApiFolder);
-            string data = Parse(apiFile, GameManager.Instance.CurrentSession);
+            string data = Parse(apiFile, SessionManager.Instance.CurrentSession);
             string file = Path.Combine(ApiFolder, apiFile.FileName);
             //File.WriteAllText(file, data);
             FileManager.Instance.WriteAllText(file, data);
@@ -60,6 +60,9 @@ namespace OsuAchievedOverlay.Managers
 
         public string Parse(LocalApiFile apiFile, Session session)
         {
+            if (session == null || session.InitialData == null || session.DifferenceData == null || session.CurrentData == null)
+                return "";
+
             LocalApiFile input = (LocalApiFile)apiFile.Clone();
             input.StringData = ParsePartial(input, "{new_ssh}", session.DifferenceData.RankSilverSS);
             input.StringData = ParsePartial(input, "{new_ss}", session.DifferenceData.RankGoldSS);

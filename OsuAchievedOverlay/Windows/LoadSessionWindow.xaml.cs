@@ -173,7 +173,7 @@ namespace OsuAchievedOverlay
 
                 SessionManager.Instance.AddFile(path);
 
-                GameManager.Instance.CurrentSession = newSession;
+                SessionManager.Instance.CurrentSession = newSession;
                 if (newSession.Username != null && newSession.Username != GameManager.Instance.OsuUser.Name)
                 {
                     SettingsManager.Instance.Settings["api"]["user"] = newSession.Username;

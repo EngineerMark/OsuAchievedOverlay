@@ -65,6 +65,7 @@ namespace OsuAchievedOverlay
                 DifferenceData = (SessionData)DifferenceData?.Clone(),
                 CurrentData = (SessionData)CurrentData?.Clone(),
                 SessionDate = SessionDate,
+                Username = Username,
                 GainedPlays = new List<OsuApiHelper.OsuPlay>(GainedPlays)
             };
         }
