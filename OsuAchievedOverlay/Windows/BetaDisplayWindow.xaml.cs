@@ -230,7 +230,10 @@ namespace OsuAchievedOverlay
 
         private void btnResetSession_Click(object sender, RoutedEventArgs e)
         {
-            GameManager.Instance.RefreshSession();
+            MessageBoxResult res = MessageBox.Show("Are you sure you want to start a new session?", "New Session", MessageBoxButton.YesNo);
+
+            if (res == MessageBoxResult.Yes)
+                GameManager.Instance.RefreshSession();
         }
 
         private void btnOpenApiManager_Click(object sender, RoutedEventArgs e)
