@@ -21,7 +21,7 @@
                 <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/icon_32.png"/>
             </Grid>
         </Grid>
-        <Grid Background="#3D2932" HorizontalAlignment="Left" Height="173" VerticalAlignment="Top" Width="369" Margin="0,29,-2,0">
+        <Grid Background="#3D2932" HorizontalAlignment="Left" Height="173" VerticalAlignment="Top" Width="367" Margin="0,29,0,0">
             <PasswordBox x:Name="InputApiKey" Foreground="White" HorizontalAlignment="Left" Height="23" Margin="105,61,0,0" Password="API Key" VerticalAlignment="Top" Width="254" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <TextBox x:Name="InputUsername" Foreground="White" HorizontalAlignment="Left" Height="23" Margin="105,89,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="254" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <Label Foreground="White" Content="API Key" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="90" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
