@@ -24,7 +24,7 @@
 
         <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Left" Height="682" Margin="0,29,0,0" VerticalAlignment="Top" Width="423">
             <Grid Margin="0,0,0,569">
-                <Rectangle>
+                <Rectangle RenderOptions.BitmapScalingMode="NearestNeighbor">
                     <Rectangle.OpacityMask>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1"> 
                             <GradientStop Color="#55FFFFFF" Offset="0"/>
@@ -32,7 +32,7 @@
                         </LinearGradientBrush>
                     </Rectangle.OpacityMask>
                     <Rectangle.Fill>
-                        <ImageBrush Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="../Assets/Images/placeholder_banner.jpeg"/>
+                        <ImageBrush RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="../Assets/Images/placeholder_banner.jpeg"/>
                     </Rectangle.Fill>
                 </Rectangle>
             </Grid>
