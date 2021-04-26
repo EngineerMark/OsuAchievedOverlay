@@ -1,4 +1,6 @@
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/engineermark/osuachievedoverlay?include_prereleases)](https://github.com/EngineerMark/OsuAchievedOverlay/releases/latest)
+![Main Branch Status](https://img.shields.io/github/workflow/status/EngineerMark/OsuAchievedOverlay/Continuous%20Integration/main?label=build%20main)
+![Development Branch Status](https://img.shields.io/github/workflow/status/EngineerMark/OsuAchievedOverlay/Continuous%20Integration/dev?label=build%20dev)
 
 # OsuAchievedOverlay
 Stream Overlay for osu! containing information on your session achievements
