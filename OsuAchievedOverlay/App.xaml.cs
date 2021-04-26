@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OsuAchievedOverlay.Managers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,9 @@ namespace OsuAchievedOverlay
     /// </summary>
     public partial class App : Application
     {
+        void StartApp(object sender, StartupEventArgs e)
+        {
+            WindowManager.Instance.LaunchWin = new LaunchWindow(e);
+        }
     }
 }

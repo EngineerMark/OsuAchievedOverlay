@@ -23,9 +23,12 @@ namespace OsuAchievedOverlay
     /// </summary>
     public partial class LaunchWindow : Window
     {
-        public LaunchWindow()
+        public LaunchWindow(StartupEventArgs e)
         {
+            StartupEventArgs t = e;
             InitializeComponent();
+            Show();
+            Focus();
 
             TestSettings();
         }

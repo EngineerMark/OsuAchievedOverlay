@@ -27,6 +27,11 @@ namespace OsuAchievedOverlay
         public PopupSetAPI()
         {
             InitializeComponent();
+
+            Closed += (object sender, EventArgs e) =>
+            {
+                Application.Current.Shutdown();
+            };
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -38,7 +43,6 @@ namespace OsuAchievedOverlay
         private void Btn_Close(object sender, RoutedEventArgs e)
         {
             Close();
-            Application.Current.Shutdown();
         }
 
         private void Btn_Minimize(object sender, RoutedEventArgs e)

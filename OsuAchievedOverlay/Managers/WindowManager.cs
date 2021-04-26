@@ -17,6 +17,7 @@ namespace OsuAchievedOverlay.Managers
         public BetaDisplayWindow BetaDisplayWin { get => betaDisplayWin; set => betaDisplayWin = value; }
         public LoadSessionWindow SessionWin { get => sessionWin; set => sessionWin = value; }
         public LocalApiWindow ApiWin { get => apiWin; set => apiWin = value; }
+        public LaunchWindow LaunchWin { get; set; }
 
         public void CloseAll(){
             SettingsWin?.Close();
