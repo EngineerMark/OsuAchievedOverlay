@@ -19,56 +19,23 @@ namespace OsuAchievedOverlay
     /// </summary>
     public partial class BetaDisplayWindow : Window
     {
-        public DispatcherTimer Timer { get; set; }
-        public KeyValuePair<long, Session> UpdateSession { get; set; }
-        public long LastSessionUpdate { get; private set; }
-
-        #region Stuff for profile picture
-        public KeyValuePair<long, BitmapImage> UpdateProfileImage { get; set; }
-        public long LastProfileImageUpdate { get; private set; }
-        #endregion
-
-        #region Stuff for profile header
-        public KeyValuePair<long, BitmapImage> UpdateHeaderImage { get; set; }
-        public long LastHeaderImageUpdate { get; private set; }
-        #endregion
-
         public BetaDisplayWindow()
         {
             InitializeComponent();
 
-            Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(5);
-            Timer.Tick += (object s, EventArgs e) => Update();
-            Timer.Start();
-
             Closed += (object sender, EventArgs e) =>
             {
-                Timer?.Stop();
-
                 GameManager.Instance.Stop();
             };
         }
 
         private void Update()
         {
-            if (LastSessionUpdate != UpdateSession.Key)
-            {
-                ApplySession(UpdateSession.Value);
-                LastSessionUpdate = UpdateSession.Key;
-            }
-
-            if (LastProfileImageUpdate != UpdateProfileImage.Key)
-            {
-                ImageProfilePicture.ImageSource = UpdateProfileImage.Value;
-                LastProfileImageUpdate = UpdateProfileImage.Key;
-            }
-
-            if (LastHeaderImageUpdate != UpdateHeaderImage.Key)
-            {
-                ImageProfileHeader.ImageSource = UpdateHeaderImage.Value;
-                LastHeaderImageUpdate = UpdateHeaderImage.Key;
-            }
+            //if (LastSessionUpdate != UpdateSession.Key)
+            //{
+            //    ApplySession(UpdateSession.Value);
+            //    LastSessionUpdate = UpdateSession.Key;
+            //}
         }
 
         public void ApplyUser(OsuApiHelper.OsuUser user)
@@ -82,13 +49,19 @@ namespace OsuAchievedOverlay
                 ThreadPool.QueueUserWorkItem((Object stateInfo) =>
                 {
                     BitmapImage img = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
-                    UpdateProfileImage = new KeyValuePair<long, BitmapImage>(DateTimeOffset.Now.ToUnixTimeSeconds(), img);
+                    Dispatcher.Invoke(new Action(()=>
+                    {
+                        ImageProfilePicture.ImageSource = img;
+                    }));
                 });
 
                 ThreadPool.QueueUserWorkItem((Object stateInfo) =>
                 {
                     BitmapImage img = InterfaceManager.Instance.LoadImage(ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/" + user.ID));
-                    UpdateHeaderImage = new KeyValuePair<long, BitmapImage>(DateTimeOffset.Now.ToUnixTimeSeconds(), img);
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        ImageProfileHeader.ImageSource = img;
+                    }));
                 });
 
                 try
@@ -107,80 +80,83 @@ namespace OsuAchievedOverlay
 
         public void ApplySession(Session session)
         {
-            if (!session.ReadOnly)
+            Dispatcher.Invoke(new Action(() =>
             {
-                
+                if (!session.ReadOnly)
+                {
 
-                //List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
-                //CurrentSession.AddNewPlays(newPlays);
-                if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Hidden)
-                    WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Hidden;
 
-                if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Visible)
-                    WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Visible;
-                if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Hidden)
-                    WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Visible)
-                    WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Visible;
+                    //List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
+                    //CurrentSession.AddNewPlays(newPlays);
+                    if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Hidden)
+                        WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Hidden;
 
-                if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Hidden)
-                    WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Hidden;
-                if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Visible)
-                    WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Visible;
+                    if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Visible)
+                        WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Visible;
+                    if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Hidden)
+                        WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Visible)
+                        WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Visible;
 
-                DateTime sessionStart = DateTimeOffset.FromUnixTimeSeconds(session.SessionDate).UtcDateTime;
-                DateTime sessionEnd = DateTimeOffset.FromUnixTimeSeconds(session.SessionEndDate).UtcDateTime;
+                    if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Hidden)
+                        WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Hidden;
+                    if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Visible)
+                        WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Visible;
 
-                WindowManager.Instance.BetaDisplayWin.LabelReadonlySessionDate.Content = sessionStart.ToString("g") + " - " + sessionEnd.ToString("g");
-            }
+                    DateTime sessionStart = DateTimeOffset.FromUnixTimeSeconds(session.SessionDate).UtcDateTime;
+                    DateTime sessionEnd = DateTimeOffset.FromUnixTimeSeconds(session.SessionEndDate).UtcDateTime;
 
-            WindowManager.Instance.BetaDisplayWin.ApplyUser(GameManager.Instance.OsuUser);
+                    WindowManager.Instance.BetaDisplayWin.LabelReadonlySessionDate.Content = sessionStart.ToString("g") + " - " + sessionEnd.ToString("g");
+                }
 
-            LabelSSHCount.Content = session.CurrentData.RankSilverSS;
-            LabelSSCount.Content = session.CurrentData.RankGoldSS;
-            LabelSHCount.Content = session.CurrentData.RankSilverS;
-            LabelSCount.Content = session.CurrentData.RankGoldS;
-            LabelACount.Content = session.CurrentData.RankA;
+                WindowManager.Instance.BetaDisplayWin.ApplyUser(GameManager.Instance.OsuUser);
 
-            SetLabelStat(LabelGainedSSHCount, session.DifferenceData.RankSilverSS);
-            SetLabelStat(LabelGainedSSCount, session.DifferenceData.RankGoldSS);
-            SetLabelStat(LabelGainedSHCount, session.DifferenceData.RankSilverS);
-            SetLabelStat(LabelGainedSCount, session.DifferenceData.RankGoldS);
-            SetLabelStat(LabelGainedACount, session.DifferenceData.RankA);
+                LabelSSHCount.Content = session.CurrentData.RankSilverSS;
+                LabelSSCount.Content = session.CurrentData.RankGoldSS;
+                LabelSHCount.Content = session.CurrentData.RankSilverS;
+                LabelSCount.Content = session.CurrentData.RankGoldS;
+                LabelACount.Content = session.CurrentData.RankA;
 
-            SetLabelStat(LabelTotalLevel, session.CurrentData.Level, false, false);
-            SetLabelStat(LabelGainedLevel, session.DifferenceData.Level);
+                SetLabelStat(LabelGainedSSHCount, session.DifferenceData.RankSilverSS);
+                SetLabelStat(LabelGainedSSCount, session.DifferenceData.RankGoldSS);
+                SetLabelStat(LabelGainedSHCount, session.DifferenceData.RankSilverS);
+                SetLabelStat(LabelGainedSCount, session.DifferenceData.RankGoldS);
+                SetLabelStat(LabelGainedACount, session.DifferenceData.RankA);
 
-            SetLabelStat(LabelTotalScore, session.CurrentData.TotalScore, false, false);
-            SetLabelStat(LabelGainedScore, session.DifferenceData.TotalScore);
+                SetLabelStat(LabelTotalLevel, session.CurrentData.Level, false, false);
+                SetLabelStat(LabelGainedLevel, session.DifferenceData.Level);
 
-            SetLabelStat(LabelTotalRankedScore, session.CurrentData.RankedScore, false, false);
-            SetLabelStat(LabelGainedRankedScore, session.DifferenceData.RankedScore);
+                SetLabelStat(LabelTotalScore, session.CurrentData.TotalScore, false, false);
+                SetLabelStat(LabelGainedScore, session.DifferenceData.TotalScore);
 
-            SetLabelStat(LabelTotalRank, session.CurrentData.WorldRank, false, false);
-            SetLabelStat(LabelGainedRank, -session.DifferenceData.WorldRank);
+                SetLabelStat(LabelTotalRankedScore, session.CurrentData.RankedScore, false, false);
+                SetLabelStat(LabelGainedRankedScore, session.DifferenceData.RankedScore);
 
-            SetLabelStat(LabelTotalCountryRank, session.CurrentData.CountryRank, false, false);
-            SetLabelStat(LabelGainedCountryRank, -session.DifferenceData.CountryRank);
+                SetLabelStat(LabelTotalRank, session.CurrentData.WorldRank, false, false);
+                SetLabelStat(LabelGainedRank, -session.DifferenceData.WorldRank);
 
-            SetLabelStat(LabelTotalPlaycount, session.CurrentData.Playcount, false, false);
-            SetLabelStat(LabelGainedPlaycount, session.DifferenceData.Playcount);
+                SetLabelStat(LabelTotalCountryRank, session.CurrentData.CountryRank, false, false);
+                SetLabelStat(LabelGainedCountryRank, -session.DifferenceData.CountryRank);
 
-            SetLabelStat(LabelTotalAccuracy, session.CurrentData.Accuracy, false, false);
-            SetLabelStat(LabelGainedAccuracy, session.DifferenceData.Accuracy);
+                SetLabelStat(LabelTotalPlaycount, session.CurrentData.Playcount, false, false);
+                SetLabelStat(LabelGainedPlaycount, session.DifferenceData.Playcount);
 
-            SetLabelStat(LabelTotalPerformance, session.CurrentData.Performance, false, false);
-            SetLabelStat(LabelGainedPerformance, session.DifferenceData.Performance);
+                SetLabelStat(LabelTotalAccuracy, session.CurrentData.Accuracy, false, false);
+                SetLabelStat(LabelGainedAccuracy, session.DifferenceData.Accuracy);
 
-            TimeSpan totalPlayTime = TimeSpan.FromSeconds(session.CurrentData.Playtime);
-            TimeSpan gainedPlayTime = TimeSpan.FromSeconds(session.DifferenceData.Playtime);
-            LabelTotalPlaytime.Content = totalPlayTime.Humanize(maxUnit: Humanizer.Localisation.TimeUnit.Hour);
+                SetLabelStat(LabelTotalPerformance, session.CurrentData.Performance, false, false);
+                SetLabelStat(LabelGainedPerformance, session.DifferenceData.Performance);
 
-            LabelGainedPlaytime.Content = (session.DifferenceData.Playtime >= 0 ? "+" : "") + gainedPlayTime.Humanize(maxUnit: Humanizer.Localisation.TimeUnit.Hour);
-            LabelGainedPlaytime.Foreground = session.DifferenceData.Playtime >= 0 ? Brushes.LightGreen : Brushes.Pink;
+                TimeSpan totalPlayTime = TimeSpan.FromSeconds(session.CurrentData.Playtime);
+                TimeSpan gainedPlayTime = TimeSpan.FromSeconds(session.DifferenceData.Playtime);
+                LabelTotalPlaytime.Content = totalPlayTime.Humanize(maxUnit: Humanizer.Localisation.TimeUnit.Hour);
+
+                LabelGainedPlaytime.Content = (session.DifferenceData.Playtime >= 0 ? "+" : "") + gainedPlayTime.Humanize(maxUnit: Humanizer.Localisation.TimeUnit.Hour);
+                LabelGainedPlaytime.Foreground = session.DifferenceData.Playtime >= 0 ? Brushes.LightGreen : Brushes.Pink;
+            }));
         }
 
         private void SetLabelStat(Label label, double value, bool usePrefix = true, bool recolor = true)

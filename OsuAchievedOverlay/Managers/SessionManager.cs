@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace OsuAchievedOverlay.Managers
 {
@@ -110,7 +111,8 @@ namespace OsuAchievedOverlay.Managers
                         CurrentSession.CurrentData = (SessionData)CurrentSession.InitialData.Clone();
                 }
                 CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
-                WindowManager.Instance.BetaDisplayWin.UpdateSession = new KeyValuePair<long, Session>(DateTimeOffset.Now.ToUnixTimeSeconds(), (Session)CurrentSession.Clone());
+                WindowManager.Instance.BetaDisplayWin.ApplySession(CurrentSession);
+                //WindowManager.Instance.BetaDisplayWin.UpdateSession = new KeyValuePair<long, Session>(DateTimeOffset.Now.ToUnixTimeSeconds(), (Session)CurrentSession.Clone());
                 //WindowManager.Instance.BetaDisplayWin.ApplySession(WindowManager.Instance.BetaDisplayWin.UpdateSession.Value);
             });
         }
