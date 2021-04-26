@@ -106,8 +106,8 @@ namespace OsuAchievedOverlay
                     if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Visible)
                         WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Visible;
 
-                    DateTime sessionStart = DateTimeOffset.FromUnixTimeSeconds(session.SessionDate).UtcDateTime;
-                    DateTime sessionEnd = DateTimeOffset.FromUnixTimeSeconds(session.SessionEndDate).UtcDateTime;
+                    DateTime sessionStart = DateTimeOffset.FromUnixTimeSeconds(session.SessionDate).UtcDateTime.ToLocalTime();
+                    DateTime sessionEnd = DateTimeOffset.FromUnixTimeSeconds(session.SessionEndDate).UtcDateTime.ToLocalTime();
 
                     WindowManager.Instance.BetaDisplayWin.LabelReadonlySessionDate.Content = sessionStart.ToString("g") + " - " + sessionEnd.ToString("g");
                 }
