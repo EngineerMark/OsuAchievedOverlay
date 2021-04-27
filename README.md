@@ -19,6 +19,16 @@ For some reason, they sometimes redirect you to the community forum. When that h
 
 I don't know what causes this nor do I know a solution. Try with peppy maybe.
 
+## Release format
+
+Releases are currently versioned as the following: 1.2.3.4
+1. Main version
+2. Beta version
+3. Release
+4. Hotfix version (Only applicable for hotfixes)
+
+This format will be standard here for the ease of the upcoming updater in the application.
+
 # Sessions
 You only need to save a session once, the current and difference data are calculated automatically when opened.
 
