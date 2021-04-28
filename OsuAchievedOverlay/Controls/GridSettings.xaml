@@ -14,7 +14,7 @@
                     <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/back_64.png"/>
                 </Button.Background>
             </Button>
-            <StackPanel HorizontalAlignment="Stretch" Height="340" Margin="10,40,10,70" VerticalAlignment="Stretch" Width="180">
+            <StackPanel HorizontalAlignment="Stretch" Margin="10,40,10,70" VerticalAlignment="Stretch">
                 <Grid HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="180">
                     <Label Content="API Key" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="180" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     <PasswordBox x:Name="InputApiKey" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,24,0,0" Password="TextBox" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>

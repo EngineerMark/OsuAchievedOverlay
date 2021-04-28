@@ -124,9 +124,6 @@
     <Compile Include="Windows\PopupSetAPI.xaml.cs">
       <DependentUpon>PopupSetAPI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\SettingsWindow.xaml.cs">
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
@@ -158,10 +155,6 @@
       <DependentUpon>LocalApiWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\PopupSetAPI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,7 +9,6 @@ namespace OsuAchievedOverlay.Managers
 {
     public class WindowManager : Manager<WindowManager>
     {
-        public SettingsWindow SettingsWin { get; set; }
         public BetaDisplayWindow BetaDisplayWin { get; set; }
         public LoadSessionWindow SessionWin { get; set; }
         public LocalApiWindow ApiWin { get; set; }
@@ -17,8 +16,6 @@ namespace OsuAchievedOverlay.Managers
         public UpdateWindow UpdateWin { get; set; }
 
         public void CloseAll(){
-            SettingsWin?.Close();
-            SettingsWin = null;
             BetaDisplayWin?.Close();
             BetaDisplayWin = null;
             SessionWin?.Close();
