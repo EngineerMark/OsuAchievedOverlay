@@ -90,6 +90,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApiHelper.cs" />
+    <Compile Include="Controls\GridSettings.xaml.cs">
+      <DependentUpon>GridSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Github\Asset.cs" />
     <Compile Include="Github\Release.cs" />
     <Compile Include="Managers\FileManager.cs" />
@@ -127,6 +130,10 @@
     <Compile Include="Windows\UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\GridSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\BetaDisplayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -526,6 +533,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\updater.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\back_32.png" />
+    <Resource Include="Assets\Images\back_64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

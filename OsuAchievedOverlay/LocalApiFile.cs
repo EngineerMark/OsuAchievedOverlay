@@ -10,10 +10,10 @@ namespace OsuAchievedOverlay
     public class LocalApiFile : ICloneable
     {
         [JsonProperty("FileName")]
-        public string FileName { get; set; }
+        public string FileName { get; set; } = "";
 
         [JsonProperty("StringData")]
-        public string StringData { get; set; }
+        public string StringData { get; set; } = "";
 
         [JsonProperty("PositivePrefix")]
         public string PositivePrefix { get; set; } = "+";

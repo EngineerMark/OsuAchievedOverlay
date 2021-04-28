@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -184,12 +185,31 @@ namespace OsuAchievedOverlay
 
         private void Btn_OpenSettings(object sender, RoutedEventArgs e)
         {
-            if (WindowManager.Instance.SettingsWin == null)
+            //if (WindowManager.Instance.SettingsWin == null)
+            //{
+            //    WindowManager.Instance.SettingsWin = new SettingsWindow();
+            //    WindowManager.Instance.SettingsWin.Show();
+            //}
+            //WindowManager.Instance.SettingsWin.Focus();
+            GridSettings.PopulateData();
+            GridBackdrop.Visibility = Visibility.Visible;
+            InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0, 0.3, 0.3);
+            GridSettings.Visibility = Visibility.Visible;
+        }
+
+        private void Btn_SettingsClosed(object sender, EventArgs e)
+        {
+            Storyboard sb = InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0.3, 0, 0.3, new Action(() =>
             {
-                WindowManager.Instance.SettingsWin = new SettingsWindow();
-                WindowManager.Instance.SettingsWin.Show();
-            }
-            WindowManager.Instance.SettingsWin.Focus();
+                GridBackdrop.Visibility = Visibility.Collapsed;
+            }));
+            GridSettings.Visibility = Visibility.Hidden;
+        }
+
+        private void SettingsGrid_ClickOutside(object sender, MouseButtonEventArgs e)
+        {
+            if (!GridSettings.IsMouseOver)
+                Btn_SettingsClosed(null, null);
         }
 
         private void btnSaveSession_Click(object sender, RoutedEventArgs e)

@@ -60,5 +60,9 @@ namespace OsuAchievedOverlay
         {
             return a.Combine() != b.Combine();
         }
+
+        public static bool IsEquals(Version a, Version b){
+            return a == b;
+        }
     }
 }

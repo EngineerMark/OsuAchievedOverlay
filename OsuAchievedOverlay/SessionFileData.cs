@@ -5,10 +5,10 @@ namespace OsuAchievedOverlay
 {
     public class SessionFileData
     {
-        public string FileName { get; set; }
-        public string FileLocation { get; set; }
-        public string FileExtension { get; set; }
-        public long FileDate { get; set; }
+        public string FileName { get; set; } = "";
+        public string FileLocation { get; set; } = "";
+        public string FileExtension { get; set; } = "";
+        public long FileDate { get; set; } = -1;
 
         [JsonIgnore]
         public string Identifier
