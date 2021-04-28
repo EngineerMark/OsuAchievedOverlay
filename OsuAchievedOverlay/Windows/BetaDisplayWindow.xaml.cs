@@ -44,12 +44,12 @@ namespace OsuAchievedOverlay
             {
                 LabelUserName.Content = user.Name;
 
-                string t = ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/"+user.ID);
+                string t = ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/" + user.ID);
 
                 ThreadPool.QueueUserWorkItem((Object stateInfo) =>
                 {
                     BitmapImage img = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
-                    Dispatcher.Invoke(new Action(()=>
+                    Dispatcher.Invoke(new Action(() =>
                     {
                         ImageProfilePicture.ImageSource = img;
                     }));
@@ -163,7 +163,7 @@ namespace OsuAchievedOverlay
         {
             label.Content = (usePrefix && (value >= 0) ? "+" : "") + value.ToString("#,##0.###");
             if (recolor)
-                label.Foreground = value >= 0 ? Brushes.LightGreen : Brushes.Pink;
+                label.Foreground = value == 0 ? Brushes.Gray : value >= 0 ? Brushes.LightGreen : Brushes.Pink;
         }
 
         private void Btn_Close(object sender, RoutedEventArgs e)
