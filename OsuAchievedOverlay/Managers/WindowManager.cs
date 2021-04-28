@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OsuAchievedOverlay.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,16 +9,12 @@ namespace OsuAchievedOverlay.Managers
 {
     public class WindowManager : Manager<WindowManager>
     {
-        private BetaDisplayWindow betaDisplayWin = null;
-        private SettingsWindow settingsWin = null;
-        private LoadSessionWindow sessionWin = null;
-        private LocalApiWindow apiWin = null;
-
-        public SettingsWindow SettingsWin { get => settingsWin; set => settingsWin = value; }
-        public BetaDisplayWindow BetaDisplayWin { get => betaDisplayWin; set => betaDisplayWin = value; }
-        public LoadSessionWindow SessionWin { get => sessionWin; set => sessionWin = value; }
-        public LocalApiWindow ApiWin { get => apiWin; set => apiWin = value; }
+        public SettingsWindow SettingsWin { get; set; }
+        public BetaDisplayWindow BetaDisplayWin { get; set; }
+        public LoadSessionWindow SessionWin { get; set; }
+        public LocalApiWindow ApiWin { get; set; }
         public LaunchWindow LaunchWin { get; set; }
+        public UpdateWindow UpdateWin { get; set; }
 
         public void CloseAll(){
             SettingsWin?.Close();

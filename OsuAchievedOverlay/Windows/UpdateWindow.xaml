@@ -11,25 +11,43 @@
         ResizeMode="NoResize"
         BorderBrush="#2E1F25"
         BorderThickness="1"
-        Title="New version out" Height="504" Width="440.677">
+        Title="New version out" Height="504" Width="568.177">
     <Grid>
-        <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="439">
-            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="-" Click="Btn_Minimize" HorizontalAlignment="Left" Margin="346,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
-            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="X" Click="Btn_Close" HorizontalAlignment="Left" Margin="395,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
+        <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="566">
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="-" Click="Btn_Minimize" HorizontalAlignment="Right" Margin="0,0,49,0" VerticalAlignment="Top" Width="44" Height="29"/>
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="X" Click="Btn_Close" HorizontalAlignment="Right" Margin="395,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
             <Label Content="New version out" Foreground="#553A46" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="29" Width="236" Margin="29,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
             <Grid HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="29">
                 <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/icon_32.png"/>
             </Grid>
         </Grid>
-        <Grid Background="#3D2932" HorizontalAlignment="Left" Height="473" VerticalAlignment="Top" Width="439" Margin="0,29,0,0">
-            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Update" HorizontalAlignment="Left" Margin="10,431,0,0" VerticalAlignment="Top" Width="172" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
-            <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Continue" HorizontalAlignment="Left" Margin="257,431,0,0" VerticalAlignment="Top" Width="172" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
-            <Label Content="There is an update available. Do you want to update?" Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="419"/>
-            <ScrollViewer HorizontalAlignment="Left" Height="387" Margin="10,39,0,0" VerticalAlignment="Top" Width="419">
-                <TextBlock TextWrapping="Wrap" Foreground="White" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus">
-                    Text
-                </TextBlock>
-            </ScrollViewer>
+        <Grid Background="#3D2932" HorizontalAlignment="Left" Height="473" VerticalAlignment="Top" Width="566" Margin="0,29,0,0">
+            <Grid Name="GridUpdater" Visibility="Visible">
+                <Rectangle RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,188">
+                    <Rectangle.OpacityMask>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#55FFFFFF" Offset="0"/>
+                            <GradientStop Color="#00FFFFFF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Fill>
+                        <ImageBrush RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/updater.jpg"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <ProgressBar Name="ProgressBarUpdater" IsIndeterminate="True" HorizontalAlignment="Left" Height="18" Margin="10,445,0,0" VerticalAlignment="Top" Width="546"/>
+                <Label VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="546" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" Height="280">
+                    <TextBlock Text="" x:Name="TextBlockProgressStates" VerticalAlignment="Bottom">
+                    </TextBlock>
+                </Label>
+                <Label Content="Updating from 1.0.5 to 1.0.7" Name="LabelUpdatingWhat" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Height="23" Width="546" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <Label Content="osu!Achieved Update" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="42" Width="546" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="24"/>
+            </Grid>
+            <Grid Name="GridUpdateReady" Visibility="Hidden">
+                <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Update" Click="Btn_Update" HorizontalAlignment="Left" Margin="324,431,0,0" VerticalAlignment="Top" Width="110" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Continue" Click="Btn_Continue" HorizontalAlignment="Left" Margin="439,431,0,0" VerticalAlignment="Top" Width="117" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <Label Content="There is an update available. Do you want to update?" Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="419"/>
+                <WebBrowser Name="BrowserDisplayReleases" Height="387" Margin="10,39,10,47"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

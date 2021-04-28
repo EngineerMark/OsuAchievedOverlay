@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
@@ -22,6 +23,27 @@ namespace OsuAchievedOverlay.Managers
         public override void Stop()
         {
             base.Stop();
+        }
+
+        public List<string> GetAllFilesInDirectory(string dir){
+            List<string> files = new List<string>();
+
+            foreach (string f in Directory.GetFiles(dir))
+                files.Add(f);
+            foreach (string d in Directory.GetDirectories(dir))
+                files.AddRange(GetAllFilesInDirectory(d));
+
+            return files;
+        }
+
+        public DirectoryInfo GetApplicationDirectory(){
+            return Directory.GetParent(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).FullName);
+        }
+
+        public void MoveFile(string from, string to, bool overwrite = false){
+            if (File.Exists(to) && overwrite)
+                File.Delete(to);
+            File.Move(from, to);
         }
 
         protected override void ThreadStep(){

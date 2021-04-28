@@ -49,12 +49,13 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -62,21 +63,26 @@
   <PropertyGroup>
     <ApplicationIcon>Assets\Images\icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <PublishSingleFile>true</PublishSingleFile>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -84,6 +90,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApiHelper.cs" />
+    <Compile Include="Github\Asset.cs" />
+    <Compile Include="Github\Release.cs" />
     <Compile Include="Managers\FileManager.cs" />
     <Compile Include="LocalApiFile.cs" />
     <Compile Include="Interfaces\IThreaded.cs" />
@@ -92,10 +100,12 @@
     <Compile Include="Managers\InterfaceManager.cs" />
     <Compile Include="Managers\SettingsManager.cs" />
     <Compile Include="Managers\ThreadedManager.cs" />
+    <Compile Include="Managers\UpdateManager.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="SessionFileData.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="Managers\WindowManager.cs" />
+    <Compile Include="Version.cs" />
     <Compile Include="Windows\BetaDisplayWindow.xaml.cs">
       <DependentUpon>BetaDisplayWindow.xaml</DependentUpon>
     </Compile>
@@ -501,6 +511,9 @@
     <PackageReference Include="ini-parser">
       <Version>2.5.2</Version>
     </PackageReference>
+    <PackageReference Include="MarkdownSharp">
+      <Version>2.0.5</Version>
+    </PackageReference>
     <PackageReference Include="MaterialDesignThemes">
       <Version>4.0.0</Version>
     </PackageReference>
@@ -510,6 +523,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\placeholder_banner.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\updater.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
