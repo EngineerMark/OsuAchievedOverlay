@@ -32,17 +32,13 @@ namespace OsuAchievedOverlay.Managers
                 WindowManager.Instance.BetaDisplayWin.Focus();
                 ApplySettingsToApp(SettingsManager.Instance.Settings);
 
-                if (OsuApiHelper.OsuApi.IsKeyValid() && OsuApiHelper.OsuApi.IsUserValid(SettingsManager.Instance.Settings["api"]["user"]))
+                if (OsuUser == null)
+                    OsuUser = OsuApiHelper.OsuApi.GetUser(SettingsManager.Instance.Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
+
+                SessionManager.Instance.CurrentSession = new Session()
                 {
-                    if (OsuUser == null)
-                        OsuUser = OsuApiHelper.OsuApi.GetUser(SettingsManager.Instance.Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
-
-                    SessionManager.Instance.CurrentSession = new Session()
-                    {
-                        InitialData = SessionData.FromUser(OsuUser)
-                    };
-
-                }
+                    InitialData = SessionData.FromUser(OsuUser)
+                };
 
                 RefreshTimer(null, null);
                 //Update every minute

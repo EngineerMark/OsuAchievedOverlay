@@ -23,6 +23,10 @@ namespace OsuAchievedOverlay
             Show();
             Focus();
 
+#if DEBUG
+            TestSettings();
+#else
+
             if(e.Args.Contains("-osufinishupdate")){
                 if (Directory.Exists("temp"))
                     Directory.Delete("temp", true);
@@ -37,6 +41,7 @@ namespace OsuAchievedOverlay
                 TestSettings();
             else
                 CheckForUpdate();
+#endif
             //TestSettings();
         }
 
