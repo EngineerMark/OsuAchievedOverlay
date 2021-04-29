@@ -33,7 +33,7 @@
                             </LinearGradientBrush>
                         </Rectangle.OpacityMask>
                         <Rectangle.Fill>
-                            <ImageBrush RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/placeholder_banner.jpeg"/>
+                            <ImageBrush RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/Headers/placeholder_banner.jpeg"/>
                         </Rectangle.Fill>
                     </Rectangle>
                 </Grid>
@@ -202,8 +202,8 @@
                 </Grid>
             </Grid>
             <Grid Visibility="Hidden" PreviewMouseLeftButtonDown="BackdropGrid_ClickOutside" Name="GridBackdrop" Background="Black" Opacity="0.5" />
-            <Grid Name="SidepanelGrid" Margin="0,0,220,0" Visibility="Hidden">
-                <localControls:GridSettings GridClosed="Btn_SettingsClosed" x:Name="GridSettings"/>
+            <Grid Name="SidepanelGrid" Margin="0,0,195,0" Visibility="Hidden" Background="#3D2932">
+                <localControls:GridSettings HorizontalAlignment="Stretch" VerticalAlignment="Stretch" GridClosed="Btn_SettingsClosed" x:Name="GridSettings"/>
             </Grid>
         </Grid>
     </Grid>

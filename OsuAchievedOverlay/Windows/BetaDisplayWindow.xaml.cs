@@ -28,6 +28,9 @@ namespace OsuAchievedOverlay
             {
                 GameManager.Instance.Stop();
             };
+
+            GridBackdrop.Visibility = Visibility.Hidden;
+            SidepanelGrid.Visibility = Visibility.Hidden;
         }
 
         private void Update()
@@ -194,6 +197,7 @@ namespace OsuAchievedOverlay
             GridSettings.PopulateData();
             InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0, 0.3, 0.4);
             InterfaceManager.Instance.AnimateOpacity(SidepanelGrid, 0, 1, 0.3);
+            GridSettings.Visibility = Visibility.Visible;
         }
 
         private void Btn_SettingsClosed(object sender, EventArgs e)
@@ -206,10 +210,14 @@ namespace OsuAchievedOverlay
             {
                 GridBackdrop.Visibility = Visibility.Collapsed;
             }));
-            InterfaceManager.Instance.AnimateOpacity(SidepanelGrid, 1, 0, 0.3, new Action(() =>
+            Storyboard sb = InterfaceManager.Instance.AnimateOpacity(SidepanelGrid, 1, 0, 0.3, new Action(() =>
             {
                 SidepanelGrid.Visibility = Visibility.Collapsed;
             }));
+            sb.Completed += delegate (object s, EventArgs e)
+            {
+                GridSettings.Visibility = Visibility.Hidden;
+            };
         }
 
         private void BackdropGrid_ClickOutside(object sender, MouseButtonEventArgs e)

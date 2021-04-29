@@ -4,10 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OsuAchievedOverlay.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="200">
+             mc:Ignorable="d">
     <Grid>
-        <Grid x:Name="GridView" Background="#3D2932">
+        <Grid HorizontalAlignment="Stretch" x:Name="GridView" Background="#3D2932">
+            <Rectangle HorizontalAlignment="Stretch" RenderOptions.BitmapScalingMode="HighQuality" Height="183" VerticalAlignment="Top">
+                <Rectangle.OpacityMask>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#55FFFFFF" Offset="0"/>
+                        <GradientStop Color="#00FFFFFF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.OpacityMask>
+                <Rectangle.Fill>
+                    <ImageBrush RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/Headers/megumin_couch.jpg"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
             <Label Content="Settings" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" Width="200" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="20"/>
             <Button Content="" Click="Btn_Close" BorderBrush="#3D2932" HorizontalAlignment="Left" VerticalAlignment="Top" Width="35" Height="35">
                 <Button.Background>
@@ -15,21 +26,25 @@
                 </Button.Background>
             </Button>
             <StackPanel HorizontalAlignment="Stretch" Margin="10,40,10,70" VerticalAlignment="Stretch">
-                <Grid HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="180">
+                <Grid HorizontalAlignment="Stretch" Height="54" VerticalAlignment="Top">
                     <Label Content="API Key" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="180" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     <PasswordBox x:Name="InputApiKey" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,24,0,0" Password="TextBox" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 </Grid>
-                <Grid HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="180">
+                <Grid HorizontalAlignment="Stretch" Height="54" VerticalAlignment="Top">
                     <Label Content="Username" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="180" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     <TextBox x:Name="InputUsername" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,24,0,0" Text="peppy" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 </Grid>
-                <Grid HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="180">
+                <Grid HorizontalAlignment="Stretch" Height="54" VerticalAlignment="Top">
                     <Label Content="Update rate" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="180" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     <TextBox x:Name="InputUpdaterate" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,24,0,0" Text="60" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 </Grid>
-                <Grid HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="180">
+                <Grid HorizontalAlignment="Stretch" Height="54" VerticalAlignment="Top">
                     <Label Content="Gamemode" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="180" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                     <ComboBox HorizontalAlignment="Stretch" x:Name="DropdownGamemode" Foreground="White" Background="#3D2932" VerticalContentAlignment="Center" VerticalAlignment="Top" Height="24" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" Margin="0,24,0,0"/>
+                </Grid>
+                <Grid HorizontalAlignment="Stretch" Height="54" VerticalAlignment="Top">
+                    <Label Content="osu! directory" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="180" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                    <TextBox x:Name="InputOsuDirectory" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,24,0,0" Text="X:/" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 </Grid>
             </StackPanel>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_SaveSettings" Content="Save &amp; Apply" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="10,385,10,30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>

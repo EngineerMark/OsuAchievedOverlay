@@ -522,14 +522,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\placeholder_banner.jpeg" />
+    <Resource Include="Assets\Images\Headers\placeholder_banner.jpeg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\updater.jpg" />
+    <Resource Include="Assets\Images\Headers\nekopara_lingerie.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\back_32.png" />
     <Resource Include="Assets\Images\back_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Headers\megumin_couch.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
