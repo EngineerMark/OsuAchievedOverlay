@@ -107,38 +107,49 @@ namespace OsuAchievedOverlay.Managers
                         WindowManager.Instance.UpdateWin.ProgressBarUpdater.IsIndeterminate = true;
                         WindowManager.Instance.UpdateWin.TextBlockProgressStates.Text += "\nFinished downloading " + relName + ".zip";
                         WindowManager.Instance.UpdateWin.TextBlockProgressStates.Text += "\nExtracting " + relName + ".zip";
+                    }));
 
-                        if (Directory.Exists("temp_" + relName))
-                            Directory.Delete("temp_" + relName, true);
+                    if (Directory.Exists("temp_" + relName))
+                        Directory.Delete("temp_" + relName, true);
 
-                        ZipFile.ExtractToDirectory(tempPath + ".zip", Path.Combine(root.FullName, tempPath));
+                    ZipFile.ExtractToDirectory(tempPath + ".zip", Path.Combine(root.FullName, tempPath));
 
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
                         WindowManager.Instance.UpdateWin.TextBlockProgressStates.Text += "\nFinished extracting " + relName + ".zip";
                         WindowManager.Instance.UpdateWin.TextBlockProgressStates.Text += "\nMoving files";
+                    }));
 
-                        //string[] files = Directory.GetFiles("temp_" + relName);
-                        List<string> files = FileManager.Instance.GetAllFilesInDirectory(tempPath);
+                    List<string> files = FileManager.Instance.GetAllFilesInDirectory(tempPath);
 
-                        DirectoryInfo targetFolder = Directory.GetParent(root.FullName);
-                        //foreach(string file in files){
-                        FileManager.Instance.MoveFile(Path.Combine(root.FullName, files[0]), Path.Combine(targetFolder.FullName, files[0].Replace("temp_" + relName + "\\", "")), true);
-                        //}
+                    DirectoryInfo targetFolder = Directory.GetParent(root.FullName);
+                    foreach (string file in files)
+                    {
+                        string from = Path.Combine(root.FullName, file);
+                        string to = Path.Combine(targetFolder.FullName, file.Replace("temp\\temp_" + relName + "\\", ""));
+                        FileManager.Instance.MoveFile(from, to, true);
+                    }
 
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
                         WindowManager.Instance.UpdateWin.TextBlockProgressStates.Text += "\nFinished moving files";
                         WindowManager.Instance.UpdateWin.TextBlockProgressStates.Text += "\nDeleting temporary files";
-
-                        Directory.Delete(tempPath, true);
-
-                        WindowManager.Instance.UpdateWin.TextBlockProgressStates.Text += "\nDone deleting temporary files";
-
-                        if (Updates.Count > 0)
-                            ProcessUpdate(Updates.Dequeue());
-                        else
-                        {
-                            Process.Start(Path.Combine(targetFolder.FullName, "OsuAchievedOverlay.exe"), "-osufinishupdate");
-                            Application.Current.Shutdown();
-                        }
                     }));
+
+                    Directory.Delete(tempPath, true);
+
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        WindowManager.Instance.UpdateWin.TextBlockProgressStates.Text += "\nDone deleting temporary files";
+                    }));
+
+                    if (Updates.Count > 0)
+                        ProcessUpdate(Updates.Dequeue());
+                    else
+                    {
+                        Process.Start(Path.Combine(targetFolder.FullName, "OsuAchievedOverlay.exe"), "-osufinishupdate");
+                        Application.Current.Shutdown();
+                    }
                 };
                 client.DownloadFileAsync(new Uri(zipurl), tempPath + ".zip");
             });

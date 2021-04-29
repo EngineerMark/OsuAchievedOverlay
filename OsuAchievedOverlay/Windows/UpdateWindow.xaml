@@ -22,7 +22,7 @@
             </Grid>
         </Grid>
         <Grid Background="#3D2932" HorizontalAlignment="Left" Height="473" VerticalAlignment="Top" Width="566" Margin="0,29,0,0">
-            <Grid Name="GridUpdater" Visibility="Hidden">
+            <Grid Name="GridUpdater" Visibility="Visible">
                 <Rectangle RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,188">
                     <Rectangle.OpacityMask>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -42,7 +42,7 @@
                 <Label Content="Updating from 1.0.5 to 1.0.7" Name="LabelUpdatingWhat" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Height="23" Width="546" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 <Label Content="osu!Achieved Update" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="42" Width="546" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="24"/>
             </Grid>
-            <Grid Name="GridUpdateReady" Visibility="Visible">
+            <Grid Name="GridUpdateReady" Visibility="Hidden">
                 <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Update" Click="Btn_Update" HorizontalAlignment="Left" Margin="324,431,0,0" VerticalAlignment="Top" Width="110" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Continue" Click="Btn_Continue" HorizontalAlignment="Left" Margin="439,431,0,0" VerticalAlignment="Top" Width="117" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 <Label Content="There is an update available. Do you want to update?" Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="419"/>
