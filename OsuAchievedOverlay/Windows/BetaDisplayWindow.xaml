@@ -11,14 +11,14 @@
         ResizeMode="NoResize"
         BorderBrush="#2E1F25"
         BorderThickness="1"
-        Title="osu!Achieved" Height="711" Width="423" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
+        Title="osu!Achieved" Height="711" Width="423" Icon="/OsuAchievedOverlay;component/Assets/Images/Icons/icon_32.png">
     <Grid>
         <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="423">
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="-" Click="Btn_Minimize" HorizontalAlignment="Left" Margin="330,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="X" Click="Btn_Close" HorizontalAlignment="Left" Margin="379,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
             <Label Content="osu!Achieved" Foreground="#553A46" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="29" Width="231" Margin="34,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
             <Grid HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="29">
-                <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/icon_32.png"/>
+                <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/Icons/icon_32.png"/>
             </Grid>
         </Grid>
 
@@ -63,27 +63,27 @@
                 </UniformGrid>
                 <UniformGrid Columns="5" HorizontalAlignment="Left" Height="101" Margin="10,171,0,0" VerticalAlignment="Top" Width="403">
                     <Grid>
-                        <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/SSH.png" Margin="2,10,1,0"/>
+                        <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/Ranks/SSH.png" Margin="2,10,1,0"/>
                         <Label Name="LabelSSHCount" Foreground="White" Content="-" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                         <Label Name="LabelGainedSSHCount" Foreground="LightGreen" Content="-" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                     </Grid>
                     <Grid>
-                        <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/SS.png" Margin="2,10,1,0"/>
+                        <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/Ranks/SS.png" Margin="2,10,1,0"/>
                         <Label Name="LabelSSCount" Foreground="White" Content="-" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                         <Label Name="LabelGainedSSCount" Foreground="LightGreen" Content="-" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                     </Grid>
                     <Grid>
-                        <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/SH.png" Margin="2,10,1,0"/>
+                        <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/Ranks/SH.png" Margin="2,10,1,0"/>
                         <Label Name="LabelSHCount" Foreground="White" Content="-" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                         <Label Name="LabelGainedSHCount" Foreground="LightGreen" Content="-" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                     </Grid>
                     <Grid>
-                        <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/S.png" Margin="2,10,1,0"/>
+                        <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/Ranks/S.png" Margin="2,10,1,0"/>
                         <Label Name="LabelSCount" Foreground="White" Content="-" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                         <Label Name="LabelGainedSCount" Foreground="LightGreen" Content="-" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                     </Grid>
                     <Grid>
-                        <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/A.png" Margin="2,10,1,0"/>
+                        <Image HorizontalAlignment="Center" Height="29" VerticalAlignment="Top" Source="/OsuAchievedOverlay;component/Assets/Images/Ranks/A.png" Margin="2,10,1,0"/>
                         <Label Name="LabelACount" Foreground="White" Content="-" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                         <Label Name="LabelGainedACount" Foreground="LightGreen" Content="-" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" Width="81" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16"/>
                     </Grid>
@@ -155,36 +155,36 @@
                 <Grid HorizontalAlignment="Left" Height="32" Margin="10,3,0,0" VerticalAlignment="Top" Width="403">
                     <Button ToolTip="Open the settings window" Content="" Click="Btn_OpenSettings" BorderBrush="#3D2932" HorizontalAlignment="Left" Margin="371,0,0,0" VerticalAlignment="Top" Width="32" Height="32">
                         <Button.Background>
-                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/settings.png"/>
+                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/Icons/settings.png"/>
                         </Button.Background>
                     </Button>
 
                     <Button ToolTip="Load a session" Content="" Click="btnLoadSession_Click" BorderBrush="#3D2932" HorizontalAlignment="Left" Margin="297,0,0,0" VerticalAlignment="Top" Width="32" Height="32">
                         <Button.Background>
-                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/load_64.png"/>
+                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/Icons/load_64.png"/>
                         </Button.Background>
                     </Button>
 
                     <Button ToolTip="Save current session" Content="" Click="btnSaveSession_Click" BorderBrush="#3D2932" HorizontalAlignment="Left" Margin="260,0,0,0" VerticalAlignment="Top" Width="32" Height="32">
                         <Button.Background>
-                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/save_64.png"/>
+                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/Icons/save_64.png"/>
                         </Button.Background>
                     </Button>
 
                     <Button ToolTip="Start a new session" Content="" Click="btnResetSession_Click" BorderBrush="#3D2932" HorizontalAlignment="Left" Margin="223,0,0,0" VerticalAlignment="Top" Width="32" Height="32">
                         <Button.Background>
-                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/new_64.png"/>
+                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/Icons/new_64.png"/>
                         </Button.Background>
                     </Button>
 
                     <Button ToolTip="Configure the local API" Content="" Click="btnOpenApiManager_Click" BorderBrush="#3D2932" HorizontalAlignment="Left" Margin="334,0,0,0" VerticalAlignment="Top" Width="32" Height="32">
                         <Button.Background>
-                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/api_64.png"/>
+                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/Icons/api_64.png"/>
                         </Button.Background>
                     </Button>
                     <Button Name="ButtonWarning" ToolTip="This is a readonly session! Data is NOT updated" Content="" BorderBrush="#3D2932" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" Height="32">
                         <Button.Background>
-                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/warn_64.png" />
+                            <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/Icons/warn_64.png" />
                         </Button.Background>
                     </Button>
                 </Grid>

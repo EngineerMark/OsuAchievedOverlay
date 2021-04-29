@@ -22,7 +22,7 @@
             <Label Content="Settings" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" Width="200" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="20"/>
             <Button Content="" Click="Btn_Close" BorderBrush="#3D2932" HorizontalAlignment="Left" VerticalAlignment="Top" Width="35" Height="35">
                 <Button.Background>
-                    <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/back_64.png"/>
+                    <ImageBrush ImageSource="/OsuAchievedOverlay;component/Assets/Images/Icons/back_64.png"/>
                 </Button.Background>
             </Button>
             <StackPanel HorizontalAlignment="Stretch" Margin="10,40,10,70" VerticalAlignment="Stretch">

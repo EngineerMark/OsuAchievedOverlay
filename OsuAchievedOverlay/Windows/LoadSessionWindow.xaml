@@ -13,14 +13,14 @@
         ResizeMode="NoResize"
         BorderBrush="#2E1F25"
         BorderThickness="1"
-        Title="osu!Achieved Session Loader" Height="413.636" Width="400" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
+        Title="osu!Achieved Session Loader" Height="413.636" Width="400" Icon="/OsuAchievedOverlay;component/Assets/Images/Icons/icon_32.png">
     <Grid>
         <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="400">
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="-" Click="Btn_Minimize" HorizontalAlignment="Left" Margin="307,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="X" Click="Btn_Close" HorizontalAlignment="Left" Margin="356,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
             <Label Content="osu!Achieved Session Loader" Foreground="#553A46" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="29" Width="231" Margin="34,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
             <Grid HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="29">
-                <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/icon_32.png"/>
+                <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/Icons/icon_32.png"/>
             </Grid>
         </Grid>
         <Grid Background="#3D2932" Margin="0,29,0,0">

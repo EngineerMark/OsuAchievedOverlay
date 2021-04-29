@@ -204,13 +204,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\SS.png" />
+    <Resource Include="Assets\Images\Ranks\SS.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\S.png" />
+    <Resource Include="Assets\Images\Ranks\S.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\A.png" />
+    <Resource Include="Assets\Images\Ranks\A.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -228,38 +228,35 @@
     <Resource Include="Assets\Images\profilepicture_placeholder.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\background.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\NL.png" />
+    <Resource Include="Assets\Images\Ranks\NL.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\SH.png" />
-    <Resource Include="Assets\Images\SSH.png" />
+    <Resource Include="Assets\Images\Ranks\SH.png" />
+    <Resource Include="Assets\Images\Ranks\SSH.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\icon_32.png" />
-    <Resource Include="Assets\Images\icon_64.png" />
+    <Resource Include="Assets\Images\Icons\icon_32.png" />
+    <Resource Include="Assets\Images\Icons\icon_64.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\settings.png" />
+    <Resource Include="Assets\Images\Icons\settings.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\load_32.png" />
-    <Resource Include="Assets\Images\load_64.png" />
-    <Resource Include="Assets\Images\save_32.png" />
-    <Resource Include="Assets\Images\save_64.png" />
+    <Resource Include="Assets\Images\Icons\load_32.png" />
+    <Resource Include="Assets\Images\Icons\load_64.png" />
+    <Resource Include="Assets\Images\Icons\save_32.png" />
+    <Resource Include="Assets\Images\Icons\save_64.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\new_32.png" />
-    <Resource Include="Assets\Images\new_64.png" />
+    <Resource Include="Assets\Images\Icons\new_32.png" />
+    <Resource Include="Assets\Images\Icons\new_64.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\api_32.png" />
-    <Resource Include="Assets\Images\api_64.png" />
+    <Resource Include="Assets\Images\Icons\api_32.png" />
+    <Resource Include="Assets\Images\Icons\api_64.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Flags\AD.png" />
@@ -489,8 +486,8 @@
     <Resource Include="Assets\Images\Flags\__.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\warn_32.png" />
-    <Resource Include="Assets\Images\warn_64.png" />
+    <Resource Include="Assets\Images\Icons\warn_32.png" />
+    <Resource Include="Assets\Images\Icons\warn_64.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\icon.ico" />
@@ -528,8 +525,8 @@
     <Resource Include="Assets\Images\Headers\nekopara_lingerie.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\back_32.png" />
-    <Resource Include="Assets\Images\back_64.png" />
+    <Resource Include="Assets\Images\Icons\back_32.png" />
+    <Resource Include="Assets\Images\Icons\back_64.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Headers\megumin_couch.jpg" />
