@@ -192,24 +192,32 @@ namespace OsuAchievedOverlay
             //}
             //WindowManager.Instance.SettingsWin.Focus();
             GridSettings.PopulateData();
-            GridBackdrop.Visibility = Visibility.Visible;
-            InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0, 0.3, 0.3);
-            GridSettings.Visibility = Visibility.Visible;
+            InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0, 0.3, 0.4);
+            InterfaceManager.Instance.AnimateOpacity(SidepanelGrid, 0, 1, 0.3);
         }
 
         private void Btn_SettingsClosed(object sender, EventArgs e)
         {
-            Storyboard sb = InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0.3, 0, 0.3, new Action(() =>
+            CloseSidepanel();
+        }
+
+        private void CloseSidepanel(){
+            InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0.3, 0, 0.4, new Action(() =>
             {
                 GridBackdrop.Visibility = Visibility.Collapsed;
             }));
-            GridSettings.Visibility = Visibility.Hidden;
+            InterfaceManager.Instance.AnimateOpacity(SidepanelGrid, 1, 0, 0.3, new Action(() =>
+            {
+                SidepanelGrid.Visibility = Visibility.Collapsed;
+            }));
         }
 
-        private void SettingsGrid_ClickOutside(object sender, MouseButtonEventArgs e)
+        private void BackdropGrid_ClickOutside(object sender, MouseButtonEventArgs e)
         {
-            if (!GridSettings.IsMouseOver)
-                Btn_SettingsClosed(null, null);
+            if (GridBackdrop.IsMouseOver)
+            {
+                CloseSidepanel();
+            }
         }
 
         private void btnSaveSession_Click(object sender, RoutedEventArgs e)

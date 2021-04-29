@@ -42,7 +42,7 @@
                         <Grid Height="128" Width="128" Margin="64,0,10,0">
                             <Rectangle RadiusX="20" RadiusY="20">
                                 <Rectangle.Fill>
-                                    <ImageBrush x:Name="ImageProfilePicture" ImageSource="../Assets/Images/profilepicture_placeholder.png"/>
+                                    <ImageBrush x:Name="ImageProfilePicture" ImageSource="/OsuAchievedOverlay;component/Assets/Images/profilepicture_placeholder.png"/>
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>
@@ -201,8 +201,10 @@
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid Visibility="Hidden" Name="GridBackdrop" Background="Black" Opacity="0.5" />
-            <localControls:GridSettings PreviewMouseLeftButtonDown="SettingsGrid_ClickOutside" GridClosed="Btn_SettingsClosed" x:Name="GridSettings" Visibility="Hidden" Margin="0,0,220,0"/>
+            <Grid Visibility="Hidden" PreviewMouseLeftButtonDown="BackdropGrid_ClickOutside" Name="GridBackdrop" Background="Black" Opacity="0.5" />
+            <Grid Name="SidepanelGrid" Margin="0,0,220,0" Visibility="Hidden">
+                <localControls:GridSettings GridClosed="Btn_SettingsClosed" x:Name="GridSettings"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

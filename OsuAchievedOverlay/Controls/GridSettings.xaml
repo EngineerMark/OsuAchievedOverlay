@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200">
     <Grid>
-        <Grid Background="#3D2932">
+        <Grid x:Name="GridView" Background="#3D2932">
             <Label Content="Settings" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" Width="200" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="20"/>
             <Button Content="" Click="Btn_Close" BorderBrush="#3D2932" HorizontalAlignment="Left" VerticalAlignment="Top" Width="35" Height="35">
                 <Button.Background>
