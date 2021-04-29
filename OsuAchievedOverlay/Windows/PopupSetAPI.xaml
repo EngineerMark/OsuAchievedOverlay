@@ -11,24 +11,24 @@
         ResizeMode="NoResize"
         BorderBrush="#2E1F25"
         BorderThickness="1"
-        Title="PopupSetAPI" Height="203.969" Width="368.898" Icon="/OsuAchievedOverlay;component/Assets/Images/icon_32.png">
+        Title="PopupSetAPI" Height="203.969" Width="368.898" Icon="/OsuAchievedOverlay;component/Assets/Images/Icons/icon_32.png">
     <Grid>
         <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="369">
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="-" Click="Btn_Minimize" HorizontalAlignment="Left" Margin="270,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="X" Click="Btn_Close" HorizontalAlignment="Left" Margin="325,0,0,0" VerticalAlignment="Top" Width="44" Height="29"/>
             <Label Content="Fix API" Foreground="#553A46" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="29" Width="236" Margin="29,0,0,0" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Aller"/>
             <Grid HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="29">
-                <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/icon_32.png"/>
+                <Image HorizontalAlignment="Center" Height="21" VerticalAlignment="Center" Width="21" Source="/OsuAchievedOverlay;component/Assets/Images/Icons/icon_32.png"/>
             </Grid>
         </Grid>
-        <Grid Background="#3D2932" HorizontalAlignment="Left" Height="173" VerticalAlignment="Top" Width="369" Margin="0,29,-2,0">
+        <Grid Background="#3D2932" HorizontalAlignment="Left" Height="173" VerticalAlignment="Top" Width="367" Margin="0,29,0,0">
             <PasswordBox x:Name="InputApiKey" Foreground="White" HorizontalAlignment="Left" Height="23" Margin="105,61,0,0" Password="API Key" VerticalAlignment="Top" Width="254" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <TextBox x:Name="InputUsername" Foreground="White" HorizontalAlignment="Left" Height="23" Margin="105,89,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="254" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <Label Foreground="White" Content="API Key" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="90" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <Label Foreground="White" Content="Username" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="90" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Content="Apply" Click="Btn_Apply" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="349" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <TextBlock Foreground="White" Text="Since this is your first launch (or you messed with the settings file), you have to enter your API key and username here" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="349" Height="46" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
-            <TextBlock Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="10,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="349"><Run Text="Click "/><Hyperlink NavigateUri="https://osu.ppy.sh/p/api" RequestNavigate="Link_OpenURL"><Run Text="here"/></Hyperlink><Run Text=" to get your API key"/></TextBlock>
+            <TextBlock Foreground="#DBB4C5" HorizontalAlignment="Left" Margin="10,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="349"><Run Text="Click "/><Hyperlink NavigateUri="https://old.ppy.sh/p/api" RequestNavigate="Link_OpenURL"><Run Text="here"/></Hyperlink><Run Text=" to get your API key"/></TextBlock>
         </Grid>
     </Grid>
 </Window>

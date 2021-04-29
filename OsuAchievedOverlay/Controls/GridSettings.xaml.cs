@@ -1,26 +1,42 @@
 ﻿using OsuAchievedOverlay.Managers;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace OsuAchievedOverlay
+namespace OsuAchievedOverlay.Controls
 {
     /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
+    /// Interaction logic for GridSettings.xaml
     /// </summary>
-    public partial class SettingsWindow : Window
+    public partial class GridSettings : UserControl
     {
-        public SettingsWindow()
+        public event EventHandler GridClosed;
+
+        public GridSettings()
         {
             InitializeComponent();
-
-            PopulateData();
         }
 
-        private void PopulateData(){
+        private void Btn_Close(object sender, RoutedEventArgs e)
+        {
+            GridClosed?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void PopulateData()
+        {
             DropdownGamemode.ItemsSource = Enum.GetValues(typeof(OsuApiHelper.OsuMode)).Cast<OsuApiHelper.OsuMode>();
 
             InputApiKey.Password = SettingsManager.Instance.Settings["api"]["key"];
@@ -31,31 +47,14 @@ namespace OsuAchievedOverlay
 
         private void Btn_SaveSettings(object sender, RoutedEventArgs e)
         {
-            SettingsManager.Instance.Settings["api"]["key"] = WindowManager.Instance.SettingsWin.InputApiKey.Password;
-            SettingsManager.Instance.Settings["api"]["user"] = WindowManager.Instance.SettingsWin.InputUsername.Text;
-            SettingsManager.Instance.Settings["api"]["gamemode"] = "" + ((OsuApiHelper.OsuMode)WindowManager.Instance.SettingsWin.DropdownGamemode.SelectedIndex);
-            int updateRate = int.Parse(WindowManager.Instance.SettingsWin.InputUpdaterate.Text);
+            SettingsManager.Instance.Settings["api"]["key"] = InputApiKey.Password;
+            SettingsManager.Instance.Settings["api"]["user"] = InputUsername.Text;
+            SettingsManager.Instance.Settings["api"]["gamemode"] = "" + ((OsuApiHelper.OsuMode)DropdownGamemode.SelectedIndex);
+            int updateRate = int.Parse(InputUpdaterate.Text);
             updateRate = Math.Min(120, Math.Max(5, updateRate));
             SettingsManager.Instance.Settings["api"]["updateRate"] = "" + updateRate;
 
             SettingsManager.Instance.SettingsSave();
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
-        }
-
-        private void Btn_Close(object sender, RoutedEventArgs e)
-        {
-            Close();
-            WindowManager.Instance.SettingsWin = null;
-        }
-
-        private void Btn_Minimize(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
         }
 
         private void InputNumericOnly(object sender, System.Windows.Input.TextCompositionEventArgs e)

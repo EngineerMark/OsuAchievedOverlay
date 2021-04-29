@@ -1,33 +1,69 @@
 ﻿using IniParser;
 using IniParser.Model;
+using Newtonsoft.Json;
+using OsuAchievedOverlay.Github;
 using OsuAchievedOverlay.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Threading;
+using System.Windows.Resources;
 
 namespace OsuAchievedOverlay
 {
-    /// <summary>
-    /// Interaction logic for LaunchWindow.xaml
-    /// </summary>
     public partial class LaunchWindow : Window
     {
-        public LaunchWindow()
+
+        public LaunchWindow(StartupEventArgs e)
         {
             InitializeComponent();
+            Show();
+            Focus();
 
+#if DEBUG
             TestSettings();
+#else
+
+            if(e.Args.Contains("-osufinishupdate")){
+                if (Directory.Exists("temp"))
+                    Directory.Delete("temp", true);
+            }
+
+            if (e.Args.Contains("-osustartupdate"))
+            {
+                WindowManager.Instance.UpdateWin = new Windows.UpdateWindow(true);
+                WindowManager.Instance.UpdateWin.Show();
+            }
+            else if (e.Args.Contains("-osunoupdate"))
+                TestSettings();
+            else
+                CheckForUpdate();
+#endif
+            //TestSettings();
+        }
+
+        public void CheckForUpdate()
+        {
+            ThreadPool.QueueUserWorkItem((Object stateInfo) =>
+            {
+                List<Release> updates = UpdateManager.Instance.GetAvailableUpdates();
+                bool updateReady = updates.Count > 0;
+
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    if (updateReady)
+                    {
+                        WindowManager.Instance.UpdateWin = new Windows.UpdateWindow();
+                        WindowManager.Instance.UpdateWin.Show();
+                        WindowManager.Instance.UpdateWin.SetReleaseData(updates);
+                    }
+                    else
+                        TestSettings();
+                }));
+            });
         }
 
         public void TestSettings()
@@ -38,9 +74,12 @@ namespace OsuAchievedOverlay
                 IniData data = parser.ReadFile("Settings.ini");
                 string key = data["api"]["key"];
                 OsuApiHelper.OsuApiKey.Key = key;
-                if (!OsuApiHelper.OsuApi.IsKeyValid()){
+                if (!OsuApiHelper.OsuApi.IsKeyValid())
+                {
                     OpenPopup();
-                }else{
+                }
+                else
+                {
                     // API key is valid, lets head on further
 
                     GameManager.Instance.Start();
@@ -59,7 +98,8 @@ namespace OsuAchievedOverlay
             }
         }
 
-        private void OpenPopup(){
+        private void OpenPopup()
+        {
             PopupSetAPI popup = new PopupSetAPI();
             popup.Show();
             popup.Focus();

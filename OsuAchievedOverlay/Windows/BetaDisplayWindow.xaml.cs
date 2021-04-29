@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -27,6 +28,9 @@ namespace OsuAchievedOverlay
             {
                 GameManager.Instance.Stop();
             };
+
+            GridBackdrop.Visibility = Visibility.Hidden;
+            SidepanelGrid.Visibility = Visibility.Hidden;
         }
 
         private void Update()
@@ -44,12 +48,12 @@ namespace OsuAchievedOverlay
             {
                 LabelUserName.Content = user.Name;
 
-                string t = ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/"+user.ID);
+                string t = ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/" + user.ID);
 
                 ThreadPool.QueueUserWorkItem((Object stateInfo) =>
                 {
                     BitmapImage img = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
-                    Dispatcher.Invoke(new Action(()=>
+                    Dispatcher.Invoke(new Action(() =>
                     {
                         ImageProfilePicture.ImageSource = img;
                     }));
@@ -155,7 +159,7 @@ namespace OsuAchievedOverlay
                 LabelTotalPlaytime.Content = totalPlayTime.Humanize(maxUnit: Humanizer.Localisation.TimeUnit.Hour);
 
                 LabelGainedPlaytime.Content = (session.DifferenceData.Playtime >= 0 ? "+" : "") + gainedPlayTime.Humanize(maxUnit: Humanizer.Localisation.TimeUnit.Hour);
-                LabelGainedPlaytime.Foreground = session.DifferenceData.Playtime >= 0 ? Brushes.LightGreen : Brushes.Pink;
+                LabelGainedPlaytime.Foreground = session.DifferenceData.Playtime == 0 ? Brushes.Gray : session.DifferenceData.Playtime >= 0 ? Brushes.LightGreen : Brushes.Pink;
             }));
         }
 
@@ -163,7 +167,7 @@ namespace OsuAchievedOverlay
         {
             label.Content = (usePrefix && (value >= 0) ? "+" : "") + value.ToString("#,##0.###");
             if (recolor)
-                label.Foreground = value >= 0 ? Brushes.LightGreen : Brushes.Pink;
+                label.Foreground = value == 0 ? Brushes.Gray : value >= 0 ? Brushes.LightGreen : Brushes.Pink;
         }
 
         private void Btn_Close(object sender, RoutedEventArgs e)
@@ -184,12 +188,44 @@ namespace OsuAchievedOverlay
 
         private void Btn_OpenSettings(object sender, RoutedEventArgs e)
         {
-            if (WindowManager.Instance.SettingsWin == null)
+            //if (WindowManager.Instance.SettingsWin == null)
+            //{
+            //    WindowManager.Instance.SettingsWin = new SettingsWindow();
+            //    WindowManager.Instance.SettingsWin.Show();
+            //}
+            //WindowManager.Instance.SettingsWin.Focus();
+            GridSettings.PopulateData();
+            InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0, 0.3, 0.4);
+            InterfaceManager.Instance.AnimateOpacity(SidepanelGrid, 0, 1, 0.3);
+            GridSettings.Visibility = Visibility.Visible;
+        }
+
+        private void Btn_SettingsClosed(object sender, EventArgs e)
+        {
+            CloseSidepanel();
+        }
+
+        private void CloseSidepanel(){
+            InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0.3, 0, 0.4, new Action(() =>
             {
-                WindowManager.Instance.SettingsWin = new SettingsWindow();
-                WindowManager.Instance.SettingsWin.Show();
+                GridBackdrop.Visibility = Visibility.Collapsed;
+            }));
+            Storyboard sb = InterfaceManager.Instance.AnimateOpacity(SidepanelGrid, 1, 0, 0.3, new Action(() =>
+            {
+                SidepanelGrid.Visibility = Visibility.Collapsed;
+            }));
+            sb.Completed += delegate (object s, EventArgs e)
+            {
+                GridSettings.Visibility = Visibility.Hidden;
+            };
+        }
+
+        private void BackdropGrid_ClickOutside(object sender, MouseButtonEventArgs e)
+        {
+            if (GridBackdrop.IsMouseOver)
+            {
+                CloseSidepanel();
             }
-            WindowManager.Instance.SettingsWin.Focus();
         }
 
         private void btnSaveSession_Click(object sender, RoutedEventArgs e)

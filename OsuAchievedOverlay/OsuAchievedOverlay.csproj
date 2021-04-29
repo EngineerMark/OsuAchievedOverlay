@@ -49,12 +49,13 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -62,21 +63,26 @@
   <PropertyGroup>
     <ApplicationIcon>Assets\Images\icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <PublishSingleFile>true</PublishSingleFile>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -84,6 +90,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApiHelper.cs" />
+    <Compile Include="Controls\GridSettings.xaml.cs">
+      <DependentUpon>GridSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Github\Asset.cs" />
+    <Compile Include="Github\Release.cs" />
     <Compile Include="Managers\FileManager.cs" />
     <Compile Include="LocalApiFile.cs" />
     <Compile Include="Interfaces\IThreaded.cs" />
@@ -92,10 +103,12 @@
     <Compile Include="Managers\InterfaceManager.cs" />
     <Compile Include="Managers\SettingsManager.cs" />
     <Compile Include="Managers\ThreadedManager.cs" />
+    <Compile Include="Managers\UpdateManager.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="SessionFileData.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="Managers\WindowManager.cs" />
+    <Compile Include="Version.cs" />
     <Compile Include="Windows\BetaDisplayWindow.xaml.cs">
       <DependentUpon>BetaDisplayWindow.xaml</DependentUpon>
     </Compile>
@@ -111,9 +124,13 @@
     <Compile Include="Windows\PopupSetAPI.xaml.cs">
       <DependentUpon>PopupSetAPI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\SettingsWindow.xaml.cs">
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    <Compile Include="Windows\UpdateWindow.xaml.cs">
+      <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\GridSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\BetaDisplayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,7 +158,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\SettingsWindow.xaml">
+    <Page Include="Windows\UpdateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,13 +204,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\SS.png" />
+    <Resource Include="Assets\Images\Ranks\SS.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\S.png" />
+    <Resource Include="Assets\Images\Ranks\S.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\A.png" />
+    <Resource Include="Assets\Images\Ranks\A.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -211,38 +228,35 @@
     <Resource Include="Assets\Images\profilepicture_placeholder.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\background.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\NL.png" />
+    <Resource Include="Assets\Images\Ranks\NL.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\SH.png" />
-    <Resource Include="Assets\Images\SSH.png" />
+    <Resource Include="Assets\Images\Ranks\SH.png" />
+    <Resource Include="Assets\Images\Ranks\SSH.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\icon_32.png" />
-    <Resource Include="Assets\Images\icon_64.png" />
+    <Resource Include="Assets\Images\Icons\icon_32.png" />
+    <Resource Include="Assets\Images\Icons\icon_64.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\settings.png" />
+    <Resource Include="Assets\Images\Icons\settings.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\load_32.png" />
-    <Resource Include="Assets\Images\load_64.png" />
-    <Resource Include="Assets\Images\save_32.png" />
-    <Resource Include="Assets\Images\save_64.png" />
+    <Resource Include="Assets\Images\Icons\load_32.png" />
+    <Resource Include="Assets\Images\Icons\load_64.png" />
+    <Resource Include="Assets\Images\Icons\save_32.png" />
+    <Resource Include="Assets\Images\Icons\save_64.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\new_32.png" />
-    <Resource Include="Assets\Images\new_64.png" />
+    <Resource Include="Assets\Images\Icons\new_32.png" />
+    <Resource Include="Assets\Images\Icons\new_64.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\api_32.png" />
-    <Resource Include="Assets\Images\api_64.png" />
+    <Resource Include="Assets\Images\Icons\api_32.png" />
+    <Resource Include="Assets\Images\Icons\api_64.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Flags\AD.png" />
@@ -472,8 +486,8 @@
     <Resource Include="Assets\Images\Flags\__.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\warn_32.png" />
-    <Resource Include="Assets\Images\warn_64.png" />
+    <Resource Include="Assets\Images\Icons\warn_32.png" />
+    <Resource Include="Assets\Images\Icons\warn_64.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\icon.ico" />
@@ -494,6 +508,9 @@
     <PackageReference Include="ini-parser">
       <Version>2.5.2</Version>
     </PackageReference>
+    <PackageReference Include="MarkdownSharp">
+      <Version>2.0.5</Version>
+    </PackageReference>
     <PackageReference Include="MaterialDesignThemes">
       <Version>4.0.0</Version>
     </PackageReference>
@@ -502,7 +519,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\placeholder_banner.jpeg" />
+    <Resource Include="Assets\Images\Headers\placeholder_banner.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Headers\nekopara_lingerie.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Icons\back_32.png" />
+    <Resource Include="Assets\Images\Icons\back_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Headers\megumin_couch.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

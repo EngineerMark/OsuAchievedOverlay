@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Xml;
 
@@ -70,11 +71,37 @@ namespace OsuAchievedOverlay.Managers
         public UIElement CloneElement(UIElement orig)
         {
             if (orig == null)
-                return (null);
+                return null;
             string s = XamlWriter.Save(orig);
             StringReader stringReader = new StringReader(s);
             XmlReader xmlReader = XmlTextReader.Create(stringReader, new XmlReaderSettings());
             return (UIElement)XamlReader.Load(xmlReader);
+        }
+
+        public Storyboard AnimateOpacity(UIElement element, double from, double to, double t, Action callbackCompleted = null){
+            element.Opacity = from;
+            element.Visibility = Visibility.Visible;
+        
+            DoubleAnimation da = new DoubleAnimation()
+            {
+                From = from,
+                To = to,
+                Duration = TimeSpan.FromSeconds(t),
+                EasingFunction = new QuadraticEase()
+            };
+
+            Storyboard sb = new Storyboard();
+            sb.Children.Add(da);
+
+            Storyboard.SetTarget(sb, element);
+            Storyboard.SetTargetProperty(sb, new PropertyPath(Control.OpacityProperty));
+
+            if (callbackCompleted != null)
+                sb.Completed += (object sender, EventArgs e) => callbackCompleted();
+
+            sb.Begin();
+
+            return sb;
         }
 
         public static T FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject
