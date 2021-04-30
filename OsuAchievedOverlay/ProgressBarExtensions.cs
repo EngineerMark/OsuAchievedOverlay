@@ -6,9 +6,7 @@ namespace OsuAchievedOverlay
 {
     public static class ProgressBarExtensions
     {
-        private static TimeSpan duration = TimeSpan.FromSeconds(1);
-
-        public static void SetPercent(this ProgressBar progressBar, double percentage)
+        public static void SetPercent(this ProgressBar progressBar, double percentage, TimeSpan duration)
         {
             DoubleAnimation animation = new DoubleAnimation(percentage, duration);
             progressBar.BeginAnimation(ProgressBar.ValueProperty, animation);

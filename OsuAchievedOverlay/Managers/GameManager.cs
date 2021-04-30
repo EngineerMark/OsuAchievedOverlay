@@ -14,8 +14,6 @@ namespace OsuAchievedOverlay.Managers
     {
         private OsuApiHelper.OsuUser osuUser = null;
 
-        private DispatcherTimer timer;
-        private DispatcherTimer progressTimer;
         private ExtendedThread fetchThread;
         private ExtendedThread progressThread;
         private ExtendedThread updateThread;
@@ -43,8 +41,7 @@ namespace OsuAchievedOverlay.Managers
                     InitialData = SessionData.FromUser(OsuUser)
                 };
 
-                RefreshTimer(null, null);
-                //Update every minute
+                RefreshTimer();
 
                 RestartTimers(Convert.ToInt32(SettingsManager.Instance.Settings["api"]["updateRate"]));
 
@@ -65,32 +62,21 @@ namespace OsuAchievedOverlay.Managers
             }
         }
 
-        private void ProgressTick(float updateRate){
-            double interval = updateRate;
-            double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
-            WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)));
-        }
-
         public void RestartTimers(int updateRate)
         {
-            //timer?.Stop();
-            //timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-            //timer.Tick += new EventHandler(RefreshTimer);
-            //timer.Interval = TimeSpan.FromSeconds(updateRate);
-            //timer.Start();
-
             fetchThread?.Join();
             fetchThread = new ExtendedThread(() =>
             {
-                RefreshTimer(null, null);
+                RefreshTimer();
                 lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
             }, updateRate * 1000);
             fetchThread.Start();
-            RefreshTimer(null, null);
+            RefreshTimer();
 
             lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
 
             progressThread?.Join();
+            int progressbarSpeed = 2;
             progressThread = new ExtendedThread(() =>
             {
                 double interval = updateRate;
@@ -98,27 +84,14 @@ namespace OsuAchievedOverlay.Managers
 
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)));
+                    WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)), TimeSpan.FromSeconds(progressbarSpeed));
                 }));
-            }, 1000);
+            }, progressbarSpeed*1000);
             progressThread.Start();
-
-            //progressTimer?.Stop();
-            //progressTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-            //progressTimer.Tick += (object s, EventArgs e) => ProgressTick(updateRate);
-            //progressTimer.Interval = new TimeSpan(0, 0, 1);
-            //progressTimer.Start();
-            //ProgressTick(updateRate);
         }
 
         public override void Stop()
         {
-            timer?.Stop();
-            timer = null;
-
-            progressTimer?.Stop();
-            progressTimer = null;
-
             fetchThread?.Join();
             progressThread?.Join();
             updateThread?.Join();
@@ -130,27 +103,17 @@ namespace OsuAchievedOverlay.Managers
             WindowManager.Instance.CloseAll();
         }
 
-        public void RefreshTimer(object sender, EventArgs e)
+        public void RefreshTimer()
         {
             if (WindowManager.Instance.BetaDisplayWin != null && SessionManager.Instance.CurrentSession != null && OsuUser != null)
             {
                 bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k=" + SettingsManager.Instance.Settings["api"]["key"] + "&u=peppy") != "";
                 if (apiReady)
                 {
-                    bool _continue = true;
+                    SessionManager.Instance.UpdateSession();
 
-                    if (_continue)
-                    {
-                        SessionManager.Instance.UpdateSession();
-
-                        foreach (LocalApiFile apiFile in LocalAPIManager.Instance.ApiDataList)
-                            LocalAPIManager.Instance.SaveData(apiFile);
-                    }
-
-                    if (sender != null)
-                    {
-                        lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
-                    }
+                    foreach (LocalApiFile apiFile in LocalAPIManager.Instance.ApiDataList)
+                        LocalAPIManager.Instance.SaveData(apiFile);
                 }
             }
         }
@@ -162,7 +125,7 @@ namespace OsuAchievedOverlay.Managers
             WindowManager.Instance.BetaDisplayWin = new BetaDisplayWindow();
             WindowManager.Instance.BetaDisplayWin.Show();
             WindowManager.Instance.BetaDisplayWin.Focus();
-            RefreshTimer(null, null);
+            RefreshTimer();
         }
 
         public void FocusDisplay()
@@ -181,7 +144,7 @@ namespace OsuAchievedOverlay.Managers
             if (!cv)
                 updateRate = 60;
 
-            if (timer?.Interval.TotalSeconds != updateRate)
+            if (fetchThread?.SleepTime != updateRate*1000)
                 RestartTimers(updateRate);
 
             if (OsuApiHelper.OsuApiKey.Key != data["api"]["key"])
@@ -192,7 +155,7 @@ namespace OsuAchievedOverlay.Managers
                 RefreshSession();
             }
             else
-                RefreshTimer(null, null);
+                RefreshTimer();
         }
 
         public void RefreshSession()
@@ -200,7 +163,7 @@ namespace OsuAchievedOverlay.Managers
             if (lastRefresh == -1 || DateTimeOffset.Now.ToUnixTimeSeconds() - lastRefresh > 15)
             {
                 SessionManager.Instance.CurrentSession = new Session();
-                RestartTimers((int)timer.Interval.TotalSeconds);
+                RestartTimers((int)fetchThread?.SleepTime/1000);
 
                 lastRefresh = DateTimeOffset.Now.ToUnixTimeSeconds();
             }

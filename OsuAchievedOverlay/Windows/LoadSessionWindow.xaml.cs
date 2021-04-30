@@ -180,7 +180,7 @@ namespace OsuAchievedOverlay
                     GameManager.Instance.OsuUser = OsuApiHelper.OsuApi.GetUser(newSession.Username, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
                 }
 
-                GameManager.Instance.RefreshTimer(null, null);
+                GameManager.Instance.RefreshTimer();
 
                 Close();
                 WindowManager.Instance.SessionWin = null;
