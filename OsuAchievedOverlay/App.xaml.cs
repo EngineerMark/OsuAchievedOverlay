@@ -32,7 +32,7 @@ namespace OsuAchievedOverlay
         {
             Directory.CreateDirectory("Logs");
 
-            File.WriteAllText("Logs/CrashLog_" + DateTimeOffset.Now.ToUnixTimeSeconds() + ".txt", e.Exception.Message+"\n\n"+e.Exception.StackTrace);
+            File.WriteAllText("Logs/CrashLog_" + DateTimeOffset.Now.ToUnixTimeSeconds() + ".txt", "osu!Achieved "+UpdateManager.version+"\n\n"+e.Exception.Message+"\n"+e.Exception.StackTrace);
 
             MessageBoxResult res = MessageBox.Show("A crash has occured! Check the latest crash log in the /Logs/ folder for details", "Application Exception");
         }
