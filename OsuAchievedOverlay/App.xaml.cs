@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using System.Windows;
 
 namespace OsuAchievedOverlay
@@ -19,7 +20,8 @@ namespace OsuAchievedOverlay
     {
         void StartApp(object sender, StartupEventArgs e)
         {
-            Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+            this.DispatcherUnhandledException += Dispatcher_UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
 #if DEBUG
             if (!Debugger.IsAttached)
@@ -28,13 +30,22 @@ namespace OsuAchievedOverlay
             WindowManager.Instance.LaunchWin = new LaunchWindow(e);
         }
 
-        private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            CreateCrashDump((Exception)e.ExceptionObject);
+        }
+
+        private void Dispatcher_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            CreateCrashDump(e.Exception);
+        }
+
+        public void CreateCrashDump(Exception e){
             Directory.CreateDirectory("Logs");
-
-            File.WriteAllText("Logs/CrashLog_" + DateTimeOffset.Now.ToUnixTimeSeconds() + ".txt", "osu!Achieved "+UpdateManager.version+"\n\n"+e.Exception.Message+"\n"+e.Exception.StackTrace);
-
-            MessageBoxResult res = MessageBox.Show("A crash has occured! Check the latest crash log in the /Logs/ folder for details", "Application Exception");
+            Trace.WriteLine("osu!Achieved " + UpdateManager.version + "\n\n" + e.Message + "\n" + e.StackTrace);
+            File.WriteAllText("Logs/CrashLog_" + DateTimeOffset.Now.ToUnixTimeSeconds() + ".txt", "osu!Achieved "+UpdateManager.version+"\n\n"+e.Message+"\n"+e.StackTrace);
+            MessageBoxResult res = MessageBox.Show("A crash has occured! Check out /Logs/ folder for the crash log(s)", "Application Exception");
+            Environment.Exit(-1);
         }
     }
 }

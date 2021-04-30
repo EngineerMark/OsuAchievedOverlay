@@ -54,7 +54,7 @@ namespace OsuAchievedOverlay.Managers
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
                             WindowManager.Instance.BetaDisplayWin.LabelSessionTime.Content = "Session started " +
-                                DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime.Humanize();
+                                DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime.Humanize(true, null, new System.Globalization.CultureInfo("en-US"));
                         }));
                     }
                 }, 1000);
@@ -111,7 +111,7 @@ namespace OsuAchievedOverlay.Managers
             progressTimer = null;
 
             progressThread?.Join();
-            updateThread.Join();
+            updateThread?.Join();
 
             LocalAPIManager.Instance.Stop();
             SessionManager.Instance.Stop();
