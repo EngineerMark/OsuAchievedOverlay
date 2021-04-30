@@ -3,6 +3,7 @@ using IniParser.Model;
 using OsuApiHelper;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -15,7 +16,8 @@ namespace OsuAchievedOverlay.Managers
 
         private DispatcherTimer timer;
         private DispatcherTimer progressTimer;
-        private DispatcherTimer updateTimer;
+        private ExtendedThread progressThread;
+        private ExtendedThread updateThread;
 
         private long lastTimerFire = -1;
         private long lastRefresh = -1;
@@ -45,17 +47,24 @@ namespace OsuAchievedOverlay.Managers
 
                 RestartTimers(Convert.ToInt32(SettingsManager.Instance.Settings["api"]["updateRate"]));
 
-                updateTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                updateTimer.Tick += new EventHandler((object s, EventArgs e) => Update());
-                updateTimer.Interval = TimeSpan.FromMilliseconds(1 / 60);
-                updateTimer.Start();
+                updateThread = new ExtendedThread(()=>
+                {
+                    if (WindowManager.Instance.BetaDisplayWin != null && SessionManager.Instance.CurrentSession != null && !SessionManager.Instance.CurrentSession.ReadOnly)
+                    {
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            WindowManager.Instance.BetaDisplayWin.LabelSessionTime.Content = "Session started " +
+                                DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime.Humanize();
+                        }));
+                    }
+                }, 1000);
+                updateThread.Start();
 
                 LocalAPIManager.Instance.Start();
             }
         }
 
-        private void ProgressTick(int updateRate)
-        {
+        private void ProgressTick(float updateRate){
             double interval = updateRate;
             double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
             WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)));
@@ -71,6 +80,19 @@ namespace OsuAchievedOverlay.Managers
             RefreshTimer(null, null);
 
             lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
+
+            //progressThread?.Join();
+            //progressThread = new ExtendedThread(()=>
+            //{
+            //    double interval = updateRate;
+            //    double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
+
+            //    //Application.Current.Dispatcher.Invoke(new Action(() =>
+            //    //{
+            //    //    WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)));
+            //    //}));
+            //}, 1000);
+            //progressThread.Start();
 
             progressTimer?.Stop();
             progressTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
@@ -88,23 +110,14 @@ namespace OsuAchievedOverlay.Managers
             progressTimer?.Stop();
             progressTimer = null;
 
-            updateTimer?.Stop();
-            updateTimer = null;
+            progressThread?.Join();
+            updateThread.Join();
 
             LocalAPIManager.Instance.Stop();
             SessionManager.Instance.Stop();
             FileManager.Instance.Stop();
 
             WindowManager.Instance.CloseAll();
-        }
-
-        public void Update()
-        {
-            if (WindowManager.Instance.BetaDisplayWin != null && SessionManager.Instance.CurrentSession != null && !SessionManager.Instance.CurrentSession.ReadOnly)
-            {
-                WindowManager.Instance.BetaDisplayWin.LabelSessionTime.Content = "Session started " +
-                    DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime.Humanize();
-            }
         }
 
         public void RefreshTimer(object sender, EventArgs e)
@@ -139,7 +152,6 @@ namespace OsuAchievedOverlay.Managers
             WindowManager.Instance.BetaDisplayWin = new BetaDisplayWindow();
             WindowManager.Instance.BetaDisplayWin.Show();
             WindowManager.Instance.BetaDisplayWin.Focus();
-            //ApplySettingsToApp();
             RefreshTimer(null, null);
         }
 

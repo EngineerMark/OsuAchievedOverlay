@@ -28,10 +28,7 @@ namespace OsuAchievedOverlay.Managers
                 {
                     tempApiDataList = JsonConvert.DeserializeObject<List<LocalApiFile>>(data);
                 }
-                catch (Exception e)
-                {
-
-                }
+                catch (Exception) { }
 
                 if (tempApiDataList != null)
                     apiDataList = new List<LocalApiFile>(tempApiDataList);

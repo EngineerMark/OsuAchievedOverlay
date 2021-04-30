@@ -93,6 +93,7 @@
     <Compile Include="Controls\GridSettings.xaml.cs">
       <DependentUpon>GridSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExtendedThread.cs" />
     <Compile Include="Github\Asset.cs" />
     <Compile Include="Github\Release.cs" />
     <Compile Include="Managers\FileManager.cs" />

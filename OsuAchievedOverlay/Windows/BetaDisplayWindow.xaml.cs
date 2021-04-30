@@ -88,10 +88,6 @@ namespace OsuAchievedOverlay
             {
                 if (!session.ReadOnly)
                 {
-
-
-                    //List<OsuApiHelper.OsuPlay> newPlays = OsuApiHelper.OsuApi.GetUserRecent(osuUser.Name, (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), Settings["api"]["gamemode"]), 20, false);
-                    //CurrentSession.AddNewPlays(newPlays);
                     if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Hidden)
                         WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Hidden;
 

@@ -16,7 +16,6 @@ namespace OsuAchievedOverlay
 {
     public partial class LaunchWindow : Window
     {
-
         public LaunchWindow(StartupEventArgs e)
         {
             InitializeComponent();
