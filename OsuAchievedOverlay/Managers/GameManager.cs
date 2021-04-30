@@ -16,6 +16,7 @@ namespace OsuAchievedOverlay.Managers
 
         private DispatcherTimer timer;
         private DispatcherTimer progressTimer;
+        private ExtendedThread fetchThread;
         private ExtendedThread progressThread;
         private ExtendedThread updateThread;
 
@@ -54,7 +55,7 @@ namespace OsuAchievedOverlay.Managers
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
                             WindowManager.Instance.BetaDisplayWin.LabelSessionTime.Content = "Session started " +
-                                DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime.Humanize(true, null, new System.Globalization.CultureInfo("en-US"));
+                                HumanizerExtensions.Humanize(DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime);
                         }));
                     }
                 }, 1000);
@@ -72,34 +73,42 @@ namespace OsuAchievedOverlay.Managers
 
         public void RestartTimers(int updateRate)
         {
-            timer?.Stop();
-            timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-            timer.Tick += new EventHandler(RefreshTimer);
-            timer.Interval = TimeSpan.FromSeconds(updateRate);
-            timer.Start();
+            //timer?.Stop();
+            //timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+            //timer.Tick += new EventHandler(RefreshTimer);
+            //timer.Interval = TimeSpan.FromSeconds(updateRate);
+            //timer.Start();
+
+            fetchThread?.Join();
+            fetchThread = new ExtendedThread(() =>
+            {
+                RefreshTimer(null, null);
+                lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
+            }, updateRate * 1000);
+            fetchThread.Start();
             RefreshTimer(null, null);
 
             lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
 
-            //progressThread?.Join();
-            //progressThread = new ExtendedThread(()=>
-            //{
-            //    double interval = updateRate;
-            //    double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
+            progressThread?.Join();
+            progressThread = new ExtendedThread(() =>
+            {
+                double interval = updateRate;
+                double secondsPassed = DateTimeOffset.Now.ToUnixTimeSeconds() - lastTimerFire;
 
-            //    //Application.Current.Dispatcher.Invoke(new Action(() =>
-            //    //{
-            //    //    WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)));
-            //    //}));
-            //}, 1000);
-            //progressThread.Start();
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    WindowManager.Instance.BetaDisplayWin.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)));
+                }));
+            }, 1000);
+            progressThread.Start();
 
-            progressTimer?.Stop();
-            progressTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-            progressTimer.Tick += (object s, EventArgs e) => ProgressTick(updateRate);
-            progressTimer.Interval = new TimeSpan(0, 0, 1);
-            progressTimer.Start();
-            ProgressTick(updateRate);
+            //progressTimer?.Stop();
+            //progressTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+            //progressTimer.Tick += (object s, EventArgs e) => ProgressTick(updateRate);
+            //progressTimer.Interval = new TimeSpan(0, 0, 1);
+            //progressTimer.Start();
+            //ProgressTick(updateRate);
         }
 
         public override void Stop()
@@ -110,6 +119,7 @@ namespace OsuAchievedOverlay.Managers
             progressTimer?.Stop();
             progressTimer = null;
 
+            fetchThread?.Join();
             progressThread?.Join();
             updateThread?.Join();
 

@@ -96,8 +96,8 @@ namespace OsuAchievedOverlay.Managers
 
         public void UpdateSession()
         {
-            ThreadPool.QueueUserWorkItem((Object stateInfo) =>
-            {
+            //ThreadPool.QueueUserWorkItem((Object stateInfo) =>
+            //{
                 GameManager.Instance.OsuUser = OsuApiHelper.OsuApi.GetUser(SettingsManager.Instance.Settings["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
                 if (GameManager.Instance.OsuUser != null)
                 {
@@ -117,7 +117,7 @@ namespace OsuAchievedOverlay.Managers
                 }
                 //WindowManager.Instance.BetaDisplayWin.UpdateSession = new KeyValuePair<long, Session>(DateTimeOffset.Now.ToUnixTimeSeconds(), (Session)CurrentSession.Clone());
                 //WindowManager.Instance.BetaDisplayWin.ApplySession(WindowManager.Instance.BetaDisplayWin.UpdateSession.Value);
-            });
+            //});
         }
     }
 }

@@ -9,7 +9,7 @@ namespace OsuAchievedOverlay
 {
     public class ExtendedThread
     {
-        public bool IsRunning { get; set; }
+        public bool IsRunning { get; set; } = false;
         public Thread InternalThread{ get; set; }
         public Action DelegateFunction { get; set; }
         public int SleepTime { get; set; }
@@ -22,15 +22,18 @@ namespace OsuAchievedOverlay
         }
 
         public void Start(){
+            Join();
             IsRunning = true;
             Build();
             InternalThread.Start();
         }
 
         public void Join(){
-            IsRunning = false;
-            if(InternalThread.IsAlive)
-                InternalThread?.Join();
+            if (IsRunning || InternalThread.IsAlive)
+            {
+                IsRunning = false;
+                InternalThread?.Abort();
+            }
         }
 
         private void Build(){
