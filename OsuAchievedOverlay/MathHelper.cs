@@ -16,15 +16,5 @@
         {
             return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
         }
-
-        public static int TextToNumber(string text)
-        {
-            int sum = 0;
-            foreach (char c in text)
-            {
-                sum = sum * 26 + c - 'A' + 1;
-            }
-            return sum;
-        }
     }
 }

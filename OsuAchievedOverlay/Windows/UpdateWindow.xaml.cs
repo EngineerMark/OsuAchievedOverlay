@@ -120,10 +120,5 @@ namespace OsuAchievedOverlay.Windows
             Process.Start(System.IO.Path.Combine(FileManager.Instance.GetApplicationDirectory().FullName,"temp","OsuAchievedOverlay.exe"), "-osustartupdate");
             Close();
         }
-
-        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
-        }
     }
 }

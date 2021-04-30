@@ -3,6 +3,7 @@ using IniParser.Model;
 using OsuApiHelper;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -16,6 +17,8 @@ namespace OsuAchievedOverlay.Managers
         private DispatcherTimer timer;
         private DispatcherTimer progressTimer;
         private DispatcherTimer updateTimer;
+        private Thread updateThread;
+        private bool isUpdating = true;
 
         private long lastTimerFire = -1;
         private long lastRefresh = -1;
@@ -45,10 +48,27 @@ namespace OsuAchievedOverlay.Managers
 
                 RestartTimers(Convert.ToInt32(SettingsManager.Instance.Settings["api"]["updateRate"]));
 
-                updateTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                updateTimer.Tick += new EventHandler((object s, EventArgs e) => Update());
-                updateTimer.Interval = TimeSpan.FromMilliseconds(1 / 60);
-                updateTimer.Start();
+                //updateTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+                //updateTimer.Tick += new EventHandler((object s, EventArgs e) => Update());
+                //updateTimer.Interval = TimeSpan.FromSeconds(1);
+                //updateTimer.Start();
+
+                updateThread = new Thread(new ThreadStart(()=>
+                {
+                    while (isUpdating)
+                    {
+                        if (WindowManager.Instance.BetaDisplayWin != null && SessionManager.Instance.CurrentSession != null && !SessionManager.Instance.CurrentSession.ReadOnly)
+                        {
+                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                            {
+                                WindowManager.Instance.BetaDisplayWin.LabelSessionTime.Content = "Session started " +
+                                    DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime.Humanize();
+                            }));
+                        }
+                        Thread.Sleep(1000);
+                    }
+                }));
+                updateThread.Start();
 
                 LocalAPIManager.Instance.Start();
             }
@@ -90,6 +110,9 @@ namespace OsuAchievedOverlay.Managers
 
             updateTimer?.Stop();
             updateTimer = null;
+
+            isUpdating = false;
+            updateThread.Join();
 
             LocalAPIManager.Instance.Stop();
             SessionManager.Instance.Stop();
