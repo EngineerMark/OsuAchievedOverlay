@@ -3,6 +3,8 @@
 ![Development Branch Status](https://img.shields.io/github/workflow/status/EngineerMark/OsuAchievedOverlay/Continuous%20Integration/dev?label=build%20dev)
 ![Total Downloads](https://img.shields.io/github/downloads/EngineerMark/OsuAchievedOverlay/total)
 
+![Code Quality Dev Branch](https://img.shields.io/codefactor/grade/github/EngineerMark/OsuAchievedOverlay/dev)
+
 # OsuAchievedOverlay
 Stream Overlay for osu! containing information on your session achievements
 
