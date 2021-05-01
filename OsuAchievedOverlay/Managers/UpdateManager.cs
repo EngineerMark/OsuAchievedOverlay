@@ -147,7 +147,7 @@ namespace OsuAchievedOverlay.Managers
                         ProcessUpdate(Updates.Dequeue());
                     else
                     {
-                        Application.Current.Dispatcher.Invoke(new Action(()=>
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
                             Process.Start(Path.Combine(targetFolder.FullName, "OsuAchievedOverlay.exe"), "-osufinishupdate");
                             Application.Current.Shutdown();

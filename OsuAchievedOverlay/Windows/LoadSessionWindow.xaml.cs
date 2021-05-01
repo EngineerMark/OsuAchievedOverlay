@@ -59,9 +59,7 @@ namespace OsuAchievedOverlay
                 try
                 {
                     temp = LoadSession(System.IO.Path.Combine(sessionData.FileLocation, sessionData.FileName + sessionData.FileExtension));
-                }catch(Exception e){
-                    
-                }
+                }catch(Exception){ }
 
                 if (temp != null)
                 {
@@ -170,7 +168,6 @@ namespace OsuAchievedOverlay
             }
             if (validSession)
             {
-
                 SessionManager.Instance.AddFile(path);
 
                 SessionManager.Instance.CurrentSession = newSession;

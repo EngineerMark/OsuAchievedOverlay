@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace OsuAchievedOverlay
 {
+
     public static class ApiHelper
     {
         public static bool IsKeyValid(string key)

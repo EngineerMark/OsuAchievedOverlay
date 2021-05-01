@@ -28,7 +28,7 @@ namespace OsuAchievedOverlay
         /// Combines version integers together for comparison purposes
         /// </summary>
         private int Combine(){
-            int com = MainVersion * 1000 + BetaVersion * 100 + Release * 10 + Hotfix;
+            int com = ((MainVersion * 1000) + (BetaVersion * 100) + (Release * 10) + Hotfix);
             return com;
         }
 
@@ -61,8 +61,12 @@ namespace OsuAchievedOverlay
             return a.Combine() != b.Combine();
         }
 
-        public static bool IsEquals(Version a, Version b){
-            return a == b;
+        public override bool Equals(object o){
+            return this == (Version)o;
+        }
+
+        public override int GetHashCode(){
+            return 0;
         }
     }
 }
