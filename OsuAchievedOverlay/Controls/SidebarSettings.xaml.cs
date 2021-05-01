@@ -1,4 +1,5 @@
-﻿using OsuAchievedOverlay.Managers;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using OsuAchievedOverlay.Managers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -43,6 +44,7 @@ namespace OsuAchievedOverlay.Controls
             InputUsername.Text = SettingsManager.Instance.Settings["api"]["user"];
             InputUpdaterate.Text = int.TryParse(SettingsManager.Instance.Settings["api"]["updateRate"], out _) ? SettingsManager.Instance.Settings["api"]["updateRate"] : "60";
             DropdownGamemode.SelectedIndex = (int)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]);
+            InputOsuDirectory.Text = SettingsManager.Instance.Settings["misc"]["osuFolder"];
         }
 
         private void Btn_SaveSettings(object sender, RoutedEventArgs e)
@@ -57,6 +59,7 @@ namespace OsuAchievedOverlay.Controls
             int updateRate = int.Parse(InputUpdaterate.Text);
             updateRate = Math.Min(120, Math.Max(5, updateRate));
             SettingsManager.Instance.Settings["api"]["updateRate"] = "" + updateRate;
+            SettingsManager.Instance.Settings["misc"]["osuFolder"] = InputOsuDirectory.Text;
 
             SettingsManager.Instance.SettingsSave();
         }
@@ -71,6 +74,15 @@ namespace OsuAchievedOverlay.Controls
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
+        }
+
+        private void Btn_SelectOsuFolder(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            if(dialog.ShowDialog()==CommonFileDialogResult.Ok){
+                InputOsuDirectory.Text = dialog.FileName;
+            }
         }
     }
 }

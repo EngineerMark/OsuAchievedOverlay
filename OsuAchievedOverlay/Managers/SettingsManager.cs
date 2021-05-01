@@ -21,6 +21,9 @@ namespace OsuAchievedOverlay.Managers
                         ["user"] = "Username here",
                         ["updateRate"] = "60",
                         ["gamemode"] = ""+OsuApiHelper.OsuMode.Standard
+                    },
+                    ["misc"] = {
+                        ["osuFolder"] = "C:\\"
                     }
                 };
             }

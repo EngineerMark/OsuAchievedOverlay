@@ -33,15 +33,6 @@ namespace OsuAchievedOverlay
             SidepanelGrid.Visibility = Visibility.Hidden;
         }
 
-        private void Update()
-        {
-            //if (LastSessionUpdate != UpdateSession.Key)
-            //{
-            //    ApplySession(UpdateSession.Value);
-            //    LastSessionUpdate = UpdateSession.Key;
-            //}
-        }
-
         private void Btn_Close(object sender, RoutedEventArgs e)
         {
             Close();
@@ -60,12 +51,6 @@ namespace OsuAchievedOverlay
 
         private void Btn_OpenSettings(object sender, RoutedEventArgs e)
         {
-            //if (WindowManager.Instance.SettingsWin == null)
-            //{
-            //    WindowManager.Instance.SettingsWin = new SettingsWindow();
-            //    WindowManager.Instance.SettingsWin.Show();
-            //}
-            //WindowManager.Instance.SettingsWin.Focus();
             GridSettings.PopulateData();
             InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0, 0.3, 0.4);
             InterfaceManager.Instance.AnimateOpacity(SidepanelGrid, 0, 1, 0.3);

@@ -44,7 +44,8 @@
                 </Grid>
                 <Grid HorizontalAlignment="Stretch" Height="54" VerticalAlignment="Top">
                     <Label Content="osu! directory" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="180" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
-                    <TextBox x:Name="InputOsuDirectory" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,24,0,0" Text="X:/" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                    <TextBox x:Name="InputOsuDirectory" Foreground="White" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,24,46,0" Text="X:/" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                    <Button Background="#2E1F25" Height="25" BorderBrush="#2E1F25" Click="Btn_SelectOsuFolder" Content=".." VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="139,0,0,5" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 </Grid>
             </StackPanel>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_SaveSettings" Content="Save &amp; Apply" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="10,385,10,30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
