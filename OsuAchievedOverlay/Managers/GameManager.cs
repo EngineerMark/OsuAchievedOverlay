@@ -51,8 +51,9 @@ namespace OsuAchievedOverlay.Managers
                     {
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
-                            WindowManager.Instance.BetaDisplayWin.DisplaySession.LabelSessionTime.Content = "Session started " +
-                                HumanizerExtensions.Humanize(DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime);
+                            if(WindowManager.Instance!=null && WindowManager.Instance.BetaDisplayWin!=null)
+                                WindowManager.Instance.BetaDisplayWin.DisplaySession.LabelSessionTime.Content = "Session started " +
+                                    HumanizerExtensions.Humanize(DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime);
                         }));
                     }
                 }, 1000);
@@ -84,7 +85,8 @@ namespace OsuAchievedOverlay.Managers
 
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    WindowManager.Instance.BetaDisplayWin.DisplaySession.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)), TimeSpan.FromSeconds(progressbarSpeed));
+                    if(WindowManager.Instance!=null && WindowManager.Instance.BetaDisplayWin!=null)
+                        WindowManager.Instance.BetaDisplayWin.DisplaySession.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)), TimeSpan.FromSeconds(progressbarSpeed));
                 }));
             }, progressbarSpeed*1000);
             progressThread.Start();
