@@ -49,7 +49,7 @@ namespace OsuAchievedOverlay.Managers
         }
 
         private object FindItem(string name){
-            return WindowManager.Instance.BetaDisplayWin.FindName(name);
+            return WindowManager.Instance.DisplayWin.FindName(name);
         }
 
         private Label FindLabel(string name){

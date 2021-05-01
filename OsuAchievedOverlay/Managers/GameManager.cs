@@ -28,9 +28,9 @@ namespace OsuAchievedOverlay.Managers
             bool success = SettingsManager.Instance.LoadSettings();
             if (success)
             {
-                WindowManager.Instance.BetaDisplayWin = new BetaDisplayWindow();
-                WindowManager.Instance.BetaDisplayWin.Show();
-                WindowManager.Instance.BetaDisplayWin.Focus();
+                WindowManager.Instance.DisplayWin = new DisplayWindow();
+                WindowManager.Instance.DisplayWin.Show();
+                WindowManager.Instance.DisplayWin.Focus();
                 ApplySettingsToApp(SettingsManager.Instance.Settings);
 
                 if (OsuUser == null)
@@ -47,12 +47,12 @@ namespace OsuAchievedOverlay.Managers
 
                 updateThread = new ExtendedThread(()=>
                 {
-                    if (WindowManager.Instance.BetaDisplayWin != null && SessionManager.Instance.CurrentSession != null && !SessionManager.Instance.CurrentSession.ReadOnly)
+                    if (WindowManager.Instance.DisplayWin != null && SessionManager.Instance.CurrentSession != null && !SessionManager.Instance.CurrentSession.ReadOnly)
                     {
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
-                            if(WindowManager.Instance!=null && WindowManager.Instance.BetaDisplayWin!=null)
-                                WindowManager.Instance.BetaDisplayWin.DisplaySession.LabelSessionTime.Content = "Session started " +
+                            if(WindowManager.Instance!=null && WindowManager.Instance.DisplayWin!=null)
+                                WindowManager.Instance.DisplayWin.DisplaySession.LabelSessionTime.Content = "Session started " +
                                     HumanizerExtensions.Humanize(DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime);
                         }));
                     }
@@ -85,8 +85,8 @@ namespace OsuAchievedOverlay.Managers
 
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    if(WindowManager.Instance!=null && WindowManager.Instance.BetaDisplayWin!=null)
-                        WindowManager.Instance.BetaDisplayWin.DisplaySession.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)), TimeSpan.FromSeconds(progressbarSpeed));
+                    if(WindowManager.Instance!=null && WindowManager.Instance.DisplayWin!=null)
+                        WindowManager.Instance.DisplayWin.DisplaySession.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)), TimeSpan.FromSeconds(progressbarSpeed));
                 }));
             }, progressbarSpeed*1000);
             progressThread.Start();
@@ -107,7 +107,7 @@ namespace OsuAchievedOverlay.Managers
 
         public void RefreshTimer()
         {
-            if (WindowManager.Instance.BetaDisplayWin != null && SessionManager.Instance.CurrentSession != null && OsuUser != null)
+            if (WindowManager.Instance.DisplayWin != null && SessionManager.Instance.CurrentSession != null && OsuUser != null)
             {
                 bool apiReady = OsuApiHelper.APIHelper<string>.GetDataFromWeb("https://osu.ppy.sh/api/get_user?k=" + SettingsManager.Instance.Settings["api"]["key"] + "&u=peppy") != "";
                 if (apiReady)
@@ -124,20 +124,20 @@ namespace OsuAchievedOverlay.Managers
         {
             if (closeCheck)
                 CloseDisplay();
-            WindowManager.Instance.BetaDisplayWin = new BetaDisplayWindow();
-            WindowManager.Instance.BetaDisplayWin.Show();
-            WindowManager.Instance.BetaDisplayWin.Focus();
+            WindowManager.Instance.DisplayWin = new DisplayWindow();
+            WindowManager.Instance.DisplayWin.Show();
+            WindowManager.Instance.DisplayWin.Focus();
             RefreshTimer();
         }
 
         public void FocusDisplay()
         {
-            WindowManager.Instance.BetaDisplayWin.Focus();
+            WindowManager.Instance.DisplayWin.Focus();
         }
 
         public void CloseDisplay()
         {
-            WindowManager.Instance.BetaDisplayWin?.Close();
+            WindowManager.Instance.DisplayWin?.Close();
         }
 
         public void ApplySettingsToApp(IniData data)

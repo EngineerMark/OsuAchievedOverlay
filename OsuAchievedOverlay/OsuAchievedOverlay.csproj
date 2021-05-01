@@ -114,8 +114,8 @@
     <Compile Include="StringHelper.cs" />
     <Compile Include="Managers\WindowManager.cs" />
     <Compile Include="Version.cs" />
-    <Compile Include="Windows\BetaDisplayWindow.xaml.cs">
-      <DependentUpon>BetaDisplayWindow.xaml</DependentUpon>
+    <Compile Include="Windows\DisplayWindow.xaml.cs">
+      <DependentUpon>DisplayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\LaunchWindow.xaml.cs">
       <DependentUpon>LaunchWindow.xaml</DependentUpon>
@@ -140,7 +140,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\BetaDisplayWindow.xaml">
+    <Page Include="Windows\DisplayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

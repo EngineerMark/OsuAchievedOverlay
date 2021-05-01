@@ -18,9 +18,9 @@ namespace OsuAchievedOverlay
     /// <summary>
     /// Interaction logic for BetaDisplayWindow.xaml
     /// </summary>
-    public partial class BetaDisplayWindow : Window
+    public partial class DisplayWindow : Window
     {
-        public BetaDisplayWindow()
+        public DisplayWindow()
         {
             InitializeComponent();
 
