@@ -27,8 +27,18 @@ namespace OsuAchievedOverlay
 #else
 
             if(e.Args.Contains("-osufinishupdate")){
-                if (Directory.Exists("temp"))
-                    Directory.Delete("temp", true);
+                if (Directory.Exists("temp")){
+                    bool deleted = false;
+                    while(!deleted){
+                        try{
+                            Directory.Delete("temp", true);
+                            deleted = true;
+                        }
+                        catch(IOException _e){
+                            deleted = false;
+                        }
+                    }
+                }
             }
 
             if (e.Args.Contains("-osustartupdate"))
