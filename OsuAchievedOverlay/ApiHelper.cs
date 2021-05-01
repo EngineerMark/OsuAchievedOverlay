@@ -11,6 +11,20 @@ namespace OsuAchievedOverlay
 {
     public static class ApiHelper
     {
+        public static bool IsKeyValid(string key)
+        {
+            string testURL = "https://osu.ppy.sh/api/get_user?k=" + key + "&u=peppy";
+            HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(testURL);
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)webReq.GetResponse();
+                return response.StatusCode == HttpStatusCode.OK;
+            }
+            catch (Exception){
+                return false;
+            }
+        }
+
         public static string GetData(string url)
         {
             using (WebClient client = new WebClient())

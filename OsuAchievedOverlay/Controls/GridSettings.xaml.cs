@@ -47,7 +47,11 @@ namespace OsuAchievedOverlay.Controls
 
         private void Btn_SaveSettings(object sender, RoutedEventArgs e)
         {
-            SettingsManager.Instance.Settings["api"]["key"] = InputApiKey.Password;
+            if(ApiHelper.IsKeyValid(InputApiKey.Password)){
+                SettingsManager.Instance.Settings["api"]["key"] = InputApiKey.Password;
+            }else{
+                MessageBoxResult res = MessageBox.Show("The API key you entered is invalid but other settings have been saved.", "Invalid API key");
+            }
             SettingsManager.Instance.Settings["api"]["user"] = InputUsername.Text;
             SettingsManager.Instance.Settings["api"]["gamemode"] = "" + ((OsuApiHelper.OsuMode)DropdownGamemode.SelectedIndex);
             int updateRate = int.Parse(InputUpdaterate.Text);

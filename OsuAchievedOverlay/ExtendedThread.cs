@@ -29,10 +29,11 @@ namespace OsuAchievedOverlay
         }
 
         public void Join(){
-            if (IsRunning || InternalThread.IsAlive)
+            if (IsRunning)
             {
                 IsRunning = false;
-                InternalThread?.Abort();
+                if(InternalThread.IsAlive)
+                    InternalThread?.Abort();
             }
         }
 
