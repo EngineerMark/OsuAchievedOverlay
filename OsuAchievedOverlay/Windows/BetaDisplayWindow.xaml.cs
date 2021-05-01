@@ -44,9 +44,9 @@ namespace OsuAchievedOverlay
 
         public void ApplyUser(OsuApiHelper.OsuUser user)
         {
-            if (!LabelUserName.Content.Equals(user.Name))
+            if (!DisplaySession.LabelUserName.Content.Equals(user.Name))
             {
-                LabelUserName.Content = user.Name;
+                DisplaySession.LabelUserName.Content = user.Name;
 
                 string t = ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/" + user.ID);
 
@@ -55,7 +55,7 @@ namespace OsuAchievedOverlay
                     BitmapImage img = InterfaceManager.Instance.LoadImage(@"https://a.ppy.sh/" + user.ID);
                     Dispatcher.Invoke(new Action(() =>
                     {
-                        ImageProfilePicture.ImageSource = img;
+                        DisplaySession.ImageProfilePicture.ImageSource = img;
                     }));
                 });
 
@@ -64,21 +64,21 @@ namespace OsuAchievedOverlay
                     BitmapImage img = InterfaceManager.Instance.LoadImage(ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/" + user.ID));
                     Dispatcher.Invoke(new Action(() =>
                     {
-                        ImageProfileHeader.ImageSource = img;
+                        DisplaySession.ImageProfileHeader.ImageSource = img;
                     }));
                 });
 
                 try
                 {
-                    ImageCountryFlag.Source = new BitmapImage(new Uri("pack://application:,,,/OsuAchievedOverlay;component/Assets/Images/Flags/" + user.CountryCode + ".png"));
+                    DisplaySession.ImageCountryFlag.Source = new BitmapImage(new Uri("pack://application:,,,/OsuAchievedOverlay;component/Assets/Images/Flags/" + user.CountryCode + ".png"));
                 }
                 catch (Exception)
                 {
                     //Its fine to go here without any issue, try-catch is pretty much for non-existing flag files
-                    ImageCountryFlag.Source = new BitmapImage(new Uri("pack://application:,,,/OsuAchievedOverlay;component/Assets/Images/Flags/__.png"));
+                    DisplaySession.ImageCountryFlag.Source = new BitmapImage(new Uri("pack://application:,,,/OsuAchievedOverlay;component/Assets/Images/Flags/__.png"));
                 }
                 RegionInfo countryInfo = new RegionInfo(user.CountryCode);
-                LabelCountryName.Content = countryInfo.DisplayName;
+                DisplaySession.LabelCountryName.Content = countryInfo.DisplayName;
             }
         }
 
@@ -91,71 +91,71 @@ namespace OsuAchievedOverlay
                     if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Hidden)
                         WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Hidden;
 
-                    if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Visible)
-                        WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Visible;
-                    if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Hidden)
-                        WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Hidden;
+                    if (WindowManager.Instance.BetaDisplayWin.DisplaySession.GridNonReadonly.Visibility != Visibility.Visible)
+                        WindowManager.Instance.BetaDisplayWin.DisplaySession.GridNonReadonly.Visibility = Visibility.Visible;
+                    if (WindowManager.Instance.BetaDisplayWin.DisplaySession.GridReadonly.Visibility != Visibility.Hidden)
+                        WindowManager.Instance.BetaDisplayWin.DisplaySession.GridReadonly.Visibility = Visibility.Hidden;
                 }
                 else
                 {
                     if (WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility != Visibility.Visible)
                         WindowManager.Instance.BetaDisplayWin.ButtonWarning.Visibility = Visibility.Visible;
 
-                    if (WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility != Visibility.Hidden)
-                        WindowManager.Instance.BetaDisplayWin.GridNonReadonly.Visibility = Visibility.Hidden;
-                    if (WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility != Visibility.Visible)
-                        WindowManager.Instance.BetaDisplayWin.GridReadonly.Visibility = Visibility.Visible;
+                    if (WindowManager.Instance.BetaDisplayWin.DisplaySession.GridNonReadonly.Visibility != Visibility.Hidden)
+                        WindowManager.Instance.BetaDisplayWin.DisplaySession.GridNonReadonly.Visibility = Visibility.Hidden;
+                    if (WindowManager.Instance.BetaDisplayWin.DisplaySession.GridReadonly.Visibility != Visibility.Visible)
+                        WindowManager.Instance.BetaDisplayWin.DisplaySession.GridReadonly.Visibility = Visibility.Visible;
 
                     DateTime sessionStart = DateTimeOffset.FromUnixTimeSeconds(session.SessionDate).UtcDateTime.ToLocalTime();
                     DateTime sessionEnd = DateTimeOffset.FromUnixTimeSeconds(session.SessionEndDate).UtcDateTime.ToLocalTime();
 
-                    WindowManager.Instance.BetaDisplayWin.LabelReadonlySessionDate.Content = sessionStart.ToString("g") + " - " + sessionEnd.ToString("g");
+                    WindowManager.Instance.BetaDisplayWin.DisplaySession.LabelReadonlySessionDate.Content = sessionStart.ToString("g") + " - " + sessionEnd.ToString("g");
                 }
 
                 WindowManager.Instance.BetaDisplayWin.ApplyUser(GameManager.Instance.OsuUser);
 
-                LabelSSHCount.Content = session.CurrentData.RankSilverSS;
-                LabelSSCount.Content = session.CurrentData.RankGoldSS;
-                LabelSHCount.Content = session.CurrentData.RankSilverS;
-                LabelSCount.Content = session.CurrentData.RankGoldS;
-                LabelACount.Content = session.CurrentData.RankA;
+                DisplaySession.LabelSSHCount.Content = session.CurrentData.RankSilverSS;
+                DisplaySession.LabelSSCount.Content = session.CurrentData.RankGoldSS;
+                DisplaySession.LabelSHCount.Content = session.CurrentData.RankSilverS;
+                DisplaySession.LabelSCount.Content = session.CurrentData.RankGoldS;
+                DisplaySession.LabelACount.Content = session.CurrentData.RankA;
 
-                SetLabelStat(LabelGainedSSHCount, session.DifferenceData.RankSilverSS);
-                SetLabelStat(LabelGainedSSCount, session.DifferenceData.RankGoldSS);
-                SetLabelStat(LabelGainedSHCount, session.DifferenceData.RankSilverS);
-                SetLabelStat(LabelGainedSCount, session.DifferenceData.RankGoldS);
-                SetLabelStat(LabelGainedACount, session.DifferenceData.RankA);
+                SetLabelStat(DisplaySession.LabelGainedSSHCount, session.DifferenceData.RankSilverSS);
+                SetLabelStat(DisplaySession.LabelGainedSSCount, session.DifferenceData.RankGoldSS);
+                SetLabelStat(DisplaySession.LabelGainedSHCount, session.DifferenceData.RankSilverS);
+                SetLabelStat(DisplaySession.LabelGainedSCount, session.DifferenceData.RankGoldS);
+                SetLabelStat(DisplaySession.LabelGainedACount, session.DifferenceData.RankA);
 
-                SetLabelStat(LabelTotalLevel, session.CurrentData.Level, false, false);
-                SetLabelStat(LabelGainedLevel, session.DifferenceData.Level);
+                SetLabelStat(DisplaySession.LabelTotalLevel, session.CurrentData.Level, false, false);
+                SetLabelStat(DisplaySession.LabelGainedLevel, session.DifferenceData.Level);
 
-                SetLabelStat(LabelTotalScore, session.CurrentData.TotalScore, false, false);
-                SetLabelStat(LabelGainedScore, session.DifferenceData.TotalScore);
+                SetLabelStat(DisplaySession.LabelTotalScore, session.CurrentData.TotalScore, false, false);
+                SetLabelStat(DisplaySession.LabelGainedScore, session.DifferenceData.TotalScore);
 
-                SetLabelStat(LabelTotalRankedScore, session.CurrentData.RankedScore, false, false);
-                SetLabelStat(LabelGainedRankedScore, session.DifferenceData.RankedScore);
+                SetLabelStat(DisplaySession.LabelTotalRankedScore, session.CurrentData.RankedScore, false, false);
+                SetLabelStat(DisplaySession.LabelGainedRankedScore, session.DifferenceData.RankedScore);
 
-                SetLabelStat(LabelTotalRank, session.CurrentData.WorldRank, false, false);
-                SetLabelStat(LabelGainedRank, -session.DifferenceData.WorldRank);
+                SetLabelStat(DisplaySession.LabelTotalRank, session.CurrentData.WorldRank, false, false);
+                SetLabelStat(DisplaySession.LabelGainedRank, -session.DifferenceData.WorldRank);
 
-                SetLabelStat(LabelTotalCountryRank, session.CurrentData.CountryRank, false, false);
-                SetLabelStat(LabelGainedCountryRank, -session.DifferenceData.CountryRank);
+                SetLabelStat(DisplaySession.LabelTotalCountryRank, session.CurrentData.CountryRank, false, false);
+                SetLabelStat(DisplaySession.LabelGainedCountryRank, -session.DifferenceData.CountryRank);
 
-                SetLabelStat(LabelTotalPlaycount, session.CurrentData.Playcount, false, false);
-                SetLabelStat(LabelGainedPlaycount, session.DifferenceData.Playcount);
+                SetLabelStat(DisplaySession.LabelTotalPlaycount, session.CurrentData.Playcount, false, false);
+                SetLabelStat(DisplaySession.LabelGainedPlaycount, session.DifferenceData.Playcount);
 
-                SetLabelStat(LabelTotalAccuracy, session.CurrentData.Accuracy, false, false);
-                SetLabelStat(LabelGainedAccuracy, session.DifferenceData.Accuracy);
+                SetLabelStat(DisplaySession.LabelTotalAccuracy, session.CurrentData.Accuracy, false, false);
+                SetLabelStat(DisplaySession.LabelGainedAccuracy, session.DifferenceData.Accuracy);
 
-                SetLabelStat(LabelTotalPerformance, session.CurrentData.Performance, false, false);
-                SetLabelStat(LabelGainedPerformance, session.DifferenceData.Performance);
+                SetLabelStat(DisplaySession.LabelTotalPerformance, session.CurrentData.Performance, false, false);
+                SetLabelStat(DisplaySession.LabelGainedPerformance, session.DifferenceData.Performance);
 
                 TimeSpan totalPlayTime = TimeSpan.FromSeconds(session.CurrentData.Playtime);
                 TimeSpan gainedPlayTime = TimeSpan.FromSeconds(session.DifferenceData.Playtime);
-                LabelTotalPlaytime.Content = totalPlayTime.Humanize(1, new System.Globalization.CultureInfo("en-US"), Humanizer.Localisation.TimeUnit.Hour);
+                DisplaySession.LabelTotalPlaytime.Content = totalPlayTime.Humanize(1, new System.Globalization.CultureInfo("en-US"), Humanizer.Localisation.TimeUnit.Hour);
 
-                LabelGainedPlaytime.Content = (session.DifferenceData.Playtime >= 0 ? "+" : "") + gainedPlayTime.Humanize(1, new System.Globalization.CultureInfo("en-US"), Humanizer.Localisation.TimeUnit.Hour);
-                LabelGainedPlaytime.Foreground = session.DifferenceData.Playtime == 0 ? Brushes.Gray : session.DifferenceData.Playtime >= 0 ? Brushes.LightGreen : Brushes.Pink;
+                DisplaySession.LabelGainedPlaytime.Content = (session.DifferenceData.Playtime >= 0 ? "+" : "") + gainedPlayTime.Humanize(1, new System.Globalization.CultureInfo("en-US"), Humanizer.Localisation.TimeUnit.Hour);
+                DisplaySession.LabelGainedPlaytime.Foreground = session.DifferenceData.Playtime == 0 ? Brushes.Gray : session.DifferenceData.Playtime >= 0 ? Brushes.LightGreen : Brushes.Pink;
             }));
         }
 

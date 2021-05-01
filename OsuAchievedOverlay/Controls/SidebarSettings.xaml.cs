@@ -21,11 +21,11 @@ namespace OsuAchievedOverlay.Controls
     /// <summary>
     /// Interaction logic for GridSettings.xaml
     /// </summary>
-    public partial class GridSettings : UserControl
+    public partial class SidebarSettings : UserControl
     {
         public event EventHandler GridClosed;
 
-        public GridSettings()
+        public SidebarSettings()
         {
             InitializeComponent();
         }

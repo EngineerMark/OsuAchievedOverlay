@@ -10,7 +10,7 @@
 
         public static int Map(this int value, int fromSource, int toSource, int fromTarget, int toTarget)
         {
-            double val = ((value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget);
+            int val = ((value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget);
             return val;
         }
 

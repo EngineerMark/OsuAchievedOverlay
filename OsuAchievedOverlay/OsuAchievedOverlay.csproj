@@ -90,8 +90,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApiHelper.cs" />
-    <Compile Include="Controls\GridSettings.xaml.cs">
-      <DependentUpon>GridSettings.xaml</DependentUpon>
+    <Compile Include="Controls\DisplaySession.xaml.cs">
+      <DependentUpon>DisplaySession.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SidebarSettings.xaml.cs">
+      <DependentUpon>SidebarSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExtendedThread.cs" />
     <Compile Include="Github\Asset.cs" />
@@ -129,7 +132,11 @@
     <Compile Include="Windows\UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\GridSettings.xaml">
+    <Page Include="Controls\DisplaySession.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SidebarSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
