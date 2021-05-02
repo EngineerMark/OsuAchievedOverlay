@@ -23,7 +23,39 @@
         </Grid>
 
         <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Stretch" Height="682" Margin="0,29,0,0" VerticalAlignment="Top">
-            <localControls:DisplaySession x:Name="DisplaySession"></localControls:DisplaySession>
+            <Grid x:Name="DisplayItems">
+                <localControls:DisplaySession x:Name="DisplaySession" Visibility="Visible"></localControls:DisplaySession>
+                <localControls:DisplayInfo x:Name="DisplayInfo" Visibility="Hidden"></localControls:DisplayInfo>
+            </Grid>
+
+            <Grid x:Name="SideButtonLeft" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="46">
+                <Rectangle RenderOptions.BitmapScalingMode="HighQuality">
+                    <Rectangle.OpacityMask>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#55FFFFFF" Offset="0"/>
+                            <GradientStop Color="#00FFFFFF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="Black" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Label Content="((" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+            </Grid>
+            <Grid x:Name="SideButtonRight" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="46">
+                <Rectangle RenderOptions.BitmapScalingMode="HighQuality">
+                    <Rectangle.OpacityMask>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                            <GradientStop Color="#55FFFFFF" Offset="0"/>
+                            <GradientStop Color="#00FFFFFF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="Black" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Label Content="))" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+            </Grid>
 
             <Grid HorizontalAlignment="Stretch" Height="32" Margin="10,3,10,0" VerticalAlignment="Top">
                 <Button ToolTip="Open the settings window" Content="" Click="Btn_OpenSettings" BorderBrush="#3D2932" HorizontalAlignment="Right" VerticalAlignment="Top" Width="32" Height="32">

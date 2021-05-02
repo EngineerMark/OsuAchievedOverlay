@@ -4,6 +4,7 @@ using OsuAchievedOverlay.Managers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +21,9 @@ namespace OsuAchievedOverlay
     /// </summary>
     public partial class DisplayWindow : Window
     {
+        private List<UIElement> DisplayGroup;
+        private int CurrentDisplay = 0;
+
         public DisplayWindow()
         {
             InitializeComponent();
@@ -29,8 +33,57 @@ namespace OsuAchievedOverlay
                 GameManager.Instance.Stop();
             };
 
+            DisplayGroup = DisplayItems.Children.Cast<UIElement>().ToList();
+
+            SideButtonLeft.Opacity = 0;
+            SideButtonRight.Opacity = 0;
+
+            SideButtonLeft.MouseEnter += (object sender, MouseEventArgs e) => InterfaceManager.Instance.AnimateOpacity(SideButtonLeft, 0, 1, 0.2);
+            SideButtonLeft.MouseLeave += (object sender, MouseEventArgs e) =>
+            {
+                InterfaceManager.Instance.AnimateOpacity(SideButtonLeft, 1, 0, 0.2);
+            };
+
+            SideButtonRight.MouseEnter += (object sender, MouseEventArgs e) => InterfaceManager.Instance.AnimateOpacity(SideButtonRight, 0, 1, 0.2);
+            SideButtonRight.MouseLeave += (object sender, MouseEventArgs e) =>
+            {
+                InterfaceManager.Instance.AnimateOpacity(SideButtonRight, 1, 0, 0.2);
+            };
+            SideButtonLeft.PreviewMouseDown += (object sender, MouseButtonEventArgs e) =>
+            {
+                CurrentDisplay--;
+                if (CurrentDisplay < 0)
+                    CurrentDisplay = DisplayGroup.Count - 1;
+                SetDisplay(CurrentDisplay);
+                InterfaceManager.Instance.AnimateOpacity(SideButtonLeft, 1, 0.7, 0.05, new Action(()=>
+                {
+                    InterfaceManager.Instance.AnimateOpacity(SideButtonLeft, 0.7, 1, 0.05);
+                }));
+            };
+
+            SideButtonRight.PreviewMouseDown += (object sender, MouseButtonEventArgs e) =>
+            {
+                CurrentDisplay++;
+                if (CurrentDisplay > DisplayGroup.Count - 1)
+                    CurrentDisplay = 0;
+                SetDisplay(CurrentDisplay);
+                InterfaceManager.Instance.AnimateOpacity(SideButtonRight, 1, 0.7, 0.05, new Action(() =>
+                {
+                    InterfaceManager.Instance.AnimateOpacity(SideButtonRight, 0.7, 1, 0.05);
+                }));
+            };
+
             GridBackdrop.Visibility = Visibility.Hidden;
             SidepanelGrid.Visibility = Visibility.Hidden;
+        }
+
+        private void SetDisplay(int index)
+        {
+            for (int i = 0; i < DisplayGroup.Count; i++)
+            {
+                //DisplayGroup[i].Visibility = i == index ? Visibility.Visible : Visibility.Hidden;
+                InterfaceManager.Instance.AnimateOpacity(DisplayGroup[i], i == index ? 0 : 1, i == index ? 1 : 0, 0.2);
+            }
         }
 
         private void Btn_Close(object sender, RoutedEventArgs e)
@@ -62,7 +115,8 @@ namespace OsuAchievedOverlay
             CloseSidepanel();
         }
 
-        private void CloseSidepanel(){
+        private void CloseSidepanel()
+        {
             InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0.3, 0, 0.4, new Action(() =>
             {
                 GridBackdrop.Visibility = Visibility.Collapsed;
