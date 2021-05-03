@@ -22,13 +22,20 @@
         </Grid>
         <Grid>
             <Label Content="About osu!Achieved" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,118,0,0" VerticalAlignment="Top" Height="77" Width="420" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="36"/>
-            <TextBlock TextWrapping="Wrap" Foreground="White" HorizontalAlignment="Stretch" Margin="15,278,10,10" VerticalAlignment="Stretch" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="22">
+            <TextBlock TextWrapping="Wrap" Foreground="White" HorizontalAlignment="Stretch" Margin="15,278,10,10" VerticalAlignment="Stretch" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="16">
                 This tool was initially meant to be an stream overlay but evolved to more of a full stat tracker.
                 <LineBreak/>
                 <LineBreak/>
                 Being a new and still in development tool, crashes are imminent. Every crash will drop a stacktrace file in /Logs/.
                 <LineBreak/>
                 Look in GitHub issues if it is reported. If not, create an issue on it.
+                <LineBreak/>
+                <LineBreak/>
+                <LineBreak/>
+                <LineBreak/>
+                <LineBreak/>
+                <LineBreak/>
+                <LineBreak/>
                 <LineBreak/>
                 <LineBreak/>
                 Code: <Hyperlink Click="ClickURL" NavigateUri="https://osu.ppy.sh/users/Amayakase">Amayakase</Hyperlink>

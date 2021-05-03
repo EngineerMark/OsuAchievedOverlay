@@ -35,6 +35,17 @@ namespace OsuAchievedOverlay
 
             DisplayGroup = DisplayItems.Children.Cast<UIElement>().ToList();
 
+            for (int i = 0; i < DisplayGroup.Count; i++)
+            {
+                if (DisplayGroup[i] == DisplaySession)
+                {
+                    CurrentDisplay = i;
+                    DisplayGroup[i].Opacity = 1;
+                }
+                else
+                    DisplayGroup[i].Opacity = 0;
+            }
+
             SideButtonLeft.Opacity = 0;
             SideButtonRight.Opacity = 0;
 
@@ -54,8 +65,8 @@ namespace OsuAchievedOverlay
                 CurrentDisplay--;
                 if (CurrentDisplay < 0)
                     CurrentDisplay = DisplayGroup.Count - 1;
-                SetDisplay(CurrentDisplay);
-                InterfaceManager.Instance.AnimateOpacity(SideButtonLeft, 1, 0.7, 0.05, new Action(()=>
+                SetDisplay(CurrentDisplay, 1);
+                InterfaceManager.Instance.AnimateOpacity(SideButtonLeft, 1, 0.7, 0.05, new Action(() =>
                 {
                     InterfaceManager.Instance.AnimateOpacity(SideButtonLeft, 0.7, 1, 0.05);
                 }));
@@ -66,7 +77,7 @@ namespace OsuAchievedOverlay
                 CurrentDisplay++;
                 if (CurrentDisplay > DisplayGroup.Count - 1)
                     CurrentDisplay = 0;
-                SetDisplay(CurrentDisplay);
+                SetDisplay(CurrentDisplay, 2);
                 InterfaceManager.Instance.AnimateOpacity(SideButtonRight, 1, 0.7, 0.05, new Action(() =>
                 {
                     InterfaceManager.Instance.AnimateOpacity(SideButtonRight, 0.7, 1, 0.05);
@@ -77,12 +88,28 @@ namespace OsuAchievedOverlay
             SidepanelGrid.Visibility = Visibility.Hidden;
         }
 
-        private void SetDisplay(int index)
+        private void SetDisplay(int index, int dir = 1)
         {
+            // dir 1 = <<
+            // dir 2 = >>
             for (int i = 0; i < DisplayGroup.Count; i++)
             {
                 //DisplayGroup[i].Visibility = i == index ? Visibility.Visible : Visibility.Hidden;
-                InterfaceManager.Instance.AnimateOpacity(DisplayGroup[i], i == index ? 0 : 1, i == index ? 1 : 0, 0.2);
+                //InterfaceManager.Instance.AnimateOpacity(DisplayGroup[i],
+                //    i == index ? (DisplayGroup[i].Opacity != 1 ? 1 : 0) : (DisplayGroup[i].Opacity != 0 ? 0 : 1),
+                //    i == index ? 1 : 0, 0.5);
+                if (i == index)
+                    InterfaceManager.Instance.AnimateOpacity(DisplayGroup[i], 0, 1, 0.5);
+                else{
+                    if(DisplayGroup[i].Opacity>0)
+                        InterfaceManager.Instance.AnimateOpacity(DisplayGroup[i], 1, 0, 0.5);
+                }
+                //if(i==index){
+                //    InterfaceManager.Instance.AnimatePosition(DisplayGroup[i], InterfaceManager.CanvasAnchorPoint.Left, 100, 0, 1);
+                //}
+                //else{
+                //    DisplayGroup[i].Visibility = Visibility.Hidden;
+                //}
             }
         }
 

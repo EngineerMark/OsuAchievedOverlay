@@ -95,6 +95,9 @@
     <Compile Include="Controls\DisplayInfo.xaml.cs">
       <DependentUpon>DisplayInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DisplayOsu.xaml.cs">
+      <DependentUpon>DisplayOsu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DisplaySession.xaml.cs">
       <DependentUpon>DisplaySession.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,10 @@
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\DisplayInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DisplayOsu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -554,6 +561,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Headers\taiga.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Headers\karen.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

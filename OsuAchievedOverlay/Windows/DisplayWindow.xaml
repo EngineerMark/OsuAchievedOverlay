@@ -11,6 +11,7 @@
         ResizeMode="NoResize"
         BorderBrush="#2E1F25"
         BorderThickness="1"
+        Name="DisplayWinParent"
         Title="osu!Achieved" Height="711" Width="423" Icon="/OsuAchievedOverlay;component/Assets/Images/Icons/icon_32.png">
     <Grid>
         <Grid MouseDown="Window_MouseDown" Background="#2E1F25" x:Name="TitleBar" HorizontalAlignment="Stretch" Height="29" VerticalAlignment="Top">
@@ -22,10 +23,17 @@
             </Grid>
         </Grid>
 
-        <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Stretch" Height="682" Margin="0,29,0,0" VerticalAlignment="Top">
+        <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Stretch" Height="682" Margin="0,29,0,-2" VerticalAlignment="Top">
             <Grid x:Name="DisplayItems">
-                <localControls:DisplaySession x:Name="DisplaySession" Visibility="Visible"></localControls:DisplaySession>
-                <localControls:DisplayInfo x:Name="DisplayInfo" Visibility="Hidden"></localControls:DisplayInfo>
+                <Canvas x:Name="DisplayOsuData" Visibility="Visible">
+                    <localControls:DisplayOsu x:Name="DisplayOsuDataControl" Height="{Binding ElementName=ContentGrid, Path=Height}" Width="{Binding ElementName=DisplayWinParent, Path=Width}"></localControls:DisplayOsu>
+                </Canvas>
+                <Canvas x:Name="DisplaySession" Visibility="Visible">
+                    <localControls:DisplaySession x:Name="DisplaySessionControl" Height="{Binding ElementName=ContentGrid, Path=Height}" Width="{Binding ElementName=DisplayWinParent, Path=Width}"></localControls:DisplaySession>
+                </Canvas>
+                <Canvas x:Name="DisplayInfo" Visibility="Visible">
+                    <localControls:DisplayInfo x:Name="DisplayInfoControl" Height="{Binding ElementName=ContentGrid, Path=Height}" Width="{Binding ElementName=DisplayWinParent, Path=Width}"></localControls:DisplayInfo>
+                </Canvas>
             </Grid>
 
             <Grid x:Name="SideButtonLeft" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="46">

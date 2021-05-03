@@ -113,7 +113,7 @@ namespace OsuAchievedOverlay.Managers
                         CurrentSession.CurrentData = (SessionData)CurrentSession.InitialData.Clone();
                 }
                 CurrentSession.DifferenceData = SessionData.CalculateDifference(CurrentSession.CurrentData, CurrentSession.InitialData);
-                WindowManager.Instance.DisplayWin.DisplaySession.ApplySession(CurrentSession);
+                WindowManager.Instance.DisplayWin.DisplaySessionControl.ApplySession(CurrentSession);
             }
                 //WindowManager.Instance.BetaDisplayWin.UpdateSession = new KeyValuePair<long, Session>(DateTimeOffset.Now.ToUnixTimeSeconds(), (Session)CurrentSession.Clone());
                 //WindowManager.Instance.BetaDisplayWin.ApplySession(WindowManager.Instance.BetaDisplayWin.UpdateSession.Value);

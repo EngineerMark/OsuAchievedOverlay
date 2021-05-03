@@ -78,6 +78,54 @@ namespace OsuAchievedOverlay.Managers
             return (UIElement)XamlReader.Load(xmlReader);
         }
 
+        public enum CanvasAnchorPoint
+        {
+            Left, Right, Top, Bottom
+        }
+
+        public Storyboard AnimatePosition(UIElement canvas, CanvasAnchorPoint anchor, double from, double to, double t, Action callbackCompleted = null){
+            DependencyProperty property = null;
+            switch (anchor){
+                case CanvasAnchorPoint.Left:
+                    property = Canvas.LeftProperty;
+                    Canvas.SetLeft(canvas, from);
+                    break;
+                case CanvasAnchorPoint.Right:
+                    property = Canvas.RightProperty;
+                    Canvas.SetRight(canvas, from);
+                    break;
+                case CanvasAnchorPoint.Top:
+                    property = Canvas.TopProperty;
+                    Canvas.SetTop(canvas, from);
+                    break;
+                case CanvasAnchorPoint.Bottom:
+                    property = Canvas.BottomProperty;
+                    Canvas.SetBottom(canvas, from);
+                    break;
+            }
+
+            DoubleAnimation da = new DoubleAnimation()
+            {
+                From = from,
+                To = to,
+                Duration = TimeSpan.FromSeconds(t),
+                EasingFunction = new QuadraticEase()
+            };
+
+            Storyboard sb = new Storyboard();
+            sb.Children.Add(da);
+
+            Storyboard.SetTarget(sb, canvas);
+            Storyboard.SetTargetProperty(sb, new PropertyPath(property));
+
+            if (callbackCompleted != null)
+                sb.Completed += (object sender, EventArgs e) => callbackCompleted();
+
+            sb.Begin();
+
+            return sb;
+        }
+
         public Storyboard AnimateOpacity(UIElement element, double from, double to, double t, Action callbackCompleted = null){
             element.Opacity = from;
             element.Visibility = Visibility.Visible;
@@ -91,10 +139,11 @@ namespace OsuAchievedOverlay.Managers
             };
 
             Storyboard sb = new Storyboard();
-            sb.Children.Add(da);
 
             Storyboard.SetTarget(sb, element);
             Storyboard.SetTargetProperty(sb, new PropertyPath(Control.OpacityProperty));
+
+            sb.Children.Add(da);
 
             if (callbackCompleted != null)
                 sb.Completed += (object sender, EventArgs e) => callbackCompleted();
