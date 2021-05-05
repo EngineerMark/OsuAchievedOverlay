@@ -265,6 +265,7 @@ namespace OsuAchievedOverlay.Controls
         {
             Button btn = (Button)sender;
 
+            int initialPage = CurrentPage;
             string t = (string)btn.Tag;
             switch (t)
             {
@@ -282,8 +283,15 @@ namespace OsuAchievedOverlay.Controls
                     break;
             }
 
-            LabelCurrentPage.Content = CurrentPage + 1;
-            SetBeatmapResults(CurrentPage);
+            if (CurrentPage < 0)
+                CurrentPage = 0;
+            if (CurrentPage > MaxPage)
+                CurrentPage = MaxPage;
+
+            if(initialPage!=CurrentPage){
+                LabelCurrentPage.Content = CurrentPage + 1;
+                SetBeatmapResults(CurrentPage);
+            }
         }
     }
 }
