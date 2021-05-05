@@ -59,7 +59,13 @@ namespace OsuAchievedOverlay.Controls
             int updateRate = int.Parse(InputUpdaterate.Text);
             updateRate = Math.Min(120, Math.Max(5, updateRate));
             SettingsManager.Instance.Settings["api"]["updateRate"] = "" + updateRate;
-            SettingsManager.Instance.Settings["misc"]["osuFolder"] = InputOsuDirectory.Text;
+
+            if(ApiHelper.IsValidOsuInstallation(InputOsuDirectory.Text)){
+                SettingsManager.Instance.Settings["misc"]["osuFolder"] = InputOsuDirectory.Text;
+            }else{
+                MessageBoxResult res = MessageBox.Show("The selected osu! folder is not a valid installation", "Invalid osu! directory");
+                InputOsuDirectory.Text = SettingsManager.Instance.Settings["misc"]["osuFolder"];
+            }
 
             SettingsManager.Instance.SettingsSave();
         }

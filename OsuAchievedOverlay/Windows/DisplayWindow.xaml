@@ -25,15 +25,9 @@
 
         <Grid Background="#3D2932" x:Name="ContentGrid" HorizontalAlignment="Stretch" Height="682" Margin="0,29,0,-2" VerticalAlignment="Top">
             <Grid x:Name="DisplayItems">
-                <Canvas x:Name="DisplayOsuData" Visibility="Visible">
-                    <localControls:DisplayOsu x:Name="DisplayOsuDataControl" Height="{Binding ElementName=ContentGrid, Path=Height}" Width="{Binding ElementName=DisplayWinParent, Path=Width}"></localControls:DisplayOsu>
-                </Canvas>
-                <Canvas x:Name="DisplaySession" Visibility="Visible">
-                    <localControls:DisplaySession x:Name="DisplaySessionControl" Height="{Binding ElementName=ContentGrid, Path=Height}" Width="{Binding ElementName=DisplayWinParent, Path=Width}"></localControls:DisplaySession>
-                </Canvas>
-                <Canvas x:Name="DisplayInfo" Visibility="Visible">
-                    <localControls:DisplayInfo x:Name="DisplayInfoControl" Height="{Binding ElementName=ContentGrid, Path=Height}" Width="{Binding ElementName=DisplayWinParent, Path=Width}"></localControls:DisplayInfo>
-                </Canvas>
+                <localControls:DisplayOsu x:Name="DisplayOsuData"></localControls:DisplayOsu>
+                <localControls:DisplaySession x:Name="DisplaySession"></localControls:DisplaySession>
+                <localControls:DisplayInfo x:Name="DisplayInfo"></localControls:DisplayInfo>
             </Grid>
 
             <Grid x:Name="SideButtonLeft" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="46">

@@ -126,7 +126,7 @@ namespace OsuAchievedOverlay.Managers
             return sb;
         }
 
-        public Storyboard AnimateOpacity(UIElement element, double from, double to, double t, Action callbackCompleted = null){
+        public Storyboard AnimateOpacity(UIElement element, double from, double to, double t, Action<UIElement> callbackCompleted = null){
             element.Opacity = from;
             element.Visibility = Visibility.Visible;
         
@@ -146,7 +146,7 @@ namespace OsuAchievedOverlay.Managers
             sb.Children.Add(da);
 
             if (callbackCompleted != null)
-                sb.Completed += (object sender, EventArgs e) => callbackCompleted();
+                sb.Completed += (object sender, EventArgs e) => callbackCompleted(element);
 
             sb.Begin();
 

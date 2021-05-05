@@ -8,26 +8,61 @@
              d:DesignHeight="682" d:DesignWidth="443">
     <Grid Background="#3D2932">
         <Grid Margin="0,0,0,424">
-            <Rectangle RenderOptions.BitmapScalingMode="HighQuality">
-                <Rectangle.OpacityMask>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <Image RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/Headers/karen.jpg">
+                <Image.OpacityMask>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.8">
                         <GradientStop Color="#55FFFFFF" Offset="0"/>
                         <GradientStop Color="#00FFFFFF" Offset="1"/>
                     </LinearGradientBrush>
-                </Rectangle.OpacityMask>
-                <Rectangle.Fill>
-                    <ImageBrush RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/Headers/karen.jpg"/>
-                </Rectangle.Fill>
-            </Rectangle>
+                </Image.OpacityMask>
+            </Image>
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="499" Margin="10,173,0,0" VerticalAlignment="Top" Width="423">
+        <Grid HorizontalAlignment="Stretch" Margin="10,173,10,10" VerticalAlignment="Stretch">
             <Label Content="osu!Data" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Height="71" Width="423" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="36"/>
-            <StackPanel HorizontalAlignment="Left" Height="428" Margin="0,71,0,0" VerticalAlignment="Top" Width="225">
-                <UniformGrid Columns="2" Height="30">
-                    <Label HorizontalContentAlignment="Right" VerticalContentAlignment="Center">Version</Label>
-                    <Label HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Name="LabelOsuVersion">n/a</Label>
-                </UniformGrid>
+            <StackPanel HorizontalAlignment="Left" Height="381" Margin="0,71,0,0" VerticalAlignment="Top" Width="225">
+                <local:OsuDataEntry x:Name="EntryVersion" Title="Version"/>
+                <local:OsuDataEntry x:Name="EntryBeatmapCount" Title="Beatmaps"></local:OsuDataEntry>
+                <local:OsuDataEntry x:Name="EntryBeatmapSetCount" Title="Beatmapsets"></local:OsuDataEntry>
+                <local:OsuDataEntry x:Name="EntryCollectionCount" Title="Collections"></local:OsuDataEntry>
+                <local:OsuDataEntry x:Name="EntryReplayCount" Title="Local Scores"></local:OsuDataEntry>
             </StackPanel>
+            <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_RefreshData" Content="Refresh" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="10,0,10,10" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <Button x:Name="ButtonShowScores" Click="Btn_ShowScores" Background="#2E1F25" BorderBrush="#2E1F25" IsEnabled="false" Content="Show Scores" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="230,0,0,396" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <Button x:Name="ButtonShowBeatmaps" Click="Btn_ShowMaps" Background="#2E1F25" BorderBrush="#2E1F25" IsEnabled="false" Content="Show Beatmaps" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="230,0,0,359" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <Button x:Name="ButtonShowCollections" Click="Btn_ShowCollections" Background="#2E1F25" BorderBrush="#2E1F25" IsEnabled="false" Content="Show Collections" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="230,0,0,322" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+        </Grid>
+        <Grid Visibility="Visible" x:Name="GridViewBeatmaps" Background="#3D2932">
+            <ScrollViewer Margin="10,94,10,48" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <StackPanel x:Name="ListBeatmapItems" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type local:BeatmapItem}">
+                            <Setter Property="Margin" Value="0,5,0,0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <local:BeatmapItem BeatmapMapper="Amayakase" />
+                    <local:BeatmapItem BeatmapMapper="Amayakase" />
+                </StackPanel>
+            </ScrollViewer>
+            <Button Click="Btn_HideOverlay" Background="#2E1F25" BorderBrush="#2E1F25" Content="Return" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <TextBox HorizontalAlignment="Right" VerticalContentAlignment="Center" Foreground="White" Height="30" Margin="0,57,94,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="140" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <Button Content="Search" Background="#2E1F25" BorderBrush="#2E1F25" HorizontalAlignment="Right" Margin="0,57,10,0" VerticalAlignment="Top" Width="79" Height="30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <Grid HorizontalAlignment="Stretch" Height="38" Margin="0,634,0,0" VerticalAlignment="Bottom">
+                <Button Content="&lt;&lt;" Click="Btn_PageButton" Tag="BackFull" Background="#2E1F25" BorderBrush="#2E1F25" HorizontalAlignment="Center" Margin="93,0,288,0" VerticalAlignment="Top" Width="45" Height="30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <Button Content="&lt;" Click="Btn_PageButton" Tag="Back" Background="#2E1F25" BorderBrush="#2E1F25" HorizontalAlignment="Center" Margin="143,0,243,0" VerticalAlignment="Top" Width="40" Height="30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <Label Content="1" x:Name="LabelCurrentPage" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="50" Height="30"/>
+                <Button Content="&gt;" Click="Btn_PageButton" Tag="Forward" Background="#2E1F25" BorderBrush="#2E1F25" HorizontalAlignment="Center" Margin="243,0,145,0" VerticalAlignment="Top" Width="38" Height="30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <Button Content="&gt;&gt;" Click="Btn_PageButton" Tag="ForwardFull" Background="#2E1F25" BorderBrush="#2E1F25" HorizontalAlignment="Center" Margin="286,0,96,0" VerticalAlignment="Top" Width="44" Height="30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            </Grid>
+        </Grid>
+        <Grid Visibility="Hidden" x:Name="GridViewScores" Background="#3D2932">
+            <Button Click="Btn_HideOverlay" Background="#2E1F25" BorderBrush="#2E1F25" Content="Return" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75"/>
+
+        </Grid>
+        <Grid Visibility="Hidden" x:Name="GridViewCollections" Background="#3D2932">
+            <Button Click="Btn_HideOverlay" Background="#2E1F25" BorderBrush="#2E1F25" Content="Return" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75"/>
+            <ScrollViewer HorizontalAlignment="Stretch" Margin="10,94,10,10" VerticalAlignment="Stretch">
+                <StackPanel></StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>

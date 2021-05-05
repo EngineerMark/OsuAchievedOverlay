@@ -45,14 +45,14 @@ namespace OsuAchievedOverlay.Managers
 
                 RestartTimers(Convert.ToInt32(SettingsManager.Instance.Settings["api"]["updateRate"]));
 
-                updateThread = new ExtendedThread(()=>
+                updateThread = new ExtendedThread(() =>
                 {
                     if (WindowManager.Instance.DisplayWin != null && SessionManager.Instance.CurrentSession != null && !SessionManager.Instance.CurrentSession.ReadOnly)
                     {
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
-                            if(WindowManager.Instance!=null && WindowManager.Instance.DisplayWin!=null)
-                                WindowManager.Instance.DisplayWin.DisplaySessionControl.LabelSessionTime.Content = "Session started " +
+                            if (WindowManager.Instance != null && WindowManager.Instance.DisplayWin != null)
+                                WindowManager.Instance.DisplayWin.DisplaySession.LabelSessionTime.Content = "Session started " +
                                     HumanizerExtensions.Humanize(DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime);
                         }));
                     }
@@ -85,10 +85,10 @@ namespace OsuAchievedOverlay.Managers
 
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    if(WindowManager.Instance!=null && WindowManager.Instance.DisplayWin!=null)
-                        WindowManager.Instance.DisplayWin.DisplaySessionControl.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)), TimeSpan.FromSeconds(progressbarSpeed));
+                    if (WindowManager.Instance != null && WindowManager.Instance.DisplayWin != null)
+                        WindowManager.Instance.DisplayWin.DisplaySession.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)), TimeSpan.FromSeconds(progressbarSpeed));
                 }));
-            }, progressbarSpeed*1000);
+            }, progressbarSpeed * 1000);
             progressThread.Start();
         }
 
@@ -146,7 +146,7 @@ namespace OsuAchievedOverlay.Managers
             if (!cv)
                 updateRate = 60;
 
-            if (fetchThread?.SleepTime != updateRate*1000)
+            if (fetchThread?.SleepTime != updateRate * 1000)
                 RestartTimers(updateRate);
 
             if (OsuApiHelper.OsuApiKey.Key != data["api"]["key"])
@@ -165,9 +165,17 @@ namespace OsuAchievedOverlay.Managers
             if (lastRefresh == -1 || DateTimeOffset.Now.ToUnixTimeSeconds() - lastRefresh > 15)
             {
                 SessionManager.Instance.CurrentSession = new Session();
-                RestartTimers((int)fetchThread?.SleepTime/1000);
+                RestartTimers((int)fetchThread?.SleepTime / 1000);
 
                 lastRefresh = DateTimeOffset.Now.ToUnixTimeSeconds();
+            }
+        }
+
+        public void SetPageButtonState(bool enabled)
+        {
+            if(WindowManager.Instance.DisplayWin!=null){
+                WindowManager.Instance.DisplayWin.SideButtonLeft.Visibility = enabled ? Visibility.Visible : Visibility.Hidden;
+                WindowManager.Instance.DisplayWin.SideButtonRight.Visibility = enabled ? Visibility.Visible : Visibility.Hidden;
             }
         }
     }

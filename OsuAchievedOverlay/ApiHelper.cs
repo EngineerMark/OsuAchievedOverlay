@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -11,6 +12,14 @@ namespace OsuAchievedOverlay
 {
     public static class ApiHelper
     {
+        public static bool IsValidOsuInstallation(string path)
+        {
+            return (File.Exists(Path.Combine(path, "osu!.exe")) &&
+                File.Exists(Path.Combine(path, "osu!.db")) &&
+                File.Exists(Path.Combine(path, "scores.db")) &&
+                Directory.Exists(Path.Combine(path, "Songs")));
+        }
+
         public static bool IsKeyValid(string key)
         {
             string testURL = "https://osu.ppy.sh/api/get_user?k=" + key + "&u=peppy";

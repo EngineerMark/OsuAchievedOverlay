@@ -66,10 +66,10 @@ namespace OsuAchievedOverlay
                 if (CurrentDisplay < 0)
                     CurrentDisplay = DisplayGroup.Count - 1;
                 SetDisplay(CurrentDisplay, 1);
-                InterfaceManager.Instance.AnimateOpacity(SideButtonLeft, 1, 0.7, 0.05, new Action(() =>
+                InterfaceManager.Instance.AnimateOpacity(SideButtonLeft, 1, 0.7, 0.05, (UIElement source) =>
                 {
                     InterfaceManager.Instance.AnimateOpacity(SideButtonLeft, 0.7, 1, 0.05);
-                }));
+                });
             };
 
             SideButtonRight.PreviewMouseDown += (object sender, MouseButtonEventArgs e) =>
@@ -78,10 +78,10 @@ namespace OsuAchievedOverlay
                 if (CurrentDisplay > DisplayGroup.Count - 1)
                     CurrentDisplay = 0;
                 SetDisplay(CurrentDisplay, 2);
-                InterfaceManager.Instance.AnimateOpacity(SideButtonRight, 1, 0.7, 0.05, new Action(() =>
+                InterfaceManager.Instance.AnimateOpacity(SideButtonRight, 1, 0.7, 0.05, (UIElement source) =>
                 {
                     InterfaceManager.Instance.AnimateOpacity(SideButtonRight, 0.7, 1, 0.05);
-                }));
+                });
             };
 
             GridBackdrop.Visibility = Visibility.Hidden;
@@ -100,9 +100,16 @@ namespace OsuAchievedOverlay
                 //    i == index ? 1 : 0, 0.5);
                 if (i == index)
                     InterfaceManager.Instance.AnimateOpacity(DisplayGroup[i], 0, 1, 0.5);
-                else{
-                    if(DisplayGroup[i].Opacity>0)
-                        InterfaceManager.Instance.AnimateOpacity(DisplayGroup[i], 1, 0, 0.5);
+                else
+                {
+                    if (DisplayGroup[i].Opacity > 0)
+                        InterfaceManager.Instance.AnimateOpacity(DisplayGroup[i], 1, 0, 0.5, (UIElement source) =>
+                        {
+                            source.Visibility = Visibility.Hidden;
+                        });
+                    else
+                        DisplayGroup[i].Visibility = Visibility.Hidden;
+
                 }
                 //if(i==index){
                 //    InterfaceManager.Instance.AnimatePosition(DisplayGroup[i], InterfaceManager.CanvasAnchorPoint.Left, 100, 0, 1);
@@ -144,14 +151,14 @@ namespace OsuAchievedOverlay
 
         private void CloseSidepanel()
         {
-            InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0.3, 0, 0.4, new Action(() =>
+            InterfaceManager.Instance.AnimateOpacity(GridBackdrop, 0.3, 0, 0.4, (UIElement source) =>
             {
                 GridBackdrop.Visibility = Visibility.Collapsed;
-            }));
-            Storyboard sb = InterfaceManager.Instance.AnimateOpacity(SidepanelGrid, 1, 0, 0.3, new Action(() =>
+            });
+            Storyboard sb = InterfaceManager.Instance.AnimateOpacity(SidepanelGrid, 1, 0, 0.3, (UIElement source) =>
             {
                 SidepanelGrid.Visibility = Visibility.Collapsed;
-            }));
+            });
             sb.Completed += delegate (object s, EventArgs e)
             {
                 GridSettings.Visibility = Visibility.Hidden;
