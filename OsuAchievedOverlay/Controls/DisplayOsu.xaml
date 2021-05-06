@@ -44,8 +44,8 @@
                 </StackPanel>
             </ScrollViewer>
             <Button Click="Btn_HideOverlay" Background="#2E1F25" BorderBrush="#2E1F25" Content="Return" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
-            <TextBox HorizontalAlignment="Right" VerticalContentAlignment="Center" Foreground="White" Height="30" Margin="0,57,94,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="140" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
-            <Button Content="Search" Background="#2E1F25" BorderBrush="#2E1F25" HorizontalAlignment="Right" Margin="0,57,10,0" VerticalAlignment="Top" Width="79" Height="30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <TextBox x:Name="InputSearchQuery" HorizontalAlignment="Right" VerticalContentAlignment="Center" Foreground="White" Height="30" Margin="0,57,94,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="140" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <Button Click="Btn_Search" Content="Search" Background="#2E1F25" BorderBrush="#2E1F25" HorizontalAlignment="Right" Margin="0,57,10,0" VerticalAlignment="Top" Width="79" Height="30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <Grid HorizontalAlignment="Stretch" Height="38" Margin="0,634,0,0" VerticalAlignment="Bottom">
                 <Button Content="&lt;&lt;" Click="Btn_PageButton" Tag="BackFull" Background="#2E1F25" BorderBrush="#2E1F25" HorizontalAlignment="Center" Margin="93,0,288,0" VerticalAlignment="Top" Width="45" Height="30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 <Button Content="&lt;" Click="Btn_PageButton" Tag="Back" Background="#2E1F25" BorderBrush="#2E1F25" HorizontalAlignment="Center" Margin="143,0,243,0" VerticalAlignment="Top" Width="40" Height="30" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>

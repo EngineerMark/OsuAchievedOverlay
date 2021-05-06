@@ -86,6 +86,10 @@ namespace OsuAchievedOverlay.Controls
                         if (set != null)
                         {
                             set.Difficulties++;
+                            string[] tags = difficulty.SongTags.Split(' ');
+                            if(tags.Length>0)
+                                foreach(string tag in tags)
+                                    set.SongTags.Add(tag);
                             set.Beatmaps.Add(difficulty);
                         }
                         else
@@ -99,6 +103,10 @@ namespace OsuAchievedOverlay.Controls
                             set.RankStatus = difficulty.RankedStatus;
                             set.Beatmaps.Add(difficulty);
                             set.Difficulties = 1;
+                            string[] tags = difficulty.SongTags.Split(' ');
+                            if (tags.Length > 0)
+                                foreach (string tag in tags)
+                                    set.SongTags.Add(tag);
                             BeatmapSets.Add(set);
                         }
                     }
@@ -111,7 +119,7 @@ namespace OsuAchievedOverlay.Controls
                         UpdateEntry(EntryBeatmapCount, "" + CurrentDatabase.Beatmaps.Count.ToString("#,##0.###"));
                         UpdateEntry(EntryBeatmapSetCount, "" + BeatmapSets.Count.ToString("#,##0.###"));
 
-                        SetBeatmapResults(CurrentPage);
+                        //SetBeatmapResults(CurrentPage);
 
                         ButtonShowScores.IsEnabled = true;
                         ButtonShowBeatmaps.IsEnabled = true;
@@ -140,7 +148,39 @@ namespace OsuAchievedOverlay.Controls
         }
 
         private void ProcessSearchData(string query){
-            MaxPage = (int)Math.Ceiling((double)ResultBeatmapSets.Count / resultsPerPage)-1;
+            if (string.IsNullOrEmpty(query))
+            {
+                ResultBeatmapSets = new List<BeatmapSetEntry>(BeatmapSets);
+            }
+            else
+            {
+                string[] splitQuery = query.ToLower().Split(' ');
+                List<BeatmapSetEntry> result = new List<BeatmapSetEntry>();
+                foreach (BeatmapSetEntry item in BeatmapSets)
+                {
+                    bool add = true;
+                    foreach (string queryItem in splitQuery)
+                    {
+                        if (!item.Title.ToLower().Contains(queryItem) &&
+                            !item.Artist.ToLower().Contains(queryItem) &&
+                            !item.Creator.ToLower().Contains(queryItem))
+                        {
+                            add = false;
+                            break;
+                        }
+                    }
+
+                    if (add)
+                        result.Add(item);
+                }
+
+                ResultBeatmapSets = result;
+            }
+
+            MaxPage = (int)Math.Ceiling((double)ResultBeatmapSets.Count / resultsPerPage) - 1;
+            CurrentPage = 0;
+            LabelCurrentPage.Content = CurrentPage + 1;
+            SetBeatmapResults(CurrentPage);
         }
 
         private void SetBeatmapResults(int page)
@@ -148,73 +188,76 @@ namespace OsuAchievedOverlay.Controls
             ListBeatmapItems.Children.Clear();
             ThreadPool.QueueUserWorkItem((Object stateInfo) =>
             {
-                for (int i = 0; i < resultsPerPage; i++)
+                if (ResultBeatmapSets.Count > 0)
                 {
-                    int actualIndex = i + (page * resultsPerPage);
-
-                    if (actualIndex > ResultBeatmapSets.Count)
-                        break;
-
-                    BeatmapSetEntry map = ResultBeatmapSets[actualIndex];
-
-                    string path = Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "Songs", map.BeatmapFolder);
-                    string backgroundImage = Directory.GetFiles(path).FirstOrDefault(file =>
+                    for (int i = 0; i < resultsPerPage; i++)
                     {
-                        return Path.GetExtension(file) == ".png" ||
-                            Path.GetExtension(file) == ".jpg" ||
-                            Path.GetExtension(file) == ".jpeg";
-                    });
+                        int actualIndex = i + (page * resultsPerPage);
 
-                    BitmapImage image = null;
-                    if (backgroundImage != string.Empty && File.Exists(backgroundImage))
-                    {
-                        try
+                        if (actualIndex >= ResultBeatmapSets.Count)
+                            break;
+
+                        BeatmapSetEntry map = ResultBeatmapSets[actualIndex];
+
+                        string path = Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "Songs", map.BeatmapFolder);
+                        string backgroundImage = Directory.GetFiles(path).FirstOrDefault(file =>
                         {
-                            image = new BitmapImage(new Uri(backgroundImage));
-                            if(image!=null)
-                                image.Freeze();
+                            return Path.GetExtension(file) == ".png" ||
+                                Path.GetExtension(file) == ".jpg" ||
+                                Path.GetExtension(file) == ".jpeg";
+                        });
+
+                        BitmapImage image = null;
+                        if (backgroundImage != string.Empty && File.Exists(backgroundImage))
+                        {
+                            try
+                            {
+                                image = new BitmapImage(new Uri(backgroundImage));
+                                if (image != null)
+                                    image.Freeze();
+                            }
+                            catch (Exception) { image = null; }
                         }
-                        catch (Exception) { image = null; }
+
+                        Dispatcher.Invoke(() =>
+                        {
+                            BeatmapItem item = new BeatmapItem();
+                            item.LabelTitle.Content = map.Title;
+                            item.LabelName.Content = map.Artist;
+                            item.LabelMapper.Content = map.Creator;
+
+                            switch (map.RankStatus)
+                            {
+                                case SubmissionStatus.Ranked:
+                                    item.MapStateRanked.Visibility = Visibility.Visible;
+                                    break;
+                                case SubmissionStatus.Loved:
+                                    item.MapStateLoved.Visibility = Visibility.Visible;
+                                    break;
+                                case SubmissionStatus.Unknown:
+                                case SubmissionStatus.Pending:
+                                case SubmissionStatus.EditableCutoff:
+                                    item.MapStateUnranked.Visibility = Visibility.Visible;
+                                    break;
+                                case SubmissionStatus.NotSubmitted:
+                                    item.MapStateUnsubmitted.Visibility = Visibility.Visible;
+                                    break;
+                                case SubmissionStatus.Qualified:
+                                    item.MapStateQualified.Visibility = Visibility.Visible;
+                                    break;
+                                case SubmissionStatus.Approved:
+                                    item.MapStateApproved.Visibility = Visibility.Visible;
+                                    break;
+                            }
+
+                            if (image != null)
+                            {
+                                item.ImageMainIcon.Source = image;
+                                item.ImageBackground.Source = item.ImageMainIcon.Source;
+                            }
+                            ListBeatmapItems.Children.Add(item);
+                        });
                     }
-
-                    Dispatcher.Invoke(() =>
-                    {
-                        BeatmapItem item = new BeatmapItem();
-                        item.LabelTitle.Content = map.Title;
-                        item.LabelName.Content = map.Artist;
-                        item.LabelMapper.Content = map.Creator;
-
-                        switch (map.RankStatus)
-                        {
-                            case SubmissionStatus.Ranked:
-                                item.MapStateRanked.Visibility = Visibility.Visible;
-                                break;
-                            case SubmissionStatus.Loved:
-                                item.MapStateLoved.Visibility = Visibility.Visible;
-                                break;
-                            case SubmissionStatus.Unknown:
-                            case SubmissionStatus.Pending:
-                            case SubmissionStatus.EditableCutoff:
-                                item.MapStateUnranked.Visibility = Visibility.Visible;
-                                break;
-                            case SubmissionStatus.NotSubmitted:
-                                item.MapStateUnsubmitted.Visibility = Visibility.Visible;
-                                break;
-                            case SubmissionStatus.Qualified:
-                                item.MapStateQualified.Visibility = Visibility.Visible;
-                                break;
-                            case SubmissionStatus.Approved:
-                                item.MapStateApproved.Visibility = Visibility.Visible;
-                                break;
-                        }
-
-                        if (image != null)
-                        {
-                            item.ImageMainIcon.Source = image;
-                            item.ImageBackground.Source = item.ImageMainIcon.Source;
-                        }
-                        ListBeatmapItems.Children.Add(item);
-                    });
                 }
             });
         }
@@ -292,6 +335,14 @@ namespace OsuAchievedOverlay.Controls
                 LabelCurrentPage.Content = CurrentPage + 1;
                 SetBeatmapResults(CurrentPage);
             }
+        }
+
+        private void Btn_Search(object sender, RoutedEventArgs e)
+        {
+            //string title = (string)BeatmapSetEntry.TitleProperty.GetValue(BeatmapSets[0]);
+            //string t = "";
+
+            ProcessSearchData(InputSearchQuery.Text);
         }
     }
 }
