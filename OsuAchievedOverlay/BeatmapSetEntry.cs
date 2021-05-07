@@ -19,6 +19,7 @@ namespace OsuAchievedOverlay
         public SubmissionStatus RankStatus { get; set; }
         public int Difficulties { get; set; }
         public string SongSource { get; set; }
+        public string BackgroundPath { get; set; }
         public HashSet<string> SongTags { get; set; } = new HashSet<string>();
         public List<BeatmapEntry> Beatmaps { get; set; } = new List<BeatmapEntry>();
     }

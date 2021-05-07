@@ -28,6 +28,18 @@ namespace OsuAchievedOverlay
         {
             InitializeComponent();
 
+            Loaded += (object sender, RoutedEventArgs e) =>
+            {
+                KeyDown += (object sender, KeyEventArgs e) =>
+                {
+                    Managers.InputManager.OnKeyDown?.Invoke(sender, e);
+                };
+                KeyUp += (object sender, KeyEventArgs e) =>
+                {
+                    Managers.InputManager.OnKeyUp?.Invoke(sender, e);
+                };
+            };
+
             Closed += (object sender, EventArgs e) =>
             {
                 GameManager.Instance.Stop();

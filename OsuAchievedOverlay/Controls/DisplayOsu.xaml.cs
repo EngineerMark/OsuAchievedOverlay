@@ -37,6 +37,22 @@ namespace OsuAchievedOverlay.Controls
             InitializeComponent();
 
             Btn_HideOverlay(null, null);
+
+            Loaded += DisplayOsu_Loaded;
+        }
+
+        private void DisplayOsu_Loaded(object sender, RoutedEventArgs e)
+        {
+            GridViewBeatmapDisplayChild.OnEscape+=(object sender, EventArgs e)=>{
+                GridViewBeatmapDisplay.Visibility = Visibility.Hidden;
+            };
+
+            BeatmapItem.OnBeatmapClick += (object sender, EventArgs e) =>
+            {
+                GridViewBeatmapDisplayChild.ApplyBeatmapSet(((BeatmapItem)sender).AttachedBeatmap);
+
+                GridViewBeatmapDisplay.Visibility = Visibility.Visible;
+            };
         }
 
         public void UpdateData()
@@ -87,8 +103,8 @@ namespace OsuAchievedOverlay.Controls
                         {
                             set.Difficulties++;
                             string[] tags = difficulty.SongTags.Split(' ');
-                            if(tags.Length>0)
-                                foreach(string tag in tags)
+                            if (tags.Length > 0)
+                                foreach (string tag in tags)
                                     set.SongTags.Add(tag);
                             set.Beatmaps.Add(difficulty);
                         }
@@ -103,10 +119,19 @@ namespace OsuAchievedOverlay.Controls
                             set.RankStatus = difficulty.RankedStatus;
                             set.Beatmaps.Add(difficulty);
                             set.Difficulties = 1;
+                            string path = Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "Songs", set.BeatmapFolder);
+                            string backgroundImage = Directory.GetFiles(path).FirstOrDefault(file =>
+                            {
+                                return Path.GetExtension(file) == ".png" ||
+                                    Path.GetExtension(file) == ".jpg" ||
+                                    Path.GetExtension(file) == ".jpeg";
+                            });
+
+                            set.BackgroundPath = backgroundImage;
                             string[] tags = difficulty.SongTags.Split(' ');
                             if (tags.Length > 0)
                                 foreach (string tag in tags)
-                                    set.SongTags.Add(tag);
+                                    set.SongTags.Add(tag); 
                             BeatmapSets.Add(set);
                         }
                     }
@@ -225,6 +250,7 @@ namespace OsuAchievedOverlay.Controls
                             item.LabelTitle.Content = map.Title;
                             item.LabelName.Content = map.Artist;
                             item.LabelMapper.Content = map.Creator;
+                            item.AttachedBeatmap = map;
 
                             switch (map.RankStatus)
                             {

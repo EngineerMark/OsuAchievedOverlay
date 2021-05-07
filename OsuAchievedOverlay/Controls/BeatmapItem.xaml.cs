@@ -1,4 +1,5 @@
-﻿using OsuAchievedOverlay.Managers;
+﻿using osu_database_reader.Components.Beatmaps;
+using OsuAchievedOverlay.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,10 @@ namespace OsuAchievedOverlay.Controls
             set { SetValue(BeatmapMapperProperty, value); }
         }
 
+        public static EventHandler OnBeatmapClick;
+
+        public BeatmapSetEntry AttachedBeatmap { get; set; }
+
         public BeatmapItem()
         {
             InitializeComponent();
@@ -54,6 +59,21 @@ namespace OsuAchievedOverlay.Controls
         {
             Opacity = 0;
             InterfaceManager.Instance.AnimateOpacity(this, 0, 1, 0.5f);
+        }
+
+        private void BeatmapMouseEnter(object sender, MouseEventArgs e)
+        {
+            InterfaceManager.Instance.AnimateOpacity(HoverOverlayResult, 0, 0.4f, 0.3f);
+        }
+
+        private void BeatmapMouseLeave(object sender, MouseEventArgs e)
+        {
+            InterfaceManager.Instance.AnimateOpacity(HoverOverlayResult, 0.4f, 0, 0.3f);
+        }
+
+        private void BeatmapMouseClick(object sender, MouseButtonEventArgs e)
+        {
+            OnBeatmapClick?.Invoke(this, null);
         }
     }
 }

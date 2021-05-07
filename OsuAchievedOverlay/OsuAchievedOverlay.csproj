@@ -93,6 +93,9 @@
     </ApplicationDefinition>
     <Compile Include="ApiHelper.cs" />
     <Compile Include="BeatmapSetEntry.cs" />
+    <Compile Include="Controls\BeatmapDisplay.xaml.cs">
+      <DependentUpon>BeatmapDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\BeatmapItem.xaml.cs">
       <DependentUpon>BeatmapItem.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,7 @@
     <Compile Include="Managers\FileManager.cs" />
     <Compile Include="LocalApiFile.cs" />
     <Compile Include="Interfaces\IThreaded.cs" />
+    <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\LocalAPIManager.cs" />
     <Compile Include="Managers\GameManager.cs" />
     <Compile Include="Managers\InterfaceManager.cs" />
@@ -150,6 +154,10 @@
     <Compile Include="Windows\UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\BeatmapDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\BeatmapItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

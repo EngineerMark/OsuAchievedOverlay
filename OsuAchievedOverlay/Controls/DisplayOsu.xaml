@@ -31,7 +31,7 @@
             <Button x:Name="ButtonShowBeatmaps" Click="Btn_ShowMaps" Background="#2E1F25" BorderBrush="#2E1F25" IsEnabled="false" Content="Show Beatmaps" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="230,0,0,359" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <Button x:Name="ButtonShowCollections" Click="Btn_ShowCollections" Background="#2E1F25" BorderBrush="#2E1F25" IsEnabled="false" Content="Show Collections" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="230,0,0,322" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
         </Grid>
-        <Grid Visibility="Visible" x:Name="GridViewBeatmaps" Background="#3D2932">
+        <Grid Visibility="Hidden" x:Name="GridViewBeatmaps" Background="#3D2932">
             <ScrollViewer Margin="10,94,10,48" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <StackPanel x:Name="ListBeatmapItems" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <StackPanel.Resources>
@@ -63,6 +63,9 @@
             <ScrollViewer HorizontalAlignment="Stretch" Margin="10,94,10,10" VerticalAlignment="Stretch">
                 <StackPanel></StackPanel>
             </ScrollViewer>
+        </Grid>
+        <Grid Visibility="Hidden" x:Name="GridViewBeatmapDisplay" Background="#3D2932">
+            <local:BeatmapDisplay x:Name="GridViewBeatmapDisplayChild" />
         </Grid>
     </Grid>
 </UserControl>
