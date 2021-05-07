@@ -126,6 +126,8 @@ namespace OsuAchievedOverlay.Controls
                                     Path.GetExtension(file) == ".jpg" ||
                                     Path.GetExtension(file) == ".jpeg";
                             });
+                            set.SongSource = difficulty.SongSource;
+                            set.AudioFileName = difficulty.AudioFileName;
 
                             set.BackgroundPath = backgroundImage;
                             string[] tags = difficulty.SongTags.Split(' ');
@@ -360,6 +362,7 @@ namespace OsuAchievedOverlay.Controls
             if(initialPage!=CurrentPage){
                 LabelCurrentPage.Content = CurrentPage + 1;
                 SetBeatmapResults(CurrentPage);
+                BeatmapItem.CurrentPlayingSong?.StopMusic();
             }
         }
 

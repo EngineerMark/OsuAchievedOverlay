@@ -554,6 +554,9 @@
     <PackageReference Include="Extended.Wpf.Toolkit">
       <Version>4.0.2</Version>
     </PackageReference>
+    <PackageReference Include="FontAwesome.WPF">
+      <Version>4.7.0.9</Version>
+    </PackageReference>
     <PackageReference Include="HoLLy.osu.DatabaseReader">
       <Version>3.0.0</Version>
     </PackageReference>
