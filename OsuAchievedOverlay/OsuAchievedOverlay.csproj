@@ -92,6 +92,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApiHelper.cs" />
+    <Compile Include="BeatmapHelper.cs" />
     <Compile Include="BeatmapSetEntry.cs" />
     <Compile Include="Controls\BeatmapDisplay.xaml.cs">
       <DependentUpon>BeatmapDisplay.xaml</DependentUpon>
@@ -600,6 +601,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Headers\karen.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Icons\Gamemodes\osu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Icons\Gamemodes\taiko.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Icons\Gamemodes\mania.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Icons\Gamemodes\ctb.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -19,5 +19,9 @@
             double val = ((value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget);
             return val;
         }
+
+        public static double MsToBpm(this double ms){
+            return 60000 / ms;
+        }
     }
 }

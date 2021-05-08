@@ -16,9 +16,9 @@
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <!--<Grid.OpacityMask>
+            <Grid.OpacityMask>
                 <VisualBrush Visual="{Binding ElementName=RoundedCorners}" />
-            </Grid.OpacityMask>-->
+            </Grid.OpacityMask>
             <Grid MouseEnter="MusicMouseEnter" MouseLeave="MusicMouseLeave" Grid.Column="0" VerticalAlignment="Stretch">
                 <Image x:Name="ImageMainIcon" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/profilepicture_placeholder.png"/>
                 <Rectangle x:Name="MusicHoverOverlayResult" Fill="Black" Opacity="0" />
@@ -40,26 +40,26 @@
                         </Style>
                     </StackPanel.Resources>
                     <Grid IsHitTestVisible="False" HorizontalAlignment="Left" Width="auto">
-                        <Border x:Name="MapStateRanked" Visibility="Collapsed" CornerRadius="5" Background="MediumSeaGreen">
-                            <Label Content="RANKED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
+                        <Border x:Name="MapStateRanked" Visibility="Collapsed" CornerRadius="5" Background="#b3ff66">
+                            <Label Content="RANKED" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
                         </Border>
-                        <Border x:Name="MapStateQualified" Visibility="Collapsed" CornerRadius="5" Background="MediumSeaGreen">
-                            <Label Content="QUALIFIED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
+                        <Border x:Name="MapStateQualified" Visibility="Collapsed" CornerRadius="5" Background="#FFD966">
+                            <Label Content="QUALIFIED" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
                         </Border>
-                        <Border x:Name="MapStateUnranked" Visibility="Collapsed" CornerRadius="5" Background="DimGray">
-                            <Label Content="UNRANKED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
+                        <Border x:Name="MapStateUnranked" Visibility="Collapsed" CornerRadius="5" Background="#cca633">
+                            <Label Content="PENDING" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
                         </Border>
                         <Border x:Name="MapStateGraveyarded" Visibility="Collapsed" CornerRadius="5" Background="DimGray">
-                            <Label Content="GRAVEYARDED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
+                            <Label Content="GRAVEYARD" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
                         </Border>
                         <Border x:Name="MapStateUnsubmitted" Visibility="Collapsed" CornerRadius="5" Background="DimGray">
                             <Label Content="UNSUBMITTED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
                         </Border>
-                        <Border x:Name="MapStateLoved" Visibility="Collapsed" CornerRadius="5" Background="HotPink">
+                        <Border x:Name="MapStateLoved" Visibility="Collapsed" CornerRadius="5" Background="#ff66ab ">
                             <Label Content="LOVED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
                         </Border>
-                        <Border x:Name="MapStateApproved" Visibility="Collapsed" CornerRadius="5" Background="MediumSeaGreen">
-                            <Label Content="APPROVED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
+                        <Border x:Name="MapStateApproved" Visibility="Collapsed" CornerRadius="5" Background="#b3ff66 ">
+                            <Label Content="APPROVED" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
                         </Border>
                     </Grid>
                     <Grid HorizontalAlignment="Left" Visibility="Collapsed" Width="auto">

@@ -62,16 +62,7 @@ namespace OsuAchievedOverlay.Controls
 
         private UIElement _prefabBeatmapDifficultyBullet;
 
-        // Reverse iterate through it, sr above key value means its that color and then break
-        private static Dictionary<double, Brush> difficultyColorMap = new Dictionary<double, Brush>()
-        {
-            {0, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#729113"))},
-            {2, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#59A1C5"))},
-            {2.7, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C5A42E"))},
-            {4, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C45B8C"))},
-            {5.3, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8A74C9"))},
-            {6.5, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1C1E20"))},
-        };
+        
 
         public BeatmapItem()
         {
@@ -133,12 +124,7 @@ namespace OsuAchievedOverlay.Controls
                     bullet.ToolTip = "(Standard, "+Math.Round(map.DiffStarRatingStandard[0], 1)+"*) "+map.Version;
 
                     Border colorBorder = (Border)bullet.Children[0];
-                    foreach(KeyValuePair<double, Brush> colorMap in difficultyColorMap.Reverse()){
-                        if(map.DiffStarRatingStandard[0]>colorMap.Key){
-                            colorBorder.Background = colorMap.Value;
-                            break;
-                        }
-                    }
+                    colorBorder.Background = BeatmapHelper.GetColorFromDifficulty(map.DiffStarRatingStandard[0]).Item2;
 
                     DifficultyStandardBulletList.Children.Add(bullet);
                 }
@@ -154,14 +140,7 @@ namespace OsuAchievedOverlay.Controls
                     bullet.ToolTip = "(Taiko, " + Math.Round(map.DiffStarRatingTaiko[0], 1) + "*) " + map.Version;
 
                     Border colorBorder = (Border)bullet.Children[0];
-                    foreach (KeyValuePair<double, Brush> colorMap in difficultyColorMap.Reverse())
-                    {
-                        if (map.DiffStarRatingTaiko[0] > colorMap.Key)
-                        {
-                            colorBorder.Background = colorMap.Value;
-                            break;
-                        }
-                    }
+                    colorBorder.Background = BeatmapHelper.GetColorFromDifficulty(map.DiffStarRatingTaiko[0]).Item2;
 
                     DifficultyTaikoBulletList.Children.Add(bullet);
                 }
@@ -177,14 +156,7 @@ namespace OsuAchievedOverlay.Controls
                     bullet.ToolTip = "(Mania, " + Math.Round(map.DiffStarRatingMania[0], 1) + "*) " + map.Version;
 
                     Border colorBorder = (Border)bullet.Children[0];
-                    foreach (KeyValuePair<double, Brush> colorMap in difficultyColorMap.Reverse())
-                    {
-                        if (map.DiffStarRatingMania[0] > colorMap.Key)
-                        {
-                            colorBorder.Background = colorMap.Value;
-                            break;
-                        }
-                    }
+                    colorBorder.Background = BeatmapHelper.GetColorFromDifficulty(map.DiffStarRatingMania[0]).Item2;
 
                     DifficultyManiaBulletList.Children.Add(bullet);
                 }
@@ -200,14 +172,7 @@ namespace OsuAchievedOverlay.Controls
                     bullet.ToolTip = "(Catch, " + Math.Round(map.DiffStarRatingCtB[0], 1) + "*) " + map.Version;
 
                     Border colorBorder = (Border)bullet.Children[0];
-                    foreach (KeyValuePair<double, Brush> colorMap in difficultyColorMap.Reverse())
-                    {
-                        if (map.DiffStarRatingCtB[0] > colorMap.Key)
-                        {
-                            colorBorder.Background = colorMap.Value;
-                            break;
-                        }
-                    }
+                    colorBorder.Background = BeatmapHelper.GetColorFromDifficulty(map.DiffStarRatingCtB[0]).Item2;
 
                     DifficultyCatchBulletList.Children.Add(bullet);
                 }
