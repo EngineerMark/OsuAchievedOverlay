@@ -210,6 +210,7 @@ namespace OsuAchievedOverlay.Controls
             SetBeatmapResults(CurrentPage);
         }
 
+        private long BeatmapResultHandlerTime = -1;
         private void SetBeatmapResults(int page)
         {
             ListBeatmapItems.Children.Clear();
@@ -217,8 +218,13 @@ namespace OsuAchievedOverlay.Controls
             {
                 if (ResultBeatmapSets.Count > 0)
                 {
+                    long CurrentHandlerStart = DateTimeOffset.Now.ToUnixTimeSeconds();
+                    BeatmapResultHandlerTime = CurrentHandlerStart;
                     for (int i = 0; i < resultsPerPage; i++)
                     {
+                        if (CurrentPage != page || CurrentHandlerStart != BeatmapResultHandlerTime)
+                            break;
+
                         int actualIndex = i + (page * resultsPerPage);
 
                         if (actualIndex >= ResultBeatmapSets.Count)
