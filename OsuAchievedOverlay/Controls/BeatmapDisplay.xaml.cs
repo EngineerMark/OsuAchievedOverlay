@@ -1,6 +1,7 @@
 ﻿using osu_database_reader.Components.Beatmaps;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,12 @@ namespace OsuAchievedOverlay.Controls
                 if (e.Key == Key.Escape && Visibility==Visibility.Visible)
                     OnEscape?.Invoke(this, null);
             };
+
+            HyperlinkBeatmapsetCreator.RequestNavigate += (object sender, RequestNavigateEventArgs e) =>
+            {
+                Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+                e.Handled = true;
+            };
         }
 
         public void ApplyBeatmapSet(BeatmapSetEntry map){
@@ -46,6 +53,9 @@ namespace OsuAchievedOverlay.Controls
 
             LabelBeatmapsetTitle.Content = map.Title;
             LabelBeatmapsetArtist.Content = map.Artist;
+
+            HyperlinkBeatmapsetCreatorText.Text = map.Creator;
+            HyperlinkBeatmapsetCreator.NavigateUri = new Uri("https://osu.ppy.sh/users/"+map.Creator);
         }
     }
 }

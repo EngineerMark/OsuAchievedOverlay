@@ -12,6 +12,10 @@
             <Rectangle Fill="Black" Opacity="0.45" />
             <Label x:Name="LabelBeatmapsetTitle" Content="Label" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" Margin="10,44,10,0" VerticalAlignment="Top" Height="35" Width="423" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="24"/>
             <Label x:Name="LabelBeatmapsetArtist" Content="Label" HorizontalAlignment="Stretch" VerticalContentAlignment="Top" Margin="10,79,10,0" VerticalAlignment="Top" Height="29" Width="423" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus" FontSize="14"/>
+            <Label Content="mapped by" HorizontalAlignment="Left" Margin="10,108,0,0" VerticalAlignment="Top" Width="72" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <Label HorizontalAlignment="Left" Margin="77,108,0,0" VerticalAlignment="Top" Width="182" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus">
+                <TextBlock><Hyperlink x:Name="HyperlinkBeatmapsetCreator" NavigateUri="https://osu.ppy.sh/users/"><TextBlock x:Name="HyperlinkBeatmapsetCreatorText">Amayakase</TextBlock></Hyperlink></TextBlock>
+            </Label>
         </Grid>
     </Grid>
 </UserControl>
