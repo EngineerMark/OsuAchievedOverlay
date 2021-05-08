@@ -16,9 +16,9 @@
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Grid.OpacityMask>
+            <!--<Grid.OpacityMask>
                 <VisualBrush Visual="{Binding ElementName=RoundedCorners}" />
-            </Grid.OpacityMask>
+            </Grid.OpacityMask>-->
             <Grid MouseEnter="MusicMouseEnter" MouseLeave="MusicMouseLeave" Grid.Column="0" VerticalAlignment="Stretch">
                 <Image x:Name="ImageMainIcon" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/profilepicture_placeholder.png"/>
                 <Rectangle x:Name="MusicHoverOverlayResult" Fill="Black" Opacity="0" />
@@ -32,8 +32,14 @@
                 <Label Content="{Binding BeatmapName, ElementName=BeatmapItemUC}" x:Name="LabelName" Height="30" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="10,20,10,0" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 <Label Content="mapped by " Foreground="#F0DBE4" Height="30" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="10,35,0,0" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
                 <Label Content="{Binding BeatmapMapper, ElementName=BeatmapItemUC}" x:Name="LabelMapper" Foreground="#D9A6BD" Height="30" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="77,35,10,0" VerticalAlignment="Top" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+                <Rectangle x:Name="HoverOverlay" MouseDown="BeatmapMouseClick" MouseEnter="BeatmapMouseEnter" MouseLeave="BeatmapMouseLeave" Fill="Black" Opacity="0" />
                 <StackPanel Orientation="Horizontal" Margin="10,65,5,10">
-                    <Grid Margin="0,0,0,0" HorizontalAlignment="Left" Width="auto">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Grid}">
+                            <Setter Property="Margin" Value="0,0,5,0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Grid IsHitTestVisible="False" HorizontalAlignment="Left" Width="auto">
                         <Border x:Name="MapStateRanked" Visibility="Collapsed" CornerRadius="5" Background="MediumSeaGreen">
                             <Label Content="RANKED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
                         </Border>
@@ -56,8 +62,46 @@
                             <Label Content="APPROVED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus SemiBold"/>
                         </Border>
                     </Grid>
+                    <Grid HorizontalAlignment="Left" Visibility="Collapsed" Width="auto">
+                        <StackPanel x:Name="DifficultyStandardBulletList" Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Setter Property="Margin" Value="0,4,2,4"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <Grid x:Name="BeatmapDifficultyBullet" ToolTip="" Width="6">
+                                <Border BorderBrush="AliceBlue" CornerRadius="3" VerticalAlignment="Stretch" Background="AliceBlue"></Border>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <Grid HorizontalAlignment="Left" Visibility="Collapsed" Width="auto">
+                        <StackPanel x:Name="DifficultyTaikoBulletList" Width="auto" Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Setter Property="Margin" Value="0,4,2,4"/>
+                                </Style>
+                            </StackPanel.Resources>
+                        </StackPanel>
+                    </Grid>
+                    <Grid HorizontalAlignment="Left" Visibility="Collapsed" Width="auto">
+                        <StackPanel x:Name="DifficultyManiaBulletList" Width="auto" Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Setter Property="Margin" Value="0,4,2,4"/>
+                                </Style>
+                            </StackPanel.Resources>
+                        </StackPanel>
+                    </Grid>
+                    <Grid HorizontalAlignment="Left" Visibility="Collapsed" Width="auto">
+                        <StackPanel x:Name="DifficultyCatchBulletList" Width="auto" Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Setter Property="Margin" Value="0,4,2,4"/>
+                                </Style>
+                            </StackPanel.Resources>
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
-                <Rectangle x:Name="HoverOverlay" MouseDown="BeatmapMouseClick" MouseEnter="BeatmapMouseEnter" MouseLeave="BeatmapMouseLeave" Fill="Black" Opacity="0" />
             </Grid>
         </Grid>
     </Grid>

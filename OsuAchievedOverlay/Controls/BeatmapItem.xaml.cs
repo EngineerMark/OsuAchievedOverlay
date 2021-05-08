@@ -1,4 +1,5 @@
-﻿using osu_database_reader.Components.Beatmaps;
+﻿using osu.Shared;
+using osu_database_reader.Components.Beatmaps;
 using OsuAchievedOverlay.Managers;
 using System;
 using System.Collections.Generic;
@@ -47,12 +48,30 @@ namespace OsuAchievedOverlay.Controls
         }
 
         public static EventHandler OnBeatmapClick;
-
         public static BeatmapItem CurrentPlayingSong { get; set; }
-
         public BeatmapSetEntry AttachedBeatmap { get; set; }
 
         private MediaPlayer SoundPlayer { get; set; }
+        private UIElement PrefabBeatmapDifficultyBullet
+        {
+            get
+            {
+                return InterfaceManager.Instance.CloneElement(_prefabBeatmapDifficultyBullet);
+            }
+        }
+
+        private UIElement _prefabBeatmapDifficultyBullet;
+
+        // Reverse iterate through it, sr above key value means its that color and then break
+        private static Dictionary<double, Brush> difficultyColorMap = new Dictionary<double, Brush>()
+        {
+            {0, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#729113"))},
+            {2, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#59A1C5"))},
+            {2.7, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C5A42E"))},
+            {4, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C45B8C"))},
+            {5.3, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8A74C9"))},
+            {6.5, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1C1E20"))},
+        };
 
         public BeatmapItem()
         {
@@ -61,6 +80,138 @@ namespace OsuAchievedOverlay.Controls
             SoundPlayer = new MediaPlayer();
 
             Loaded += BeatmapItem_Loaded;
+            _prefabBeatmapDifficultyBullet = InterfaceManager.Instance.CloneElement(BeatmapDifficultyBullet);
+        }
+
+        public void ApplyBeatmapSet(BeatmapSetEntry set)
+        {
+            AttachedBeatmap = set;
+
+            LabelTitle.Content = set.Title;
+            LabelName.Content = set.Artist;
+            LabelMapper.Content = set.Creator;
+
+            switch (set.RankStatus)
+            {
+                case SubmissionStatus.Ranked:
+                    MapStateRanked.Visibility = Visibility.Visible;
+                    break;
+                case SubmissionStatus.Loved:
+                    MapStateLoved.Visibility = Visibility.Visible;
+                    break;
+                case SubmissionStatus.Unknown:
+                case SubmissionStatus.Pending:
+                case SubmissionStatus.EditableCutoff:
+                    MapStateUnranked.Visibility = Visibility.Visible;
+                    break;
+                case SubmissionStatus.NotSubmitted:
+                    MapStateUnsubmitted.Visibility = Visibility.Visible;
+                    break;
+                case SubmissionStatus.Qualified:
+                    MapStateQualified.Visibility = Visibility.Visible;
+                    break;
+                case SubmissionStatus.Approved:
+                    MapStateApproved.Visibility = Visibility.Visible;
+                    break;
+            }
+
+            List<BeatmapEntry> osuDiffs = set.Beatmaps.Where(map=>map.GameMode==GameMode.Standard).ToList();
+            List<BeatmapEntry> taikoDiffs = set.Beatmaps.Where(map=>map.GameMode==GameMode.Taiko).ToList();
+            List<BeatmapEntry> maniaDiffs = set.Beatmaps.Where(map=>map.GameMode==GameMode.Mania).ToList();
+            List<BeatmapEntry> catchDiffs = set.Beatmaps.Where(map=>map.GameMode==GameMode.CatchTheBeat).ToList();
+
+            DifficultyStandardBulletList.Children.Clear();
+            DifficultyTaikoBulletList.Children.Clear();
+            DifficultyManiaBulletList.Children.Clear();
+            DifficultyCatchBulletList.Children.Clear();
+            //string t = "";
+            if (osuDiffs.Count>0){
+                ((Grid)DifficultyStandardBulletList.Parent).Visibility = Visibility.Visible;
+                osuDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingStandard[0].CompareTo(b.DiffStarRatingStandard[0]));
+                foreach (BeatmapEntry map in osuDiffs){
+                    Grid bullet = (Grid)PrefabBeatmapDifficultyBullet;
+                    bullet.ToolTip = "(Standard, "+Math.Round(map.DiffStarRatingStandard[0], 1)+"*) "+map.Version;
+
+                    Border colorBorder = (Border)bullet.Children[0];
+                    foreach(KeyValuePair<double, Brush> colorMap in difficultyColorMap.Reverse()){
+                        if(map.DiffStarRatingStandard[0]>colorMap.Key){
+                            colorBorder.Background = colorMap.Value;
+                            break;
+                        }
+                    }
+
+                    DifficultyStandardBulletList.Children.Add(bullet);
+                }
+            }
+
+            if (taikoDiffs.Count > 0)
+            {
+                ((Grid)DifficultyTaikoBulletList.Parent).Visibility = Visibility.Visible;
+                taikoDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingTaiko[0].CompareTo(b.DiffStarRatingTaiko[0]));
+                foreach (BeatmapEntry map in taikoDiffs)
+                {
+                    Grid bullet = (Grid)PrefabBeatmapDifficultyBullet;
+                    bullet.ToolTip = "(Taiko, " + Math.Round(map.DiffStarRatingTaiko[0], 1) + "*) " + map.Version;
+
+                    Border colorBorder = (Border)bullet.Children[0];
+                    foreach (KeyValuePair<double, Brush> colorMap in difficultyColorMap.Reverse())
+                    {
+                        if (map.DiffStarRatingTaiko[0] > colorMap.Key)
+                        {
+                            colorBorder.Background = colorMap.Value;
+                            break;
+                        }
+                    }
+
+                    DifficultyTaikoBulletList.Children.Add(bullet);
+                }
+            }
+
+            if (maniaDiffs.Count > 0)
+            {
+                ((Grid)DifficultyManiaBulletList.Parent).Visibility = Visibility.Visible;
+                maniaDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingMania[0].CompareTo(b.DiffStarRatingMania[0]));
+                foreach (BeatmapEntry map in maniaDiffs)
+                {
+                    Grid bullet = (Grid)PrefabBeatmapDifficultyBullet;
+                    bullet.ToolTip = "(Mania, " + Math.Round(map.DiffStarRatingMania[0], 1) + "*) " + map.Version;
+
+                    Border colorBorder = (Border)bullet.Children[0];
+                    foreach (KeyValuePair<double, Brush> colorMap in difficultyColorMap.Reverse())
+                    {
+                        if (map.DiffStarRatingMania[0] > colorMap.Key)
+                        {
+                            colorBorder.Background = colorMap.Value;
+                            break;
+                        }
+                    }
+
+                    DifficultyManiaBulletList.Children.Add(bullet);
+                }
+            }
+
+            if (catchDiffs.Count > 0)
+            {
+                ((Grid)DifficultyCatchBulletList.Parent).Visibility = Visibility.Visible;
+                catchDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingCtB[0].CompareTo(b.DiffStarRatingCtB[0]));
+                foreach (BeatmapEntry map in catchDiffs)
+                {
+                    Grid bullet = (Grid)PrefabBeatmapDifficultyBullet;
+                    bullet.ToolTip = "(Catch, " + Math.Round(map.DiffStarRatingCtB[0], 1) + "*) " + map.Version;
+
+                    Border colorBorder = (Border)bullet.Children[0];
+                    foreach (KeyValuePair<double, Brush> colorMap in difficultyColorMap.Reverse())
+                    {
+                        if (map.DiffStarRatingCtB[0] > colorMap.Key)
+                        {
+                            colorBorder.Background = colorMap.Value;
+                            break;
+                        }
+                    }
+
+                    DifficultyCatchBulletList.Children.Add(bullet);
+                }
+            }
         }
 
         public void PlayMusic()

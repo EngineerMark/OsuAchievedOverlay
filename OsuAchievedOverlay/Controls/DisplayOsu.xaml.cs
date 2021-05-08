@@ -255,34 +255,7 @@ namespace OsuAchievedOverlay.Controls
                         Dispatcher.Invoke(() =>
                         {
                             BeatmapItem item = new BeatmapItem();
-                            item.LabelTitle.Content = map.Title;
-                            item.LabelName.Content = map.Artist;
-                            item.LabelMapper.Content = map.Creator;
-                            item.AttachedBeatmap = map;
-
-                            switch (map.RankStatus)
-                            {
-                                case SubmissionStatus.Ranked:
-                                    item.MapStateRanked.Visibility = Visibility.Visible;
-                                    break;
-                                case SubmissionStatus.Loved:
-                                    item.MapStateLoved.Visibility = Visibility.Visible;
-                                    break;
-                                case SubmissionStatus.Unknown:
-                                case SubmissionStatus.Pending:
-                                case SubmissionStatus.EditableCutoff:
-                                    item.MapStateUnranked.Visibility = Visibility.Visible;
-                                    break;
-                                case SubmissionStatus.NotSubmitted:
-                                    item.MapStateUnsubmitted.Visibility = Visibility.Visible;
-                                    break;
-                                case SubmissionStatus.Qualified:
-                                    item.MapStateQualified.Visibility = Visibility.Visible;
-                                    break;
-                                case SubmissionStatus.Approved:
-                                    item.MapStateApproved.Visibility = Visibility.Visible;
-                                    break;
-                            }
+                            item.ApplyBeatmapSet(map);
 
                             if (image != null)
                             {
