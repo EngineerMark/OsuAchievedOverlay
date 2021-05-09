@@ -62,7 +62,7 @@ namespace OsuAchievedOverlay.Controls
 
         private UIElement _prefabBeatmapDifficultyBullet;
 
-        
+
 
         public BeatmapItem()
         {
@@ -106,84 +106,52 @@ namespace OsuAchievedOverlay.Controls
                     break;
             }
 
-            List<BeatmapEntry> osuDiffs = set.Beatmaps.Where(map=>map.GameMode==GameMode.Standard).ToList();
-            List<BeatmapEntry> taikoDiffs = set.Beatmaps.Where(map=>map.GameMode==GameMode.Taiko).ToList();
-            List<BeatmapEntry> maniaDiffs = set.Beatmaps.Where(map=>map.GameMode==GameMode.Mania).ToList();
-            List<BeatmapEntry> catchDiffs = set.Beatmaps.Where(map=>map.GameMode==GameMode.CatchTheBeat).ToList();
+            List<BeatmapEntry> osuDiffs = set.Beatmaps.Where(map => map.GameMode == GameMode.Standard).ToList();
+            List<BeatmapEntry> taikoDiffs = set.Beatmaps.Where(map => map.GameMode == GameMode.Taiko).ToList();
+            List<BeatmapEntry> maniaDiffs = set.Beatmaps.Where(map => map.GameMode == GameMode.Mania).ToList();
+            List<BeatmapEntry> catchDiffs = set.Beatmaps.Where(map => map.GameMode == GameMode.CatchTheBeat).ToList();
+
+            osuDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingStandard[0].CompareTo(b.DiffStarRatingStandard[0]));
+            taikoDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingTaiko[0].CompareTo(b.DiffStarRatingTaiko[0]));
+            maniaDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingMania[0].CompareTo(b.DiffStarRatingMania[0]));
+            catchDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingCtB[0].CompareTo(b.DiffStarRatingCtB[0]));
+
+            List<BeatmapEntry> refilledDiffs = new List<BeatmapEntry>();
+            refilledDiffs.AddRange(osuDiffs);
+            refilledDiffs.AddRange(taikoDiffs);
+            refilledDiffs.AddRange(maniaDiffs);
+            refilledDiffs.AddRange(catchDiffs);
 
             DifficultyStandardBulletList.Children.Clear();
             DifficultyTaikoBulletList.Children.Clear();
             DifficultyManiaBulletList.Children.Clear();
             DifficultyCatchBulletList.Children.Clear();
             //string t = "";
-            if (osuDiffs.Count>0){
+            if (refilledDiffs.Count > 0)
+            {
                 ((Grid)DifficultyStandardBulletList.Parent).Visibility = Visibility.Visible;
-                osuDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingStandard[0].CompareTo(b.DiffStarRatingStandard[0]));
-                foreach (BeatmapEntry map in osuDiffs){
+                foreach (BeatmapEntry map in refilledDiffs)
+                {
+                    double sr = BeatmapHelper.GetStarRating(map);
+                    string mode = BeatmapHelper.GetGamemodeString(map.GameMode);
+
                     Grid bullet = (Grid)PrefabBeatmapDifficultyBullet;
-                    bullet.ToolTip = "(Standard, "+Math.Round(map.DiffStarRatingStandard[0], 1)+"*) "+map.Version;
+                    bullet.ToolTip = "(" + mode + ", " + Math.Round(sr, 1) + "*) " + map.Version;
 
                     Border colorBorder = (Border)bullet.Children[0];
-                    colorBorder.Background = BeatmapHelper.GetColorFromDifficulty(map.DiffStarRatingStandard[0]).Item2;
+                    colorBorder.Background = BeatmapHelper.GetColorFromDifficulty(sr).Item2;
 
                     DifficultyStandardBulletList.Children.Add(bullet);
-                }
-            }
-
-            if (taikoDiffs.Count > 0)
-            {
-                ((Grid)DifficultyTaikoBulletList.Parent).Visibility = Visibility.Visible;
-                taikoDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingTaiko[0].CompareTo(b.DiffStarRatingTaiko[0]));
-                foreach (BeatmapEntry map in taikoDiffs)
-                {
-                    Grid bullet = (Grid)PrefabBeatmapDifficultyBullet;
-                    bullet.ToolTip = "(Taiko, " + Math.Round(map.DiffStarRatingTaiko[0], 1) + "*) " + map.Version;
-
-                    Border colorBorder = (Border)bullet.Children[0];
-                    colorBorder.Background = BeatmapHelper.GetColorFromDifficulty(map.DiffStarRatingTaiko[0]).Item2;
-
-                    DifficultyTaikoBulletList.Children.Add(bullet);
-                }
-            }
-
-            if (maniaDiffs.Count > 0)
-            {
-                ((Grid)DifficultyManiaBulletList.Parent).Visibility = Visibility.Visible;
-                maniaDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingMania[0].CompareTo(b.DiffStarRatingMania[0]));
-                foreach (BeatmapEntry map in maniaDiffs)
-                {
-                    Grid bullet = (Grid)PrefabBeatmapDifficultyBullet;
-                    bullet.ToolTip = "(Mania, " + Math.Round(map.DiffStarRatingMania[0], 1) + "*) " + map.Version;
-
-                    Border colorBorder = (Border)bullet.Children[0];
-                    colorBorder.Background = BeatmapHelper.GetColorFromDifficulty(map.DiffStarRatingMania[0]).Item2;
-
-                    DifficultyManiaBulletList.Children.Add(bullet);
-                }
-            }
-
-            if (catchDiffs.Count > 0)
-            {
-                ((Grid)DifficultyCatchBulletList.Parent).Visibility = Visibility.Visible;
-                catchDiffs.Sort((BeatmapEntry a, BeatmapEntry b) => a.DiffStarRatingCtB[0].CompareTo(b.DiffStarRatingCtB[0]));
-                foreach (BeatmapEntry map in catchDiffs)
-                {
-                    Grid bullet = (Grid)PrefabBeatmapDifficultyBullet;
-                    bullet.ToolTip = "(Catch, " + Math.Round(map.DiffStarRatingCtB[0], 1) + "*) " + map.Version;
-
-                    Border colorBorder = (Border)bullet.Children[0];
-                    colorBorder.Background = BeatmapHelper.GetColorFromDifficulty(map.DiffStarRatingCtB[0]).Item2;
-
-                    DifficultyCatchBulletList.Children.Add(bullet);
                 }
             }
         }
 
         public void PlayMusic()
         {
-            string song = System.IO.Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"],"Songs",AttachedBeatmap.BeatmapFolder,AttachedBeatmap.AudioFileName);
+            string song = System.IO.Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "Songs", AttachedBeatmap.BeatmapFolder, AttachedBeatmap.AudioFileName);
 
-            if(File.Exists(song)){
+            if (File.Exists(song))
+            {
                 SoundPlayer.Open(new Uri(song));
                 SoundPlayer.Play();
                 MusicButton.Icon = FontAwesome.WPF.FontAwesomeIcon.Pause;

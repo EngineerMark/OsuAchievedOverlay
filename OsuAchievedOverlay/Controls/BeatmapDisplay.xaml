@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:OsuAchievedOverlay.Controls"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
-             d:DesignHeight="682" d:DesignWidth="443">
+             d:DesignHeight="682" d:DesignWidth="443" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus">
     <Grid Background="#3D2932">
         <Grid Height="275" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <Image x:Name="ImageBeatmapBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill"/>
