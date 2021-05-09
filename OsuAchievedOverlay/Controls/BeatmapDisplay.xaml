@@ -21,7 +21,7 @@
                             <TextBlock><Hyperlink x:Name="HyperlinkBeatmapsetCreator" NavigateUri="https://osu.ppy.sh/users/"><TextBlock x:Name="HyperlinkBeatmapsetCreatorText">Amayakase</TextBlock></Hyperlink></TextBlock>
                         </Label>
                     </Grid>
-                    <Border CornerRadius="15" Background="#44ffffff">
+                    <Border CornerRadius="15" Background="#55ffffff">
                         <UniformGrid Margin="0,0,0,0" Columns="12" x:Name="ListViewDifficulties">
                             <Grid x:Name="HeaderDifficultyBullet" ToolTip="Placeholder Item" VerticalAlignment="Stretch" Width="36" Height="36">
                                 <!--Placeholder-->
