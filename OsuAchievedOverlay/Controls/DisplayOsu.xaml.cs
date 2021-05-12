@@ -19,7 +19,6 @@ namespace OsuAchievedOverlay.Controls
     public partial class DisplayOsu : UserControl
     {
         private bool IsUpdating { get; set; }
-
         private OsuDb CurrentDatabase { get; set; }
         private CollectionDb CurrentCollections { get; set; }
         private ScoresDb CurrentScores { get; set; }

@@ -59,6 +59,16 @@
 
         </Grid>
         <Grid Visibility="Hidden" x:Name="GridViewCollections" Background="#3D2932">
+            <Grid Margin="0,0,0,175">
+                <Image RenderOptions.BitmapScalingMode="HighQuality"  Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/Headers/pecorine.jpg">
+                    <Image.OpacityMask>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.8">
+                            <GradientStop Color="#55FFFFFF" Offset="0"/>
+                            <GradientStop Color="#00FFFFFF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Image.OpacityMask>
+                </Image>
+            </Grid>
             <Button Click="Btn_HideOverlay" Background="#2E1F25" BorderBrush="#2E1F25" Content="Return" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75"/>
             <ScrollViewer HorizontalAlignment="Stretch" Margin="10,94,10,10" VerticalAlignment="Stretch">
                 <StackPanel></StackPanel>
