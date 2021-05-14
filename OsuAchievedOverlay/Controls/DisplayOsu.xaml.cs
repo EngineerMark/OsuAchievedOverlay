@@ -43,7 +43,8 @@ namespace OsuAchievedOverlay.Controls
 
         private void DisplayOsu_Loaded(object sender, RoutedEventArgs e)
         {
-            GridViewBeatmapDisplayChild.OnEscape+=(object sender, EventArgs e)=>{
+            GridViewBeatmapDisplayChild.OnEscape += (object sender, EventArgs e) =>
+            {
                 GridViewBeatmapDisplay.Visibility = Visibility.Hidden;
             };
 
@@ -134,7 +135,7 @@ namespace OsuAchievedOverlay.Controls
                             string[] tags = difficulty.SongTags.Split(' ');
                             if (tags.Length > 0)
                                 foreach (string tag in tags)
-                                    set.SongTags.Add(tag); 
+                                    set.SongTags.Add(tag);
                             BeatmapSets.Add(set);
                         }
                     }
@@ -160,7 +161,8 @@ namespace OsuAchievedOverlay.Controls
 
                     Dispatcher.Invoke(() =>
                     {
-                        foreach(Collection collection in CurrentCollections.Collections){
+                        foreach (Collection collection in CurrentCollections.Collections)
+                        {
                             CollectionItem item = new CollectionItem()
                             {
                                 CollectionTitle = collection.Name,
@@ -205,17 +207,20 @@ namespace OsuAchievedOverlay.Controls
             }
         }
 
-        private void ProcessSearchData(string query){
+        private void ProcessSearchData(string query)
+        {
             if (string.IsNullOrEmpty(query))
             {
                 ResultBeatmapSets = new List<BeatmapSetEntry>(BeatmapSets);
             }
             else
             {
-                Dictionary<string, string> arguments = StringHelper.QueryParser(query);
+                List<Tuple<string, string, string>> arguments = StringHelper.QueryParser(query);
 
-                foreach(KeyValuePair<string,string> argument in arguments){
-                    query = query.Replace(argument.Key + "=\"" + argument.Value+"\"", "");
+                foreach (Tuple<string, string, string> argument in arguments)
+                {
+                    query = query.Replace(argument.Item1 + argument.Item3 + argument.Item2, "");
+                    query = query.Replace(argument.Item1 + argument.Item3 + "\"" + argument.Item2 + "\"", "");
                 }
                 string[] splitQuery = query.ToLower().Split(' ');
                 List<BeatmapSetEntry> result = new List<BeatmapSetEntry>();
@@ -237,19 +242,28 @@ namespace OsuAchievedOverlay.Controls
                         result.Add(item);
                 }
 
-                foreach(KeyValuePair<string, string> argument in arguments){
-                    if(argument.Key.ToLower()=="collection"){
-                        Collection c = CurrentCollections.Collections.FirstOrDefault(coll=>coll.Name.ToLower()==argument.Value.ToLower());
+                foreach (Tuple<string, string, string> argument in arguments)
+                {
+                    if (argument.Item1.ToLower() == "collection")
+                    {
+                        Collection c = CurrentCollections.Collections.FirstOrDefault(coll => coll.Name.ToLower() == argument.Item2.ToLower());
                         List<BeatmapSetEntry> duplicate = new List<BeatmapSetEntry>();
-                        foreach(BeatmapSetEntry existingBeatmap in result){
-                            foreach(BeatmapEntry beatmap in existingBeatmap.Beatmaps){
-                                if (c.BeatmapHashes.Contains(beatmap.BeatmapChecksum)){
+                        foreach (BeatmapSetEntry existingBeatmap in result)
+                        {
+                            foreach (BeatmapEntry beatmap in existingBeatmap.Beatmaps)
+                            {
+                                if (c.BeatmapHashes.Contains(beatmap.BeatmapChecksum))
+                                {
                                     duplicate.Add(existingBeatmap);
                                     break;
                                 }
                             }
                         }
                         result = duplicate;
+                    }
+
+                    if(argument.Item1.ToLower()=="mapper"){
+                        result.RemoveAll(set => !set.Creator.Equals(argument.Item2, StringComparison.InvariantCultureIgnoreCase));
                     }
                 }
 
@@ -390,7 +404,8 @@ namespace OsuAchievedOverlay.Controls
             if (CurrentPage > MaxPage)
                 CurrentPage = MaxPage;
 
-            if(initialPage!=CurrentPage){
+            if (initialPage != CurrentPage)
+            {
                 LabelCurrentPage.Content = CurrentPage + 1;
                 SetBeatmapResults(CurrentPage);
                 BeatmapItem.CurrentPlayingSong?.StopMusic();

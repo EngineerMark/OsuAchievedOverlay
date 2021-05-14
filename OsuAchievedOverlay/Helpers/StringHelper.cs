@@ -35,15 +35,19 @@ namespace OsuAchievedOverlay.Helpers
             }
         }
 
-        public static Dictionary<string, string> QueryParser(string query){
+        public static List<Tuple<string, string, string>> QueryParser(string query)
+        {
             string[] data = Regex.Split(query, "(?<=^[^\"]*(?:\"[^\"]*\"[^\"]*)*) (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
-            Dictionary<string, string> res = new Dictionary<string, string>();
-            if(data.Length>0){
-                foreach(string queryPart in data){
-                    if(queryPart.Contains("=")){
+            List<Tuple<string, string, string>> res = new List<Tuple<string, string, string>>();
+            if (data.Length > 0)
+            {
+                foreach (string queryPart in data)
+                {
+                    if (queryPart.Contains("="))
+                    {
                         string[] splitPart = queryPart.Split(new[] { '=' }, 2);
-                        res.Add(splitPart[0], splitPart[1].Trim('"'));
+                        res.Add(new Tuple<string, string, string>(splitPart[0], splitPart[1].Trim('"'), "="));
                     }
                 }
             }
