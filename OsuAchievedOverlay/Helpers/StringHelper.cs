@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace OsuAchievedOverlay.Helpers
 {
@@ -30,6 +33,22 @@ namespace OsuAchievedOverlay.Helpers
                 }
                 return ms.ToArray();
             }
+        }
+
+        public static Dictionary<string, string> QueryParser(string query){
+            string[] data = Regex.Split(query, "(?<=^[^\"]*(?:\"[^\"]*\"[^\"]*)*) (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
+            Dictionary<string, string> res = new Dictionary<string, string>();
+            if(data.Length>0){
+                foreach(string queryPart in data){
+                    if(queryPart.Contains("=")){
+                        string[] splitPart = queryPart.Split(new[] { '=' }, 2);
+                        res.Add(splitPart[0], splitPart[1].Trim('"'));
+                    }
+                }
+            }
+
+            return res;
         }
     }
 }

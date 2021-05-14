@@ -161,11 +161,22 @@ namespace OsuAchievedOverlay.Controls
                     Dispatcher.Invoke(() =>
                     {
                         foreach(Collection collection in CurrentCollections.Collections){
-                            CollectionItemList.Children.Add(new CollectionItem()
+                            CollectionItem item = new CollectionItem()
                             {
                                 CollectionTitle = collection.Name,
                                 CollectionSize = collection.BeatmapHashes.Count + " map" + (collection.BeatmapHashes.Count > 1 ? "s" : "")
-                            });
+                            };
+
+                            item.HoverOverlay.MouseDown += (object sender, System.Windows.Input.MouseButtonEventArgs e) =>
+                            {
+                                GridViewCollections.Visibility = Visibility.Collapsed;
+                                GridViewBeatmaps.Visibility = Visibility.Visible;
+
+                                InputSearchQuery.Text = "collection=\"" + item.CollectionTitle + "\"";
+                                ProcessSearchData(InputSearchQuery.Text);
+                            };
+
+                            CollectionItemList.Children.Add(item);
                         }
 
                         UpdateEntry(EntryCollectionCount, "" + CurrentCollections.Collections.Count.ToString("#,##0.###"));
@@ -201,6 +212,11 @@ namespace OsuAchievedOverlay.Controls
             }
             else
             {
+                Dictionary<string, string> arguments = StringHelper.QueryParser(query);
+
+                foreach(KeyValuePair<string,string> argument in arguments){
+                    query = query.Replace(argument.Key + "=\"" + argument.Value+"\"", "");
+                }
                 string[] splitQuery = query.ToLower().Split(' ');
                 List<BeatmapSetEntry> result = new List<BeatmapSetEntry>();
                 foreach (BeatmapSetEntry item in BeatmapSets)
@@ -219,6 +235,22 @@ namespace OsuAchievedOverlay.Controls
 
                     if (add)
                         result.Add(item);
+                }
+
+                foreach(KeyValuePair<string, string> argument in arguments){
+                    if(argument.Key.ToLower()=="collection"){
+                        Collection c = CurrentCollections.Collections.FirstOrDefault(coll=>coll.Name.ToLower()==argument.Value.ToLower());
+                        List<BeatmapSetEntry> duplicate = new List<BeatmapSetEntry>();
+                        foreach(BeatmapSetEntry existingBeatmap in result){
+                            foreach(BeatmapEntry beatmap in existingBeatmap.Beatmaps){
+                                if (c.BeatmapHashes.Contains(beatmap.BeatmapChecksum)){
+                                    duplicate.Add(existingBeatmap);
+                                    break;
+                                }
+                            }
+                        }
+                        result = duplicate;
+                    }
                 }
 
                 ResultBeatmapSets = result;
