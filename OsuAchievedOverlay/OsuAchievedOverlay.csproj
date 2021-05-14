@@ -91,8 +91,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ApiHelper.cs" />
-    <Compile Include="BeatmapHelper.cs" />
+    <Compile Include="Controls\CollectionItem.xaml.cs">
+      <DependentUpon>CollectionItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ApiHelper.cs" />
+    <Compile Include="Helpers\BeatmapHelper.cs" />
     <Compile Include="BeatmapSetEntry.cs" />
     <Compile Include="Controls\BeatmapDisplay.xaml.cs">
       <DependentUpon>BeatmapDisplay.xaml</DependentUpon>
@@ -132,9 +135,9 @@
     <Compile Include="Managers\SettingsManager.cs" />
     <Compile Include="Managers\ThreadedManager.cs" />
     <Compile Include="Managers\UpdateManager.cs" />
-    <Compile Include="MathHelper.cs" />
+    <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="SessionFileData.cs" />
-    <Compile Include="StringHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Managers\WindowManager.cs" />
     <Compile Include="Version.cs" />
     <Compile Include="Windows\DisplayWindow.xaml.cs">
@@ -160,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\BeatmapItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CollectionItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

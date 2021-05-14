@@ -1,6 +1,7 @@
 ﻿using osu.Shared;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
+using OsuAchievedOverlay.Helpers;
 using OsuAchievedOverlay.Managers;
 using System;
 using System.Collections.Generic;
@@ -79,6 +80,7 @@ namespace OsuAchievedOverlay.Controls
                 ButtonShowBeatmaps.IsEnabled = false;
                 ButtonShowCollections.IsEnabled = false;
                 ListBeatmapItems.Children.Clear();
+                CollectionItemList.Children.Clear();
                 ThreadPool.QueueUserWorkItem((Object stateInfo) =>
                 {
                     IsUpdating = true;
@@ -158,6 +160,14 @@ namespace OsuAchievedOverlay.Controls
 
                     Dispatcher.Invoke(() =>
                     {
+                        foreach(Collection collection in CurrentCollections.Collections){
+                            CollectionItemList.Children.Add(new CollectionItem()
+                            {
+                                CollectionTitle = collection.Name,
+                                CollectionSize = collection.BeatmapHashes.Count + " map" + (collection.BeatmapHashes.Count > 1 ? "s" : "")
+                            });
+                        }
+
                         UpdateEntry(EntryCollectionCount, "" + CurrentCollections.Collections.Count.ToString("#,##0.###"));
                     });
 
@@ -166,6 +176,17 @@ namespace OsuAchievedOverlay.Controls
                     Dispatcher.Invoke(() =>
                     {
                         UpdateEntry(EntryReplayCount, "" + CurrentScores.Scores.Count().ToString("#,##0.###"));
+                    });
+
+                    int rankedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus == SubmissionStatus.Ranked || a.RankedStatus == SubmissionStatus.Approved);
+                    int lovedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus == SubmissionStatus.Loved);
+                    int unrankedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus != SubmissionStatus.Ranked && a.RankedStatus != SubmissionStatus.Approved && a.RankedStatus != SubmissionStatus.Loved);
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        UpdateEntry(EntryBeatmapCountRanked, "" + rankedCount.ToString("#,##0.###"));
+                        UpdateEntry(EntryBeatmapCountLoved, "" + lovedCount.ToString("#,##0.###"));
+                        UpdateEntry(EntryBeatmapCountUnranked, "" + unrankedCount.ToString("#,##0.###"));
                     });
 
                     IsUpdating = false;

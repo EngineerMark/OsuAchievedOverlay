@@ -25,6 +25,10 @@
                 <local:OsuDataEntry x:Name="EntryBeatmapSetCount" Title="Beatmapsets"></local:OsuDataEntry>
                 <local:OsuDataEntry x:Name="EntryCollectionCount" Title="Collections"></local:OsuDataEntry>
                 <local:OsuDataEntry x:Name="EntryReplayCount" Title="Local Scores"></local:OsuDataEntry>
+                <Grid Height="10"></Grid>
+                <local:OsuDataEntry x:Name="EntryBeatmapCountRanked" Title="Ranked Maps"></local:OsuDataEntry>
+                <local:OsuDataEntry x:Name="EntryBeatmapCountLoved" Title="Loved Maps"></local:OsuDataEntry>
+                <local:OsuDataEntry x:Name="EntryBeatmapCountUnranked" Title="Unranked Maps"></local:OsuDataEntry>
             </StackPanel>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_RefreshData" Content="Refresh" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="10,0,10,10" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <Button x:Name="ButtonShowScores" Click="Btn_ShowScores" Background="#2E1F25" BorderBrush="#2E1F25" IsEnabled="false" Content="Show Scores" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="230,0,0,396" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
@@ -58,7 +62,7 @@
             <Button Click="Btn_HideOverlay" Background="#2E1F25" BorderBrush="#2E1F25" Content="Return" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75"/>
 
         </Grid>
-        <Grid Visibility="Hidden" x:Name="GridViewCollections" Background="#3D2932">
+        <Grid Visibility="Visible" x:Name="GridViewCollections" Background="#3D2932">
             <Grid Margin="0,0,0,175">
                 <Image RenderOptions.BitmapScalingMode="HighQuality"  Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/Headers/pecorine.jpg">
                     <Image.OpacityMask>
@@ -70,8 +74,16 @@
                 </Image>
             </Grid>
             <Button Click="Btn_HideOverlay" Background="#2E1F25" BorderBrush="#2E1F25" Content="Return" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75"/>
-            <ScrollViewer HorizontalAlignment="Stretch" Margin="10,94,10,10" VerticalAlignment="Stretch">
-                <StackPanel></StackPanel>
+            <ScrollViewer HorizontalAlignment="Stretch" Margin="10,94,10,10" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="CollectionItemList">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type local:CollectionItem}">
+                            <Setter Property="Height" Value="30"/>
+                            <Setter Property="Margin" Value="0,0,0,5" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <local:CollectionItem />
+                </StackPanel>
             </ScrollViewer>
         </Grid>
         <Grid Visibility="Hidden" x:Name="GridViewBeatmapDisplay" Background="#3D2932">

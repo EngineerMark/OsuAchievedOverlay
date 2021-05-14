@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OsuAchievedOverlay.Github;
+using OsuAchievedOverlay.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

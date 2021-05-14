@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace OsuAchievedOverlay
+namespace OsuAchievedOverlay.Helpers
 {
     public static class StringHelper
     {

@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="OsuAchievedOverlay.Controls.CollectionItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OsuAchievedOverlay.Controls"
+             mc:Ignorable="d" 
+             x:Name="CollectionItemObject"
+             d:DesignHeight="30" d:DesignWidth="280" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus">
+    <Grid>
+        <Grid>
+            <Border x:Name="BackBorder" CornerRadius="8" Background="#88000000" />
+            <Label Content="{Binding ElementName=CollectionItemObject, Path=CollectionTitle}" HorizontalAlignment="Left" Margin="10,0,10,0" VerticalContentAlignment="Center"/>
+            <Label Content="{Binding ElementName=CollectionItemObject, Path=CollectionSize}" HorizontalAlignment="Right" Margin="10,0,10,0" VerticalContentAlignment="Center"/>
+            <Rectangle x:Name="HoverOverlay" Fill="Black" Opacity="0" />
+        </Grid>
+    </Grid>
+</UserControl>

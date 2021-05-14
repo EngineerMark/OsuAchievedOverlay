@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OsuAchievedOverlay
+namespace OsuAchievedOverlay.Helpers
 {
     public static class ApiHelper
     {

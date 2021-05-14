@@ -1,4 +1,4 @@
-﻿namespace OsuAchievedOverlay
+﻿namespace OsuAchievedOverlay.Helpers
 {
     public static class MathHelper
     {
