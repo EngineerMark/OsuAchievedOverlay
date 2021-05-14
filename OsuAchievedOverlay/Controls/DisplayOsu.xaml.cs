@@ -1,6 +1,7 @@
 ﻿using osu.Shared;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
+using osu_database_reader.Components.Player;
 using OsuAchievedOverlay.Helpers;
 using OsuAchievedOverlay.Managers;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -82,6 +84,8 @@ namespace OsuAchievedOverlay.Controls
                 ButtonShowCollections.IsEnabled = false;
                 ListBeatmapItems.Children.Clear();
                 CollectionItemList.Children.Clear();
+                ScoreItemList.Children.Clear();
+                LabelRefreshStatus.Content = "Status: reading osu db";
                 ThreadPool.QueueUserWorkItem((Object stateInfo) =>
                 {
                     IsUpdating = true;
@@ -150,11 +154,13 @@ namespace OsuAchievedOverlay.Controls
 
                         //SetBeatmapResults(CurrentPage);
 
-                        ButtonShowScores.IsEnabled = true;
+                        ButtonShowScores.IsEnabled = false;
                         ButtonShowBeatmaps.IsEnabled = true;
                         ButtonShowCollections.IsEnabled = true;
 
+                        LabelRefreshStatus.Content = "Status: creating beatmap items";
                         ProcessSearchData(SearchQuery);
+                        LabelRefreshStatus.Content = "Status: reading collection db";
                     });
 
                     CurrentCollections = CollectionDb.Read(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "collection.db"));
@@ -182,12 +188,30 @@ namespace OsuAchievedOverlay.Controls
                         }
 
                         UpdateEntry(EntryCollectionCount, "" + CurrentCollections.Collections.Count.ToString("#,##0.###"));
+                        LabelRefreshStatus.Content = "Status: counting ranks";
                     });
 
                     CurrentScores = ScoresDb.Read(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "scores.db"));
-
+                    //if (CurrentScores.Scores.Count() > 0)
+                    //{
+                    //    foreach (Replay score in CurrentScores.Scores)
+                    //    {
+                    //        BeatmapEntry attachedMap = CurrentDatabase.Beatmaps.FirstOrDefault(map => map.BeatmapChecksum == score.BeatmapHash);
+                    //        if (attachedMap != null)
+                    //        {
+                    //            Dispatcher.Invoke(() =>
+                    //            {
+                    //                ScoreItem item = new ScoreItem();
+                    //                item.LabelScore.Content = score.Score.ToString("#,##0.###");
+                    //                item.LabelBeatmapName.Content = attachedMap.Title + " [" + attachedMap.Version + "]";
+                    //                ScoreItemList.Children.Add(item);
+                    //            });
+                    //        }
+                    //    }
+                    //}
                     Dispatcher.Invoke(() =>
                     {
+
                         UpdateEntry(EntryReplayCount, "" + CurrentScores.Scores.Count().ToString("#,##0.###"));
                     });
 
@@ -200,6 +224,8 @@ namespace OsuAchievedOverlay.Controls
                         UpdateEntry(EntryBeatmapCountRanked, "" + rankedCount.ToString("#,##0.###"));
                         UpdateEntry(EntryBeatmapCountLoved, "" + lovedCount.ToString("#,##0.###"));
                         UpdateEntry(EntryBeatmapCountUnranked, "" + unrankedCount.ToString("#,##0.###"));
+
+                        LabelRefreshStatus.Content = "Status: finished";
                     });
 
                     IsUpdating = false;

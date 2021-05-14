@@ -94,6 +94,9 @@
     <Compile Include="Controls\CollectionItem.xaml.cs">
       <DependentUpon>CollectionItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ScoreItem.xaml.cs">
+      <DependentUpon>ScoreItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\BeatmapHelper.cs" />
     <Compile Include="BeatmapSetEntry.cs" />
@@ -183,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\OsuDataEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ScoreItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

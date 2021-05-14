@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OsuAchievedOverlay.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="682" d:DesignWidth="443">
+             d:DesignHeight="682" d:DesignWidth="443" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus">
     <Grid Background="#3D2932">
         <Grid Margin="0,0,0,424">
             <Image RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/Headers/karen.jpg">
@@ -31,9 +31,10 @@
                 <local:OsuDataEntry x:Name="EntryBeatmapCountUnranked" Title="Unranked Maps"></local:OsuDataEntry>
             </StackPanel>
             <Button Background="#2E1F25" BorderBrush="#2E1F25" Click="Btn_RefreshData" Content="Refresh" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="10,0,10,10" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
-            <Button x:Name="ButtonShowScores" Click="Btn_ShowScores" Background="#2E1F25" BorderBrush="#2E1F25" IsEnabled="false" Content="Show Scores" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="230,0,0,396" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <Button x:Name="ButtonShowScores" ToolTip="Future technologies may allow this to be enabled.." Click="Btn_ShowScores" Background="#2E1F25" BorderBrush="#2E1F25" IsEnabled="false" Content="Show Scores" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="230,0,0,396" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <Button x:Name="ButtonShowBeatmaps" Click="Btn_ShowMaps" Background="#2E1F25" BorderBrush="#2E1F25" IsEnabled="false" Content="Show Beatmaps" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="230,0,0,359" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
             <Button x:Name="ButtonShowCollections" Click="Btn_ShowCollections" Background="#2E1F25" BorderBrush="#2E1F25" IsEnabled="false" Content="Show Collections" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="230,0,0,322" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus"/>
+            <Label Content="Status: none" x:Name="LabelRefreshStatus" HorizontalAlignment="Right" Margin="0,430,10,0" VerticalAlignment="Top"/>
         </Grid>
         <Grid Visibility="Hidden" x:Name="GridViewBeatmaps" Background="#3D2932">
             <ScrollViewer Margin="10,94,10,48" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -60,9 +61,19 @@
         </Grid>
         <Grid Visibility="Hidden" x:Name="GridViewScores" Background="#3D2932">
             <Button Click="Btn_HideOverlay" Background="#2E1F25" BorderBrush="#2E1F25" Content="Return" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75"/>
-
+            <ScrollViewer HorizontalAlignment="Stretch" Margin="10,109,10,10" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="ScoreItemList">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type local:ScoreItem}">
+                            <Setter Property="Height" Value="70"/>
+                            <Setter Property="Margin" Value="0,0,0,5" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <local:ScoreItem />
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
-        <Grid Visibility="Visible" x:Name="GridViewCollections" Background="#3D2932">
+        <Grid Visibility="Hidden" x:Name="GridViewCollections" Background="#3D2932">
             <Grid Margin="0,0,0,175">
                 <Image RenderOptions.BitmapScalingMode="HighQuality"  Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/Headers/pecorine.jpg">
                     <Image.OpacityMask>
@@ -74,7 +85,7 @@
                 </Image>
             </Grid>
             <Button Click="Btn_HideOverlay" Background="#2E1F25" BorderBrush="#2E1F25" Content="Return" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75"/>
-            <ScrollViewer HorizontalAlignment="Stretch" Margin="10,94,10,10" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ScrollViewer HorizontalAlignment="Stretch" Margin="10,109,10,10" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="CollectionItemList">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type local:CollectionItem}">
