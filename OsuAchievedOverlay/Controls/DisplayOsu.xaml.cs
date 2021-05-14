@@ -265,6 +265,37 @@ namespace OsuAchievedOverlay.Controls
                     if(argument.Item1.ToLower()=="mapper"){
                         result.RemoveAll(set => !set.Creator.Equals(argument.Item2, StringComparison.InvariantCultureIgnoreCase));
                     }
+
+                    if(argument.Item1.ToLower()=="status"){
+                        switch(argument.Item2.ToLower()){
+                            case "ranked":
+                            case "r":
+                                result.RemoveAll(set => set.RankStatus!=SubmissionStatus.Ranked);
+                                break;
+                            case "approved":
+                            case "a":
+                                result.RemoveAll(set => set.RankStatus != SubmissionStatus.Approved);
+                                break;
+                            case "loved":
+                            case "l":
+                                result.RemoveAll(set => set.RankStatus != SubmissionStatus.Loved);
+                                break;
+                            case "pending":
+                            case "p":
+                                result.RemoveAll(set => set.RankStatus != SubmissionStatus.Pending);
+                                break;
+                            case "notsubmitted":
+                            case "n":
+                            case "not":
+                                result.RemoveAll(set => set.RankStatus != SubmissionStatus.NotSubmitted);
+                                break;
+                            default:
+                            case "unknown":
+                            case "u":
+                                result.RemoveAll(set => set.RankStatus != SubmissionStatus.Unknown);
+                                break;
+                        }
+                    }
                 }
 
                 ResultBeatmapSets = result;
