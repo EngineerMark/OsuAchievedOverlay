@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 8a33db00c9fe56e459eeb6d60ca3e8a8
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Torus
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 031e2b588e2e7544bacef3671a564cc5, type: 3}
+  - {fileID: 12800000, guid: a4a093c350145744b980661e3231bc7c, type: 3}
+  - {fileID: 12800000, guid: 64caa2b7a701d404cbdf5f1ba8890426, type: 3}
+  - {fileID: 12800000, guid: 40e7a0cdcc7552b4194aaeaa9d41754c, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
