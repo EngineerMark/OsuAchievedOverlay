@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace OsuAchievedOverlay.Managers
 {
-    public class Manager : MonoBehaviour
+    public abstract class Manager : MonoBehaviour
     {
 
-
+        public abstract void Start();
+        public abstract void Stop();
     }
 }
