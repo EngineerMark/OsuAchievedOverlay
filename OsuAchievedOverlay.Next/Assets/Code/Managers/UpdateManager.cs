@@ -35,84 +35,63 @@ namespace OsuAchievedOverlay.Managers
 
         public override void Start()
         {
+        }
+
+        public override void Stop()
+        {
+        }
+
+        public void InternalStart(Action callbackIfNoUpdate){
             TextVersionNumber.text = Application.version;
-
-
             string[] cmds = System.Environment.GetCommandLineArgs();
 
             UpdaterWindow.SetActive(false);
             UpdateReadyView.SetActive(false);
             UpdateProcessView.SetActive(false);
 
-            UnityEngine.Debug.Log("CMDS: " + string.Join(", ", cmds));
-
-            if (cmds.Contains("-osufinishupdate"))
+            GetAvailableUpdates();
+            if (AllNewerUpdates.Count > 0)
             {
-                if (Directory.Exists(Path.Combine(Application.dataPath, "temp")))
+                LatestUpdate = AllNewerUpdates[0];
+                if (cmds.Contains("-osustartupdate"))
                 {
-                    bool deleted = false;
-                    while (!deleted)
-                    {
-                        try
-                        {
-                            Directory.Delete(Path.Combine(Application.dataPath, "temp"), true);
-                            deleted = true;
-                        }
-                        catch (IOException _e)
-                        {
-                            deleted = false;
-                        }
-                    }
+                    TextUpdateFromTo.text = "Updating from " + Application.version + " to " + LatestUpdate.Version;
+                    UpdaterWindow.SetActive(true);
+                    UpdateProcessView.SetActive(true);
+                    ProcessUpdate(LatestUpdate);
                 }
-            }
-            else
-            {
-                GetAvailableUpdates();
-                if (AllNewerUpdates.Count > 0)
+                else
                 {
-                    LatestUpdate = AllNewerUpdates[0];
-                    if (cmds.Contains("-osustartupdate"))
+
+                    UpdaterWindow.SetActive(true);
+                    UpdateReadyView.SetActive(true);
+                    TextNewVersion.text = "New version available: " + LatestUpdate.Version;
+
+                    TextUpdateDetails.text = string.Empty;
+
+                    string val = "";
+                    Markdown md = new Markdown();
+                    int i = 0;
+                    foreach (Release rel in AllNewerUpdates)
                     {
-                        TextUpdateFromTo.text = "Updating from " + Application.version + " to " + LatestUpdate.Version;
-                        UpdaterWindow.SetActive(true);
-                        UpdateProcessView.SetActive(true);
-                        ProcessUpdate(LatestUpdate);
+                        string transformedBody = md.Transform(rel.Body);
+                        val += "Version " + rel.Version + "\n";
+                        val += transformedBody + "\n";
+                        i++;
+                        if (i < AllNewerUpdates.Count)
+                            val += "<hr />";
                     }
-                    else
+
+                    Ref<string> valRef = new Ref<string>(val);
+                    //val = HtmlRichParser.Parse(val);
+                    StartCoroutine(HtmlRichParser.ParseAsync(valRef, () =>
                     {
-
-                        UpdaterWindow.SetActive(true);
-                        UpdateReadyView.SetActive(true);
-                        TextNewVersion.text = "New version available: " + LatestUpdate.Version;
-
-                        TextUpdateDetails.text = string.Empty;
-
-                        string val = "";
-                        Markdown md = new Markdown();
-                        int i = 0;
-                        foreach (Release rel in AllNewerUpdates)
-                        {
-                            string transformedBody = md.Transform(rel.Body);
-                            val += "Version " + rel.Version + "\n";
-                            val += transformedBody + "\n";
-                            i++;
-                            if (i < AllNewerUpdates.Count)
-                                val += "<hr />";
-                        }
-
-                        Ref<string> valRef = new Ref<string>(val);
-                        //val = HtmlRichParser.Parse(val);
-                        StartCoroutine(HtmlRichParser.ParseAsync(valRef, () =>
-                        {
-                            TextUpdateDetails.text = valRef.Value;
-                        }));
-                    }
+                        TextUpdateDetails.text = valRef.Value;
+                    }));
                 }
+            }else{
+                callbackIfNoUpdate.Invoke();
             }
-        }
-
-        public override void Stop()
-        {
         }
 
         public void ProcessUpdate(Release update)

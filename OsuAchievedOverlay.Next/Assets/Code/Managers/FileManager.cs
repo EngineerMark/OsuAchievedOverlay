@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using UnityEngine;
 
 namespace OsuAchievedOverlay.Managers
 {
@@ -38,6 +39,17 @@ namespace OsuAchievedOverlay.Managers
 
         public static DirectoryInfo GetApplicationDirectory(){
             return Directory.GetParent(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).FullName);
+        }
+
+        public static string GetExecutableDirectory(){
+#if UNITY_EDITOR
+            string baseFolder = Path.Combine(Application.dataPath, "BuildDir");
+            if (!Directory.Exists(baseFolder))
+                Directory.CreateDirectory(baseFolder);
+#else
+            string baseFolder = Directory.GetParent(Application.dataPath).FullName;
+#endif
+            return baseFolder;
         }
 
         public static void MoveFile(string from, string to, bool overwrite = false){
