@@ -1,22 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C19CEF94-F590-4484-B9D9-2346C3118C21}</ProjectGuid>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>OsuAchievedOverlay</RootNamespace>
-    <AssemblyName>OsuAchievedOverlay</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <PublishUrl>publish\</PublishUrl>
@@ -34,27 +20,17 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>embedded</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
@@ -64,194 +40,12 @@
     <ApplicationIcon>Assets\Images\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <PublishSingleFile>true</PublishSingleFile>
+    <PublishSingleFile>false</PublishSingleFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Controls\CollectionItem.xaml.cs">
-      <DependentUpon>CollectionItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ScoreItem.xaml.cs">
-      <DependentUpon>ScoreItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Helpers\ApiHelper.cs" />
-    <Compile Include="Helpers\BeatmapHelper.cs" />
-    <Compile Include="BeatmapSetEntry.cs" />
-    <Compile Include="Controls\BeatmapDisplay.xaml.cs">
-      <DependentUpon>BeatmapDisplay.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\BeatmapItem.xaml.cs">
-      <DependentUpon>BeatmapItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DisplayInfo.xaml.cs">
-      <DependentUpon>DisplayInfo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DisplayOsu.xaml.cs">
-      <DependentUpon>DisplayOsu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DisplaySession.xaml.cs">
-      <DependentUpon>DisplaySession.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\OsuDataEntry.xaml.cs">
-      <DependentUpon>OsuDataEntry.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SidebarSettings.xaml.cs">
-      <DependentUpon>SidebarSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SpinnerSwirl.xaml.cs">
-      <DependentUpon>SpinnerSwirl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ExtendedThread.cs" />
-    <Compile Include="Github\Asset.cs" />
-    <Compile Include="Github\Release.cs" />
-    <Compile Include="HumanizerExtensions.cs" />
-    <Compile Include="Managers\FileManager.cs" />
-    <Compile Include="LocalApiFile.cs" />
-    <Compile Include="Interfaces\IThreaded.cs" />
-    <Compile Include="Managers\InputManager.cs" />
-    <Compile Include="Managers\LocalAPIManager.cs" />
-    <Compile Include="Managers\GameManager.cs" />
-    <Compile Include="Managers\InterfaceManager.cs" />
-    <Compile Include="Managers\SettingsManager.cs" />
-    <Compile Include="Managers\ThreadedManager.cs" />
-    <Compile Include="Managers\UpdateManager.cs" />
-    <Compile Include="Helpers\MathHelper.cs" />
-    <Compile Include="SessionFileData.cs" />
-    <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Managers\WindowManager.cs" />
-    <Compile Include="Version.cs" />
-    <Compile Include="Windows\DisplayWindow.xaml.cs">
-      <DependentUpon>DisplayWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\LaunchWindow.xaml.cs">
-      <DependentUpon>LaunchWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\LoadSessionWindow.xaml.cs">
-      <DependentUpon>LoadSessionWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Managers\Manager.cs" />
-    <Compile Include="Session.cs" />
-    <Compile Include="Managers\SessionManager.cs" />
-    <Compile Include="Windows\PopupSetAPI.xaml.cs">
-      <DependentUpon>PopupSetAPI.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\UpdateWindow.xaml.cs">
-      <DependentUpon>UpdateWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Controls\BeatmapDisplay.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\BeatmapItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\CollectionItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DisplayInfo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DisplayOsu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DisplaySession.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\OsuDataEntry.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ScoreItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\SidebarSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\SpinnerSwirl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\DisplayWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\LaunchWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\LoadSessionWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\LocalApiWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Windows\LocalApiWindow.xaml.cs">
-      <DependentUpon>LocalApiWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Windows\PopupSetAPI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\UpdateWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ProgressBarExtensions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <Resource Include="Assets\Fonts\AllerDisplay.ttf" />
     <Resource Include="Assets\Fonts\Aller_Bd.ttf" />
     <Resource Include="Assets\Fonts\Aller_BdIt.ttf" />
@@ -265,13 +59,6 @@
     <Resource Include="Assets\Fonts\Torus Regular.otf" />
     <Resource Include="Assets\Fonts\Torus SemiBold.otf" />
     <Resource Include="Assets\Fonts\Torus Thin.otf" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Ranks\SS.png" />
@@ -590,12 +377,14 @@
     <PackageReference Include="MaterialDesignThemes">
       <Version>4.0.0</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.WindowsAPICodePack-Shell">
       <Version>1.1.0</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Headers\placeholder_banner.jpeg" />
@@ -631,5 +420,17 @@
   <ItemGroup>
     <Resource Include="Assets\Images\Headers\pecorine.jpg" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
 </Project>

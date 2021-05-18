@@ -1,0 +1,57 @@
+2021-05-18 21:30:49.789 +02:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.203\
+2021-05-18 21:30:49.932 +02:00 [INF] Registered 1 extensions:
+	Default extension
+2021-05-18 21:30:52.752 +02:00 [INF] Initializing upgrade step Select an entrypoint
+2021-05-18 21:30:52.757 +02:00 [INF] Setting entrypoint to only project in solution: D:\Projects\OsuAchievedOverlay\OsuAchievedOverlay\OsuAchievedOverlay.csproj
+2021-05-18 21:30:52.769 +02:00 [INF] Initializing upgrade step Select project to upgrade
+2021-05-18 21:30:52.855 +02:00 [INF] Initializing upgrade step Back up project
+2021-05-18 21:31:12.135 +02:00 [INF] Skipping upgrade step Back up project
+2021-05-18 21:31:12.136 +02:00 [INF] Upgrade step Back up project skipped
+2021-05-18 21:31:16.097 +02:00 [INF] Initializing upgrade step Convert project file to SDK style
+2021-05-18 21:31:21.538 +02:00 [INF] Applying upgrade step Convert project file to SDK style
+2021-05-18 21:31:21.541 +02:00 [INF] Converting project file format with try-convert, version 0.7.222801
+2021-05-18 21:31:22.182 +02:00 [INF] [try-convert] D:\Projects\OsuAchievedOverlay\OsuAchievedOverlay\OsuAchievedOverlay.csproj contains an App.config file. App.config is replaced by appsettings.json in .NET Core. You will need to delete App.config and migrate to appsettings.json if it's applicable to your project.
+2021-05-18 21:31:25.679 +02:00 [INF] [try-convert] Conversion complete!
+2021-05-18 21:31:27.331 +02:00 [INF] Project file converted successfully! The project may require additional changes to build successfully against the new .NET target.
+2021-05-18 21:31:29.673 +02:00 [INF] Upgrade step Convert project file to SDK style applied successfully
+2021-05-18 21:31:32.621 +02:00 [INF] Initializing upgrade step Clean up NuGet package references
+2021-05-18 21:31:35.472 +02:00 [WRN] .NET Upgrade Assistant analyzer NuGet package reference cannot be added because the package cannot be found
+2021-05-18 21:31:35.478 +02:00 [INF] No package updates needed
+2021-05-18 21:31:35.479 +02:00 [INF] Initializing upgrade step Update TFM
+2021-05-18 21:31:35.495 +02:00 [INF] TFM needs updated to net5.0-windows
+2021-05-18 21:31:40.536 +02:00 [INF] Applying upgrade step Update TFM
+2021-05-18 21:31:46.927 +02:00 [INF] Updated TFM to net5.0-windows
+2021-05-18 21:31:46.928 +02:00 [INF] Upgrade step Update TFM applied successfully
+2021-05-18 21:31:48.999 +02:00 [INF] Initializing upgrade step Update NuGet Packages
+2021-05-18 21:31:50.831 +02:00 [WRN] No version of Extended.Wpf.Toolkit found that supports ["net5.0-windows"]; leaving unchanged
+2021-05-18 21:31:50.847 +02:00 [WRN] No version of FontAwesome.WPF found that supports ["net5.0-windows"]; leaving unchanged
+2021-05-18 21:31:50.861 +02:00 [WRN] No version of ini-parser found that supports ["net5.0-windows"]; leaving unchanged
+2021-05-18 21:31:50.868 +02:00 [WRN] .NET Upgrade Assistant analyzer NuGet package reference cannot be added because the package cannot be found
+2021-05-18 21:31:51.572 +02:00 [INF] Adding Microsoft.Windows.Compatibility 5.0.2
+2021-05-18 21:31:51.581 +02:00 [INF] Packages to be added: Microsoft.Windows.Compatibility, Version=5.0.2
+2021-05-18 21:32:02.747 +02:00 [INF] Applying upgrade step Update NuGet Packages
+2021-05-18 21:32:02.751 +02:00 [INF] Adding package reference: Microsoft.Windows.Compatibility, Version=5.0.2
+2021-05-18 21:32:12.717 +02:00 [INF] Marking package System.Data.DataSetExtensions for removal because it appears to be a transitive dependency
+2021-05-18 21:32:12.734 +02:00 [WRN] No version of Extended.Wpf.Toolkit found that supports ["net5.0-windows"]; leaving unchanged
+2021-05-18 21:32:12.738 +02:00 [WRN] No version of FontAwesome.WPF found that supports ["net5.0-windows"]; leaving unchanged
+2021-05-18 21:32:12.744 +02:00 [WRN] No version of ini-parser found that supports ["net5.0-windows"]; leaving unchanged
+2021-05-18 21:32:12.761 +02:00 [WRN] .NET Upgrade Assistant analyzer NuGet package reference cannot be added because the package cannot be found
+2021-05-18 21:32:12.853 +02:00 [INF] Removing outdated package reference: System.Data.DataSetExtensions, Version=4.5.0
+2021-05-18 21:32:15.980 +02:00 [WRN] No version of Extended.Wpf.Toolkit found that supports ["net5.0-windows"]; leaving unchanged
+2021-05-18 21:32:15.984 +02:00 [WRN] No version of FontAwesome.WPF found that supports ["net5.0-windows"]; leaving unchanged
+2021-05-18 21:32:15.990 +02:00 [WRN] No version of ini-parser found that supports ["net5.0-windows"]; leaving unchanged
+2021-05-18 21:32:15.998 +02:00 [WRN] .NET Upgrade Assistant analyzer NuGet package reference cannot be added because the package cannot be found
+2021-05-18 21:32:16.078 +02:00 [INF] Upgrade step Update NuGet Packages applied successfully
+2021-05-18 21:32:21.099 +02:00 [INF] Initializing upgrade step Add template files
+2021-05-18 21:32:21.150 +02:00 [INF] 0 expected template items needed
+2021-05-18 21:32:21.151 +02:00 [INF] Initializing upgrade step Upgrade app config files
+2021-05-18 21:32:21.186 +02:00 [INF] Found 0 app settings for upgrade: 
+2021-05-18 21:32:21.314 +02:00 [INF] Initializing upgrade step Update source code
+2021-05-18 21:32:24.063 +02:00 [INF] Initializing upgrade step Move to next project
+2021-05-18 21:32:28.459 +02:00 [INF] Applying upgrade step Move to next project
+2021-05-18 21:32:28.460 +02:00 [INF] Upgrade step Move to next project applied successfully
+2021-05-18 21:32:30.265 +02:00 [INF] Initializing upgrade step Finalize upgrade
+2021-05-18 21:32:39.378 +02:00 [INF] Applying upgrade step Finalize upgrade
+2021-05-18 21:32:39.379 +02:00 [INF] Upgrade step Finalize upgrade applied successfully
+2021-05-18 21:32:41.282 +02:00 [INF] Upgrade has completed. Please review any changes.
+2021-05-18 21:32:41.284 +02:00 [INF] Saving upgrade progress file at D:\Projects\OsuAchievedOverlay\.upgrade-assistant

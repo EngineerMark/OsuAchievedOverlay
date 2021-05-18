@@ -9,40 +9,40 @@ namespace OsuAchievedOverlay
 {
     public class ExtendedThread
     {
-        public bool IsRunning { get; set; } = false;
         public Thread InternalThread{ get; set; }
         public Action DelegateFunction { get; set; }
         public int SleepTime { get; set; }
+        public int TimeoutTime { get; set; } = 30;
 
-        public ExtendedThread(Action func, int sleepTime){
+        private CancellationTokenSource token;
+
+        public ExtendedThread(Action func, int sleepTime, int timeout = 30){
             DelegateFunction = func;
             SleepTime = sleepTime;
+            TimeoutTime = timeout;
 
             Build();
         }
 
         public void Start(){
             Join();
-            IsRunning = true;
             Build();
             InternalThread.Start();
         }
 
         public void Join(){
-            if (IsRunning)
-            {
-                IsRunning = false;
-                if(InternalThread.IsAlive)
-                    InternalThread?.Abort();
-            }
+            token.Cancel();
+            token.Dispose();
         }
 
         private void Build(){
+            token = new CancellationTokenSource();
             InternalThread = new Thread(new ThreadStart(() =>
             {
-                while (IsRunning)
+                while (!token.IsCancellationRequested)
                 {
-                    DelegateFunction();
+                    Task task = Task.Run(()=>DelegateFunction());
+                    task.Wait(TimeSpan.FromSeconds(TimeoutTime));
                     Thread.Sleep(SleepTime);
                 }
             }));

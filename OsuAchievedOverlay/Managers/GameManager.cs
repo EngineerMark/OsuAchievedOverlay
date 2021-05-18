@@ -57,7 +57,7 @@ namespace OsuAchievedOverlay.Managers
                                     HumanizerExtensions.Humanize(DateTimeOffset.FromUnixTimeSeconds(SessionManager.Instance.CurrentSession.SessionDate).UtcDateTime);
                         }));
                     }
-                }, 1000);
+                }, 1000, 5);
                 updateThread.Start();
 
                 LocalAPIManager.Instance.Start();
@@ -71,7 +71,7 @@ namespace OsuAchievedOverlay.Managers
             {
                 RefreshTimer();
                 lastTimerFire = DateTimeOffset.Now.ToUnixTimeSeconds();
-            }, updateRate * 1000);
+            }, updateRate * 1000, 5);
             fetchThread.Start();
             RefreshTimer();
 
@@ -89,7 +89,7 @@ namespace OsuAchievedOverlay.Managers
                     if (WindowManager.Instance != null && WindowManager.Instance.DisplayWin != null)
                         WindowManager.Instance.DisplayWin.DisplaySession.ProgressNextUpdate.SetPercent((lastTimerFire == -1 ? 0 : (secondsPassed.Map(0, updateRate, 0, updateRate + 1) / interval)), TimeSpan.FromSeconds(progressbarSpeed));
                 }));
-            }, progressbarSpeed * 1000);
+            }, progressbarSpeed * 1000, 5);
             progressThread.Start();
         }
 
@@ -104,6 +104,7 @@ namespace OsuAchievedOverlay.Managers
             FileManager.Instance.Stop();
 
             WindowManager.Instance.CloseAll();
+            Environment.Exit(0);
         }
 
         public void RefreshTimer()

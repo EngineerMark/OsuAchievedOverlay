@@ -76,6 +76,8 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.19041.8" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OsuAchievedOverlay\OsuAchievedOverlay.csproj" />
+    <ProjectReference Include="..\OsuAchievedOverlay\OsuAchievedOverlay.csproj">
+      <SkipGetTargetFrameworkProperties>True</SkipGetTargetFrameworkProperties>
+    </ProjectReference>
   </ItemGroup>
 </Project>
