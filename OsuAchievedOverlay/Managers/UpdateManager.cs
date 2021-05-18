@@ -79,7 +79,7 @@ namespace OsuAchievedOverlay.Managers
 
         private void ProcessUpdate(Release update)
         {
-            ThreadPool.QueueUserWorkItem((Object stateInfo) =>
+            ThreadPool.QueueUserWorkItem((Object? stateInfo) =>
             {
                 string relName = "OsuAchievedOverlay_" + update.Version;
                 string zipurl = update.Assets[0].DownloadLink;
@@ -101,7 +101,7 @@ namespace OsuAchievedOverlay.Managers
                         WindowManager.Instance.UpdateWin.ProgressBarUpdater.Value = e.ProgressPercentage;
                     }));
                 };
-                client.DownloadFileCompleted += (object sender, AsyncCompletedEventArgs e) =>
+                client.DownloadFileCompleted += (object? sender, AsyncCompletedEventArgs e) =>
                 {
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {

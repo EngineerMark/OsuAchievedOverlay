@@ -48,6 +48,8 @@ namespace OsuAchievedOverlay.Managers
         }
 
         public void MoveFile(string from, string to, bool overwrite = false){
+            if (!Directory.Exists(Path.GetDirectoryName(to)))
+                Directory.CreateDirectory(Path.GetDirectoryName(to));
             if (File.Exists(to) && overwrite)
                 File.Delete(to);
             File.Move(from, to);
