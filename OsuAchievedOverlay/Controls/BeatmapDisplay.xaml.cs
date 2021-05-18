@@ -158,7 +158,7 @@ namespace OsuAchievedOverlay.Controls
 
             LabelBeatmapsetTitle.Content = beatmap.Title + " [" + beatmap.Version + "]";
 
-            LabelBeatmapBpm.Content = Math.Round(beatmap.TimingPoints[0].MsPerQuarter.MsToBpm());
+            LabelBeatmapBpm.Content = beatmap.TimingPoints.Count > 0 ? Math.Round(beatmap.TimingPoints[0].MsPerQuarter.MsToBpm()) : "0";
             LabelBeatmapLength.Content = TimeSpan.FromMilliseconds(beatmap.TotalTime).ToString(@"mm\:ss");
             LabelBeatmapObjects.Content = beatmap.CountHitCircles + beatmap.CountSliders + beatmap.CountSpinners;
 

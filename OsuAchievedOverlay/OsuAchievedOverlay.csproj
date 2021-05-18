@@ -353,6 +353,7 @@
     <PackageReference Include="Amayakase.OsuHelper">
       <Version>1.0.6</Version>
     </PackageReference>
+    <PackageReference Include="Chromely.CefSharp.Winapi" Version="4.0.71.1" />
     <PackageReference Include="Extended.Wpf.Toolkit">
       <Version>4.0.2</Version>
     </PackageReference>
@@ -429,6 +430,9 @@
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="wwwroot\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>
