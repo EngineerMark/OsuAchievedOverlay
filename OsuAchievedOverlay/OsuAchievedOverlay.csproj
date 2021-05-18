@@ -39,9 +39,6 @@
   <PropertyGroup>
     <ApplicationIcon>Assets\Images\icon.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <PublishSingleFile>false</PublishSingleFile>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.IO.Compression" />
   </ItemGroup>

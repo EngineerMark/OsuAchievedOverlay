@@ -92,7 +92,7 @@ namespace OsuAchievedOverlay.Windows
 
         private void Btn_Continue(object sender, RoutedEventArgs e)
         {
-            Process.Start(System.Reflection.Assembly.GetEntryAssembly().CodeBase, "-osunoupdate");
+            Process.Start(FileManager.Instance.GetCurrentExecutable(), "-osunoupdate");
             Close();
         }
 

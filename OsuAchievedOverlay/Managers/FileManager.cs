@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Windows;
 
 namespace OsuAchievedOverlay.Managers
 {
@@ -38,6 +39,12 @@ namespace OsuAchievedOverlay.Managers
 
         public DirectoryInfo GetApplicationDirectory(){
             return Directory.GetParent(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).FullName);
+        }
+
+        public string GetCurrentExecutable(){
+            string path = Application.ResourceAssembly.Location;
+            path = Path.ChangeExtension(path, ".exe");
+            return path;
         }
 
         public void MoveFile(string from, string to, bool overwrite = false){

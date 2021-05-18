@@ -73,7 +73,7 @@ namespace OsuAchievedOverlay
                 parser.WriteFile("Settings.ini", newData);
             }
 
-            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            System.Diagnostics.Process.Start(FileManager.Instance.GetCurrentExecutable());
             Application.Current.Shutdown();
         }
 
