@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OsuAchievedOverlay.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,8 @@ namespace OsuAchievedOverlay.Controls
         private void ClickURL(object sender, RoutedEventArgs e)
         {
             Hyperlink link = (Hyperlink)sender;
-            System.Diagnostics.Process.Start(link.NavigateUri.ToString());
+            //System.Diagnostics.Process.Start(link.NavigateUri.ToString());
+            FileManager.Instance.OpenUrl(link.NavigateUri.ToString());
         }
     }
 }

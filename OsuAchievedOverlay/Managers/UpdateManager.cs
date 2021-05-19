@@ -19,7 +19,7 @@ namespace OsuAchievedOverlay.Managers
 {
     public class UpdateManager : Manager<UpdateManager>
     {
-        public const string version = "1.1.0";
+        public const string version = "1.0.9.2";
 
         public Queue<Release> Updates { get; set; }
 

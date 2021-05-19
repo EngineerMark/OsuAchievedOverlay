@@ -27,7 +27,7 @@ namespace OsuAchievedOverlay
             if (!Debugger.IsAttached)
                 Debugger.Launch();
 #endif
-
+            //new BrowserLauncher().Run();
             WindowManager.Instance.LaunchWin = new LaunchWindow(e);
         }
 

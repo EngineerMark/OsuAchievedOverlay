@@ -79,7 +79,7 @@ namespace OsuAchievedOverlay
 
         private void Link_OpenURL(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            FileManager.Instance.OpenUrl(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
     }
