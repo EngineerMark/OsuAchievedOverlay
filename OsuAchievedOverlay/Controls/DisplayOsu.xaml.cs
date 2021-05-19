@@ -126,21 +126,24 @@ namespace OsuAchievedOverlay.Controls
                             set.Beatmaps.Add(difficulty);
                             set.Difficulties = 1;
                             string path = Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "Songs", set.BeatmapFolder);
-                            string backgroundImage = Directory.GetFiles(path).FirstOrDefault(file =>
+                            if (Directory.Exists(path))
                             {
-                                return Path.GetExtension(file) == ".png" ||
-                                    Path.GetExtension(file) == ".jpg" ||
-                                    Path.GetExtension(file) == ".jpeg";
-                            });
-                            set.SongSource = difficulty.SongSource;
-                            set.AudioFileName = difficulty.AudioFileName;
+                                string backgroundImage = Directory.GetFiles(path).FirstOrDefault(file =>
+                                {
+                                    return Path.GetExtension(file) == ".png" ||
+                                        Path.GetExtension(file) == ".jpg" ||
+                                        Path.GetExtension(file) == ".jpeg";
+                                });
+                                set.SongSource = difficulty.SongSource;
+                                set.AudioFileName = difficulty.AudioFileName;
 
-                            set.BackgroundPath = backgroundImage;
-                            string[] tags = difficulty.SongTags.Split(' ');
-                            if (tags.Length > 0)
-                                foreach (string tag in tags)
-                                    set.SongTags.Add(tag);
-                            BeatmapSets.Add(set);
+                                set.BackgroundPath = backgroundImage;
+                                string[] tags = difficulty.SongTags.Split(' ');
+                                if (tags.Length > 0)
+                                    foreach (string tag in tags)
+                                        set.SongTags.Add(tag);
+                                BeatmapSets.Add(set);
+                            }
                         }
                     }
 
