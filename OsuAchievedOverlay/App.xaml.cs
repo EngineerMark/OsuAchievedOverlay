@@ -22,12 +22,12 @@ namespace OsuAchievedOverlay
         {
             this.DispatcherUnhandledException += Dispatcher_UnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
 #if DEBUG
             if (!Debugger.IsAttached)
                 Debugger.Launch();
 #endif
-            //new BrowserLauncher().Run();
             WindowManager.Instance.LaunchWin = new LaunchWindow(e);
         }
 
@@ -47,6 +47,33 @@ namespace OsuAchievedOverlay
             File.WriteAllText("Logs/CrashLog_" + DateTimeOffset.Now.ToUnixTimeSeconds() + ".txt", "osu!Achieved "+UpdateManager.version+"\n\n"+e.Message+"\n"+e.StackTrace);
             MessageBoxResult res = MessageBox.Show("A crash has occured! Check out /Logs/ folder for the crash log(s)", "Application Exception");
             Environment.Exit(-1);
+        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            // Ignore missing resources
+            if (args.Name.Contains(".resources"))
+                return null;
+
+            // check for assemblies already loaded
+            Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName == args.Name);
+            if (assembly != null)
+                return assembly;
+
+            // Try to load by filename - split out the filename of the full assembly name
+            // and append the base path of the original assembly (ie. look in the same dir)
+            string filename = args.Name.Split(',')[0] + ".dll".ToLower();
+
+            string asmFile = Path.Combine(@".\", "lib", filename);
+
+            try
+            {
+                return System.Reflection.Assembly.LoadFrom(asmFile);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

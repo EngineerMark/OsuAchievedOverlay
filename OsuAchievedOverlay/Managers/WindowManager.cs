@@ -14,6 +14,7 @@ namespace OsuAchievedOverlay.Managers
         public LocalApiWindow ApiWin { get; set; }
         public LaunchWindow LaunchWin { get; set; }
         public UpdateWindow UpdateWin { get; set; }
+        public BrowserWrapper BrowserWin { get; set; }
 
         public void CloseAll(){
             DisplayWin?.Close();
@@ -22,6 +23,8 @@ namespace OsuAchievedOverlay.Managers
             SessionWin = null;
             ApiWin?.Close();
             ApiWin = null;
+            BrowserWin?.Close();
+            BrowserWin = null;
         }
 
         public override void Start()

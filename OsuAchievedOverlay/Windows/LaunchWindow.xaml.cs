@@ -92,7 +92,6 @@ namespace OsuAchievedOverlay
                     // API key is valid, lets head on further
 
                     GameManager.Instance.Start();
-
                     Close();
                 }
             }

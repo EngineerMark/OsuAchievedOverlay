@@ -1,0 +1,21 @@
+:root {
+    --osu-dark: #2E1F25;
+    --osu-regular: #3D2932;
+}
+
+@font-face {
+    font-family: "Torus";
+    src: url("../../fonts/Torus Regular.otf") format("opentype");
+}
+
+.bg-osu-dark {
+    background-color: var(--osu-dark);
+}
+
+.bg-osu-regular {
+    background-color: var(--osu-regular);
+}
+
+.body{
+    font-family: "Torus" !important;
+}
