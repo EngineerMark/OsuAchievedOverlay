@@ -1,11 +1,14 @@
 ﻿using CefSharp;
 using CefSharp.Wpf;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using OsuAchievedOverlay.Next.JavaScript;
 using OsuAchievedOverlay.Next.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -38,6 +41,9 @@ namespace OsuAchievedOverlay.Next
             chromiumBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#viewLoader').hide()");
             chromiumBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#viewApp').show()");
 
+            cefOsuApp.JsExecuter.Html("#aboutAppVersion", "2.0.0dev");
+            cefOsuApp.JsExecuter.Html("#aboutCefVersion", "CEF: "+Cef.CefSharpVersion+", Chromium: "+Cef.ChromiumVersion);
+
             Closed += MainWindow_Closed;
         }
 
@@ -50,6 +56,7 @@ namespace OsuAchievedOverlay.Next
         {
             CefSettings settings = new CefSettings();
             //settings.CefCommandLineArgs.Add("disable-gpu", "");
+            settings.CefCommandLineArgs.Add("disable-threaded-scrolling", "1");
 
             string start = string.Format(@"{0}\wwwroot\index.html", FileManager.GetExecutableDirectory());
 
@@ -71,16 +78,44 @@ namespace OsuAchievedOverlay.Next
     {
         private static ChromiumWebBrowser _internalBrowser;
         private static Window _internalWindow;
+        private static JSWrapper _jsExecuter;
+
+        public static JSWrapper JsExecuter { get => _jsExecuter; set => _jsExecuter = value; }
 
         public cefOsuApp(ChromiumWebBrowser browser, Window window)
         {
             _internalBrowser = browser;
             _internalWindow = window;
+
+            JsExecuter = new JSWrapper(_internalBrowser);
         }
 
         public void showDevTools()
         {
             _internalBrowser.ShowDevTools();
+        }
+
+        public void OpenUrl(string url){
+            System.Diagnostics.Process.Start(url);
+        }
+
+        public void dirDialogOsuInstall()
+        {
+            _internalBrowser.Dispatcher.Invoke(() =>
+            {
+                CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                dialog.IsFolderPicker = true;
+                CommonFileDialogResult result = dialog.ShowDialog();
+                JsExecuter.SetAttribute("#settingsInputOsuDir", "value", HttpUtility.JavaScriptStringEncode(dialog.FileName));
+                JsExecuter.AddClass("#settingsInputOsuDirLabel", "active");
+            });
+        }
+
+        public void buttonSaveSettings()
+        {
+            _internalBrowser.Dispatcher.Invoke(() =>
+            {
+            });
         }
     }
 

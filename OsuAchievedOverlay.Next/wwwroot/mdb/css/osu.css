@@ -1,11 +1,18 @@
 :root {
     --osu-dark: #2E1F25;
+    --osu-dark-hover: #22171b;
     --osu-regular: #3D2932;
+    --osu-regular-hover: #312128;
 }
 
 @font-face {
     font-family: "Torus";
     src: url("../../fonts/Torus Regular.otf") format("opentype");
+}
+
+.list-group-flush > .list-group-item {
+    border-width: 0 0 1px;
+    background-color: var(--osu-dark);
 }
 
 .container {
@@ -15,7 +22,53 @@
     margin-right: auto;
     margin-left: auto;
 }
-  
+
+.btn-bg-dark {
+    color: #fff !important;
+    background-color: var(--osu-dark) !important
+}
+
+.btn-bg-dark:hover {
+    color: #fff !important;
+    background-color: var(--osu-dark-hover) !important
+}
+
+.btn-bg-dark:focus,
+.btn-bg-dark.focus {
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
+}
+
+.btn-bg-dark:focus,
+.btn-bg-dark:active,
+.btn-bg-dark.active {
+    color: #fff !important;
+    background-color: var(--osu-dark-hover) !important
+}
+
+.btn-bg-regular {
+    color: #fff !important;
+    background-color: var(--osu-regular) !important
+}
+
+.btn-bg-regular:hover {
+    color: #fff !important;
+    background-color: var(--osu-regular-hover) !important
+}
+
+.btn-bg-regular:focus,
+.btn-bg-regular.focus {
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
+}
+
+.btn-bg-regular:focus,
+.btn-bg-regular:active,
+.btn-bg-regular.active {
+    color: #fff !important;
+    background-color: var(--osu-regular-hover) !important
+}
+
 @media (min-width: 576px) {
     .container {
         max-width: 440px;
@@ -85,12 +138,12 @@ html {
 
 @media screen and (min-width: 320px) {
     html {
-        font-size: calc(10px + 12 * ((100vw - 320px) / 680));
+        font-size: calc(10px + 8 * ((100vw - 320px) / 680));
     }
 }
 @media screen and (min-width: 1000px) {
     html {
-        font-size: 22px;
+        font-size: 18px;
     }
 }
 

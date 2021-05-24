@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿<!-- DO NOT MODIFY THE FILES IN WWWROOT. DOING SO CAN BREAK THE PROGRAM -->
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -47,6 +48,7 @@
                         <li class="nav-item"><a href="#scores" aria-controls="scores" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#scores">scores</a></li>
                         <li class="nav-item"><a href="#beatmaps" aria-controls="beatmaps" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#beatmaps">beatmaps</a></li>
                         <li class="nav-item"><a href="#settings" aria-controls="settings" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#settings">settings</a></li>
+                        <li class="nav-item"><a href="#about" aria-controls="about" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#about">about</a></li>
                     </ul>
                 </div>
             </nav>
@@ -183,33 +185,62 @@
                     <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="tab-settings">
                         <div class="card bg-osu-dark">
                             <div class="card-body">
-                                <div class="md-form form-sm">
-                                    <input type="password" id="settingsInputApikey" class="form-control form-extend-osu">
-                                    <label for="settingsInputApikey">API Key</label>
+                                <div class="container">
+                                    <div class="md-form form-sm">
+                                        <input type="password" id="settingsInputApikey" class="form-control form-extend-osu">
+                                        <label for="settingsInputApikey">API Key</label>
+                                    </div>
+                                    <div class="md-form form-sm">
+                                        <input type="text" id="settingsInputUsername" class="form-control form-extend-osu">
+                                        <label for="settingsInputUsername">Username</label>
+                                    </div>
+                                    <select class="mdb-select md-form form-extend-osu">
+                                        <option value="1" selected>Standard</option>
+                                        <option value="2">Taiko</option>
+                                        <option value="3">Mania</option>
+                                        <option value="4">Catch the Beat</option>
+                                    </select>
+                                    <div class="md-form form-sm input-group">
+                                        <input type="text" id="settingsInputOsuDir" class="form-control form-extend-osu" readonly>
+                                        <label id="settingsInputOsuDirLabel" for="settingsInputOsuDir">osu! directory</label>
+                                        <div class="input-group-append">
+                                            <button onclick="cefOsuApp.dirDialogOsuInstall();" class="btn btn-sm btn-osu-dark" type="button" id="settingsInputOsuDir_btn">Browse</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input form-extend-osu" id="settingsInputGpuUsage" checked="checked2" disabled>
+                                        <label class="form-check-label material-tooltip-main" data-toggle="tooltip" title="This switch will be added in a later update (currently enabled)" for="settingsInputGpuUsage"><strike>Hardware Acceleration</strike></label>
+                                    </div>
+                                    <br />
+                                    <!-- <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a> -->
+                                    <a class="btn btn-success btn-sm" onclick="cefOsuApp.buttonSaveSettings();">Save and apply</a>
                                 </div>
-                                <div class="md-form form-sm">
-                                    <input type="text" id="settingsInputUsername" class="form-control form-extend-osu">
-                                    <label for="settingsInputUsername">Username</label>
-                                </div>
-                                <select class="mdb-select md-form form-extend-osu">
-                                    <option value="1" selected>Standard</option>
-                                    <option value="2">Taiko</option>
-                                    <option value="3">Mania</option>
-                                    <option value="4">Catch the Beat</option>
-                                </select>
-                                <div class="md-form form-sm input-group">
-                                    <input type="text" id="settingsInputOsuDir" class="form-control form-extend-osu">
-                                    <label for="settingsInputOsuDir">osu! directory</label>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-sm btn-secondary" type="button" id="settingsInputOsuDir_btn">Browse</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="tab-about">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5>About osu!achieved</h5>
+                                <br />
+                                <p>Next is version 2+ of osu!achieved. It's a complete rewrite to convert the app to use CEF for web-based UI.</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card bg-osu-dark">
+                                    <div class="card-body">
+                                        <div class="list-group-flush">
+                                            <div class="list-group-item">
+                                                <h6><img style="height: 1em;" src="./img/icon.png"/> osu!Achieved <span id="aboutAppVersion">0.0</span></h6>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <p><span id="aboutCefVersion">-</span></p>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <p><a onclick="cefOsuApp.openUrl('https://github.com/EngineerMark/OsuAchievedOverlay')"><span id="aboutGitPage">Visit repository <i class="fas fa-external-link-alt"></i></span></a></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input form-extend-osu" id="settingsInputGpuUsage" checked="checked2" disabled>
-                                    <label class="form-check-label material-tooltip-main" data-toggle="tooltip" title="This switch will be added in a later update (currently enabled)" for="settingsInputGpuUsage"><strike>Hardware Acceleration</strike></label>
-                                </div>
-                                <br />
-                                <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a>
                             </div>
                         </div>
                     </div>
