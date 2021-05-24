@@ -8,41 +8,210 @@
         <link rel="stylesheet" href="mdb/css/bootstrap.css">
         <link rel="stylesheet" href="mdb/css/mdb.css">
         <link rel="stylesheet" href="mdb/css/osu.css">
+
+        <link rel="stylesheet" href="mdb/css/addons/datatables.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/datatables2.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/datatables-select.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/datatables-select2.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/directives.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/flag.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/jquery.zmd.hierarchical-display.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/rating.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/cards-extended.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/chat.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/multi-range.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/simple-charts.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/steppers.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/timeline.min.css">
+        <link rel="stylesheet" href="mdb/css/modules/accordion-extended.min.css">
+        <link rel="stylesheet" href="mdb/css/modules/animations-extended.min.css">
+        <link rel="stylesheet" href="mdb/css/modules/lightbox.min.css">
+        <link rel="stylesheet" href="mdb/css/modules/megamenu.min.css">
+        <link rel="stylesheet" href="mdb/css/modules/parallax.min.css">
     </head>
-    <body class="bg-osu-regular text-white" style="width: 100%;height: 100%;-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" unselectable="on" onselectstart="return false;"  onmousedown="return false;">
+    <body class="bg-osu-regular text-white osu-base" style="width: 100%;height: 100%;-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" unselectable="on" onselectstart="return false;">
         <div id="viewLoader" style="width: 100%;height: 100%;" hidden>
-            <div class="d-flex justify-content-center">
+            <div class="text-center">
+                <br/>
                 <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"></div>
                 <br/>
-                <h4>Checking files</h4>
+                <br/>
+                <h4 id="loaderStatusText">Checking for update</h4>
             </div>
         </div>
         <div id="viewApp">
-            <nav class="navbar navbar-expand-lg bg-osu-dark text-white">
-                <div class="container">
-                    <div class="container-fluid">
-                        <ul class="nav nav-tabs mb-3" id="contentTabList" role="tablist">
-                            <li><a href="#" class="nav-link text-white active" role="tab" data-mdb-toggle="tab" data-mdb-target="#session">session</a></li>
-                            <li><a href="#" class="nav-link text-white" role="tab" data-mdb-toggle="tab" data-mdb-target="#scores">scores</a></li>
-                            <li><a href="#" class="nav-link text-white" role="tab" data-mdb-toggle="tab" data-mdb-target="#beatmaps">beatmaps</a></li>
-                        </ul>
-                    </div>
+            <nav class="navbar navbar-expand-lg bg-osu-dark text-white" style="padding-bottom: 0;">
+                <div class="container classic-tabs">
+                    <ul class="nav tabs-osu-regular" id="contentTabList" role="tablist">
+                        <li class="nav-item"><a href="#session" aria-controls="session" aria-selected="true" role="tab" class="nav-link text-white active" data-toggle="tab" data-target="#session">session</a></li>
+                        <li class="nav-item"><a href="#scores" aria-controls="scores" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#scores">scores</a></li>
+                        <li class="nav-item"><a href="#beatmaps" aria-controls="beatmaps" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#beatmaps">beatmaps</a></li>
+                        <li class="nav-item"><a href="#settings" aria-controls="settings" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#settings">settings</a></li>
+                    </ul>
                 </div>
             </nav>
             <div class="container">
                 <div class="tab-content" id="tabcontent">
                     <div class="tab-pane fade show active" id="session" role="tabpanel" aria-labelledby="tab-session">
-                        <div class="jumbotron jumbotron-fluid card card-image" style="background-image: url(./img/headers/placeholder_banner.jpeg);">
+                        <!-- <div class="jumbotron jumbotron-fluid card card-image" style="background-image: url(./img/headers/placeholder_banner.jpeg);">
                             <div class="text-white text-center py-5 px-4">
                               <div>
                               </div>
                             </div>
-                          </div>
-                        <button type="button" class="btn btn-primary" onclick="cefOsuApp.showDevTools();">Primary</button>
+                          </div> -->
+                        <div class="card testimonial-card bg-osu-dark">
+                            <div class="card-up">
+                                <img class="card-img-top" src="./img/headers/placeholder_banner.jpeg">
+                            </div>
+
+                            <div class="avatar mx-auto">
+                                <img src="./img/headers/karenkujo.png" class="rounded-circle"
+                                  alt="woman avatar">
+                            </div>
+
+                            <div class="card-body">
+                                <h4 class="card-title"><img class="material-tooltip-main" data-toggle="tooltip" title="Unknown Country (placeholder)" style="height: 1em;" src="./img/flags/__.png"/> Amayakase</h4>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="card bg-osu-dark text-center">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/SSH.png" />
+                                        <h6 class="h6-responsive">1,000</h6>
+                                        <span class="badge badge-pill green">+50</span>
+                                    </div>
+                                    <div class="col">
+                                        <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/SS.png" />
+                                        <h6 class="h6-responsive">1,000</h6>
+                                        <span class="badge badge-pill green">+50</span>
+                                    </div>
+                                    <div class="col">
+                                        <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/SH.png" />
+                                        <h6 class="h6-responsive">1,000</h6>
+                                        <span class="badge badge-pill green">+50</span>
+                                    </div>
+                                    <div class="col">
+                                        <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/S.png" />
+                                        <h6 class="h6-responsive">1,000</h6>
+                                        <span class="badge badge-pill green">+50</span>
+                                    </div>
+                                    <div class="col">
+                                        <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/A.png" />
+                                        <h6 class="h6-responsive">1,000</h6>
+                                        <span class="badge badge-pill green">+50</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="card bg-osu-dark text-center">
+                            <div class="card-body">
+                                <div class="list-group-flush">
+                                    <div class="list-group-item bg-osu-dark">
+                                        <div class="row">
+                                            <div class="col text-right">Level</div>
+                                            <div class="col text-right">100.8</div>
+                                            <div class="col text-left">+0</div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-osu-dark">
+                                        <div class="row">
+                                            <div class="col text-right">Total Score</div>
+                                            <div class="col text-right">100.000.000</div>
+                                            <div class="col text-left">+0</div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-osu-dark">
+                                        <div class="row">
+                                            <div class="col text-right">Ranked Score</div>
+                                            <div class="col text-right">50.000.000</div>
+                                            <div class="col text-left">+0</div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-osu-dark">
+                                        <div class="row">
+                                            <div class="col text-right">World Rank</div>
+                                            <div class="col text-right">#1</div>
+                                            <div class="col text-left">+0</div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-osu-dark">
+                                        <div class="row">
+                                            <div class="col text-right">Country Score</div>
+                                            <div class="col text-right">#1</div>
+                                            <div class="col text-left">+0</div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-osu-dark">
+                                        <div class="row">
+                                            <div class="col text-right">Playcount</div>
+                                            <div class="col text-right">200.000</div>
+                                            <div class="col text-left">+0</div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-osu-dark">
+                                        <div class="row">
+                                            <div class="col text-right">Playtime</div>
+                                            <div class="col text-right">3360 hours</div>
+                                            <div class="col text-left">+0 hours</div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-osu-dark">
+                                        <div class="row">
+                                            <div class="col text-right">Accuracy</div>
+                                            <div class="col text-right">100%</div>
+                                            <div class="col text-left">+0</div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-osu-dark">
+                                        <div class="row">
+                                            <div class="col text-right">Performance</div>
+                                            <div class="col text-right">5000</div>
+                                            <div class="col text-left">+0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="scores" role="tabpanel" aria-labelledby="tab-scores">
                     </div>
                     <div class="tab-pane fade" id="beatmaps" role="tabpanel" aria-labelledby="tab-beatmaps">
+                    </div>
+                    <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="tab-settings">
+                        <div class="card bg-osu-dark">
+                            <div class="card-body">
+                                <div class="md-form form-sm">
+                                    <input type="password" id="settingsInputApikey" class="form-control form-extend-osu">
+                                    <label for="settingsInputApikey">API Key</label>
+                                </div>
+                                <div class="md-form form-sm">
+                                    <input type="text" id="settingsInputUsername" class="form-control form-extend-osu">
+                                    <label for="settingsInputUsername">Username</label>
+                                </div>
+                                <select class="mdb-select md-form form-extend-osu">
+                                    <option value="1" selected>Standard</option>
+                                    <option value="2">Taiko</option>
+                                    <option value="3">Mania</option>
+                                    <option value="4">Catch the Beat</option>
+                                </select>
+                                <div class="md-form form-sm input-group">
+                                    <input type="text" id="settingsInputOsuDir" class="form-control form-extend-osu">
+                                    <label for="settingsInputOsuDir">osu! directory</label>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-sm btn-secondary" type="button" id="settingsInputOsuDir_btn">Browse</button>
+                                    </div>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input form-extend-osu" id="settingsInputGpuUsage" checked="checked2" disabled>
+                                    <label class="form-check-label material-tooltip-main" data-toggle="tooltip" title="This switch will be added in a later update (currently enabled)" for="settingsInputGpuUsage"><strike>Hardware Acceleration</strike></label>
+                                </div>
+                                <br />
+                                <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,5 +220,51 @@
         <script type="text/javascript" src="mdb/js/popper.min.js"></script>
         <script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/datatables.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/datatables2.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/datatables-select.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/datatables-select2.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/directives.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/flag.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/imagesloaded.pkgd.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/jquery.zmd.hierarchical-display.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/masonry.pkgd.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/rating.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/cards-extended.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/chat.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/multi-range.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/simple-charts.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/steppers.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/timeline.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/accordion-extended.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/animations-extended.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/buttons.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/cards.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/character-counter.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/chips.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/collapsible.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/file-input.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/forms-free.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/lightbox.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/mdb-autocomplete.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/megamenu.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/parallax.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/preloading.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/range-input.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/scrolling-navbar.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/sidenav.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/smooth-scroll.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/sticky.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/treeview.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/wow.min.js"></script>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+
+            $(document).ready(function() {
+                $('.mdb-select').materialSelect();
+            });
+        </script>
     </body>
 </html>

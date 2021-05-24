@@ -8,6 +8,65 @@
     src: url("../../fonts/Torus Regular.otf") format("opentype");
 }
 
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+  
+@media (min-width: 576px) {
+    .container {
+        max-width: 440px;
+    }
+}
+  
+@media (min-width: 768px) {
+    .container {
+        max-width: 620px;
+    }
+}
+  
+@media (min-width: 992px) {
+    .container {
+        max-width: 860px;
+    }
+}
+  
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1040px;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--osu-regular);
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--osu-dark);
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+.tabs-osu-dark {
+    background-color: var(--osu-dark) !important;
+}
+
+.tabs-osu-regular {
+    background-color: var(--osu-regular) !important;
+}
+
 .bg-osu-dark {
     background-color: var(--osu-dark);
 }
@@ -16,6 +75,77 @@
     background-color: var(--osu-regular);
 }
 
-.body{
+.osu-base{
     font-family: "Torus" !important;
+}
+
+html {
+    font-size: 10px;
+}
+
+@media screen and (min-width: 320px) {
+    html {
+        font-size: calc(10px + 12 * ((100vw - 320px) / 680));
+    }
+}
+@media screen and (min-width: 1000px) {
+    html {
+        font-size: 22px;
+    }
+}
+
+.form-extend-osu {
+    color:white;
+}
+
+.form-extend-osu label {
+    color:white;
+}
+
+.form-extend-osu:focus {
+    color:white;
+}
+
+.dropdown-content {
+    position: absolute;
+    z-index: 1021;
+    display: none;
+    min-width: 6.25rem;
+    max-height: 40.625rem;
+    margin: 0;
+    overflow-y: auto;
+    background-color: var(--osu-dark);
+    color:white;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    will-change: width, height
+}
+
+.dropdown-content li {
+    width: 100%;
+    clear: both;
+    line-height: 1.3rem;
+    color: white;
+    text-align: left;
+    text-transform: none;
+    cursor: pointer
+}
+
+.dropdown-content li:hover,
+.dropdown-content li.active {
+    background-color: var(--osu-regular);
+}
+
+.dropdown-content li>a,
+.dropdown-content li>span {
+    display: block;
+    padding: .5rem;
+    font-size: .9rem;
+    color: white;
+}
+
+.dropdown-content li>a>i {
+    height: inherit;
+    line-height: inherit
 }

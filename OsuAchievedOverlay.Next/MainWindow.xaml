@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OsuAchievedOverlay.Next"
         mc:Ignorable="d"
+        Background="#3D2932"
         MinHeight="200" MinWidth="300"
         Title="OsuAchieved" Height="450" Width="800">
     <Grid x:Name="BrowserWrapper">

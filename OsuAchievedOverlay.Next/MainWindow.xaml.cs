@@ -36,6 +36,7 @@ namespace OsuAchievedOverlay.Next
             //chromiumBrowser.RegisterJsObject("cefOsuApp", new cefOsuApp(chromiumBrowser, this));
 
             chromiumBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#viewLoader').hide()");
+            chromiumBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#viewApp').show()");
 
             Closed += MainWindow_Closed;
         }
@@ -48,6 +49,7 @@ namespace OsuAchievedOverlay.Next
         public void InitializeChromium()
         {
             CefSettings settings = new CefSettings();
+            //settings.CefCommandLineArgs.Add("disable-gpu", "");
 
             string start = string.Format(@"{0}\wwwroot\index.html", FileManager.GetExecutableDirectory());
 
