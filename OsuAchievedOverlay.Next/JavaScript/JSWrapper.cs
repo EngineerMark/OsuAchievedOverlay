@@ -1,5 +1,5 @@
 ﻿using CefSharp;
-using CefSharp.Wpf;
+using CefSharp.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +15,21 @@ namespace OsuAchievedOverlay.Next.JavaScript
     {
         private static ChromiumWebBrowser _internalBrowser;
 
+        public JSInputWrapper Input { get; }
+
         public JSWrapper(ChromiumWebBrowser browser)
         {
             _internalBrowser = browser;
+
+            Input = new JSInputWrapper(this);
+        }
+
+        public void Hide(string obj){
+            _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').hide();");
+        }
+
+        public void Show(string obj){
+            _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').show();");
         }
 
         public void SetAttribute(string obj, string attribute, string value)
@@ -47,52 +59,12 @@ namespace OsuAchievedOverlay.Next.JavaScript
             return res.Result.ToString();
         }
 
-        public void SetInputValue(string obj, string data)
-        {
-            _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').val('"+data+"')");
-        }
-
-        public async Task<string> GetInputValue(string obj)
-        {
-            JavascriptResponse res = await _internalBrowser.EvaluateScriptAsync("$('" + obj + "').val()");
-            return res.Result.ToString();
-        }
 
         public void SetElementDisabled(string obj, bool state)
         {
             _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').prop('disabled', "+(state?"true":"false")+")");
         }
 
-        private T EvalJs<T>(string script, TimeSpan timeout)
-        {
-            T val = default(T);
-
-            if (_internalBrowser.IsBrowserInitialized && !_internalBrowser.IsDisposed)
-            {
-                try
-                {
-                    var task = _internalBrowser.EvaluateScriptAsync(script, timeout);
-                    var completed = task.ContinueWith(res =>
-                    {
-                        if (!res.IsFaulted)
-                        {
-                            var response = res.Result;
-                            val = response.Success ? (T)response.Result : default(T);
-                        }
-                        else
-                        {
-                            Console.WriteLine("JS Thread is faulted");
-                        }
-                    });
-                    completed.Wait();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.InnerException.Message);
-                }
-            }
-
-            return (T)val;
-        }
+        public ChromiumWebBrowser GetBrowser() => _internalBrowser;
     }
 }

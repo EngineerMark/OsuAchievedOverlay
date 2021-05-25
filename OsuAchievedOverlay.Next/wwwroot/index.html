@@ -31,7 +31,7 @@
         <link rel="stylesheet" href="mdb/css/modules/parallax.min.css">
     </head>
     <body class="bg-osu-regular text-white osu-base" style="width: 100%;height: 100%;-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" unselectable="on" onselectstart="return false;">
-        <div id="viewLoader" style="width: 100%;height: 100%;" hidden>
+        <div id="viewLoader" style="width: 100%;height: 100%;">
             <div class="text-center">
                 <br/>
                 <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"></div>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div id="viewApp">
-            <nav class="navbar navbar-expand-lg bg-osu-dark text-white" style="padding-bottom: 0;">
+            <nav class="navbar navbar-expand-sm bg-osu-dark text-white" style="padding-bottom: 0;height:3rem;">
                 <div class="container classic-tabs">
                     <ul class="nav tabs-osu-regular" id="contentTabList" role="tablist">
                         <li class="nav-item"><a href="#session" aria-controls="session" aria-selected="true" role="tab" class="nav-link text-white active" data-toggle="tab" data-target="#session">session</a></li>
@@ -214,6 +214,7 @@
                                     <br />
                                     <!-- <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a> -->
                                     <button id="settingsConfirmButton" class="btn btn-success btn-sm" onclick="cefOsuApp.buttonSaveSettings();">Save and apply</button>
+                                    <button id="settingsProcessOsu" class="btn btn-success btn-sm" onclick="cefOsuApp.buttonProcessOsu();">Process osu</button>
                                 </div>
                             </div>
                         </div>

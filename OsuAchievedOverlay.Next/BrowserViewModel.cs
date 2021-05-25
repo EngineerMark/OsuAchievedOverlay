@@ -1,4 +1,4 @@
-﻿using CefSharp.Wpf;
+﻿using CefSharp.WinForms;
 using OsuAchievedOverlay.Next.JavaScript;
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace OsuAchievedOverlay.Next
         }
 
         public async Task<string> SettingsGetApiKey(){
-            return await AttachedJavascriptWrapper.GetInputValue("#settingsInputApikey");
+            return await AttachedJavascriptWrapper.Input.GetValue("#settingsInputApikey");
         }
     }
 }

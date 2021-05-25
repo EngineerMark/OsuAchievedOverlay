@@ -202,3 +202,7 @@ html {
     height: inherit;
     line-height: inherit
 }
+
+.navbar {
+    font-weight: 300;
+}

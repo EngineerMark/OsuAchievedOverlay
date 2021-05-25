@@ -1,5 +1,5 @@
 ﻿using CefSharp;
-using CefSharp.Wpf;
+using CefSharp.WinForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using OsuAchievedOverlay.Next.JavaScript;
 using OsuAchievedOverlay.Next.Managers;
@@ -38,17 +38,18 @@ namespace OsuAchievedOverlay.Next
             chromiumBrowser.JavascriptObjectRepository.Register("cefOsuApp", new cefOsuApp(chromiumBrowser, this), false);
             //chromiumBrowser.RegisterJsObject("cefOsuApp", new cefOsuApp(chromiumBrowser, this));
 
-            chromiumBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#viewLoader').hide()");
-            chromiumBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#viewApp').show()");
+            
+
+            Closed += MainWindow_Closed;
 
             BrowserViewModel.Instance.AttachedBrowser = chromiumBrowser;
             BrowserViewModel.Instance.AttachedJavascriptWrapper = cefOsuApp.JsExecuter;
 
+            BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#viewLoader");
+            BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#viewApp");
+
             BrowserViewModel.Instance.SetAppVersionText("2.0.0dev");
             BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
-
-            Closed += MainWindow_Closed;
-
             //string test = BrowserViewModel.Instance.GetAppVersion();
             //string t = "";
         }
@@ -71,7 +72,7 @@ namespace OsuAchievedOverlay.Next
 
             chromiumBrowser.MenuHandler = new cefOsuContextMenuHandler();
 
-            BrowserWrapper.Children.Add(chromiumBrowser);
+            BrowserWrapper.Child = chromiumBrowser;
 
             BrowserSettings browserSettings = new BrowserSettings();
             browserSettings.FileAccessFromFileUrls = CefState.Enabled;
@@ -108,7 +109,7 @@ namespace OsuAchievedOverlay.Next
 
         public void dirDialogOsuInstall()
         {
-            _internalBrowser.Dispatcher.Invoke(() =>
+            _internalWindow.Dispatcher.Invoke(() =>
             {
                 CommonOpenFileDialog dialog = new CommonOpenFileDialog();
                 dialog.IsFolderPicker = true;
@@ -120,7 +121,7 @@ namespace OsuAchievedOverlay.Next
 
         public void buttonSaveSettings()
         {
-            _internalBrowser.Dispatcher.Invoke(() =>
+            _internalWindow.Dispatcher.Invoke(() =>
             {
                 Task.Run(async () =>
                 {
