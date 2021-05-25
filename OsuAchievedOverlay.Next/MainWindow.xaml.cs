@@ -41,10 +41,16 @@ namespace OsuAchievedOverlay.Next
             chromiumBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#viewLoader').hide()");
             chromiumBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#viewApp').show()");
 
-            cefOsuApp.JsExecuter.Html("#aboutAppVersion", "2.0.0dev");
-            cefOsuApp.JsExecuter.Html("#aboutCefVersion", "CEF: "+Cef.CefSharpVersion+", Chromium: "+Cef.ChromiumVersion);
+            BrowserViewModel.Instance.AttachedBrowser = chromiumBrowser;
+            BrowserViewModel.Instance.AttachedJavascriptWrapper = cefOsuApp.JsExecuter;
+
+            BrowserViewModel.Instance.SetAppVersionText("2.0.0dev");
+            BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
 
             Closed += MainWindow_Closed;
+
+            //string test = BrowserViewModel.Instance.GetAppVersion();
+            //string t = "";
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -95,7 +101,8 @@ namespace OsuAchievedOverlay.Next
             _internalBrowser.ShowDevTools();
         }
 
-        public void OpenUrl(string url){
+        public void OpenUrl(string url)
+        {
             System.Diagnostics.Process.Start(url);
         }
 
@@ -115,6 +122,16 @@ namespace OsuAchievedOverlay.Next
         {
             _internalBrowser.Dispatcher.Invoke(() =>
             {
+                Task.Run(async () =>
+                {
+                    JsExecuter.SetElementDisabled("#settingsConfirmButton", true);
+                    JsExecuter.SetHtml("#settingsConfirmButton", "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> saving");
+
+                    string apiKey = await BrowserViewModel.Instance.SettingsGetApiKey();
+                    //MessageBox.Show(apiKey);
+                    JsExecuter.SetElementDisabled("#settingsConfirmButton", false);
+                    JsExecuter.SetHtml("#settingsConfirmButton", "Save and apply");
+                });
             });
         }
     }

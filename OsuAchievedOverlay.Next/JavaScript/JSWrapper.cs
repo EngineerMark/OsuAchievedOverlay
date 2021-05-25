@@ -30,8 +30,69 @@ namespace OsuAchievedOverlay.Next.JavaScript
             _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').addClass('" + _class + "');");
         }
 
-        public void Html(string obj, string data){
+        public void SetHtml(string obj, string data)
+        {
             _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').html('" + data + "');");
+        }
+
+        public async Task<string> GetHtml(string obj)
+        {
+            JavascriptResponse res = await _internalBrowser.EvaluateScriptAsync("$('" + obj + "').html()");
+            return res.Result.ToString();
+        }
+
+        public async Task<string> GetAttribute(string obj, string attribute)
+        {
+            JavascriptResponse res = await _internalBrowser.EvaluateScriptAsync("$('" + obj + "').attr('" + attribute + "')");
+            return res.Result.ToString();
+        }
+
+        public void SetInputValue(string obj, string data)
+        {
+            _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').val('"+data+"')");
+        }
+
+        public async Task<string> GetInputValue(string obj)
+        {
+            JavascriptResponse res = await _internalBrowser.EvaluateScriptAsync("$('" + obj + "').val()");
+            return res.Result.ToString();
+        }
+
+        public void SetElementDisabled(string obj, bool state)
+        {
+            _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').prop('disabled', "+(state?"true":"false")+")");
+        }
+
+        private T EvalJs<T>(string script, TimeSpan timeout)
+        {
+            T val = default(T);
+
+            if (_internalBrowser.IsBrowserInitialized && !_internalBrowser.IsDisposed)
+            {
+                try
+                {
+                    var task = _internalBrowser.EvaluateScriptAsync(script, timeout);
+                    var completed = task.ContinueWith(res =>
+                    {
+                        if (!res.IsFaulted)
+                        {
+                            var response = res.Result;
+                            val = response.Success ? (T)response.Result : default(T);
+                        }
+                        else
+                        {
+                            Console.WriteLine("JS Thread is faulted");
+                        }
+                    });
+                    completed.Wait();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.InnerException.Message);
+                }
+            }
+
+            return (T)val;
         }
     }
 }
