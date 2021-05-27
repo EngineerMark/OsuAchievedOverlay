@@ -1,0 +1,130 @@
+﻿<!-- DO NOT MODIFY THE FILES IN WWWROOT. DOING SO CAN BREAK THE PROGRAM -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>OsuAchievedOverlay</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <link rel="stylesheet" href="mdb/css/bootstrap.css">
+        <link rel="stylesheet" href="mdb/css/mdb.css">
+        <link rel="stylesheet" href="mdb/css/osu.css">
+
+        <link rel="stylesheet" href="mdb/css/addons/datatables.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/datatables2.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/datatables-select.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/datatables-select2.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/directives.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/flag.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/jquery.zmd.hierarchical-display.min.css">
+        <link rel="stylesheet" href="mdb/css/addons/rating.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/cards-extended.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/chat.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/multi-range.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/simple-charts.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/steppers.min.css">
+        <link rel="stylesheet" href="mdb/css/addons-pro/timeline.min.css">
+        <link rel="stylesheet" href="mdb/css/modules/accordion-extended.min.css">
+        <link rel="stylesheet" href="mdb/css/modules/animations-extended.min.css">
+        <link rel="stylesheet" href="mdb/css/modules/lightbox.min.css">
+        <link rel="stylesheet" href="mdb/css/modules/megamenu.min.css">
+        <link rel="stylesheet" href="mdb/css/modules/parallax.min.css">
+    </head>
+    <body class="bg-osu-regular text-white osu-base" style="width: 100%;height: 100%;-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" unselectable="on" onselectstart="return false;">
+        <div id="viewApp" class="container h-100">
+            <div class="row align-items-center h-100">
+                <div class="col-6 mx-auto">
+                    <h2 class="text-osu-dark text-center">starting osu!achieved</h2>
+                    <br />
+                    <div class="d-flex justify-content-center">
+                        <div class="preloader-wrapper active">
+                            <div class="spinner-layer spinner-osu-dark-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="generateSettingsModal" tabindex="-1" role="dialog" aria-labelledby="generateSettingsModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content bg-osu-regular">
+                        <div class="modal-body bg-osu-regular">
+                            <h4>First time setup</h4>
+                            <div class="md-form form-sm">
+                                <input type="password" id="settingsInputApikey" class="form-control form-extend-osu">
+                                <label for="settingsInputApikey">API Key</label>
+                            </div>
+                            <div class="md-form form-sm">
+                                <input type="text" id="settingsInputUsername" class="form-control form-extend-osu">
+                                <label for="settingsInputUsername">Username</label>
+                            </div>
+                            <button id="settingsConfirmButton" onclick="cefOsuApp.finishSetup();" type="button" class="btn btn-sm btn-primary">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="mdb/js/jquery.min.js"></script>
+        <script type="text/javascript" src="mdb/js/popper.min.js"></script>
+        <script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/datatables.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/datatables2.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/datatables-select.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/datatables-select2.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/directives.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/flag.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/imagesloaded.pkgd.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/jquery.zmd.hierarchical-display.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/masonry.pkgd.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons/rating.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/cards-extended.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/chat.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/multi-range.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/simple-charts.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/steppers.min.js"></script>
+        <script type="text/javascript" src="mdb/js/addons-pro/timeline.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/accordion-extended.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/animations-extended.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/buttons.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/cards.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/character-counter.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/chips.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/collapsible.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/file-input.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/forms-free.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/lightbox.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/mdb-autocomplete.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/megamenu.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/parallax.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/preloading.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/range-input.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/scrolling-navbar.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/sidenav.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/smooth-scroll.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/sticky.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/treeview.min.js"></script>
+        <script type="text/javascript" src="mdb/js/modules/wow.min.js"></script>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+
+            $(document).ready(function() {
+                $('.mdb-select').materialSelect();
+            });
+
+            $('img').on('dragstart', function(event) { event.preventDefault(); });
+
+            $('#generateSettingsModal').modal('show');
+        </script>
+    </body>
+</html>

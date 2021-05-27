@@ -3,10 +3,12 @@ using CefSharp.WinForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using OsuAchievedOverlay.Next.JavaScript;
 using OsuAchievedOverlay.Next.Managers;
+using OsuAchievedOverlay.Next.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
@@ -18,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 
 namespace OsuAchievedOverlay.Next
 {
@@ -37,21 +40,15 @@ namespace OsuAchievedOverlay.Next
             chromiumBrowser.JavascriptObjectRepository.Settings.LegacyBindingEnabled = true;
             chromiumBrowser.JavascriptObjectRepository.Register("cefOsuApp", new cefOsuApp(chromiumBrowser, this), false);
             //chromiumBrowser.RegisterJsObject("cefOsuApp", new cefOsuApp(chromiumBrowser, this));
-
-            
-
             Closed += MainWindow_Closed;
+
+            //Forced sleep so browser has time to load
+            Thread.Sleep(5);
 
             BrowserViewModel.Instance.AttachedBrowser = chromiumBrowser;
             BrowserViewModel.Instance.AttachedJavascriptWrapper = cefOsuApp.JsExecuter;
 
-            BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#viewLoader");
-            BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#viewApp");
-
-            BrowserViewModel.Instance.SetAppVersionText("2.0.0dev");
-            BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
-            //string test = BrowserViewModel.Instance.GetAppVersion();
-            //string t = "";
+            AppManager.Instance.Start();
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -62,10 +59,8 @@ namespace OsuAchievedOverlay.Next
         public void InitializeChromium()
         {
             CefSettings settings = new CefSettings();
-            //settings.CefCommandLineArgs.Add("disable-gpu", "");
-            settings.CefCommandLineArgs.Add("disable-threaded-scrolling", "1");
 
-            string start = string.Format(@"{0}\wwwroot\index.html", FileManager.GetExecutableDirectory());
+            string start = string.Format(@"{0}\wwwroot\launcher.html", FileManager.GetExecutableDirectory());
 
             Cef.Initialize(settings);
             chromiumBrowser = new ChromiumWebBrowser(start);
@@ -87,6 +82,8 @@ namespace OsuAchievedOverlay.Next
         private static Window _internalWindow;
         private static JSWrapper _jsExecuter;
 
+        public static event EventHandler SetupFinished;
+
         public static JSWrapper JsExecuter { get => _jsExecuter; set => _jsExecuter = value; }
 
         public cefOsuApp(ChromiumWebBrowser browser, Window window)
@@ -96,6 +93,8 @@ namespace OsuAchievedOverlay.Next
 
             JsExecuter = new JSWrapper(_internalBrowser);
         }
+
+        public static Window GetWindow() => _internalWindow;
 
         public void showDevTools()
         {
@@ -123,17 +122,38 @@ namespace OsuAchievedOverlay.Next
         {
             _internalWindow.Dispatcher.Invoke(() =>
             {
-                Task.Run(async () =>
+                Task task = Task.Run(async () =>
                 {
                     JsExecuter.SetElementDisabled("#settingsConfirmButton", true);
                     JsExecuter.SetHtml("#settingsConfirmButton", "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> saving");
 
                     string apiKey = await BrowserViewModel.Instance.SettingsGetApiKey();
+                    string username = await BrowserViewModel.Instance.SettingsGetUsername();
+
+                    bool processSettings = true;
+                    if (!ApiHelper.IsUserValid(apiKey, username))
+                    {
+                        BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "API Key or username is invalid");
+                        processSettings = false;
+                    }
+
+                    if (processSettings)
+                    {
+                        // Save stuff
+                        SettingsManager.Instance.SettingsSave();
+                        BrowserViewModel.Instance.SendNotification(NotificationType.Success, "Saved settings");
+                    }
+
                     //MessageBox.Show(apiKey);
                     JsExecuter.SetElementDisabled("#settingsConfirmButton", false);
                     JsExecuter.SetHtml("#settingsConfirmButton", "Save and apply");
+
                 });
             });
+        }
+    
+        public void finishSetup(){
+            SetupFinished?.Invoke(null, null);
         }
     }
 

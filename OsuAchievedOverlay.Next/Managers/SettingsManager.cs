@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OsuAchievedOverlay.Next.Managers
@@ -32,13 +33,32 @@ namespace OsuAchievedOverlay.Next.Managers
                 };
             }
         }
+        public const string SettingsLocation = "Data/Settings.ini";
+
+        public void FixSettingsPath(){
+            if(File.Exists("Settings.ini")){
+                while(!FileManager.IsFileReady("Settings.ini")){
+                    Thread.Sleep(1);
+                }
+                FileManager.MoveFile("Settings.ini", SettingsLocation);
+            }
+        }
+
+        public bool LoadOrCreateSettings(){
+            if(!LoadSettings()){
+                FileIniDataParser parser = new FileIniDataParser();
+                parser.WriteFile(SettingsLocation, DefaultSettings);
+                return false;
+            }
+            return true;
+        }
 
         public bool LoadSettings()
         {
             FileIniDataParser parser = new FileIniDataParser();
-            if (File.Exists("Settings.ini"))
+            if (File.Exists(SettingsLocation))
             {
-                IniData data = parser.ReadFile("Settings.ini");
+                IniData data = parser.ReadFile(SettingsLocation);
                 data = FixIniData(parser, data);
                 OsuApiHelper.OsuApiKey.Key = data["api"]["key"];
                 //GameManager.Instance.OsuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), data["api"]["gamemode"]));
@@ -64,14 +84,14 @@ namespace OsuAchievedOverlay.Next.Managers
                 }
             }
 
-            parser.WriteFile("Settings.ini", data);
+            parser.WriteFile(SettingsLocation, data);
             return data;
         }
 
         public void SettingsSave()
         {
             FileIniDataParser parser = new FileIniDataParser();
-            parser.WriteFile("Settings.ini", Settings);
+            parser.WriteFile(SettingsLocation, Settings);
 
             //GameManager.Instance.ApplySettingsToApp(Settings);
         }

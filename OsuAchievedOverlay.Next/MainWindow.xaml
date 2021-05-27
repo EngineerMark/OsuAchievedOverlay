@@ -7,9 +7,11 @@
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
         Background="#3D2932"
-        MinHeight="200" MinWidth="300"
+        MinHeight="300" MinWidth="300"
         Title="OsuAchieved" Height="450" Width="800">
     <Grid>
-        <WindowsFormsHost x:Name="BrowserWrapper" Background="#3D2932"></WindowsFormsHost>
+        <Grid Margin="0,0,0,0">
+            <WindowsFormsHost x:Name="BrowserWrapper" Background="#3D2932"></WindowsFormsHost>
+        </Grid>
     </Grid>
 </Window>

@@ -1,0 +1,46 @@
+﻿<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>OsuAchievedOverlay</title>
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
+        <link href="css/bootstrap.css" rel="stylesheet">
+    </head>
+    <body class="bg-osu-regular text-white">
+        <header class="p-3 bg-osu-dark text-white">
+            <div class="container">
+              <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                  <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+                </a>
+        
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" id="contentTabList" role="tablist">
+                  <li><a href="#" class="nav-link px-2 text-white" data-bs-toggle="tab" data-bs-target="#session">session</a></li>
+                  <li><a href="#" class="nav-link px-2 text-white" data-bs-toggle="tab" data-bs-target="#scores">scores</a></li>
+                  <li><a href="#" class="nav-link px-2 text-white" data-bs-toggle="tab" data-bs-target="#beatmaps">beatmaps</a></li>
+                </ul>
+              </div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="tab-content" id="tabcontent">
+                <div class="tab-pane fade show active" id="session" role="tabpanel" aria-labelledby="tab-session">
+                    <div style="overflow: hidden; position: relative;">
+                        <img style="position: absolute;left: 0;top: 0;width: 100%;height: auto;opacity:0.3;" id="UserHeaderImage" src="./img/headers/placeholder_banner.jpeg" alt=""></img>
+                        <div style="position: relative;">
+                            <h1 class="display-4 fw-normal">Punny headline</h1>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="cefOsuObject.showDevTools();">Primary</button>
+                </div>
+                <div class="tab-pane fade" id="scores" role="tabpanel" aria-labelledby="tab-scores">
+                </div>
+                <div class="tab-pane fade" id="beatmaps" role="tabpanel" aria-labelledby="tab-beatmaps">
+                </div>
+            </div>
+        </div>
+        <script src="js/bootstrap.bundle.js"></script>
+        <script src="js/jquery.js"></script>
+    </body>
+</html>

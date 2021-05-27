@@ -17,7 +17,7 @@ namespace OsuAchievedOverlay.Next.JavaScript
 
         public void SetValue(string obj, string data)
         {
-            parent.GetBrowser().ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').val('" + data + "')");
+            parent.GetBrowser().ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').val('" + data + "').trigger('change');");
         }
 
         public async Task<string> GetValue(string obj)

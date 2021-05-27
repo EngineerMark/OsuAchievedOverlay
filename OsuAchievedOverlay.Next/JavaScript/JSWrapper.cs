@@ -16,20 +16,24 @@ namespace OsuAchievedOverlay.Next.JavaScript
         private static ChromiumWebBrowser _internalBrowser;
 
         public JSInputWrapper Input { get; }
+        public JSModalWrapper Modal { get; }
 
         public JSWrapper(ChromiumWebBrowser browser)
         {
             _internalBrowser = browser;
 
             Input = new JSInputWrapper(this);
+            Modal = new JSModalWrapper(this);
         }
 
         public void Hide(string obj){
             _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').hide();");
+            SetProp(obj, "hidden", true);
         }
 
         public void Show(string obj){
             _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').show();");
+            SetProp(obj, "hidden", false);
         }
 
         public void SetAttribute(string obj, string attribute, string value)
@@ -62,7 +66,12 @@ namespace OsuAchievedOverlay.Next.JavaScript
 
         public void SetElementDisabled(string obj, bool state)
         {
-            _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').prop('disabled', "+(state?"true":"false")+")");
+            //_internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').prop('disabled', "+(state?"true":"false")+")");
+            SetProp(obj, "disabled", state);
+        }
+
+        public void SetProp(string obj, string prop, bool state){
+            _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').prop('"+prop+"', "+ (state ? "true" : "false") + ")");
         }
 
         public ChromiumWebBrowser GetBrowser() => _internalBrowser;
