@@ -10,6 +10,16 @@
     src: url("../../fonts/Torus Regular.otf") format("opentype");
 }
 
+.stretched-link {
+    transition: all 0.5s ease-in-out;
+}
+
+.stretched-link:hover{
+    transition: all 0.5s ease-in-out;
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
+}
+
 .list-group-flush > .list-group-item {
     border-width: 0 0 1px;
     background-color: var(--osu-dark);
@@ -240,4 +250,90 @@ html {
 .switch label input[type="checkbox"]:checked+.lever:after {
     left: 1.5rem;
     background-color: #644251
+}
+
+.range-field input[type="range"] {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin: 15px 0;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+}
+
+.range-field input[type="range"]+.thumb {
+    position: absolute;
+    top: 10px;
+    width: 0;
+    height: 0;
+    background-color: #ff65f7;
+    border: none;
+    border-radius: 50%;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%
+}
+
+.range-field input[type="range"]+.thumb .value {
+    display: block;
+    width: 30px;
+    font-size: 0;
+    color: #ff65f7;
+    text-align: center;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg)
+}
+
+.range-field input[type="range"]::-webkit-slider-runnable-track {
+    height: 3px;
+    background: var(--osu-regular);
+    border: none
+}
+
+.range-field input[type="range"]::-webkit-slider-thumb {
+    width: 14px;
+    height: 14px;
+    margin: -5px 0 0 0;
+    background-color: #ff65f7;
+    border: none;
+    border-radius: 50%;
+    -webkit-transition: .3s;
+    transition: .3s;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-appearance: none;
+    appearance: none
+}
+
+.range-field input[type="range"]:focus::-webkit-slider-runnable-track {
+    background: var(--osu-regular)
+}
+
+.range-field input[type="range"]::-moz-range-track {
+    height: 3px;
+    background: var(--osu-regular);
+    border: none
+}
+
+.range-field input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    margin-top: -5px;
+    background: #ff65f7;
+    border: none;
+    border-radius: 50%
+}
+
+.range-field input[type="range"]::-ms-thumb {
+    width: 14px;
+    height: 14px;
+    background: #ff65f7;
+    border: none;
+    border-radius: 50%
 }

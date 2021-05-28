@@ -18,79 +18,46 @@ namespace OsuAchievedOverlay.Next.Managers
 
             //BrowserViewModel.Instance.SetAppVersionText("2.0.0dev");
             //BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
+
+            StartupManager.StartupFinished += (object sender, EventArgs e) => Prepare();
+
             Directory.CreateDirectory("Data");
             SettingsManager.Instance.FixSettingsPath();
-            bool exists = SettingsManager.Instance.LoadOrCreateSettings();
-            bool validApiOrUser = ApiHelper.IsKeyValid(SettingsManager.Instance.Settings["api"]["key"])
-                && ApiHelper.IsUserValid(SettingsManager.Instance.Settings["api"]["key"], SettingsManager.Instance.Settings["api"]["user"]);
-
-            if (!exists || !validApiOrUser)
-            {
-                if (exists && !validApiOrUser)
-                {
-                    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "API Key or username in settings is invalid");
-                }
-
-                BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Show("#generateSettingsModal");
-                cefOsuApp.SetupFinished += (object sender, EventArgs e) =>
-                {
-                    cefOsuApp.GetWindow().Dispatcher.Invoke(() =>
-                    {
-                        Task.Run(async () =>
-                        {
-                            BrowserViewModel.Instance.AttachedJavascriptWrapper.SetElementDisabled("#settingsConfirmButton", true);
-                            BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#settingsConfirmButton", "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> saving");
-
-                            Task task = ProcessSetup();
-                            if (await Task.WhenAny(task, Task.Delay(5000)) != task)
-                            {
-                                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Something went wrong. Please retry.");
-                            }
-
-                            //MessageBox.Show(apiKey);
-                            BrowserViewModel.Instance.AttachedJavascriptWrapper.SetElementDisabled("#settingsConfirmButton", false);
-                            BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#settingsConfirmButton", "Save");
-                        });
-                    });
-                };
-            }
-            else
-            {
-                Prepare();
-            }
-        }
-
-        private async Task ProcessSetup()
-        {
-            string apiKey = await BrowserViewModel.Instance.SettingsGetApiKey();
-            string username = await BrowserViewModel.Instance.SettingsGetUsername();
-
-            bool processSettings = true;
-
-            if (!ApiHelper.IsUserValid(apiKey, username))
-            {
-                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "API Key or username is invalid");
-                processSettings = false;
-            }
-
-            if (processSettings)
-            {
-                SettingsManager.Instance.Settings["api"]["key"] = apiKey;
-                SettingsManager.Instance.Settings["api"]["user"] = username;
-                SettingsManager.Instance.SettingsSave();
-                BrowserViewModel.Instance.SendNotification(NotificationType.Success, "Saved settings");
-                Prepare();
-            }
+            StartupManager.Instance.CheckSetup();
         }
 
         public void Prepare()
         {
             BrowserViewModel.Instance.LoadPage("index.html");
 
+            //Forced sleep to give browser time to load (maybe switch to event later)
             Thread.Sleep(3);
 
+            PopulateSettings();
+
+            BrowserViewModel.Instance.SetAppVersionText("2.0.0dev");
+            BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
+
+            OsuApiHelper.OsuUser user = OsuApiHelper.OsuApi.GetUser(SettingsManager.Instance.Settings["api"]["user"]);
+            //Test
+            Session s = new Session()
+            {
+                InitialData = SessionData.FromUser(user),
+                CurrentData = SessionData.FromUser(user)
+            };
+            s.DifferenceData = s.CurrentData - s.InitialData;
+
+            BrowserViewModel.Instance.ApplyUser(user);
+            BrowserViewModel.Instance.ApplySession(s);
+        }
+
+        private void PopulateSettings(){
             BrowserViewModel.Instance.SettingsSetApikey(SettingsManager.Instance.Settings["api"]["key"]);
             BrowserViewModel.Instance.SettingsSetUsername(SettingsManager.Instance.Settings["api"]["user"]);
+            BrowserViewModel.Instance.SettingsSetUpdaterate(SettingsManager.Instance.Settings["api"]["updateRate"]);
+            if(!string.IsNullOrEmpty(SettingsManager.Instance.Settings["misc"]["osuFolder"]))
+                BrowserViewModel.Instance.SettingsSetOsuDirectory(SettingsManager.Instance.Settings["misc"]["osuFolder"]);
+            BrowserViewModel.Instance.SettingsSetGamemode((OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
         }
     }
 }

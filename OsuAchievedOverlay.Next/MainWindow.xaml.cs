@@ -21,6 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Shell;
+using OsuApiHelper;
 
 namespace OsuAchievedOverlay.Next
 {
@@ -129,6 +130,9 @@ namespace OsuAchievedOverlay.Next
 
                     string apiKey = await BrowserViewModel.Instance.SettingsGetApiKey();
                     string username = await BrowserViewModel.Instance.SettingsGetUsername();
+                    string osudir = await BrowserViewModel.Instance.SettingsGetOsuDirectory();
+                    OsuMode gamemode = await BrowserViewModel.Instance.SettingsGetGamemode();
+                    int updateRateInteger = -1;
 
                     bool processSettings = true;
                     if (!ApiHelper.IsUserValid(apiKey, username))
@@ -137,8 +141,33 @@ namespace OsuAchievedOverlay.Next
                         processSettings = false;
                     }
 
+                    if(!string.IsNullOrEmpty(osudir) && processSettings){
+                        if(!ApiHelper.IsValidOsuInstallation(osudir)){
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Selected osu directory is invalid");
+                            processSettings = false;
+                        }
+                    }
+
+                    if(processSettings){
+                        string updateRate = await BrowserViewModel.Instance.SettingsGetUpdaterate();
+                        try
+                        {
+                            updateRateInteger = Convert.ToInt32(updateRate);
+                            updateRateInteger = Math.Min(120, Math.Max(5, updateRateInteger));
+                        }catch(Exception e){
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Update rate value seems to be invalid");
+                            processSettings = false;
+                        }
+                    }
+
                     if (processSettings)
                     {
+                        SettingsManager.Instance.Settings["api"]["key"] = apiKey;
+                        SettingsManager.Instance.Settings["api"]["user"] = username;
+                        SettingsManager.Instance.Settings["api"]["updateRate"] = updateRateInteger+"";
+                        SettingsManager.Instance.Settings["api"]["gamemode"] = gamemode + "";
+                        SettingsManager.Instance.Settings["misc"]["osuFolder"] = osudir;
+
                         // Save stuff
                         SettingsManager.Instance.SettingsSave();
                         BrowserViewModel.Instance.SendNotification(NotificationType.Success, "Saved settings");
@@ -154,6 +183,10 @@ namespace OsuAchievedOverlay.Next
     
         public void finishSetup(){
             SetupFinished?.Invoke(null, null);
+        }
+
+        public void buttonProcessOsu(){
+            InspectorManager.Instance.ProcessOsu(_internalWindow.Dispatcher);
         }
     }
 

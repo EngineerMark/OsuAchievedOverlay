@@ -15,15 +15,19 @@ namespace OsuAchievedOverlay.Next.JavaScript
     {
         private static ChromiumWebBrowser _internalBrowser;
 
-        public JSInputWrapper Input { get; }
-        public JSModalWrapper Modal { get; }
+        public JSTextInput TextInput { get; }
+        public JSRangeInput RangeInput { get; }
+        public JSSelectInput SelectInput { get; }
+        public JSModal Modal { get; }
 
         public JSWrapper(ChromiumWebBrowser browser)
         {
             _internalBrowser = browser;
 
-            Input = new JSInputWrapper(this);
-            Modal = new JSModalWrapper(this);
+            TextInput = new JSTextInput(this);
+            RangeInput = new JSRangeInput(this);
+            SelectInput = new JSSelectInput(this);
+            Modal = new JSModal(this);
         }
 
         public void Hide(string obj){

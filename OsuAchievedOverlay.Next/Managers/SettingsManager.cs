@@ -48,6 +48,7 @@ namespace OsuAchievedOverlay.Next.Managers
             if(!LoadSettings()){
                 FileIniDataParser parser = new FileIniDataParser();
                 parser.WriteFile(SettingsLocation, DefaultSettings);
+                Settings = DefaultSettings;
                 return false;
             }
             return true;

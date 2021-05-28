@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
+using osu_database_reader.Components.Beatmaps;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +18,8 @@ namespace OsuAchievedOverlay.Next.Helpers
             return (File.Exists(Path.Combine(path, "osu!.exe")) &&
                 File.Exists(Path.Combine(path, "osu!.db")) &&
                 File.Exists(Path.Combine(path, "scores.db")) &&
-                Directory.Exists(Path.Combine(path, "Songs")));
+                File.Exists(Path.Combine(path, "osu!.cfg")));
+                //Directory.Exists(Path.Combine(path, "Songs")));
         }
 
         public static bool IsKeyValid(string key)
@@ -33,6 +35,16 @@ namespace OsuAchievedOverlay.Next.Helpers
             {
                 return false;
             }
+        }
+
+        public static List<string> GetImages(string path){
+            List<string> images = Directory.GetFiles(path).Where(file =>
+            {
+                return Path.GetExtension(file) == ".png" ||
+                    Path.GetExtension(file) == ".jpg" ||
+                    Path.GetExtension(file) == ".jpeg";
+            }).ToList();
+            return images;
         }
 
         public static bool IsUserValid(string key, string user)

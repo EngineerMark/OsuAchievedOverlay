@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace OsuAchievedOverlay.Next.JavaScript
 {
-    public class JSModalWrapper
+    public class JSModal
     {
         private JSWrapper parent { get; }
 
-        public JSModalWrapper(JSWrapper parent)
+        public JSModal(JSWrapper parent)
         {
             this.parent = parent;
         }

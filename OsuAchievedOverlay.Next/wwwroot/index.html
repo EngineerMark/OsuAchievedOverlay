@@ -53,16 +53,15 @@
                           </div> -->
                         <div class="card testimonial-card bg-osu-dark">
                             <div class="card-up">
-                                <img class="card-img-top" src="./img/headers/placeholder_banner.jpeg">
+                                <img id="sessionHeaderImage" class="card-img-top" src="./img/headers/placeholder_banner.jpeg">
                             </div>
 
                             <div class="avatar mx-auto">
-                                <img src="./img/headers/karenkujo.png" class="rounded-circle"
-                                  alt="woman avatar">
+                                <img id="sessionProfileImage" src="./img/headers/karenkujo.png" class="rounded-circle">
                             </div>
 
                             <div class="card-body">
-                                <h4 class="card-title"><img class="material-tooltip-main" data-toggle="tooltip" title="Unknown Country (placeholder)" style="height: 1em;" src="./img/flags/__.png"/> Amayakase</h4>
+                                <h4 class="card-title"><img id="sessionFlag" class="material-tooltip-main" data-toggle="tooltip" title="Unknown Country (placeholder)" style="height: 1em;" src="./img/flags/__.png"/> <span id="sessionUsername">Amayakase</span></h4>
                             </div>
                         </div>
                         <br />
@@ -71,28 +70,28 @@
                                 <div class="row">
                                     <div class="col">
                                         <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/SSH.png" />
-                                        <h6 class="h6-responsive">1,000</h6>
-                                        <span class="badge badge-pill green">+50</span>
+                                        <h6 id="sessionTotalSSHCount" class="h6-responsive">1,000</h6>
+                                        <span id="sessionDifferenceSSHCount" class="badge badge-pill green">+50</span>
                                     </div>
                                     <div class="col">
                                         <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/SS.png" />
-                                        <h6 class="h6-responsive">1,000</h6>
-                                        <span class="badge badge-pill green">+50</span>
+                                        <h6 id="sessionTotalSSCount" class="h6-responsive">1,000</h6>
+                                        <span id="sessionDifferenceSSCount" class="badge badge-pill green">+50</span>
                                     </div>
                                     <div class="col">
                                         <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/SH.png" />
-                                        <h6 class="h6-responsive">1,000</h6>
-                                        <span class="badge badge-pill green">+50</span>
+                                        <h6 id="sessionTotalSHCount" class="h6-responsive">1,000</h6>
+                                        <span id="sessionDifferenceSHCount" class="badge badge-pill green">+50</span>
                                     </div>
                                     <div class="col">
                                         <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/S.png" />
-                                        <h6 class="h6-responsive">1,000</h6>
-                                        <span class="badge badge-pill green">+50</span>
+                                        <h6 id="sessionTotalSCount" class="h6-responsive">1,000</h6>
+                                        <span id="sessionDifferenceSCount" class="badge badge-pill green">+50</span>
                                     </div>
                                     <div class="col">
                                         <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/A.png" />
-                                        <h6 class="h6-responsive">1,000</h6>
-                                        <span class="badge badge-pill green">+50</span>
+                                        <h6 id="sessionTotalACount" class="h6-responsive">1,000</h6>
+                                        <span id="sessionDifferenceACount" class="badge badge-pill green">+50</span>
                                     </div>
                                 </div>
                             </div>
@@ -104,64 +103,64 @@
                                     <div class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Level</div>
-                                            <div class="col text-right">100.8</div>
-                                            <div class="col text-left">+0</div>
+                                            <div id="sessionCurrentLevel" class="col text-right">100.8</div>
+                                            <div id="sessionDifferenceLevel" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Total Score</div>
-                                            <div class="col text-right">100.000.000</div>
-                                            <div class="col text-left">+0</div>
+                                            <div id="sessionCurrentTotalScore" class="col text-right">100.000.000</div>
+                                            <div id="sessionDifferenceTotalScore" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Ranked Score</div>
-                                            <div class="col text-right">50.000.000</div>
-                                            <div class="col text-left">+0</div>
+                                            <div id="sessionCurrentRankedScore" class="col text-right">50.000.000</div>
+                                            <div id="sessionDifferenceRankedScore" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">World Rank</div>
-                                            <div class="col text-right">#1</div>
-                                            <div class="col text-left">+0</div>
+                                            <div id="sessionCurrentWorldRank" class="col text-right">#1</div>
+                                            <div id="sessionDifferenceWorldRank" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Country Score</div>
-                                            <div class="col text-right">#1</div>
-                                            <div class="col text-left">+0</div>
+                                            <div id="sessionCurrentCountryRank" class="col text-right">#1</div>
+                                            <div id="sessionDifferenceCountryRank" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Playcount</div>
-                                            <div class="col text-right">200.000</div>
-                                            <div class="col text-left">+0</div>
+                                            <div id="sessionCurrentPlaycount" class="col text-right">200.000</div>
+                                            <div id="sessionDifferencePlaycount" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Playtime</div>
-                                            <div class="col text-right">3360 hours</div>
-                                            <div class="col text-left">+0 hours</div>
+                                            <div id="sessionCurrentPlaytime" class="col text-right">3360 hours</div>
+                                            <div id="sessionDifferencePlaytime" class="col text-left">+0 hours</div>
                                         </div>
                                     </div>
                                     <div class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Accuracy</div>
-                                            <div class="col text-right">100%</div>
-                                            <div class="col text-left">+0</div>
+                                            <div id="sessionCurrentAccuracy" class="col text-right">100%</div>
+                                            <div id="sessionDifferenceAccuracy" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Performance</div>
-                                            <div class="col text-right">5000</div>
-                                            <div class="col text-left">+0</div>
+                                            <div id="sessionCurrentPerformance" class="col text-right">5000</div>
+                                            <div id="sessionDifferencePerformance" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                 </div>
@@ -169,25 +168,105 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="inspector" role="tabpanel" aria-labelledby="tab-inspector">
-                        <button id="settingsProcessOsu" class="btn btn-success btn-sm" onclick="cefOsuApp.buttonProcessOsu();">Process osu</button>
+                        <section>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
+                                        <i class="fas fa-cubes fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
+                                        <div class="media-body p-1">
+                                            <p class="text-uppercase text-muted mb-1"><small>beatmap sets</small></p>
+                                            <h5 id="inspectorBeatmapSetCount" class="font-weight-bold mb-0">-</h5>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
+                                        <i class="fas fa-box-open fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
+                                        <div class="media-body p-1">
+                                            <p class="text-uppercase text-muted mb-1"><small>difficulties</small></p>
+                                            <h5 id="inspectorBeatmapDiffCount" class="font-weight-bold mb-0">-</h5>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <a class="media bg-osu-dark z-depth-1 rounded stretched-link" data-toggle="modal" data-target="#inspectorCollectionModal">
+                                        <i class="fas fa-list-ul fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
+                                        <div class="media-body p-1">
+                                            <p class="text-uppercase text-muted mb-1"><small>collections</small></p>
+                                            <h5 id="inspectorCollectionCount" class="font-weight-bold mb-0">-</h5>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
+                                        <i class="fas fa-star fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
+                                        <div class="media-body p-1">
+                                            <p class="text-uppercase text-muted mb-1"><small>scores</small></p>
+                                            <h5 id="inspectorScoreCount" class="font-weight-bold mb-0">-</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="card">
+                            <div class="card-body bg-osu-dark">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <canvas id="inspectorMapRankChart"></canvas>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <table class="table text-white">
+                                            <tbody>
+                                                <tr data-toggle="tooltip" title="Qualified maps included">
+                                                    <td>ranked maps</td>
+                                                    <td id="inspectorCellRankedMaps">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>loved maps</td>
+                                                    <td id="inspectorCellLovedMaps">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>unranked maps</td>
+                                                    <td id="inspectorCellUnrankedMaps">-</td>
+                                                </tr>
+                                                <br />
+                                                <tr>
+                                                    <td>osu! version</td>
+                                                    <td id="inspectorCellVersion">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>player</td>
+                                                    <td id="inspectorCellUsername">-</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <button id="settingsProcessOsu" class="btn btn-success btn-sm float-right" onclick="cefOsuApp.buttonProcessOsu();">Process osu</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="tab-settings">
                         <div class="card bg-osu-dark">
                             <div class="card-body">
                                 <div class="container">
                                     <div class="md-form form-sm">
-                                        <input type="password" id="settingsInputApikey" class="form-control form-extend-osu">
+                                        <input max-length="80" type="password" id="settingsInputApikey" class="form-control form-extend-osu">
                                         <label for="settingsInputApikey">API Key</label>
                                     </div>
                                     <div class="md-form form-sm">
-                                        <input type="text" id="settingsInputUsername" class="form-control form-extend-osu">
+                                        <input max-length="30" type="text" id="settingsInputUsername" class="form-control form-extend-osu">
                                         <label for="settingsInputUsername">Username</label>
                                     </div>
-                                    <select class="mdb-select md-form form-extend-osu">
-                                        <option value="1" selected>Standard</option>
-                                        <option value="2">Taiko</option>
+                                    <select id="settingsInputGamemodeDropdown" class="mdb-select md-form form-extend-osu">
+                                        <option value="" disabled>Select gamemode</option>
+                                        <option value="0" selected>Standard</option>
+                                        <option value="1">Taiko</option>
                                         <option value="3">Mania</option>
-                                        <option value="4">Catch the Beat</option>
+                                        <option value="2">Catch the Beat</option>
                                     </select>
                                     <div class="md-form form-sm input-group">
                                         <input type="text" id="settingsInputOsuDir" class="form-control form-extend-osu" readonly>
@@ -196,12 +275,11 @@
                                             <button onclick="cefOsuApp.dirDialogOsuInstall();" class="btn btn-sm btn-osu-dark" type="button" id="settingsInputOsuDir_btn">Browse</button>
                                         </div>
                                     </div>
-                                    <div class="switch">
-                                        <label>
-                                          <input type="checkbox" checked>
-                                          <span class="lever"></span> Hardware Acceleration
-                                        </label>
-                                    </div>
+                                    <br />
+                                    <p class="font-weight-light">Refresh time</p>
+                                    <form class="range-field">
+                                        <input id="settingsInputRefreshTime" type="range" min="5" max="120" />
+                                    </form>
                                     <br />
                                     <!-- <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a> -->
                                     <button id="settingsConfirmButton" class="btn btn-success btn-sm" onclick="cefOsuApp.buttonSaveSettings();">Save and apply</button>
@@ -232,6 +310,19 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="inspectorCollectionModal" tabindex="-1" role="dialog" aria-labelledby="inspectorCollectionModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content bg-osu-regular">
+                        <div class="modal-body bg-osu-regular">
+                            <h4>osu! collections</h4>
+                            <div id="inspectorCollectionList" class="container">
+                                <!-- <button type="button" class="btn btn-sm btn-block btn-osu-dark">Primary</button> -->
                             </div>
                         </div>
                     </div>
@@ -289,6 +380,164 @@
             });
 
             $('img').on('dragstart', function(event) { event.preventDefault(); });
+
+            (function (factory) {
+                if (typeof define === 'function' && define.amd) {
+                    // AMD
+                    define(['jquery'], factory);
+                } else if (typeof exports === 'object') {
+                    // CommonJS
+                    factory(require('jquery'));
+                } else {
+                    // Browser globals
+                    factory(jQuery);
+                }
+            }(function ($) {
+            var CountTo = function (element, options) {
+                this.$element = $(element);
+                this.options  = $.extend({}, CountTo.DEFAULTS, this.dataOptions(), options);
+                this.init();
+            };
+
+            CountTo.DEFAULTS = {
+                from: 0,               // the number the element should start at
+                to: 0,                 // the number the element should end at
+                speed: 1000,           // how long it should take to count between the target numbers
+                refreshInterval: 100,  // how often the element should be updated
+                decimals: 0,           // the number of decimal places to show
+                formatter: formatter,  // handler for formatting the value before rendering
+                onUpdate: null,        // callback method for every time the element is updated
+                onComplete: null       // callback method for when the element finishes updating
+            };
+
+            CountTo.prototype.init = function () {
+                this.value     = this.options.from;
+                this.loops     = Math.ceil(this.options.speed / this.options.refreshInterval);
+                this.loopCount = 0;
+                this.increment = (this.options.to - this.options.from) / this.loops;
+            };
+
+            CountTo.prototype.dataOptions = function () {
+                var options = {
+                from:            this.$element.data('from'),
+                to:              this.$element.data('to'),
+                speed:           this.$element.data('speed'),
+                refreshInterval: this.$element.data('refresh-interval'),
+                decimals:        this.$element.data('decimals')
+                };
+
+                var keys = Object.keys(options);
+
+                for (var i in keys) {
+                var key = keys[i];
+
+                if (typeof(options[key]) === 'undefined') {
+                    delete options[key];
+                }
+                }
+
+                return options;
+            };
+
+            CountTo.prototype.update = function () {
+                this.value += this.increment;
+                this.loopCount++;
+
+                this.render();
+
+                if (typeof(this.options.onUpdate) == 'function') {
+                this.options.onUpdate.call(this.$element, this.value);
+                }
+
+                if (this.loopCount >= this.loops) {
+                clearInterval(this.interval);
+                this.value = this.options.to;
+
+                if (typeof(this.options.onComplete) == 'function') {
+                    this.options.onComplete.call(this.$element, this.value);
+                }
+                }
+            };
+
+            CountTo.prototype.render = function () {
+                var formattedValue = this.options.formatter.call(this.$element, this.value, this.options);
+                this.$element.text(formattedValue);
+            };
+
+            CountTo.prototype.restart = function () {
+                this.stop();
+                this.init();
+                this.start();
+            };
+
+            CountTo.prototype.start = function () {
+                this.stop();
+                this.render();
+                this.interval = setInterval(this.update.bind(this), this.options.refreshInterval);
+            };
+
+            CountTo.prototype.stop = function () {
+                if (this.interval) {
+                clearInterval(this.interval);
+                }
+            };
+
+            CountTo.prototype.toggle = function () {
+                if (this.interval) {
+                this.stop();
+                } else {
+                this.start();
+                }
+            };
+
+            function formatter(value, options) {
+                return value.toFixed(options.decimals);
+            }
+
+            $.fn.countTo = function (option) {
+                return this.each(function () {
+                var $this   = $(this);
+                var data    = $this.data('countTo');
+                var init    = !data || typeof(option) === 'object';
+                var options = typeof(option) === 'object' ? option : {};
+                var method  = typeof(option) === 'string' ? option : 'start';
+
+                if (init) {
+                    if (data) data.stop();
+                    $this.data('countTo', data = new CountTo(this, options));
+                }
+
+                data[method].call(data);
+                });
+            };
+            }));
+        </script>
+        <script>
+            var ctxP = document.getElementById("inspectorMapRankChart").getContext('2d');
+            var mapChart = new Chart(ctxP, {
+                type: 'pie',
+                data: {
+                    labels: ["Ranked", "Loved", "Unranked"],
+                    datasets: [{
+                        data: [0, 0, 0],
+                        backgroundColor: ["#b3ff66", "#ff66ab", "#969696"],
+                        hoverBackgroundColor: ["#caff94", "#ff8abf", "#bfbfbf"]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    elements: {
+                        arc: {
+                            borderWidth: 0
+                        }
+                    }
+                }
+            });
+
+            function updateMapChart(ranked, loved, unranked){
+                mapChart.data.datasets[0].data = [ranked, loved, unranked];
+                mapChart.update();
+            }
         </script>
     </body>
 </html>
