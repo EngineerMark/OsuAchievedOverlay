@@ -1,5 +1,6 @@
 ﻿using IniParser;
 using IniParser.Model;
+using OsuAchievedOverlay.Next.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,23 +30,43 @@ namespace OsuAchievedOverlay.Next.Managers
                     },
                     ["misc"] = {
                         ["osuFolder"] = "C:\\"
+                    },
+                    ["display"] = {
+                        ["roundingValue"] = "1"
+                    },
+                    ["showingItems"] = {
+                        ["ranks"] = "true",
+                        ["level"] = "true",
+                        ["totalscore"] = "true",
+                        ["rankedscore"] = "true",
+                        ["worldrank"] = "true",
+                        ["countryrank"] = "true",
+                        ["playcount"] = "true",
+                        ["playtime"] = "true",
+                        ["accuracy"] = "true",
+                        ["performance"] = "true",
                     }
                 };
             }
         }
         public const string SettingsLocation = "Data/Settings.ini";
 
-        public void FixSettingsPath(){
-            if(File.Exists("Settings.ini")){
-                while(!FileManager.IsFileReady("Settings.ini")){
+        public void FixSettingsPath()
+        {
+            if (File.Exists("Settings.ini"))
+            {
+                while (!FileManager.IsFileReady("Settings.ini"))
+                {
                     Thread.Sleep(1);
                 }
                 FileManager.MoveFile("Settings.ini", SettingsLocation);
             }
         }
 
-        public bool LoadOrCreateSettings(){
-            if(!LoadSettings()){
+        public bool LoadOrCreateSettings()
+        {
+            if (!LoadSettings())
+            {
                 FileIniDataParser parser = new FileIniDataParser();
                 parser.WriteFile(SettingsLocation, DefaultSettings);
                 Settings = DefaultSettings;
@@ -87,6 +108,22 @@ namespace OsuAchievedOverlay.Next.Managers
 
             parser.WriteFile(SettingsLocation, data);
             return data;
+        }
+
+        public void SettingsApply()
+        {
+            KeyDataCollection displayOptions = Settings["showingItems"];
+            foreach (KeyData keyData in displayOptions)
+            {
+                string key = keyData.KeyName;
+                bool state = keyData.Value == "true";
+                if(state){
+                    BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionDisplay" + (key.FirstCharToUpper()) + "");
+                }else{
+                    BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#sessionDisplay" + (key.FirstCharToUpper()) + "");
+                }
+                //BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.SetChecked("#settingsInputDisplay" + (key.FirstCharToUpper()) + "", keyData.Value == "true");
+            }
         }
 
         public void SettingsSave()

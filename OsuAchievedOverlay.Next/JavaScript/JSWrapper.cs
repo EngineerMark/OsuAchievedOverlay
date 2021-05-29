@@ -18,6 +18,7 @@ namespace OsuAchievedOverlay.Next.JavaScript
         public JSTextInput TextInput { get; }
         public JSRangeInput RangeInput { get; }
         public JSSelectInput SelectInput { get; }
+        public JSCheckbox Checkbox { get; }
         public JSModal Modal { get; }
 
         public JSWrapper(ChromiumWebBrowser browser)
@@ -27,16 +28,25 @@ namespace OsuAchievedOverlay.Next.JavaScript
             TextInput = new JSTextInput(this);
             RangeInput = new JSRangeInput(this);
             SelectInput = new JSSelectInput(this);
+            Checkbox = new JSCheckbox(this);
             Modal = new JSModal(this);
         }
 
-        public void Hide(string obj){
+        public void Hide(string obj)
+        {
             _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').hide();");
             SetProp(obj, "hidden", true);
         }
 
-        public void Show(string obj){
+        public void Show(string obj)
+        {
             _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').show();");
+            SetProp(obj, "hidden", false);
+        }
+
+        public void FadeIn(string obj, int duration = 400)
+        {
+            _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').fadeIn(" + duration + ");");
             SetProp(obj, "hidden", false);
         }
 
@@ -74,8 +84,16 @@ namespace OsuAchievedOverlay.Next.JavaScript
             SetProp(obj, "disabled", state);
         }
 
-        public void SetProp(string obj, string prop, bool state){
-            _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').prop('"+prop+"', "+ (state ? "true" : "false") + ")");
+        public void SetProp(string obj, string prop, bool state)
+        {
+            _internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').prop('" + prop + "', " + (state ? "true" : "false") + ")");
+        }
+
+        public async Task<bool> GetProp(string obj, string prop)
+        {
+            string task = "$('" + obj + "').prop('" + prop + "')";
+            JavascriptResponse res = await _internalBrowser.EvaluateScriptAsync(task);
+            return (bool)res.Result;
         }
 
         public ChromiumWebBrowser GetBrowser() => _internalBrowser;

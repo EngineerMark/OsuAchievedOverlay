@@ -22,6 +22,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Shell;
 using OsuApiHelper;
+using IniParser.Model;
 
 namespace OsuAchievedOverlay.Next
 {
@@ -134,6 +135,7 @@ namespace OsuAchievedOverlay.Next
                     OsuMode gamemode = await BrowserViewModel.Instance.SettingsGetGamemode();
                     int updateRateInteger = -1;
 
+
                     bool processSettings = true;
                     if (!ApiHelper.IsUserValid(apiKey, username))
                     {
@@ -160,6 +162,17 @@ namespace OsuAchievedOverlay.Next
                         }
                     }
 
+                    if(processSettings){
+
+                        KeyDataCollection displayOptions = SettingsManager.DefaultSettings["showingItems"];
+                        foreach (KeyData keyData in displayOptions)
+                        {
+                            string key = keyData.KeyName;
+                            bool state = await BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.IsChecked("#settingsInputDisplay"+(key.FirstCharToUpper())+ "");
+                            SettingsManager.Instance.Settings["showingItems"][key] = state ? "true" : "false";
+                        }
+                    }
+
                     if (processSettings)
                     {
                         SettingsManager.Instance.Settings["api"]["key"] = apiKey;
@@ -170,6 +183,7 @@ namespace OsuAchievedOverlay.Next
 
                         // Save stuff
                         SettingsManager.Instance.SettingsSave();
+                        SettingsManager.Instance.SettingsApply();
                         BrowserViewModel.Instance.SendNotification(NotificationType.Success, "Saved settings");
                     }
 

@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <br />
-                        <div class="card bg-osu-dark text-center">
+                        <div id="sessionDisplayRanks" class="card bg-osu-dark text-center">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
@@ -100,63 +100,63 @@
                         <div class="card bg-osu-dark text-center">
                             <div class="card-body">
                                 <div class="list-group-flush">
-                                    <div class="list-group-item bg-osu-dark">
+                                    <div id="sessionDisplayLevel" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Level</div>
                                             <div id="sessionCurrentLevel" class="col text-right">100.8</div>
                                             <div id="sessionDifferenceLevel" class="col text-left">+0</div>
                                         </div>
                                     </div>
-                                    <div class="list-group-item bg-osu-dark">
+                                    <div id="sessionDisplayTotalscore" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Total Score</div>
                                             <div id="sessionCurrentTotalScore" class="col text-right">100.000.000</div>
                                             <div id="sessionDifferenceTotalScore" class="col text-left">+0</div>
                                         </div>
                                     </div>
-                                    <div class="list-group-item bg-osu-dark">
+                                    <div id="sessionDisplayRankedscore" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Ranked Score</div>
                                             <div id="sessionCurrentRankedScore" class="col text-right">50.000.000</div>
                                             <div id="sessionDifferenceRankedScore" class="col text-left">+0</div>
                                         </div>
                                     </div>
-                                    <div class="list-group-item bg-osu-dark">
+                                    <div id="sessionDisplayWorldrank" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">World Rank</div>
                                             <div id="sessionCurrentWorldRank" class="col text-right">#1</div>
                                             <div id="sessionDifferenceWorldRank" class="col text-left">+0</div>
                                         </div>
                                     </div>
-                                    <div class="list-group-item bg-osu-dark">
+                                    <div id="sessionDisplayCountryrank" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Country Score</div>
                                             <div id="sessionCurrentCountryRank" class="col text-right">#1</div>
                                             <div id="sessionDifferenceCountryRank" class="col text-left">+0</div>
                                         </div>
                                     </div>
-                                    <div class="list-group-item bg-osu-dark">
+                                    <div id="sessionDisplayPlaycount" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Playcount</div>
                                             <div id="sessionCurrentPlaycount" class="col text-right">200.000</div>
                                             <div id="sessionDifferencePlaycount" class="col text-left">+0</div>
                                         </div>
                                     </div>
-                                    <div class="list-group-item bg-osu-dark">
+                                    <div id="sessionDisplayPlaytime" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Playtime</div>
                                             <div id="sessionCurrentPlaytime" class="col text-right">3360 hours</div>
                                             <div id="sessionDifferencePlaytime" class="col text-left">+0 hours</div>
                                         </div>
                                     </div>
-                                    <div class="list-group-item bg-osu-dark">
+                                    <div id="sessionDisplayAccuracy" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Accuracy</div>
                                             <div id="sessionCurrentAccuracy" class="col text-right">100%</div>
                                             <div id="sessionDifferenceAccuracy" class="col text-left">+0</div>
                                         </div>
                                     </div>
-                                    <div class="list-group-item bg-osu-dark">
+                                    <div id="sessionDisplayPerformance" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Performance</div>
                                             <div id="sessionCurrentPerformance" class="col text-right">5000</div>
@@ -170,7 +170,7 @@
                     <div class="tab-pane fade" id="inspector" role="tabpanel" aria-labelledby="tab-inspector">
                         <section>
                             <div class="row">
-                                <div class="col-lg-3 col-md-6 mb-4">
+                                <div id="inspectorBeatmapSetCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
                                     <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
                                         <i class="fas fa-cubes fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
                                         <div class="media-body p-1">
@@ -180,7 +180,7 @@
                                     </a>
                                 </div>
 
-                                <div class="col-lg-3 col-md-6 mb-4">
+                                <div id="inspectorBeatmapDiffCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
                                     <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
                                         <i class="fas fa-box-open fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
                                         <div class="media-body p-1">
@@ -190,7 +190,7 @@
                                     </a>
                                 </div>
 
-                                <div class="col-lg-3 col-md-6 mb-4">
+                                <div id="inspectorCollectionCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
                                     <a class="media bg-osu-dark z-depth-1 rounded stretched-link" data-toggle="modal" data-target="#inspectorCollectionModal">
                                         <i class="fas fa-list-ul fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
                                         <div class="media-body p-1">
@@ -200,7 +200,7 @@
                                     </a>
                                 </div>
 
-                                <div class="col-lg-3 col-md-6 mb-4">
+                                <div id="inspectorScoreCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
                                     <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
                                         <i class="fas fa-star fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
                                         <div class="media-body p-1">
@@ -213,7 +213,7 @@
                         </section>
                         <div class="card">
                             <div class="card-body bg-osu-dark">
-                                <div class="row">
+                                <div id="inspectorRegularInfoParent" class="row" hidden>
                                     <div class="col-lg-6">
                                         <canvas id="inspectorMapRankChart"></canvas>
                                     </div>
@@ -253,33 +253,209 @@
                         <div class="card bg-osu-dark">
                             <div class="card-body">
                                 <div class="container">
-                                    <div class="md-form form-sm">
-                                        <input max-length="80" type="password" id="settingsInputApikey" class="form-control form-extend-osu">
-                                        <label for="settingsInputApikey">API Key</label>
-                                    </div>
-                                    <div class="md-form form-sm">
-                                        <input max-length="30" type="text" id="settingsInputUsername" class="form-control form-extend-osu">
-                                        <label for="settingsInputUsername">Username</label>
-                                    </div>
-                                    <select id="settingsInputGamemodeDropdown" class="mdb-select md-form form-extend-osu">
-                                        <option value="" disabled>Select gamemode</option>
-                                        <option value="0" selected>Standard</option>
-                                        <option value="1">Taiko</option>
-                                        <option value="3">Mania</option>
-                                        <option value="2">Catch the Beat</option>
-                                    </select>
-                                    <div class="md-form form-sm input-group">
-                                        <input type="text" id="settingsInputOsuDir" class="form-control form-extend-osu" readonly>
-                                        <label id="settingsInputOsuDirLabel" for="settingsInputOsuDir">osu! directory</label>
-                                        <div class="input-group-append">
-                                            <button onclick="cefOsuApp.dirDialogOsuInstall();" class="btn btn-sm btn-osu-dark" type="button" id="settingsInputOsuDir_btn">Browse</button>
+                                    <div class="row settings-item">
+                                        <div class="col-sm-3 text-right align-self-center">api key</div>
+                                        <div class="col-sm-9" style="padding: 0;">
+                                            <div class="md-form">
+                                                <input max-length="80" type="password" id="settingsInputApikey" class="form-control form-extend-osu">
+                                            </div>
                                         </div>
                                     </div>
-                                    <br />
-                                    <p class="font-weight-light">Refresh time</p>
-                                    <form class="range-field">
-                                        <input id="settingsInputRefreshTime" type="range" min="5" max="120" />
-                                    </form>
+
+                                    <div class="row settings-item">
+                                        <div class="col-sm-3 text-right align-self-center">username</div>
+                                        <div class="col-sm-9" style="padding: 0;">
+                                            <div class="md-form">
+                                                <input max-length="30" type="text" id="settingsInputUsername" class="form-control form-extend-osu">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row settings-item">
+                                        <div class="col-sm-3 text-right align-self-center">gamemode</div>
+                                        <div class="col-sm-9" style="padding: 0;">
+                                            <div class="md-form">
+                                                <select id="settingsInputGamemodeDropdown" class="mdb-select md-form form-extend-osu">
+                                                    <option value="0" selected>Standard</option>
+                                                    <option value="1">Taiko</option>
+                                                    <option value="3">Mania</option>
+                                                    <option value="2">Catch the Beat</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="seperator"></div>
+
+                                    <div class="row settings-item">
+                                        <div class="col-sm-3 text-right align-self-center">osu! directory</div>
+                                        <div class="col-sm-9" style="padding: 0;">
+                                            <div class="md-form">
+                                                <div class="md-form form-sm input-group">
+                                                    <input type="text" id="settingsInputOsuDir" class="form-control form-extend-osu" readonly>
+                                                    <div class="input-group-append">
+                                                        <button onclick="cefOsuApp.dirDialogOsuInstall();" class="btn btn-sm btn-osu-dark" type="button" id="settingsInputOsuDir_btn">Browse</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="seperator"></div>
+
+                                    <div class="row settings-item">
+                                        <div class="col-sm-3 text-right align-self-center">refresh time</div>
+                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                            <div class="md-form">
+                                                <form class="range-field">
+                                                    <input id="settingsInputRefreshTime" type="range" min="5" max="120" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row settings-item">
+                                        <div class="col-sm-3 text-right align-self-center">rounding digits</div>
+                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                            <div class="md-form">
+                                                <form class="range-field">
+                                                    <input id="settingsInputRoundDigit" type="range" min="1" max="10" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="seperator"></div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item list-group-item-sm">
+                                            <div class="row settings-item">
+                                                <div class="col-sm-3 text-right align-self-center">
+                                                    <div class="form-check d-flex justify-content-end">
+                                                        <input type="checkbox" class="form-check-input" id="settingsInputDisplayRanks" checked>
+                                                        <label class="form-check-label" for="settingsInputDisplayRanks"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                    show rank count
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-sm">
+                                            <div class="row settings-item">
+                                                <div class="col-sm-3 text-right align-self-center">
+                                                    <div class="form-check d-flex justify-content-end">
+                                                        <input type="checkbox" class="form-check-input" id="settingsInputDisplayLevel" checked>
+                                                        <label class="form-check-label" for="settingsInputDisplayLevel"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                    show level
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-sm">
+                                            <div class="row settings-item">
+                                                <div class="col-sm-3 text-right align-self-center">
+                                                    <div class="form-check d-flex justify-content-end">
+                                                        <input type="checkbox" class="form-check-input" id="settingsInputDisplayTotalscore" checked>
+                                                        <label class="form-check-label" for="settingsInputDisplayTotalscore"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                    show total score
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-sm">
+                                            <div class="row settings-item">
+                                                <div class="col-sm-3 text-right align-self-center">
+                                                    <div class="form-check d-flex justify-content-end">
+                                                        <input type="checkbox" class="form-check-input" id="settingsInputDisplayRankedscore" checked>
+                                                        <label class="form-check-label" for="settingsInputDisplayRankedscore"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                    show ranked score
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-sm">
+                                            <div class="row settings-item">
+                                                <div class="col-sm-3 text-right align-self-center">
+                                                    <div class="form-check d-flex justify-content-end">
+                                                        <input type="checkbox" class="form-check-input" id="settingsInputDisplayWorldrank" checked>
+                                                        <label class="form-check-label" for="settingsInputDisplayWorldrank"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                    show world rank
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-sm">
+                                            <div class="row settings-item">
+                                                <div class="col-sm-3 text-right align-self-center">
+                                                    <div class="form-check d-flex justify-content-end">
+                                                        <input type="checkbox" class="form-check-input" id="settingsInputDisplayCountryrank" checked>
+                                                        <label class="form-check-label" for="settingsInputDisplayCountryrank"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                    show country rank
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-sm">
+                                            <div class="row settings-item">
+                                                <div class="col-sm-3 text-right align-self-center">
+                                                    <div class="form-check d-flex justify-content-end">
+                                                        <input type="checkbox" class="form-check-input" id="settingsInputDisplayPlaycount" checked>
+                                                        <label class="form-check-label" for="settingsInputDisplayPlaycount"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                    show playcount
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-sm">
+                                            <div class="row settings-item">
+                                                <div class="col-sm-3 text-right align-self-center">
+                                                    <div class="form-check d-flex justify-content-end">
+                                                        <input type="checkbox" class="form-check-input" id="settingsInputDisplayPlaytime" checked>
+                                                        <label class="form-check-label" for="settingsInputDisplayPlaytime"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                    show playtime
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-sm">
+                                            <div class="row settings-item">
+                                                <div class="col-sm-3 text-right align-self-center">
+                                                    <div class="form-check d-flex justify-content-end">
+                                                        <input type="checkbox" class="form-check-input" id="settingsInputDisplayAccuracy" checked>
+                                                        <label class="form-check-label" for="settingsInputDisplayAccuracy"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                    show accuracy
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-sm">
+                                            <div class="row settings-item">
+                                                <div class="col-sm-3 text-right align-self-center">
+                                                    <div class="form-check d-flex justify-content-end">
+                                                        <input type="checkbox" class="form-check-input" id="settingsInputDisplayPerformance" checked>
+                                                        <label class="form-check-label" for="settingsInputDisplayPerformance"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                    show performance points
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                     <br />
                                     <!-- <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a> -->
                                     <button id="settingsConfirmButton" class="btn btn-success btn-sm" onclick="cefOsuApp.buttonSaveSettings();">Save and apply</button>
@@ -322,7 +498,7 @@
                         <div class="modal-body bg-osu-regular">
                             <h4>osu! collections</h4>
                             <div id="inspectorCollectionList" class="container">
-                                <!-- <button type="button" class="btn btn-sm btn-block btn-osu-dark">Primary</button> -->
+                                <button type="button" class="btn btn-sm btn-block btn-dark btn-rounded" style="margin:10px auto;"><span class="float-left">Primary</span><span class="float-right"></span>2 maps</button>
                             </div>
                         </div>
                     </div>

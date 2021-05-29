@@ -337,3 +337,27 @@ html {
     border: none;
     border-radius: 50%
 }
+
+.md-form {
+    position: relative;
+}
+
+.settings-item {
+    min-height:4rem;
+}
+
+.seperator {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width:100%;
+    border: 0;
+    border-top: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.list-group-item-sm {
+    min-height:3rem !important;
+}
+
+.list-group-item-sm > .settings-item{
+    min-height:2rem;
+}

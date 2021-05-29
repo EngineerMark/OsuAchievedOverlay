@@ -1,4 +1,5 @@
 ﻿using CefSharp;
+using IniParser.Model;
 using OsuAchievedOverlay.Next.Helpers;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,13 @@ namespace OsuAchievedOverlay.Next.Managers
             if(!string.IsNullOrEmpty(SettingsManager.Instance.Settings["misc"]["osuFolder"]))
                 BrowserViewModel.Instance.SettingsSetOsuDirectory(SettingsManager.Instance.Settings["misc"]["osuFolder"]);
             BrowserViewModel.Instance.SettingsSetGamemode((OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
+            
+            KeyDataCollection displayOptions = SettingsManager.Instance.Settings["showingItems"];
+            foreach (KeyData keyData in displayOptions)
+            {
+                string key = keyData.KeyName;
+                BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.SetChecked("#settingsInputDisplay" + (key.FirstCharToUpper()) + "", keyData.Value == "true");
+            }
         }
     }
 }

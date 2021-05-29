@@ -110,6 +110,8 @@
     <Compile Include="Github\Asset.cs" />
     <Compile Include="Github\Release.cs" />
     <Compile Include="Helpers\ApiHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="JavaScript\JSCheckbox.cs" />
     <Compile Include="JavaScript\JSInput.cs" />
     <Compile Include="JavaScript\JSRangeInput.cs" />
     <Compile Include="JavaScript\JSSelectInput.cs" />

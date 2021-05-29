@@ -10708,12 +10708,6 @@ body.scrollable {
     }
 }
 
-.md-form {
-    position: relative;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem
-}
-
 .md-form input:not([type]),
 .md-form input[type="text"]:not(.browser-default),
 .md-form input[type="password"]:not(.browser-default),
@@ -17294,7 +17288,7 @@ select:disabled {
     max-height: 40.625rem;
     margin: 0;
     overflow-y: auto;
-    background-color: transparent;
+    background-color: #fff;
     -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     opacity: 0;
