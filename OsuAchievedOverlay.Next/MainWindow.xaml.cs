@@ -134,6 +134,7 @@ namespace OsuAchievedOverlay.Next
                     string osudir = await BrowserViewModel.Instance.SettingsGetOsuDirectory();
                     OsuMode gamemode = await BrowserViewModel.Instance.SettingsGetGamemode();
                     int updateRateInteger = -1;
+                    int roundingDigit = -1;
 
 
                     bool processSettings = true;
@@ -155,14 +156,29 @@ namespace OsuAchievedOverlay.Next
                         try
                         {
                             updateRateInteger = Convert.ToInt32(updateRate);
-                            updateRateInteger = Math.Min(120, Math.Max(5, updateRateInteger));
+                            updateRateInteger = Math.Min(SettingsManager.RefreshTimeMax, Math.Max(SettingsManager.RefreshTimeMin, updateRateInteger));
                         }catch(Exception e){
                             BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Update rate value seems to be invalid");
                             processSettings = false;
                         }
                     }
 
-                    if(processSettings){
+                    if (processSettings)
+                    {
+                        string roundingDigitVal = await BrowserViewModel.Instance.SettingsGetRoundingValue();
+                        try
+                        {
+                            roundingDigit = Convert.ToInt32(roundingDigitVal);
+                            roundingDigit = Math.Min(SettingsManager.RoundingMax, Math.Max(SettingsManager.RoundingMin, roundingDigit));
+                        }
+                        catch (Exception e)
+                        {
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Rounding value seems to be invalid");
+                            processSettings = false;
+                        }
+                    }
+
+                    if (processSettings){
 
                         KeyDataCollection displayOptions = SettingsManager.DefaultSettings["showingItems"];
                         foreach (KeyData keyData in displayOptions)
@@ -179,6 +195,7 @@ namespace OsuAchievedOverlay.Next
                         SettingsManager.Instance.Settings["api"]["user"] = username;
                         SettingsManager.Instance.Settings["api"]["updateRate"] = updateRateInteger+"";
                         SettingsManager.Instance.Settings["api"]["gamemode"] = gamemode + "";
+                        SettingsManager.Instance.Settings["display"]["roundingValue"] = roundingDigit + "";
                         SettingsManager.Instance.Settings["misc"]["osuFolder"] = osudir;
 
                         // Save stuff

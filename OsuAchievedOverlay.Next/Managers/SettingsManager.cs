@@ -16,6 +16,12 @@ namespace OsuAchievedOverlay.Next.Managers
         private IniData settings;
         public IniData Settings { get => settings; set => settings = value; }
 
+        public static int RefreshTimeMin = 5;
+        public static int RefreshTimeMax = 120;
+
+        public static int RoundingMin = 0;
+        public static int RoundingMax = 10;
+
         public static IniData DefaultSettings
         {
             get
@@ -86,7 +92,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 //GameManager.Instance.OsuUser = OsuApiHelper.OsuApi.GetUser(data["api"]["user"], (OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), data["api"]["gamemode"]));
 
                 int updateRate = int.Parse(data["api"]["updateRate"]);
-                updateRate = Math.Min(120, Math.Max(5, updateRate));
+                updateRate = Math.Min(RefreshTimeMax, Math.Max(RefreshTimeMin, updateRate));
                 data["api"]["updateRate"] = "" + updateRate;
 
                 Settings = data;

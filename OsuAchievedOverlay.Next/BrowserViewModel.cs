@@ -48,6 +48,9 @@ namespace OsuAchievedOverlay.Next
         public async Task<string> SettingsGetUpdaterate() => await AttachedJavascriptWrapper.RangeInput.GetValue("#settingsInputRefreshTime");
         public void SettingsSetUpdaterate(string val) => AttachedJavascriptWrapper.RangeInput.SetValue("#settingsInputRefreshTime", val);
 
+        public async Task<string> SettingsGetRoundingValue() => await AttachedJavascriptWrapper.RangeInput.GetValue("#settingsInputRoundDigit");
+        public void SettingsSetRoundingValue(string val) => AttachedJavascriptWrapper.RangeInput.SetValue("#settingsInputRoundDigit", val);
+
         public async Task<string> SettingsGetOsuDirectory() => await AttachedJavascriptWrapper.TextInput.GetValue("#settingsInputOsuDir");
         public void SettingsSetOsuDirectory(string val) => AttachedJavascriptWrapper.TextInput.SetValue("#settingsInputOsuDir", val);
 
@@ -113,8 +116,8 @@ namespace OsuAchievedOverlay.Next
                 "$('#sessionCurrentCountryRank').html('#" + session.CurrentData.CountryRank + "');" +
                 "$('#sessionCurrentPlaycount').html('" + session.CurrentData.Playcount.ToString("#,##0.###") + "');" +
                 "$('#sessionCurrentPlaytime').html('" + totalPlayTime.Humanize(1, new System.Globalization.CultureInfo("en-US"), Humanizer.Localisation.TimeUnit.Hour) + "');" +
-                "$('#sessionCurrentAccuracy').html('" + Math.Round(session.CurrentData.Accuracy, 2) + "%');" +
-                "$('#sessionCurrentPerformance').html('" + Math.Round(session.CurrentData.Performance, 2).ToString("#,##0.###") + "%');" +
+                "$('#sessionCurrentAccuracy').html('" + Math.Round(session.CurrentData.Accuracy, Convert.ToInt32(SettingsManager.Instance.Settings["display"]["roundingValue"])) + "%');" +
+                "$('#sessionCurrentPerformance').html('" + Math.Round(session.CurrentData.Performance, Convert.ToInt32(SettingsManager.Instance.Settings["display"]["roundingValue"])).ToString("#,##0.###") + "');" +
                 "";
             AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded(query);
 
@@ -126,8 +129,8 @@ namespace OsuAchievedOverlay.Next
                 "$('#sessionDifferenceCountryRank').html('" + (session.DifferenceData.CountryRank > 0 ? "-" : "+") + session.DifferenceData.CountryRank + "');" +
                 "$('#sessionDifferencePlaycount').html('" + (session.DifferenceData.Playcount >= 0 ? "+" : "-") + session.DifferenceData.Playcount.ToString("#,##0.###") + "');" +
                 "$('#sessionDifferencePlaytime').html('" + (session.DifferenceData.Playtime >= 0 ? "+" : "-") + gainedPlayTime.Humanize(1, new System.Globalization.CultureInfo("en-US"), Humanizer.Localisation.TimeUnit.Hour, Humanizer.Localisation.TimeUnit.Second) + "');" +
-                "$('#sessionDifferenceAccuracy').html('" + (session.DifferenceData.Accuracy >= 0 ? "+" : "-") + Math.Round(session.DifferenceData.Accuracy, 2) + "%');" +
-                "$('#sessionDifferencePerformance').html('" + (session.DifferenceData.Performance >= 0 ? "+" : "-") + Math.Round(session.DifferenceData.Performance, 2).ToString("#,##0.###") + "');" +
+                "$('#sessionDifferenceAccuracy').html('" + (session.DifferenceData.Accuracy >= 0 ? "+" : "-") + Math.Round(session.DifferenceData.Accuracy, Convert.ToInt32(SettingsManager.Instance.Settings["display"]["roundingValue"])) + "%');" +
+                "$('#sessionDifferencePerformance').html('" + (session.DifferenceData.Performance >= 0 ? "+" : "-") + Math.Round(session.DifferenceData.Performance, Convert.ToInt32(SettingsManager.Instance.Settings["display"]["roundingValue"])).ToString("#,##0.###") + "');" +
                 "";
             AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded(query);
         }

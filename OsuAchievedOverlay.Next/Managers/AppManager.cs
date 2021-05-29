@@ -56,7 +56,8 @@ namespace OsuAchievedOverlay.Next.Managers
             BrowserViewModel.Instance.SettingsSetApikey(SettingsManager.Instance.Settings["api"]["key"]);
             BrowserViewModel.Instance.SettingsSetUsername(SettingsManager.Instance.Settings["api"]["user"]);
             BrowserViewModel.Instance.SettingsSetUpdaterate(SettingsManager.Instance.Settings["api"]["updateRate"]);
-            if(!string.IsNullOrEmpty(SettingsManager.Instance.Settings["misc"]["osuFolder"]))
+            BrowserViewModel.Instance.SettingsSetRoundingValue(SettingsManager.Instance.Settings["display"]["roundingValue"]);
+            if (!string.IsNullOrEmpty(SettingsManager.Instance.Settings["misc"]["osuFolder"]))
                 BrowserViewModel.Instance.SettingsSetOsuDirectory(SettingsManager.Instance.Settings["misc"]["osuFolder"]);
             BrowserViewModel.Instance.SettingsSetGamemode((OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
             
