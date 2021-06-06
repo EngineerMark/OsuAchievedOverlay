@@ -52,6 +52,23 @@ function ApplySession(session, rounding){
     $('#sessionDifferencePlaytime').html((differencePlayTime>=0?"+":"-")+""+differencePlayTime+" "+diffType);
     $('#sessionDifferenceAccuracy').html((session["SessionDataDifference"]["DataAccuracy"]>=0?"+":"-")+""+session["SessionDataDifference"]["DataAccuracy"].toFixed(rounding));
     $('#sessionDifferencePerformance').html((session["SessionDataDifference"]["DataPerformance"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataPerformance"].toFixed(rounding)));
+
+    setTextColorToSign("#sessionDifferenceLevel", session["SessionDataDifference"]["DataLevel"]);
+    setTextColorToSign("#sessionDifferenceTotalScore", session["SessionDataDifference"]["DataTotalScore"]);
+    setTextColorToSign("#sessionDifferenceRankedScore", session["SessionDataDifference"]["DataRankedScore"]);
+    setTextColorToSign("#sessionDifferenceWorldRank", session["SessionDataDifference"]["DataPPRank"], true);
+    setTextColorToSign("#sessionDifferenceCountryRank", session["SessionDataDifference"]["DataCountryRank"], true);
+    setTextColorToSign("#sessionDifferencePlaycount", session["SessionDataDifference"]["DataPlaycount"]);
+    setTextColorToSign("#sessionDifferencePlaytime", differencePlayTime);
+    setTextColorToSign("#sessionDifferenceAccuracy", session["SessionDataDifference"]["DataAccuracy"]);
+    setTextColorToSign("#sessionDifferencePerformance", session["SessionDataDifference"]["DataPerformance"]);
+}
+
+function setTextColorToSign(element, valueToTest, invert = false){
+    var col = invert?
+        (valueToTest>=0?(valueToTest==0?"text-muted":"text-danger"):"text-success"):
+        (valueToTest>=0?(valueToTest==0?"text-muted":"text-success"):"text-danger");
+    $(element).removeClass('text-success').removeClass('text-danger').removeClass('text-muted').addClass(col);
 }
 
 function numberWithCommas(x) {
