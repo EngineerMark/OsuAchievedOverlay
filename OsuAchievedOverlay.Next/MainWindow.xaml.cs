@@ -23,6 +23,7 @@ namespace OsuAchievedOverlay.Next
             chromiumBrowser.JavascriptObjectRepository.Settings.LegacyBindingEnabled = true;
             chromiumBrowser.JavascriptObjectRepository.Register("cefOsuApp", new cefOsuApp(chromiumBrowser, this), false);
             //chromiumBrowser.RegisterJsObject("cefOsuApp", new cefOsuApp(chromiumBrowser, this));
+            SourceInitialized += MainWindow_SourceInitialized;
             Closed += MainWindow_Closed;
 
             //Forced sleep so browser has time to load
@@ -34,8 +35,44 @@ namespace OsuAchievedOverlay.Next
             AppManager.Instance.Start();
         }
 
+        private void MainWindow_SourceInitialized(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.Top != -1)
+            {
+                this.Top = Properties.Settings.Default.Top;
+                this.Left = Properties.Settings.Default.Left;
+                this.Height = Properties.Settings.Default.Height;
+                this.Width = Properties.Settings.Default.Width;
+                // Very quick and dirty - but it does the job
+                if (Properties.Settings.Default.Maximized)
+                {
+                    WindowState = WindowState.Maximized;
+                }
+            }
+        }
+
         private void MainWindow_Closed(object sender, EventArgs e)
         {
+            if (WindowState == WindowState.Maximized)
+            {
+                // Use the RestoreBounds as the current values will be 0, 0 and the size of the screen
+                Properties.Settings.Default.Top = RestoreBounds.Top;
+                Properties.Settings.Default.Left = RestoreBounds.Left;
+                Properties.Settings.Default.Height = RestoreBounds.Height;
+                Properties.Settings.Default.Width = RestoreBounds.Width;
+                Properties.Settings.Default.Maximized = true;
+            }
+            else
+            {
+                Properties.Settings.Default.Top = this.Top;
+                Properties.Settings.Default.Left = this.Left;
+                Properties.Settings.Default.Height = this.Height;
+                Properties.Settings.Default.Width = this.Width;
+                Properties.Settings.Default.Maximized = false;
+            }
+
+            Properties.Settings.Default.Save();
+
             AppManager.Instance.Stop();
             Cef.Shutdown();
         }
