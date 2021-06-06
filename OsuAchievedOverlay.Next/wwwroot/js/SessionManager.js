@@ -24,8 +24,6 @@ function loadSessionById(){
     var selected = $('#sessionListTable tbody').find('.highlight');
     var selectedAttr = selected.attr('sessionid');
 
-    console.log(selectedAttr);
-
     if(typeof selectedAttr === 'undefined')
         toastr.error('You didn\'t select any to load');
     else
@@ -119,6 +117,9 @@ function time2TimeAgo(ts) {
     var nowTs = Math.floor(d.getTime()/1000); // getTime() returns milliseconds, and we need seconds, hence the Math.floor and division by 1000
     var seconds = nowTs-ts;
 
+    if(seconds<0)
+        seconds = 0;
+
     // more that two days
     if (seconds > 2*24*3600) {
        return "a few days ago";
@@ -137,4 +138,5 @@ function time2TimeAgo(ts) {
     if (seconds > 60) {
        return Math.floor(seconds/60) + " minutes ago";
     }
+    return seconds + " seconds ago";
 }
