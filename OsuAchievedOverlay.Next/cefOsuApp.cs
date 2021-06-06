@@ -84,8 +84,9 @@ namespace OsuAchievedOverlay.Next
             });
         }
 
-        public void buttonSaveSettings()
+        public void buttonSaveSettings(bool checkUsername = true, bool newSession = false)
         {
+            BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Hide("#modalSettingsUsernameChanged");
             _internalWindow.Dispatcher.Invoke(() =>
             {
                 Task task = Task.Run(async () =>
@@ -161,6 +162,14 @@ namespace OsuAchievedOverlay.Next
 
                     if (processSettings)
                     {
+                        if (checkUsername)
+                        {
+                            if(SettingsManager.Instance.Settings["api"]["user"]!=username){
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Show("#modalSettingsUsernameChanged");
+                                return;
+                            }
+                        }
+
                         SettingsManager.Instance.Settings["api"]["key"] = apiKey;
                         SettingsManager.Instance.Settings["api"]["user"] = username;
                         SettingsManager.Instance.Settings["api"]["updateRate"] = updateRateInteger + "";
@@ -172,6 +181,11 @@ namespace OsuAchievedOverlay.Next
                         SettingsManager.Instance.SettingsSave();
                         SettingsManager.Instance.SettingsApply();
                         BrowserViewModel.Instance.SendNotification(NotificationType.Success, "Saved settings");
+
+                        if(newSession){
+                            SessionManager.Instance.PrepareSession();
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Info, "Started new session");
+                        }
                     }
 
                     //MessageBox.Show(apiKey);

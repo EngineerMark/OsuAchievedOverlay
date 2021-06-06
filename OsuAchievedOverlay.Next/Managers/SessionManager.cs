@@ -13,11 +13,14 @@ namespace OsuAchievedOverlay.Next.Managers
         public ExtendedThread SessionThread { get; set; }
 
         //Prepare a new session
-        public void PrepareSession()
+        public void PrepareSession(Session session = null)
         {
             SessionThread?.Join();
 
-            CurrentSession = new Session();
+            if (session == null)
+                CurrentSession = new Session();
+            else
+                CurrentSession = session;
 
             SessionThread = new ExtendedThread(() => OnUpdate(), Convert.ToInt32(SettingsManager.Instance.Settings["api"]["updateRate"]));
             SessionThread.Start();

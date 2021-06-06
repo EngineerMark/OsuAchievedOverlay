@@ -48,7 +48,7 @@
                         <div class="btn-group btn-group-sm d-flex" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-unique btn-sm" data-toggle="modal" data-target="#modalNewSession">New Session</button>
                             <button type="button" class="btn btn-unique btn-sm" data-toggle="modal" data-target="#modalSaveSession">Save Session</button>
-                            <button type="button" class="btn btn-unique btn-sm">Load Session</button>
+                            <button type="button" class="btn btn-unique btn-sm" data-toggle="modal" data-target="#modalLoadSession">Load Session</button>
                         </div>
                         <div class="card testimonial-card bg-osu-dark">
                             <div class="card-up">
@@ -524,6 +524,30 @@
                       <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancel</button>
                       <button type="button" class="btn btn-info btn-sm material-tooltip-main" data-toggle="tooltip" title="Saves the session in a readonly state" onclick="cefOsuApp.sessionHandlerSave(true)">Read-only</button>
                       <button type="button" class="btn btn-info btn-sm material-tooltip-main" data-toggle="tooltip" title="Saves a session that can be continued later on" onclick="cefOsuApp.sessionHandlerSave()">Default</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div id="modalLoadSession" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLoadSession" aria-hidden="true">
+                <div class="modal-dialog"  role="document">
+                  <div class="modal-content bg-osu-regular">
+                    <div class="modal-body bg-osu-regular text-center">
+                      <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-info btn-sm material-tooltip-main" data-toggle="tooltip" title="Saves the session in a readonly state" onclick="cefOsuApp.sessionHandlerSave(true)">Load from file</button>
+                      <button type="button" class="btn btn-info btn-sm material-tooltip-main" data-toggle="tooltip" title="Saves a session that can be continued later on" onclick="cefOsuApp.sessionHandlerSave()">Load selected</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div id="modalSettingsUsernameChanged" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSettingsUsernameChanged" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog"  role="document">
+                  <div class="modal-content bg-osu-regular">
+                    <div class="modal-body bg-osu-regular text-center">
+                        <p>You changed the username. Do you want to reset the session?</p>
+                        <button type="button" class="btn btn-info btn-sm material-tooltip-main" onclick="cefOsuApp.buttonSaveSettings(false, true)">Yes</button>
+                        <button type="button" class="btn btn-info btn-sm material-tooltip-main" onclick="cefOsuApp.buttonSaveSettings(false, false)">No</button>
                     </div>
                   </div>
                 </div>
