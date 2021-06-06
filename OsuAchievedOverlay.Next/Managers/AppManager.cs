@@ -44,22 +44,7 @@ namespace OsuAchievedOverlay.Next.Managers
             BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
 
             if (!NetworkManager.Instance.HasConnection())
-            {
                 BrowserViewModel.Instance.SendNotification(NotificationType.Warning, "You are not connected to the internet");
-            }
-            else
-            {
-                //Test
-                //Session s = new Session()
-                //{
-                //    InitialData = SessionData.FromUser(user),
-                //    CurrentData = SessionData.FromUser(user)
-                //};
-                //s.DifferenceData = s.CurrentData - s.InitialData;
-
-                //BrowserViewModel.Instance.ApplyUser(user);
-                //BrowserViewModel.Instance.ApplySession(s);
-            }
             SessionManager.Instance.PrepareSession();
         }
 

@@ -29,8 +29,10 @@ namespace OsuAchievedOverlay
         }
 
         public void Join(){
-            token?.Cancel();
-            token?.Dispose();
+            if(token!=null){
+                token?.Cancel();
+                token?.Dispose();
+            }
         }
 
         private void Build(){
@@ -43,6 +45,7 @@ namespace OsuAchievedOverlay
                     task.Wait(TimeSpan.FromSeconds(TimeoutTime));
                     Thread.Sleep(SleepTime*1000);
                 }
+                token = null;
             }));
         }
     }

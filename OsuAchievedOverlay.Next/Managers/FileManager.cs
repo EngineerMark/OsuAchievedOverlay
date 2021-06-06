@@ -53,5 +53,10 @@ namespace OsuAchievedOverlay.Next.Managers
                 File.WriteAllText(file, data);
             });
         }
+
+        public static string ReadAllText(string file)
+        {
+            return File.ReadAllText(file);
+        }
     }
 }

@@ -130,6 +130,10 @@
     background-color: var(--osu-regular) !important;
 }
 
+.nav-link:active {
+    background-color: var(--osu-dark) !important;
+}
+
 .bg-osu-dark {
     background-color: var(--osu-dark);
 }
@@ -156,7 +160,7 @@ html {
 
 @media screen and (min-width: 320px) {
     html {
-        font-size: calc(10px + 8 * ((100vw - 320px) / 680));
+        font-size: calc(14px + 4 * ((100vw - 320px) / 680));
     }
 }
 @media screen and (min-width: 1000px) {
@@ -382,4 +386,21 @@ html {
     border-radius: 20px;
     -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
+}
+
+.osu-nav{
+    max-height: 50px;
+}
+
+.osu-nav > .nav-link{
+    height: 50px;
+}
+
+.table-hover tbody tr:hover {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+.highlight {
+    background-color: var(--osu-dark-hover);
 }

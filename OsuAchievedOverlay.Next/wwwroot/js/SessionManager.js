@@ -1,18 +1,53 @@
+function FillSessionDataList(data){
+    $('#sessionListTable tbody tr').remove();
+    data = JSON.parse(data);
+
+    var html = '';
+    for(var i=0;i<data.length;i++){
+        html+='<tr sessionid="'+btoa(data[i]["FileDate"])+'">'+
+            '<th>'+data[i]["FileName"]+'</th>'+
+            '<th>'+time2TimeAgo(new Date(data[i]["FileDate"]))+'</th>'+
+            '</tr>';
+    }
+    console.log(html);
+    $('#sessionListTable tbody').html(html);
+
+    $('#sessionListTable tbody tr').click(function(){
+        var selected = $(this).hasClass('highlight');
+        $("#sessionListTable tr").removeClass('highlight');
+        if(!selected)
+            $(this).addClass('highlight');
+    });
+}
+
+function loadSessionById(){
+    var selected = $('#sessionListTable tbody').find('.highlight');
+    var selectedAttr = selected.attr('sessionid');
+
+    console.log(selectedAttr);
+
+    if(typeof selectedAttr === 'undefined')
+        toastr.error('You didn\'t select any to load');
+    else
+        cefOsuApp.sessionHandlerLoad(selectedAttr);
+        //toastr.error('Test');
+}
+
 function ApplySession(session, rounding){
     session = JSON.parse(session);
     rounding = parseInt(rounding);
 
-    $('#sessionTotalSSHCount').html(session["SessionDataCurrent"]["DataRankSSH"]);
-    $('#sessionTotalSSCount').html(session["SessionDataCurrent"]["DataRankSS"]);
-    $('#sessionTotalSHCount').html(session["SessionDataCurrent"]["DataRankSH"]);
-    $('#sessionTotalSCount').html(session["SessionDataCurrent"]["DataRankS"]);
-    $('#sessionTotalACount').html(session["SessionDataCurrent"]["DataRankA"]);
+    $('#sessionTotalSSHCount').html(numberWithCommas(session["SessionDataCurrent"]["DataRankSSH"]));
+    $('#sessionTotalSSCount').html(numberWithCommas(session["SessionDataCurrent"]["DataRankSS"]));
+    $('#sessionTotalSHCount').html(numberWithCommas(session["SessionDataCurrent"]["DataRankSH"]));
+    $('#sessionTotalSCount').html(numberWithCommas(session["SessionDataCurrent"]["DataRankS"]));
+    $('#sessionTotalACount').html(numberWithCommas(session["SessionDataCurrent"]["DataRankA"]));
 
-    $('#sessionDifferenceSSHCount').html((session["SessionDataDifference"]["DataRankSSH"]>=0?"+":"-")+""+session["SessionDataDifference"]["DataRankSSH"]);
-    $('#sessionDifferenceSSCount').html((session["SessionDataDifference"]["DataRankSS"]>=0?"+":"-")+""+session["SessionDataDifference"]["DataRankSS"]);
-    $('#sessionDifferenceSHCount').html((session["SessionDataDifference"]["DataRankSH"]>=0?"+":"-")+""+session["SessionDataDifference"]["DataRankSH"]);
-    $('#sessionDifferenceSCount').html((session["SessionDataDifference"]["DataRankS"]>=0?"+":"-")+""+session["SessionDataDifference"]["DataRankS"]);
-    $('#sessionDifferenceACount').html((session["SessionDataDifference"]["DataRankA"]>=0?"+":"-")+""+session["SessionDataDifference"]["DataRankA"]);
+    $('#sessionDifferenceSSHCount').html((session["SessionDataDifference"]["DataRankSSH"]>=0?"+":"-")+""+Math.abs(session["SessionDataDifference"]["DataRankSSH"]));
+    $('#sessionDifferenceSSCount').html((session["SessionDataDifference"]["DataRankSS"]>=0?"+":"-")+""+Math.abs(session["SessionDataDifference"]["DataRankSS"]));
+    $('#sessionDifferenceSHCount').html((session["SessionDataDifference"]["DataRankSH"]>=0?"+":"-")+""+Math.abs(session["SessionDataDifference"]["DataRankSH"]));
+    $('#sessionDifferenceSCount').html((session["SessionDataDifference"]["DataRankS"]>=0?"+":"-")+""+Math.abs(session["SessionDataDifference"]["DataRankS"]));
+    $('#sessionDifferenceACount').html((session["SessionDataDifference"]["DataRankA"]>=0?"+":"-")+""+Math.abs(session["SessionDataDifference"]["DataRankA"]));
 
     $('#sessionDifferenceSSHCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankSSH"]>=0?(session["SessionDataDifference"]["DataRankSSH"]==0?"grey":"green"):"red"));
     $('#sessionDifferenceSSHCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankSS"]>=0?(session["SessionDataDifference"]["DataRankSS"]==0?"grey":"green"):"red"));
@@ -46,8 +81,8 @@ function ApplySession(session, rounding){
     $('#sessionDifferenceLevel').html((session["SessionDataDifference"]["DataLevel"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataLevel"].toFixed(rounding)));
     $('#sessionDifferenceTotalScore').html((session["SessionDataDifference"]["DataTotalScore"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataTotalScore"]));
     $('#sessionDifferenceRankedScore').html((session["SessionDataDifference"]["DataRankedScore"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataRankedScore"]));
-    $('#sessionDifferenceWorldRank').html((session["SessionDataDifference"]["DataPPRank"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataPPRank"]));
-    $('#sessionDifferenceCountryRank').html((session["SessionDataDifference"]["DataCountryRank"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataCountryRank"]));
+    $('#sessionDifferenceWorldRank').html((session["SessionDataDifference"]["DataPPRank"]>=0?"-":"+")+""+numberWithCommas(session["SessionDataDifference"]["DataPPRank"]));
+    $('#sessionDifferenceCountryRank').html((session["SessionDataDifference"]["DataCountryRank"]>=0?"-":"+")+""+numberWithCommas(session["SessionDataDifference"]["DataCountryRank"]));
     $('#sessionDifferencePlaycount').html((session["SessionDataDifference"]["DataPlaycount"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataPlaycount"]));
     $('#sessionDifferencePlaytime').html((differencePlayTime>=0?"+":"-")+""+differencePlayTime+" "+diffType);
     $('#sessionDifferenceAccuracy').html((session["SessionDataDifference"]["DataAccuracy"]>=0?"+":"-")+""+session["SessionDataDifference"]["DataAccuracy"].toFixed(rounding));
@@ -73,4 +108,33 @@ function setTextColorToSign(element, valueToTest, invert = false){
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function time2TimeAgo(ts) {
+    // This function computes the delta between the
+    // provided timestamp and the current time, then test
+    // the delta for predefined ranges.
+
+    var d=new Date();  // Gets the current time
+    var nowTs = Math.floor(d.getTime()/1000); // getTime() returns milliseconds, and we need seconds, hence the Math.floor and division by 1000
+    var seconds = nowTs-ts;
+
+    // more that two days
+    if (seconds > 2*24*3600) {
+       return "a few days ago";
+    }
+    // a day
+    if (seconds > 24*3600) {
+       return "yesterday";
+    }
+
+    if (seconds > 3600) {
+       return "a few hours ago";
+    }
+    if (seconds > 1800) {
+       return "Half an hour ago";
+    }
+    if (seconds > 60) {
+       return Math.floor(seconds/60) + " minutes ago";
+    }
 }

@@ -3,11 +3,14 @@ using CefSharp.WinForms;
 using IniParser.Model;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Newtonsoft.Json;
 using OsuAchievedOverlay.Next.Helpers;
 using OsuAchievedOverlay.Next.JavaScript;
 using OsuAchievedOverlay.Next.Managers;
 using OsuApiHelper;
 using System;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
@@ -41,6 +44,65 @@ namespace OsuAchievedOverlay.Next
             BrowserViewModel.Instance.SendNotification(NotificationType.Info, "Started a new session");
         }
 
+        public void sessionHandlerLoad(string id)
+        {
+            //Can't use regular int64 values since c# > js > c# causes glitches in it and we end up with some different value
+            string decoded = Encoding.UTF8.GetString(Convert.FromBase64String(id));
+            long longID = Convert.ToInt64(decoded);
+            SessionFileData sessionData = SessionManager.Instance.SessionFiles.Find(a => a.FileDate == longID);
+
+            if (sessionData != null)
+            {
+                BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Hide("#modalLoadSession");
+                SessionLoadFromFile(Path.Combine(sessionData.FileLocation, sessionData.FileName + sessionData.FileExtension));
+            }
+            else
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Failed to load session information");
+        }
+
+        public void sessionHandlerLoadFromFile(){
+            BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Hide("#modalLoadSession");
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+            if(openFileDialog.ShowDialog()==true){
+                SessionLoadFromFile(openFileDialog.FileName);
+            }
+        }
+
+        private void SessionLoadFromFile(string path){
+            string data = string.Empty;
+            try
+            {
+                data = FileManager.ReadAllText(path);
+            }
+            catch (Exception)
+            {
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Could not open that file");
+                return;
+            }
+
+            Session loaded = null;
+            try
+            {
+                loaded = JsonConvert.DeserializeObject<Session>(data);
+            }
+            catch (Exception)
+            {
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Unable to load that session");
+                return;
+            }
+
+            if (loaded != null)
+            {
+                SessionManager.Instance.PrepareSession(loaded);
+                SessionManager.Instance.AddFile(path);
+            }
+            else
+            {
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Session file seemed fine, but unable to deserialize");
+            }
+        }
+
         public void sessionHandlerSave(bool _readonly = false)
         {
             if(SessionManager.Instance!=null && SessionManager.Instance.CurrentSession!=null){
@@ -54,7 +116,7 @@ namespace OsuAchievedOverlay.Next
                     FileManager.WriteAllText(saveFileDialog.FileName, json);
                     BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Hide("#modalSaveSession");
                     BrowserViewModel.Instance.SendNotification(NotificationType.Success, "Saved session");
-                    //SessionManager.Instance.AddFile(saveFileDialog.FileName);
+                    SessionManager.Instance.AddFile(saveFileDialog.FileName);
                 }
             }
             else{

@@ -55,7 +55,8 @@ namespace OsuAchievedOverlay.Next.Managers
                 };
             }
         }
-        public const string SettingsLocation = "Data/Settings.ini";
+        public const string DefaultDataFolder = "Data";
+        public static string SettingsLocation = Path.Combine(DefaultDataFolder, "Settings.ini");
 
         public void FixSettingsPath()
         {
@@ -66,6 +67,15 @@ namespace OsuAchievedOverlay.Next.Managers
                     Thread.Sleep(1);
                 }
                 FileManager.MoveFile("Settings.ini", SettingsLocation);
+            }
+
+            if (File.Exists("stored_sessions.json"))
+            {
+                while (!FileManager.IsFileReady("stored_sessions.json"))
+                {
+                    Thread.Sleep(1);
+                }
+                FileManager.MoveFile("stored_sessions.json", Path.Combine(DefaultDataFolder, "stored_sessions.json"));
             }
         }
 
