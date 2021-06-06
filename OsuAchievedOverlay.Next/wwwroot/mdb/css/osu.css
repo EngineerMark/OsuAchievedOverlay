@@ -361,3 +361,25 @@ html {
 .list-group-item-sm > .settings-item{
     min-height:2rem;
 }
+
+.modal-dialog .modal-content {
+    border: 0;
+    border-radius: 20px;
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
+}
+
+.modal-dialog .modal-content .modal-header {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px
+}
+
+.modal-dialog.cascading-modal .modal-header {
+    padding: 1.5rem;
+    margin: -2rem 1rem 1rem 1rem;
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
+}

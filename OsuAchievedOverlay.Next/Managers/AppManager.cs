@@ -27,6 +27,10 @@ namespace OsuAchievedOverlay.Next.Managers
             StartupManager.Instance.CheckSetup();
         }
 
+        public void Stop(){
+            SessionManager.Instance.Stop();
+        }
+
         public void Prepare()
         {
             BrowserViewModel.Instance.LoadPage("index.html");
@@ -39,17 +43,24 @@ namespace OsuAchievedOverlay.Next.Managers
             BrowserViewModel.Instance.SetAppVersionText("2.0.0dev");
             BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
 
-            OsuApiHelper.OsuUser user = OsuApiHelper.OsuApi.GetUser(SettingsManager.Instance.Settings["api"]["user"]);
-            //Test
-            Session s = new Session()
+            if (!NetworkManager.Instance.HasConnection())
             {
-                InitialData = SessionData.FromUser(user),
-                CurrentData = SessionData.FromUser(user)
-            };
-            s.DifferenceData = s.CurrentData - s.InitialData;
+                BrowserViewModel.Instance.SendNotification(NotificationType.Warning, "You are not connected to the internet");
+            }
+            else
+            {
+                //Test
+                //Session s = new Session()
+                //{
+                //    InitialData = SessionData.FromUser(user),
+                //    CurrentData = SessionData.FromUser(user)
+                //};
+                //s.DifferenceData = s.CurrentData - s.InitialData;
 
-            BrowserViewModel.Instance.ApplyUser(user);
-            BrowserViewModel.Instance.ApplySession(s);
+                //BrowserViewModel.Instance.ApplyUser(user);
+                //BrowserViewModel.Instance.ApplySession(s);
+            }
+            SessionManager.Instance.PrepareSession();
         }
 
         private void PopulateSettings(){

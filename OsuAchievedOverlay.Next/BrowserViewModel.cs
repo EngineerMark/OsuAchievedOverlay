@@ -135,7 +135,7 @@ namespace OsuAchievedOverlay.Next
             AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded(query);
         }
 
-        public void SendNotification(NotificationType notificationType, string message)
+        public void SendNotification(NotificationType notificationType, string message, int timeout = 1000)
         {
             string t = "";
             switch (notificationType)
@@ -154,7 +154,7 @@ namespace OsuAchievedOverlay.Next
                     t = "success";
                     break;
             }
-            AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("toastr." + t + "('" + HttpUtility.JavaScriptStringEncode(message) + "');");
+            AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("toastr." + t + "('" + HttpUtility.JavaScriptStringEncode(message) + "', '', {timeOut: " + timeout + "});");
         }
     }
 

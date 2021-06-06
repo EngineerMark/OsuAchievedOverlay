@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OsuAchievedOverlay.Next.Managers
@@ -15,6 +16,13 @@ namespace OsuAchievedOverlay.Next.Managers
 
         public static string GetExecutableDirectory(){
             return Path.GetDirectoryName(GetExecutablePath());
+        }
+
+        public static long GetFileSize(string file){
+            if(File.Exists(file)){
+                return new FileInfo(file).Length;
+            }
+            return 0;
         }
 
         public static bool IsFileReady(string filename)
@@ -35,6 +43,15 @@ namespace OsuAchievedOverlay.Next.Managers
                 Directory.CreateDirectory(Path.GetDirectoryName(to));
 
             File.Move(from, to);
+        }
+
+        public static void WriteAllText(string file, string data)
+        {
+            //FileWriteQueue.Enqueue(new KeyValuePair<string, string>(file, data));
+            ThreadPool.QueueUserWorkItem((object stateInfo) =>
+            {
+                File.WriteAllText(file, data);
+            });
         }
     }
 }

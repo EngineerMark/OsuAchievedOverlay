@@ -45,12 +45,11 @@
             <div class="container">
                 <div class="tab-content" id="tabcontent">
                     <div class="tab-pane fade show active" id="session" role="tabpanel" aria-labelledby="tab-session">
-                        <!-- <div class="jumbotron jumbotron-fluid card card-image" style="background-image: url(./img/headers/placeholder_banner.jpeg);">
-                            <div class="text-white text-center py-5 px-4">
-                              <div>
-                              </div>
-                            </div>
-                          </div> -->
+                        <div class="btn-group btn-group-sm d-flex" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-unique btn-sm" data-toggle="modal" data-target="#modalNewSession">New Session</button>
+                            <button type="button" class="btn btn-unique btn-sm" data-toggle="modal" data-target="#modalSaveSession">Save Session</button>
+                            <button type="button" class="btn btn-unique btn-sm">Load Session</button>
+                        </div>
                         <div class="card testimonial-card bg-osu-dark">
                             <div class="card-up">
                                 <img id="sessionHeaderImage" class="card-img-top" src="./img/headers/placeholder_banner.jpeg">
@@ -61,7 +60,7 @@
                             </div>
 
                             <div class="card-body">
-                                <h4 class="card-title"><img id="sessionFlag" class="material-tooltip-main" data-toggle="tooltip" title="Unknown Country (placeholder)" style="height: 1em;" src="./img/flags/__.png"/> <span id="sessionUsername">Amayakase</span></h4>
+                                <h4 class="card-title"><img id="sessionFlag" class="material-tooltip-main" data-toggle="tooltip" title="Unknown Country" style="height: 1em;" src="./img/flags/__.png"/> <span id="sessionUsername">-</span></h4>
                             </div>
                         </div>
                         <br />
@@ -70,28 +69,28 @@
                                 <div class="row">
                                     <div class="col">
                                         <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/SSH.png" />
-                                        <h6 id="sessionTotalSSHCount" class="h6-responsive">1,000</h6>
-                                        <span id="sessionDifferenceSSHCount" class="badge badge-pill green">+50</span>
+                                        <h6 id="sessionTotalSSHCount" class="h6-responsive">-</h6>
+                                        <span id="sessionDifferenceSSHCount" class="badge badge-pill grey">+0</span>
                                     </div>
                                     <div class="col">
                                         <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/SS.png" />
-                                        <h6 id="sessionTotalSSCount" class="h6-responsive">1,000</h6>
-                                        <span id="sessionDifferenceSSCount" class="badge badge-pill green">+50</span>
+                                        <h6 id="sessionTotalSSCount" class="h6-responsive">-</h6>
+                                        <span id="sessionDifferenceSSCount" class="badge badge-pill grey">+0</span>
                                     </div>
                                     <div class="col">
                                         <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/SH.png" />
-                                        <h6 id="sessionTotalSHCount" class="h6-responsive">1,000</h6>
-                                        <span id="sessionDifferenceSHCount" class="badge badge-pill green">+50</span>
+                                        <h6 id="sessionTotalSHCount" class="h6-responsive">-</h6>
+                                        <span id="sessionDifferenceSHCount" class="badge badge-pill grey">+0</span>
                                     </div>
                                     <div class="col">
                                         <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/S.png" />
-                                        <h6 id="sessionTotalSCount" class="h6-responsive">1,000</h6>
-                                        <span id="sessionDifferenceSCount" class="badge badge-pill green">+50</span>
+                                        <h6 id="sessionTotalSCount" class="h6-responsive">-</h6>
+                                        <span id="sessionDifferenceSCount" class="badge badge-pill grey">+0</span>
                                     </div>
                                     <div class="col">
                                         <img class="img-fluid w-25" style="min-width:32px;" src="./img/ranks/A.png" />
-                                        <h6 id="sessionTotalACount" class="h6-responsive">1,000</h6>
-                                        <span id="sessionDifferenceACount" class="badge badge-pill green">+50</span>
+                                        <h6 id="sessionTotalACount" class="h6-responsive">-</h6>
+                                        <span id="sessionDifferenceACount" class="badge badge-pill grey">+0</span>
                                     </div>
                                 </div>
                             </div>
@@ -103,63 +102,63 @@
                                     <div id="sessionDisplayLevel" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Level</div>
-                                            <div id="sessionCurrentLevel" class="col text-right">100.8</div>
+                                            <div id="sessionCurrentLevel" class="col text-right">-</div>
                                             <div id="sessionDifferenceLevel" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div id="sessionDisplayTotalscore" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Total Score</div>
-                                            <div id="sessionCurrentTotalScore" class="col text-right">100.000.000</div>
+                                            <div id="sessionCurrentTotalScore" class="col text-right">-</div>
                                             <div id="sessionDifferenceTotalScore" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div id="sessionDisplayRankedscore" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Ranked Score</div>
-                                            <div id="sessionCurrentRankedScore" class="col text-right">50.000.000</div>
+                                            <div id="sessionCurrentRankedScore" class="col text-right">-</div>
                                             <div id="sessionDifferenceRankedScore" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div id="sessionDisplayWorldrank" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">World Rank</div>
-                                            <div id="sessionCurrentWorldRank" class="col text-right">#1</div>
+                                            <div id="sessionCurrentWorldRank" class="col text-right">#-</div>
                                             <div id="sessionDifferenceWorldRank" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div id="sessionDisplayCountryrank" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Country Score</div>
-                                            <div id="sessionCurrentCountryRank" class="col text-right">#1</div>
+                                            <div id="sessionCurrentCountryRank" class="col text-right">#-</div>
                                             <div id="sessionDifferenceCountryRank" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div id="sessionDisplayPlaycount" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Playcount</div>
-                                            <div id="sessionCurrentPlaycount" class="col text-right">200.000</div>
+                                            <div id="sessionCurrentPlaycount" class="col text-right">-</div>
                                             <div id="sessionDifferencePlaycount" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div id="sessionDisplayPlaytime" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Playtime</div>
-                                            <div id="sessionCurrentPlaytime" class="col text-right">3360 hours</div>
+                                            <div id="sessionCurrentPlaytime" class="col text-right">- hours</div>
                                             <div id="sessionDifferencePlaytime" class="col text-left">+0 hours</div>
                                         </div>
                                     </div>
                                     <div id="sessionDisplayAccuracy" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Accuracy</div>
-                                            <div id="sessionCurrentAccuracy" class="col text-right">100%</div>
+                                            <div id="sessionCurrentAccuracy" class="col text-right">-%</div>
                                             <div id="sessionDifferenceAccuracy" class="col text-left">+0</div>
                                         </div>
                                     </div>
                                     <div id="sessionDisplayPerformance" class="list-group-item bg-osu-dark">
                                         <div class="row">
                                             <div class="col text-right">Performance</div>
-                                            <div id="sessionCurrentPerformance" class="col text-right">5000</div>
+                                            <div id="sessionCurrentPerformance" class="col text-right">-</div>
                                             <div id="sessionDifferencePerformance" class="col text-left">+0</div>
                                         </div>
                                     </div>
@@ -502,6 +501,31 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div id="modalNewSession" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNewSession" aria-hidden="true">
+                <div class="modal-dialog"  role="document">
+                  <div class="modal-content bg-osu-regular">
+                    <div class="modal-body bg-osu-regular text-center">
+                      <p>Are you sure you want to start a new session?</p>
+                      <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-success btn-sm" onclick="cefOsuApp.sessionHandlerStartNew()">Yes</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div id="modalSaveSession" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSaveSession" aria-hidden="true">
+                <div class="modal-dialog"  role="document">
+                  <div class="modal-content bg-osu-regular">
+                    <div class="modal-body bg-osu-regular text-center">
+                      <p>In what format do you want to save the session?</p>
+                      <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-info btn-sm material-tooltip-main" data-toggle="tooltip" title="Saves the session in a readonly state" onclick="cefOsuApp.sessionHandlerSave(true)">Read-only</button>
+                      <button type="button" class="btn btn-info btn-sm material-tooltip-main" data-toggle="tooltip" title="Saves a session that can be continued later on" onclick="cefOsuApp.sessionHandlerSave()">Default</button>
+                    </div>
+                  </div>
                 </div>
             </div>
         </div>

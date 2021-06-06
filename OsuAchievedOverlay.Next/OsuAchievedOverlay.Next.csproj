@@ -107,6 +107,8 @@
     </ApplicationDefinition>
     <Compile Include="BeatmapSetEntry.cs" />
     <Compile Include="BrowserViewModel.cs" />
+    <Compile Include="cefOsuApp.cs" />
+    <Compile Include="ExtendedThread.cs" />
     <Compile Include="Github\Asset.cs" />
     <Compile Include="Github\Release.cs" />
     <Compile Include="Helpers\ApiHelper.cs" />
@@ -119,6 +121,8 @@
     <Compile Include="JavaScript\JSModal.cs" />
     <Compile Include="Managers\AppManager.cs" />
     <Compile Include="Managers\InspectorManager.cs" />
+    <Compile Include="Managers\NetworkManager.cs" />
+    <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Managers\StartupManager.cs" />
     <Compile Include="Managers\UpdateManager.cs" />
     <Compile Include="Session.cs" />

@@ -1,4 +1,6 @@
 ﻿using CefSharp;
+using Humanizer;
+using Humanizer.Bytes;
 using osu.Shared;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
