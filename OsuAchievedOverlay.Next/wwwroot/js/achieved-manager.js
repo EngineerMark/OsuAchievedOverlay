@@ -32,6 +32,10 @@ function loadSessionById(){
 }
 
 function ApplySession(session, rounding){
+    const positive = "<i class=\"fas fa-caret-up\"></i> ";
+    const nochange = "";
+    const negative = "<i class=\"fas fa-caret-down\"></i> ";
+
     session = JSON.parse(session);
     rounding = parseInt(rounding);
 
@@ -41,17 +45,17 @@ function ApplySession(session, rounding){
     $('#sessionTotalSCount').html(numberWithCommas(session["SessionDataCurrent"]["DataRankS"]));
     $('#sessionTotalACount').html(numberWithCommas(session["SessionDataCurrent"]["DataRankA"]));
 
-    $('#sessionDifferenceSSHCount').html((session["SessionDataDifference"]["DataRankSSH"]>=0?"+":"-")+""+Math.abs(session["SessionDataDifference"]["DataRankSSH"]));
-    $('#sessionDifferenceSSCount').html((session["SessionDataDifference"]["DataRankSS"]>=0?"+":"-")+""+Math.abs(session["SessionDataDifference"]["DataRankSS"]));
-    $('#sessionDifferenceSHCount').html((session["SessionDataDifference"]["DataRankSH"]>=0?"+":"-")+""+Math.abs(session["SessionDataDifference"]["DataRankSH"]));
-    $('#sessionDifferenceSCount').html((session["SessionDataDifference"]["DataRankS"]>=0?"+":"-")+""+Math.abs(session["SessionDataDifference"]["DataRankS"]));
-    $('#sessionDifferenceACount').html((session["SessionDataDifference"]["DataRankA"]>=0?"+":"-")+""+Math.abs(session["SessionDataDifference"]["DataRankA"]));
+    $('#sessionDifferenceSSHCount').html((session["SessionDataDifference"]["DataRankSSH"]>=0?(session["SessionDataDifference"]["DataRankSSH"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataRankSSH"]));
+    $('#sessionDifferenceSSCount').html((session["SessionDataDifference"]["DataRankSS"]>=0?(session["SessionDataDifference"]["DataRankSS"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataRankSS"]));
+    $('#sessionDifferenceSHCount').html((session["SessionDataDifference"]["DataRankSH"]>=0?(session["SessionDataDifference"]["DataRankSH"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataRankSH"]));
+    $('#sessionDifferenceSCount').html((session["SessionDataDifference"]["DataRankS"]>=0?(session["SessionDataDifference"]["DataRankS"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataRankS"]));
+    $('#sessionDifferenceACount').html((session["SessionDataDifference"]["DataRankA"]>=0?(session["SessionDataDifference"]["DataRankA"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataRankA"]));
 
     $('#sessionDifferenceSSHCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankSSH"]>=0?(session["SessionDataDifference"]["DataRankSSH"]==0?"grey":"green"):"red"));
-    $('#sessionDifferenceSSHCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankSS"]>=0?(session["SessionDataDifference"]["DataRankSS"]==0?"grey":"green"):"red"));
-    $('#sessionDifferenceSSHCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankSH"]>=0?(session["SessionDataDifference"]["DataRankSH"]==0?"grey":"green"):"red"));
-    $('#sessionDifferenceSSHCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankS"]>=0?(session["SessionDataDifference"]["DataRankS"]==0?"grey":"green"):"red"));
-    $('#sessionDifferenceSSHCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankA"]>=0?(session["SessionDataDifference"]["DataRankA"]==0?"grey":"green"):"red"));
+    $('#sessionDifferenceSSCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankSS"]>=0?(session["SessionDataDifference"]["DataRankSS"]==0?"grey":"green"):"red"));
+    $('#sessionDifferenceSHCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankSH"]>=0?(session["SessionDataDifference"]["DataRankSH"]==0?"grey":"green"):"red"));
+    $('#sessionDifferenceSCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankS"]>=0?(session["SessionDataDifference"]["DataRankS"]==0?"grey":"green"):"red"));
+    $('#sessionDifferenceACount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankA"]>=0?(session["SessionDataDifference"]["DataRankA"]==0?"grey":"green"):"red"));
 
     var totalPlayTime = session["SessionDataCurrent"]["DataPlaytime"]; // In seconds
     var initialPlayTime = session["SessionDataInitial"]["DataPlaytime"]; // In seconds
@@ -76,15 +80,15 @@ function ApplySession(session, rounding){
     $('#sessionCurrentAccuracy').html(session["SessionDataCurrent"]["DataAccuracy"].toFixed(rounding)+"%");
     $('#sessionCurrentPerformance').html(numberWithCommas(session["SessionDataCurrent"]["DataPerformance"].toFixed(rounding))+"pp");
 
-    $('#sessionDifferenceLevel').html((session["SessionDataDifference"]["DataLevel"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataLevel"].toFixed(rounding)));
-    $('#sessionDifferenceTotalScore').html((session["SessionDataDifference"]["DataTotalScore"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataTotalScore"]));
-    $('#sessionDifferenceRankedScore').html((session["SessionDataDifference"]["DataRankedScore"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataRankedScore"]));
-    $('#sessionDifferenceWorldRank').html((session["SessionDataDifference"]["DataPPRank"]>=0?"-":"+")+""+numberWithCommas(session["SessionDataDifference"]["DataPPRank"]));
-    $('#sessionDifferenceCountryRank').html((session["SessionDataDifference"]["DataCountryRank"]>=0?"-":"+")+""+numberWithCommas(session["SessionDataDifference"]["DataCountryRank"]));
-    $('#sessionDifferencePlaycount').html((session["SessionDataDifference"]["DataPlaycount"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataPlaycount"]));
-    $('#sessionDifferencePlaytime').html((differencePlayTime>=0?"+":"-")+""+differencePlayTime+" "+diffType);
-    $('#sessionDifferenceAccuracy').html((session["SessionDataDifference"]["DataAccuracy"]>=0?"+":"-")+""+session["SessionDataDifference"]["DataAccuracy"].toFixed(rounding));
-    $('#sessionDifferencePerformance').html((session["SessionDataDifference"]["DataPerformance"]>=0?"+":"-")+""+numberWithCommas(session["SessionDataDifference"]["DataPerformance"].toFixed(rounding)));
+    $('#sessionDifferenceLevel').html((session["SessionDataDifference"]["DataLevel"]>=0?(session["SessionDataDifference"]["DataLevel"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataLevel"].toFixed(rounding)));
+    $('#sessionDifferenceTotalScore').html((session["SessionDataDifference"]["DataTotalScore"]>=0?(session["SessionDataDifference"]["DataTotalScore"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataTotalScore"]));
+    $('#sessionDifferenceRankedScore').html((session["SessionDataDifference"]["DataRankedScore"]>=0?(session["SessionDataDifference"]["DataRankedScore"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataRankedScore"]));
+    $('#sessionDifferenceWorldRank').html((session["SessionDataDifference"]["DataPPRank"]>=0?(session["SessionDataDifference"]["DataPPRank"]==0?nochange:negative):positive)+""+numberWithCommas(session["SessionDataDifference"]["DataPPRank"]));
+    $('#sessionDifferenceCountryRank').html((session["SessionDataDifference"]["DataCountryRank"]>=0?(session["SessionDataDifference"]["DataCountryRank"]==0?nochange:negative):positive)+""+numberWithCommas(session["SessionDataDifference"]["DataCountryRank"]));
+    $('#sessionDifferencePlaycount').html((session["SessionDataDifference"]["DataPlaycount"]>=0?(session["SessionDataDifference"]["DataPlaycount"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataPlaycount"]));
+    $('#sessionDifferencePlaytime').html((differencePlayTime>=0?(differencePlayTime==0?nochange:positive):negative)+""+differencePlayTime+" "+diffType);
+    $('#sessionDifferenceAccuracy').html((session["SessionDataDifference"]["DataAccuracy"]>=0?(session["SessionDataDifference"]["DataAccuracy"]==0?nochange:positive):negative)+""+session["SessionDataDifference"]["DataAccuracy"].toFixed(rounding));
+    $('#sessionDifferencePerformance').html((session["SessionDataDifference"]["DataPerformance"]>=0?(session["SessionDataDifference"]["DataPerformance"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataPerformance"].toFixed(rounding)));
 
     setTextColorToSign("#sessionDifferenceLevel", session["SessionDataDifference"]["DataLevel"]);
     setTextColorToSign("#sessionDifferenceTotalScore", session["SessionDataDifference"]["DataTotalScore"]);

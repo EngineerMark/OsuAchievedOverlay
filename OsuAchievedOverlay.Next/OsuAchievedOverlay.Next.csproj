@@ -160,7 +160,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="wwwroot\js\SessionManager.js">
+    <Content Include="wwwroot\js\achieved-manager.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="wwwroot\launcher.html">
