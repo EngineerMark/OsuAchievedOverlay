@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\ILMerge.3.0.29\build\ILMerge.props" Condition="Exists('..\packages\ILMerge.3.0.29\build\ILMerge.props')" />
   <Import Project="..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.props')" />
   <Import Project="..\packages\cef.redist.x86.90.6.5\build\cef.redist.x86.props" Condition="Exists('..\packages\cef.redist.x86.90.6.5\build\cef.redist.x86.props')" />
   <Import Project="..\packages\cef.redist.x64.90.6.5\build\cef.redist.x64.props" Condition="Exists('..\packages\cef.redist.x64.90.6.5\build\cef.redist.x64.props')" />
@@ -84,6 +85,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -1398,6 +1401,57 @@
     <Error Condition="!Exists('..\packages\cef.redist.x86.90.6.5\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.90.6.5\build\cef.redist.x86.props'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.props'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('..\packages\ILMerge.3.0.29\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILMerge.3.0.29\build\ILMerge.props'))" />
   </Target>
   <Import Project="..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.targets')" />
+  <UsingTask TaskName="ILMerge.MSBuild.Tasks.ILMerge" AssemblyFile="$(SolutionDir)\packages\ILMerge.MSBuild.Tasks.1.0.0.3\tools\ILMerge.MSBuild.Tasks.dll" />
+  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
+    <ItemGroup>
+      <MergeAsm Include="$(OutputPath)$(TargetFileName)" />
+      <MergeAsm Include="$(OutputPath)osu-database-reader.dll" />
+      <MergeAsm Include="$(OutputPath)Newtonsoft.Json.dll" />
+      <MergeAsm Include="$(OutputPath)Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
+      <MergeAsm Include="$(OutputPath)Microsoft.WindowsAPICodePack.Shell.dll" />
+      <MergeAsm Include="$(OutputPath)Microsoft.WindowsAPICodePack.dll" />
+      <MergeAsm Include="$(OutputPath)OsuHelper.dll" />
+      <MergeAsm Include="$(OutputPath)INIFileParser.dll" />
+      <MergeAsm Include="$(OutputPath)Humanizer.dll" />
+      <MergeAsm Include="$(OutputPath)HtmlAgilityPack.dll" />
+      <MergeAsm Include="$(OutputPath)osu.Shared.dll" />
+    </ItemGroup>
+    <PropertyGroup>
+      <MergedAssembly>$(ProjectDir)$(OutDir)OsuAchievedOverlay.Next.exe</MergedAssembly>
+    </PropertyGroup>
+    <Message Text="ILMerge @(MergeAsm) -&gt; $(MergedAssembly)" Importance="high" />
+    <ILMerge InputAssemblies="@(MergeAsm)" OutputFile="$(MergedAssembly)" TargetKind="SameAsPrimaryAssembly" />
+    <ItemGroup>
+      <FilesToDelete Include="$(OutputPath)osu-database-reader.dll" />
+      <FilesToDelete Include="$(OutputPath)Newtonsoft.Json.dll" />
+      <FilesToDelete Include="$(OutputPath)Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
+      <FilesToDelete Include="$(OutputPath)Microsoft.WindowsAPICodePack.Shell.dll" />
+      <FilesToDelete Include="$(OutputPath)Microsoft.WindowsAPICodePack.dll" />
+      <FilesToDelete Include="$(OutputPath)OsuHelper.dll" />
+      <FilesToDelete Include="$(OutputPath)INIFileParser.dll" />
+      <FilesToDelete Include="$(OutputPath)Humanizer.dll" />
+      <FilesToDelete Include="$(OutputPath)HtmlAgilityPack.dll" />
+      <FilesToDelete Include="$(OutputPath)osu.Shared.dll" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>echo on
+cd $(TargetDir)
+if $(ConfigurationName) == Release (
+  del *.pdb
+  del *.xml
+)
+del webdata.pak
+
+for /f "tokens=3,2,4 delims=/- " %25%25x in ("%25date%25") do set d=%25%25y%25%25x%25%25z
+Echo zipping web data...
+"C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetDir)webdata.pak" "$(TargetDir)wwwroot\*"
+echo Web data built!
+
+rd /Q /S "$(TargetDir)wwwroot"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

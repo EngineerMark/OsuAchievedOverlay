@@ -2,6 +2,8 @@
 using CefSharp.WinForms;
 using OsuAchievedOverlay.Next.Managers;
 using System;
+using System.IO;
+using System.IO.Compression;
 using System.Threading;
 using System.Windows;
 
@@ -17,6 +19,23 @@ namespace OsuAchievedOverlay.Next
         public MainWindow()
         {
             InitializeComponent();
+
+            string webpackage = "webdata.pak";
+            string webfolder = "wwwroot";
+
+            if(!File.Exists(webpackage)){
+                MessageBox.Show("File data for the display is missing! Did you delete it? (webdata.pak)");
+                Environment.Exit(-1);
+            }
+
+            if(Directory.Exists(webfolder))
+                Directory.Delete(webfolder, true);
+
+            DirectoryInfo dirInfo = Directory.CreateDirectory(webfolder);
+            dirInfo.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+
+            ZipFile.ExtractToDirectory(webpackage, webfolder);
+
             InitializeChromium();
 
             CefSharpSettings.WcfEnabled = true;
