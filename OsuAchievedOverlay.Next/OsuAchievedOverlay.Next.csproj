@@ -110,10 +110,11 @@
     </ApplicationDefinition>
     <Compile Include="BeatmapSetEntry.cs" />
     <Compile Include="BrowserViewModel.cs" />
-    <Compile Include="cefOsuApp.cs" />
+    <Compile Include="CefOsuApp.cs" />
     <Compile Include="ExtendedThread.cs" />
     <Compile Include="Github\Asset.cs" />
     <Compile Include="Github\Release.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="JavaScript\JSCheckbox.cs" />

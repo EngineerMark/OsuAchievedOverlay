@@ -83,7 +83,7 @@ namespace OsuAchievedOverlay.Next
 
         public void SendNotification(NotificationType notificationType, string message, int timeout = 1000)
         {
-            string t = "";
+            string t;
             switch (notificationType)
             {
                 case NotificationType.Info:

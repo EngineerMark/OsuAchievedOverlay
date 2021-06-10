@@ -2,6 +2,17 @@
 ![Total Downloads](https://img.shields.io/github/downloads/EngineerMark/OsuAchievedOverlay/total)
 ![Code Quality Dev Branch](https://img.shields.io/codefactor/grade/github/EngineerMark/OsuAchievedOverlay/dev)
 
+# Table of Contents
+1. [OsuAchievedOverlay](#OsuAchievedOverlay)
+    1. [osu! API key](#osu!-API-key)
+    2. [Release format](#release-format)
+2. [Building](#building)
+    1. [Dependencies](#dependencies)
+3. [Sessions](#sessions)
+4. [Local API](#local-api)
+    1. [Reference](#reference)
+5. [OBS Studio](#obs-studio)
+
 # OsuAchievedOverlay
 Stream Overlay for osu! containing information on your session achievements
 
@@ -27,6 +38,20 @@ Releases are currently versioned as the following: 1.2.3.4
 4. Hotfix version (Only applicable for hotfixes)
 
 This format will be standard here for the ease of the upcoming updater in the application.
+
+# Building
+
+To build osu!achieved for yourself, please make sure of the following things:
+- ILMerge is used to combine the resulting managed dlls into the .exe
+- 7zip is used to package the web resources into a single file
+
+These are both done after the initial build, but are still part of the build process in Visual Studio 2019 (and works in other IDEs most likely, but I did not test that).
+The first one does not happen if the target is set to Debug, the latter does.
+
+## Dependencies
+
+This project makes use of my OsuHelper library: https://github.com/EngineerMark/OsuHelper\
+It uses Newtonsoft for json parsing. Latest version should be safe, but in case of errors or crashes; check used version in NuGet package
 
 # Sessions
 You only need to save a session once, the current and difference data are calculated automatically when opened.
@@ -90,8 +115,3 @@ Starting = value at start of the session
 # OBS Studio
 
 When capturing the window, set Window Match Priority to "Match title, otherwise find window of same executable", that way it automatically recaptures when you change settings.
-
-# Dependencies
-
-This project makes use of my OsuHelper library: https://github.com/EngineerMark/OsuHelper\
-It uses Newtonsoft for json parsing. Latest version should be safe, but in case of errors or crashes; check used version in NuGet package

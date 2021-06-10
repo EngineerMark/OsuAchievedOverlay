@@ -62,15 +62,17 @@ namespace OsuAchievedOverlay.Next
 
         public void sessionHandlerLoadFromFile(){
             BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Hide("#modalLoadSession");
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
-            if(openFileDialog.ShowDialog()==true){
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt"
+            };
+            if (openFileDialog.ShowDialog()==true){
                 SessionLoadFromFile(openFileDialog.FileName);
             }
         }
 
         private void SessionLoadFromFile(string path){
-            string data = string.Empty;
+            string data;
             try
             {
                 data = FileManager.ReadAllText(path);
@@ -81,7 +83,7 @@ namespace OsuAchievedOverlay.Next
                 return;
             }
 
-            Session loaded = null;
+            Session loaded;
             try
             {
                 loaded = JsonConvert.DeserializeObject<Session>(data);
@@ -109,8 +111,10 @@ namespace OsuAchievedOverlay.Next
                 Session clonedSession = (Session)SessionManager.Instance.CurrentSession.Clone();
                 clonedSession.ReadOnly = _readonly;
                 string json = clonedSession.ConvertToJson();
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt"
+                };
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     FileManager.WriteAllText(saveFileDialog.FileName, json);
@@ -138,8 +142,10 @@ namespace OsuAchievedOverlay.Next
         {
             _internalWindow.Dispatcher.Invoke(() =>
             {
-                CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-                dialog.IsFolderPicker = true;
+                CommonOpenFileDialog dialog = new CommonOpenFileDialog
+                {
+                    IsFolderPicker = true
+                };
                 CommonFileDialogResult result = dialog.ShowDialog();
                 JsExecuter.SetAttribute("#settingsInputOsuDir", "value", HttpUtility.JavaScriptStringEncode(dialog.FileName));
                 JsExecuter.AddClass("#settingsInputOsuDirLabel", "active");
@@ -188,7 +194,7 @@ namespace OsuAchievedOverlay.Next
                             updateRateInteger = Convert.ToInt32(updateRate);
                             updateRateInteger = Math.Min(SettingsManager.RefreshTimeMax, Math.Max(SettingsManager.RefreshTimeMin, updateRateInteger));
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Update rate value seems to be invalid");
                             processSettings = false;
@@ -203,7 +209,7 @@ namespace OsuAchievedOverlay.Next
                             roundingDigit = Convert.ToInt32(roundingDigitVal);
                             roundingDigit = Math.Min(SettingsManager.RoundingMax, Math.Max(SettingsManager.RoundingMin, roundingDigit));
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Rounding value seems to be invalid");
                             processSettings = false;

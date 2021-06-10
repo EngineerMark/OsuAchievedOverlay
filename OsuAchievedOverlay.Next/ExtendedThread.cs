@@ -13,6 +13,7 @@ namespace OsuAchievedOverlay
         public Action DelegateFunction { get; set; }
         public int SleepTime { get; set; }
         public int TimeoutTime { get; set; } = 30;
+        public bool IsAlive { get; set; } = false;
 
         private CancellationTokenSource token;
 
@@ -29,7 +30,8 @@ namespace OsuAchievedOverlay
         }
 
         public void Join(){
-            if(token!=null){
+            if(token!=null && IsAlive)
+            {
                 token?.Cancel();
                 token?.Dispose();
             }
@@ -39,6 +41,7 @@ namespace OsuAchievedOverlay
             token = new CancellationTokenSource();
             InternalThread = new Thread(new ThreadStart(() =>
             {
+                IsAlive = true;
                 while (!token.IsCancellationRequested)
                 {
                     Task task = Task.Run(()=>DelegateFunction());
@@ -46,6 +49,7 @@ namespace OsuAchievedOverlay
                     Thread.Sleep(SleepTime*1000);
                 }
                 token = null;
+                IsAlive = false;
             }));
         }
     }

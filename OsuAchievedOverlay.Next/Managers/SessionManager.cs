@@ -143,11 +143,17 @@ namespace OsuAchievedOverlay.Next.Managers
                 }
                 BrowserViewModel.Instance.ApplySession(CurrentSession);
                 BrowserViewModel.Instance.ApplyUser(currentUserData);
+
+                BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#sessionProgressTime");
+                BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionProgressReadonly");
             }
             else
             {
                 SessionThread = new ExtendedThread(() => OnUpdate(), Convert.ToInt32(SettingsManager.Instance.Settings["api"]["updateRate"]));
                 SessionThread.Start();
+
+                BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionProgressTime");
+                BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#sessionProgressReadonly");
             }
 
         }
