@@ -80,6 +80,8 @@ namespace OsuAchievedOverlay.Next.Managers
 
                 int actualPerc = 100-Convert.ToInt32(Math.Round(perc * 100));
 
+                actualPerc = Math.Min(100, Math.Max(0, actualPerc));
+
                 BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#progressbarSessionTimer').css('width', '" + actualPerc + "%');");
             }, 1);
             ProgressThread.Start();
