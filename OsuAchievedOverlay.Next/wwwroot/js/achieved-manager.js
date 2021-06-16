@@ -1,3 +1,5 @@
+var settings = null;
+
 function FillSessionDataList(data){
     $('#sessionListTable tbody tr').remove();
     data = JSON.parse(data);

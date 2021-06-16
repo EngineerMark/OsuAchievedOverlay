@@ -5471,7 +5471,7 @@ a.badge-dark:focus, a.badge-dark.focus {
   text-align: center;
   white-space: nowrap;
   background-color: #007bff;
-  transition: width 0.6s ease;
+  transition: width 1s linear;
 }
 
 @media (prefers-reduced-motion: reduce) {

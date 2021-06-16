@@ -13,6 +13,10 @@ namespace OsuAchievedOverlay.Next.Managers
         public List<SessionFileData> SessionFiles { get; set; }
         public Session CurrentSession { get; set; }
         public ExtendedThread SessionThread { get; set; }
+        public ExtendedThread ProgressThread { get; set; }
+
+        private long lastIteration = -1;
+        private long nextIteration = -1;
 
         public SessionManager()
         {
@@ -47,6 +51,42 @@ namespace OsuAchievedOverlay.Next.Managers
                     }
                 }
             }
+        }
+
+        public void StartProgressHandler(){
+            StopProgressHandler();
+            ProgressThread = new ExtendedThread(() =>
+            {
+                float perc = 0;
+
+                if(nextIteration!=-1 && lastIteration!=-1)
+                {
+                    long currentTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+
+                    long normalizedTime = nextIteration - lastIteration;
+                    long normalizedCurrent = nextIteration - currentTime;
+
+                    if (normalizedTime < 0)
+                        normalizedTime = 0;
+
+                    if (normalizedCurrent < 0)
+                        normalizedCurrent = 0;
+
+                    if (normalizedTime == 0 || normalizedCurrent == 0)
+                        perc = 0;
+                    else
+                        perc = (float)normalizedCurrent / (float)normalizedTime;
+                }
+
+                int actualPerc = 100-Convert.ToInt32(Math.Round(perc * 100));
+
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#progressbarSessionTimer').css('width', '" + actualPerc + "%');");
+            }, 1);
+            ProgressThread.Start();
+        }
+
+        public void StopProgressHandler(){
+            ProgressThread?.Join();
         }
 
         public void PopulateLoadList()
@@ -144,12 +184,19 @@ namespace OsuAchievedOverlay.Next.Managers
                 BrowserViewModel.Instance.ApplySession(CurrentSession);
                 BrowserViewModel.Instance.ApplyUser(currentUserData);
 
+                StopProgressHandler();
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#sessionProgressTime");
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionProgressReadonly");
+
             }
             else
             {
                 SessionThread = new ExtendedThread(() => OnUpdate(), Convert.ToInt32(SettingsManager.Instance.Settings["api"]["updateRate"]));
+
+                lastIteration = DateTimeOffset.Now.ToUnixTimeSeconds();
+                nextIteration = DateTimeOffset.Now.ToUnixTimeSeconds() + SessionThread.SleepTime;
+
+                StartProgressHandler();
                 SessionThread.Start();
 
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionProgressTime");
@@ -208,6 +255,9 @@ namespace OsuAchievedOverlay.Next.Managers
                 if (updateRate != SessionThread.SleepTime)
                     SessionThread.SleepTime = updateRate;
             }
+
+            lastIteration = DateTimeOffset.Now.ToUnixTimeSeconds();
+            nextIteration = DateTimeOffset.Now.ToUnixTimeSeconds() + SessionThread.SleepTime;
         }
     }
 }

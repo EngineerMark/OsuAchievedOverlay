@@ -19557,8 +19557,8 @@ button.md-toast-close-button {
 }
 
 .md-progress .progress-bar-animated {
-    -webkit-transition: width 2s ease-in-out;
-    transition: width 2s ease-in-out
+    -webkit-transition: width 1s ease-in-out;
+    transition: width 1s ease-in-out
 }
 
 .md-progress .indeterminate {
