@@ -207,6 +207,7 @@ namespace OsuAchievedOverlay.Next.Managers
 
         public void Stop()
         {
+            StopProgressHandler();
             SessionThread?.Join();
 
             if (File.Exists("Data/stored_sessions.json"))
