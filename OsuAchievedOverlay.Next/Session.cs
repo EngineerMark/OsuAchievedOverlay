@@ -40,8 +40,8 @@ namespace OsuAchievedOverlay
             SessionDate = DateTimeOffset.Now.ToUnixTimeSeconds();
         }
 
-        public void AddNewPlays(List<OsuApiHelper.OsuPlay> plays)
-        {
+        //public void AddNewPlays(List<OsuApiHelper.OsuPlay> plays)
+        //{
             // For the future, once we secured a safe way to get Performance data without basically killing the program for data retrieval.
             //foreach (OsuApiHelper.OsuPlay play in plays)
             //{
@@ -50,7 +50,7 @@ namespace OsuAchievedOverlay
             //        GainedPlays.Add(play);
             //    }
             //}
-        }
+        //}
 
         public string ConvertToJson()
         {

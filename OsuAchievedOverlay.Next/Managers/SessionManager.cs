@@ -163,8 +163,10 @@ namespace OsuAchievedOverlay.Next.Managers
 
             if (session == null)
             {
-                CurrentSession = new Session();
-                CurrentSession.Username = SettingsManager.Instance.Settings["api"]["user"];
+                CurrentSession = new Session
+                {
+                    Username = SettingsManager.Instance.Settings["api"]["user"]
+                };
             }
             else
                 CurrentSession = session;
