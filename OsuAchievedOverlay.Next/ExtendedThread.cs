@@ -34,6 +34,7 @@ namespace OsuAchievedOverlay
             {
                 token?.Cancel();
                 token?.Dispose();
+                token = null;
             }
         }
 
@@ -42,7 +43,7 @@ namespace OsuAchievedOverlay
             InternalThread = new Thread(new ThreadStart(() =>
             {
                 IsAlive = true;
-                while (!token.IsCancellationRequested)
+                while (token!=null && !token.IsCancellationRequested)
                 {
                     Task task = Task.Run(()=>DelegateFunction());
                     task.Wait(TimeSpan.FromSeconds(TimeoutTime));
