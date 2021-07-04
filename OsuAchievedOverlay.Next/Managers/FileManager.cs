@@ -18,6 +18,23 @@ namespace OsuAchievedOverlay.Next.Managers
             return Path.GetDirectoryName(GetExecutablePath());
         }
 
+        public static List<string> GetAllFilesInDirectory(string dir)
+        {
+            List<string> files = new List<string>();
+
+            foreach (string f in Directory.GetFiles(dir))
+                files.Add(f);
+            foreach (string d in Directory.GetDirectories(dir))
+                files.AddRange(GetAllFilesInDirectory(d));
+
+            return files;
+        }
+
+        public static bool IsSubDir(string fullpath, string directoryName)
+        {
+            return fullpath.Contains(string.Format(@"{0}\", directoryName));
+        }
+
         public static long GetFileSize(string file){
             if(File.Exists(file)){
                 return new FileInfo(file).Length;
@@ -43,6 +60,14 @@ namespace OsuAchievedOverlay.Next.Managers
                 Directory.CreateDirectory(Path.GetDirectoryName(to));
 
             File.Move(from, to);
+        }
+
+        public static void CopyFile(string from, string to)
+        {
+            if (!Directory.Exists(Path.GetDirectoryName(to)))
+                Directory.CreateDirectory(Path.GetDirectoryName(to));
+
+            File.Copy(from, to, true);
         }
 
         public static void WriteAllText(string file, string data)

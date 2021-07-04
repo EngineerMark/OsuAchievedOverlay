@@ -37,6 +37,15 @@ namespace OsuAchievedOverlay.Next
 
         public static Window GetWindow() => _internalWindow;
 
+        public void updateHandlerDownload(){
+            UpdateManager.Instance.DownloadUpdate(UpdateManager.Instance.AvailableUpdate);
+        }
+
+        public void updateHandlerInstall()
+        {
+            UpdateManager.Instance.InstallUpdate(UpdateManager.Instance.AvailableUpdate);
+        }
+
         public void sessionHandlerStartNew()
         {
             SessionManager.Instance.PrepareSession();

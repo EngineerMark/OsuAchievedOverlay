@@ -2,6 +2,7 @@
 using CefSharp.WinForms;
 using OsuAchievedOverlay.Next.Managers;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
@@ -16,7 +17,7 @@ namespace OsuAchievedOverlay.Next
     {
         public ChromiumWebBrowser chromiumBrowser;
 
-        public MainWindow()
+        public MainWindow(StartupEventArgs e)
         {
             InitializeComponent();
 

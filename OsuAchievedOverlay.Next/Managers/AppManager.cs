@@ -40,12 +40,13 @@ namespace OsuAchievedOverlay.Next.Managers
 
             PopulateSettings();
 
-            BrowserViewModel.Instance.SetAppVersionText("2.0.0dev");
+            BrowserViewModel.Instance.SetAppVersionText(UpdateManager.version);
             BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
 
             if (!NetworkManager.Instance.HasConnection())
                 BrowserViewModel.Instance.SendNotification(NotificationType.Warning, "You are not connected to the internet");
             SessionManager.Instance.PrepareSession();
+            UpdateManager.Instance.Start();
         }
 
         private void PopulateSettings(){

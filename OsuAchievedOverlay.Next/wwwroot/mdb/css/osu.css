@@ -105,22 +105,30 @@
 
 ::-webkit-scrollbar {
     width: 15px;
-  }
+}
   
-  /* Track */
-  ::-webkit-scrollbar-track {
+/* Track */
+::-webkit-scrollbar-track {
     background: var(--osu-regular);
-  }
+    border-radius: 7.5px;
+    background-clip: content-box;
+}
   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: var(--osu-dark);
-  }
+    border: 3px solid transparent;
+    border-radius: 7.5px;
+    background-clip: content-box;
+}
   
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background: #555;
-  }
+    border: 3px solid transparent;
+    border-radius: 7.5px;
+    background-clip: content-box;
+}
 
 .tabs-osu-dark {
     background-color: var(--osu-dark) !important;

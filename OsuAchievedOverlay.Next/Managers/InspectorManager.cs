@@ -5,6 +5,7 @@ using osu.Shared;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
 using OsuAchievedOverlay.Next.Helpers;
+using OsuAchievedOverlay.Next.OsuWeb;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -124,7 +125,7 @@ namespace OsuAchievedOverlay.Next.Managers
                             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorCollectionList').html('')");
                             foreach (Collection coll in CurrentCollections.Collections)
                             {
-                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorCollectionList').append('<button type=\\\"button\\\" class=\\\"btn btn-block btn-dark btn-rounded\\\" style=\\\"margin:10px auto;\\\"><span class=\\\"float-left\\\">" + coll.Name + "</span></button>')");
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorCollectionList').append('<button type=\\\"button\\\" class=\\\"btn btn-block btn-sm btn-dark btn-rounded\\\" style=\\\"margin:10px auto;\\\"><span class=\\\"float-left\\\">" + coll.Name + "</span></button>')");
                             }
 
                             CurrentScores = ScoresDb.Read(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "scores.db"));
