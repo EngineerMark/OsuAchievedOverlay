@@ -130,6 +130,8 @@
     background-clip: content-box;
 }
 
+::-webkit-scrollbar-corner { background: rgba(0,0,0,0); }
+
 .tabs-osu-dark {
     background-color: var(--osu-dark) !important;
 }
