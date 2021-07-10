@@ -1428,6 +1428,7 @@
       <MergeAsm Include="$(OutputPath)Humanizer.dll" />
       <MergeAsm Include="$(OutputPath)HtmlAgilityPack.dll" />
       <MergeAsm Include="$(OutputPath)osu.Shared.dll" />
+      <MergeAsm Include="$(OutputPath)MarkdownSharp.dll" />
     </ItemGroup>
     <PropertyGroup>
       <MergedAssembly>$(ProjectDir)$(OutDir)OsuAchievedOverlay.Next.exe</MergedAssembly>
@@ -1445,6 +1446,7 @@
       <FilesToDelete Include="$(OutputPath)Humanizer.dll" />
       <FilesToDelete Include="$(OutputPath)HtmlAgilityPack.dll" />
       <FilesToDelete Include="$(OutputPath)osu.Shared.dll" />
+      <FilesToDelete Include="$(OutputPath)MarkdownSharp.dll" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
   </Target>
