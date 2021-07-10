@@ -47,6 +47,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 BrowserViewModel.Instance.SendNotification(NotificationType.Warning, "You are not connected to the internet");
             SessionManager.Instance.PrepareSession();
             UpdateManager.Instance.Start();
+
         }
 
         private void PopulateSettings(){
@@ -64,6 +65,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 string key = keyData.KeyName;
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.SetChecked("#settingsInputDisplay" + (key.FirstCharToUpper()) + "", keyData.Value == "true");
             }
+            SettingsManager.Instance.SettingsApply();
         }
     }
 }

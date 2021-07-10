@@ -37,13 +37,8 @@ namespace OsuAchievedOverlay.Next
 
         public static Window GetWindow() => _internalWindow;
 
-        public void updateHandlerDownload(){
-            UpdateManager.Instance.DownloadUpdate(UpdateManager.Instance.AvailableUpdate);
-        }
-
-        public void updateHandlerInstall()
-        {
-            UpdateManager.Instance.InstallUpdate(UpdateManager.Instance.AvailableUpdate);
+        public void updateHandlerVisit(){
+            System.Diagnostics.Process.Start(UpdateManager.Instance.AvailableUpdate.HTMLURL);
         }
 
         public void sessionHandlerStartNew()
@@ -163,114 +158,7 @@ namespace OsuAchievedOverlay.Next
 
         public void buttonSaveSettings(bool checkUsername = true, bool newSession = false)
         {
-            BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Hide("#modalSettingsUsernameChanged");
-            _internalWindow.Dispatcher.Invoke(() =>
-            {
-                Task task = Task.Run(async () =>
-                {
-                    JsExecuter.SetElementDisabled("#settingsConfirmButton", true);
-                    JsExecuter.SetHtml("#settingsConfirmButton", "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> saving");
-
-                    string apiKey = await BrowserViewModel.Instance.SettingsGetApiKey();
-                    string username = await BrowserViewModel.Instance.SettingsGetUsername();
-                    string osudir = await BrowserViewModel.Instance.SettingsGetOsuDirectory();
-                    OsuMode gamemode = await BrowserViewModel.Instance.SettingsGetGamemode();
-                    int updateRateInteger = -1;
-                    int roundingDigit = -1;
-
-
-                    bool processSettings = true;
-                    if (!ApiHelper.IsUserValid(apiKey, username))
-                    {
-                        BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "API Key or username is invalid");
-                        processSettings = false;
-                    }
-
-                    if (!string.IsNullOrEmpty(osudir) && processSettings)
-                    {
-                        if (!ApiHelper.IsValidOsuInstallation(osudir))
-                        {
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Selected osu directory is invalid");
-                            processSettings = false;
-                        }
-                    }
-
-                    if (processSettings)
-                    {
-                        string updateRate = await BrowserViewModel.Instance.SettingsGetUpdaterate();
-                        try
-                        {
-                            updateRateInteger = Convert.ToInt32(updateRate);
-                            updateRateInteger = Math.Min(SettingsManager.RefreshTimeMax, Math.Max(SettingsManager.RefreshTimeMin, updateRateInteger));
-                        }
-                        catch (Exception)
-                        {
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Update rate value seems to be invalid");
-                            processSettings = false;
-                        }
-                    }
-
-                    if (processSettings)
-                    {
-                        string roundingDigitVal = await BrowserViewModel.Instance.SettingsGetRoundingValue();
-                        try
-                        {
-                            roundingDigit = Convert.ToInt32(roundingDigitVal);
-                            roundingDigit = Math.Min(SettingsManager.RoundingMax, Math.Max(SettingsManager.RoundingMin, roundingDigit));
-                        }
-                        catch (Exception)
-                        {
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Rounding value seems to be invalid");
-                            processSettings = false;
-                        }
-                    }
-
-                    if (processSettings)
-                    {
-
-                        KeyDataCollection displayOptions = SettingsManager.DefaultSettings["showingItems"];
-                        foreach (KeyData keyData in displayOptions)
-                        {
-                            string key = keyData.KeyName;
-                            bool state = await BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.IsChecked("#settingsInputDisplay" + (key.FirstCharToUpper()) + "");
-                            SettingsManager.Instance.Settings["showingItems"][key] = state ? "true" : "false";
-                        }
-                    }
-
-                    if (processSettings)
-                    {
-                        if (checkUsername)
-                        {
-                            if(SettingsManager.Instance.Settings["api"]["user"]!=username){
-                                BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Show("#modalSettingsUsernameChanged");
-                                return;
-                            }
-                        }
-
-                        SettingsManager.Instance.Settings["api"]["key"] = apiKey;
-                        SettingsManager.Instance.Settings["api"]["user"] = username;
-                        SettingsManager.Instance.Settings["api"]["updateRate"] = updateRateInteger + "";
-                        SettingsManager.Instance.Settings["api"]["gamemode"] = gamemode + "";
-                        SettingsManager.Instance.Settings["display"]["roundingValue"] = roundingDigit + "";
-                        SettingsManager.Instance.Settings["misc"]["osuFolder"] = osudir;
-
-                        // Save stuff
-                        SettingsManager.Instance.SettingsSave();
-                        SettingsManager.Instance.SettingsApply();
-                        BrowserViewModel.Instance.SendNotification(NotificationType.Success, "Saved settings");
-
-                        if(newSession){
-                            SessionManager.Instance.PrepareSession();
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Info, "Started new session");
-                        }
-                    }
-
-                    //MessageBox.Show(apiKey);
-                    JsExecuter.SetElementDisabled("#settingsConfirmButton", false);
-                    JsExecuter.SetHtml("#settingsConfirmButton", "Save and apply");
-
-                });
-            });
+            SettingsManager.Instance.SaveChangedSettings(checkUsername, newSession);
         }
 
         public void finishSetup()

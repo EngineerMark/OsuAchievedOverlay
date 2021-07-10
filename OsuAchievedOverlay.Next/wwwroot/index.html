@@ -36,7 +36,7 @@
                 <div id="navigationBar">
                     <ul class="nav tabs-osu-regular" id="contentTabList" role="tablist">
                         <li class="nav-item"><a href="#session" aria-controls="session" aria-selected="true" role="tab" class="nav-link text-white active" data-toggle="tab" data-target="#session"><i class="fas fa-home"></i> session</a></li>
-                        <li class="nav-item"><a href="#inspector" aria-controls="inspector" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#inspector"><i class="fas fa-search"></i> inspector</a></li>
+                        <li class="nav-item" onclick="inspectorOpenMain()"><a href="#inspector" aria-controls="inspector" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#inspector"><i class="fas fa-search"></i> inspector</a></li>
                         <li class="nav-item"><a href="#settings" aria-controls="settings" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#settings"><i class="fas fa-cog"></i> settings</a></li>
                         <li class="nav-item"><a href="#about" aria-controls="about" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#about"><i class="fas fa-info-circle"></i> about <span id="navigationUpdateWarning" class="text-warning text-muted" hidden><i class="fas fa-exclamation-triangle"></i></span></a></li>
                     </ul>
@@ -177,86 +177,106 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="inspector" role="tabpanel" aria-labelledby="tab-inspector">
-                        <section>
-                            <div class="row">
-                                <div id="inspectorBeatmapSetCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
-                                    <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
-                                        <i class="fas fa-cubes fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
-                                        <div class="media-body p-1">
-                                            <p class="text-uppercase text-muted mb-1"><small>beatmap sets</small></p>
-                                            <h5 id="inspectorBeatmapSetCount" class="font-weight-bold mb-0">-</h5>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div id="inspectorBeatmapDiffCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
-                                    <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
-                                        <i class="fas fa-box-open fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
-                                        <div class="media-body p-1">
-                                            <p class="text-uppercase text-muted mb-1"><small>difficulties</small></p>
-                                            <h5 id="inspectorBeatmapDiffCount" class="font-weight-bold mb-0">-</h5>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div id="inspectorCollectionCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
-                                    <a class="media bg-osu-dark z-depth-1 rounded stretched-link" data-toggle="modal" data-target="#inspectorCollectionModal">
-                                        <i class="fas fa-list-ul fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
-                                        <div class="media-body p-1">
-                                            <p class="text-uppercase text-muted mb-1"><small>collections</small></p>
-                                            <h5 id="inspectorCollectionCount" class="font-weight-bold mb-0">-</h5>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div id="inspectorScoreCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
-                                    <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
-                                        <i class="fas fa-star fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
-                                        <div class="media-body p-1">
-                                            <p class="text-uppercase text-muted mb-1"><small>scores</small></p>
-                                            <h5 id="inspectorScoreCount" class="font-weight-bold mb-0">-</h5>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </section>
-                        <div class="card">
-                            <div class="card-body bg-osu-dark">
-                                <div id="inspectorRegularInfoParent" class="row" hidden>
-                                    <div class="col-lg-6">
-                                        <canvas id="inspectorMapRankChart"></canvas>
+                        <div id="inspectorviewMain">
+                            <section>
+                                <div class="row">
+                                    <div id="inspectorBeatmapSetCountParent" class="col-lg-3 col-md-6 mb-4">
+                                        <a onclick="inspectorOpenBeatmapListing()" class="media bg-osu-dark z-depth-1 rounded stretched-link">
+                                            <i class="fas fa-cubes fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
+                                            <div class="media-body p-1">
+                                                <p class="text-uppercase text-muted mb-1"><small>beatmap sets</small></p>
+                                                <h5 id="inspectorBeatmapSetCount" class="font-weight-bold mb-0">-</h5>
+                                            </div>
+                                        </a>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <table class="table text-white">
-                                            <tbody>
-                                                <tr data-toggle="tooltip" title="Qualified maps included">
-                                                    <td>ranked maps</td>
-                                                    <td id="inspectorCellRankedMaps">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>loved maps</td>
-                                                    <td id="inspectorCellLovedMaps">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>unranked maps</td>
-                                                    <td id="inspectorCellUnrankedMaps">-</td>
-                                                </tr>
-                                                <br />
-                                                <tr>
-                                                    <td>osu! version</td>
-                                                    <td id="inspectorCellVersion">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>player</td>
-                                                    <td id="inspectorCellUsername">-</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+
+                                    <div onclick="inspectorOpenBeatmapListing()" id="inspectorBeatmapDiffCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
+                                        <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
+                                            <i class="fas fa-box-open fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
+                                            <div class="media-body p-1">
+                                                <p class="text-uppercase text-muted mb-1"><small>difficulties</small></p>
+                                                <h5 id="inspectorBeatmapDiffCount" class="font-weight-bold mb-0">-</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div id="inspectorCollectionCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
+                                        <a class="media bg-osu-dark z-depth-1 rounded stretched-link" data-toggle="modal" data-target="#inspectorCollectionModal">
+                                            <i class="fas fa-list-ul fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
+                                            <div class="media-body p-1">
+                                                <p class="text-uppercase text-muted mb-1"><small>collections</small></p>
+                                                <h5 id="inspectorCollectionCount" class="font-weight-bold mb-0">-</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div id="inspectorScoreCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
+                                        <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
+                                            <i class="fas fa-star fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
+                                            <div class="media-body p-1">
+                                                <p class="text-uppercase text-muted mb-1"><small>scores</small></p>
+                                                <h5 id="inspectorScoreCount" class="font-weight-bold mb-0">-</h5>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                                <button id="settingsProcessOsu" class="btn btn-success btn-sm btn-block" onclick="cefOsuApp.buttonProcessOsu();">Process osu</button>
+                            </section>
+                            <div class="card">
+                                <div class="card-body bg-osu-dark">
+                                    <div id="inspectorRegularInfoParent" class="row" hidden>
+                                        <div class="col-lg-6">
+                                            <canvas id="inspectorMapRankChart"></canvas>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <table class="table text-white">
+                                                <tbody>
+                                                    <tr data-toggle="tooltip" title="Qualified maps included">
+                                                        <td>ranked maps</td>
+                                                        <td id="inspectorCellRankedMaps">-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>loved maps</td>
+                                                        <td id="inspectorCellLovedMaps">-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>unranked maps</td>
+                                                        <td id="inspectorCellUnrankedMaps">-</td>
+                                                    </tr>
+                                                    <br />
+                                                    <tr>
+                                                        <td>osu! version</td>
+                                                        <td id="inspectorCellVersion">-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>player</td>
+                                                        <td id="inspectorCellUsername">-</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <button id="settingsProcessOsu" class="btn btn-success btn-sm btn-block" onclick="cefOsuApp.buttonProcessOsu();">Process osu</button>
+                                </div>
                             </div>
                         </div>
+                        <div id="inspectorviewBeatmapListing">
+                            <h2>Placeholder string</h2>
+                        </div>
+                        <script>
+                            $(document).ready(function(){
+                                inspectorOpenMain();
+                            });
+
+                            function inspectorOpenMain(){
+                                $('#inspectorviewMain').show(500);
+                                $('#inspectorviewBeatmapListing').hide(500);
+                            }
+
+                            function inspectorOpenBeatmapListing(){
+                                $('#inspectorviewMain').hide(500);
+                                $('#inspectorviewBeatmapListing').show(500);
+                            }
+                        </script>
                     </div>
                     <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="tab-settings">
                         <div class="tab-content" id="settingstabcontent">
@@ -314,7 +334,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
                                             <div class="seperator"></div>
         
                                             <div class="row settings-item">
@@ -337,139 +356,110 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                             <div class="seperator"></div>
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item list-group-item-sm">
-                                                    <div class="row settings-item">
-                                                        <div class="col-sm-3 text-right align-self-center">
-                                                            <div class="form-check d-flex justify-content-end">
-                                                                <input type="checkbox" class="form-check-input" id="settingsInputDisplayRanks" checked>
-                                                                <label class="form-check-label" for="settingsInputDisplayRanks"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                            show rank count
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item list-group-item-sm">
-                                                    <div class="row settings-item">
-                                                        <div class="col-sm-3 text-right align-self-center">
-                                                            <div class="form-check d-flex justify-content-end">
-                                                                <input type="checkbox" class="form-check-input" id="settingsInputDisplayLevel" checked>
-                                                                <label class="form-check-label" for="settingsInputDisplayLevel"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                            show level
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item list-group-item-sm">
-                                                    <div class="row settings-item">
-                                                        <div class="col-sm-3 text-right align-self-center">
-                                                            <div class="form-check d-flex justify-content-end">
-                                                                <input type="checkbox" class="form-check-input" id="settingsInputDisplayTotalscore" checked>
-                                                                <label class="form-check-label" for="settingsInputDisplayTotalscore"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                            show total score
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item list-group-item-sm">
-                                                    <div class="row settings-item">
-                                                        <div class="col-sm-3 text-right align-self-center">
-                                                            <div class="form-check d-flex justify-content-end">
-                                                                <input type="checkbox" class="form-check-input" id="settingsInputDisplayRankedscore" checked>
-                                                                <label class="form-check-label" for="settingsInputDisplayRankedscore"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                            show ranked score
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item list-group-item-sm">
-                                                    <div class="row settings-item">
-                                                        <div class="col-sm-3 text-right align-self-center">
-                                                            <div class="form-check d-flex justify-content-end">
-                                                                <input type="checkbox" class="form-check-input" id="settingsInputDisplayWorldrank" checked>
-                                                                <label class="form-check-label" for="settingsInputDisplayWorldrank"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                            show world rank
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item list-group-item-sm">
-                                                    <div class="row settings-item">
-                                                        <div class="col-sm-3 text-right align-self-center">
-                                                            <div class="form-check d-flex justify-content-end">
-                                                                <input type="checkbox" class="form-check-input" id="settingsInputDisplayCountryrank" checked>
-                                                                <label class="form-check-label" for="settingsInputDisplayCountryrank"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                            show country rank
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item list-group-item-sm">
-                                                    <div class="row settings-item">
-                                                        <div class="col-sm-3 text-right align-self-center">
-                                                            <div class="form-check d-flex justify-content-end">
-                                                                <input type="checkbox" class="form-check-input" id="settingsInputDisplayPlaycount" checked>
-                                                                <label class="form-check-label" for="settingsInputDisplayPlaycount"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                            show playcount
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item list-group-item-sm">
-                                                    <div class="row settings-item">
-                                                        <div class="col-sm-3 text-right align-self-center">
-                                                            <div class="form-check d-flex justify-content-end">
-                                                                <input type="checkbox" class="form-check-input" id="settingsInputDisplayPlaytime" checked>
-                                                                <label class="form-check-label" for="settingsInputDisplayPlaytime"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                            show playtime
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item list-group-item-sm">
-                                                    <div class="row settings-item">
-                                                        <div class="col-sm-3 text-right align-self-center">
-                                                            <div class="form-check d-flex justify-content-end">
-                                                                <input type="checkbox" class="form-check-input" id="settingsInputDisplayAccuracy" checked>
-                                                                <label class="form-check-label" for="settingsInputDisplayAccuracy"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                            show accuracy
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item list-group-item-sm">
-                                                    <div class="row settings-item">
-                                                        <div class="col-sm-3 text-right align-self-center">
-                                                            <div class="form-check d-flex justify-content-end">
-                                                                <input type="checkbox" class="form-check-input" id="settingsInputDisplayPerformance" checked>
-                                                                <label class="form-check-label" for="settingsInputDisplayPerformance"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                            show performance points
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                            <div>
+                                                <table class="table table-sm table-borderless text-white">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="form-check d-flex justify-content-end">
+                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayRanks" checked>
+                                                                    <label class="form-check-label" for="settingsInputDisplayRanks"></label>
+                                                                </div>
+                                                            </th>
+                                                            <td>show rank count</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="form-check d-flex justify-content-end">
+                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayLevel" checked>
+                                                                    <label class="form-check-label" for="settingsInputDisplayLevel"></label>
+                                                                </div>
+                                                            </th>
+                                                            <td>show level</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="form-check d-flex justify-content-end">
+                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayTotalscore" checked>
+                                                                    <label class="form-check-label" for="settingsInputDisplayTotalscore"></label>
+                                                                </div>
+                                                            </th>
+                                                            <td>show total score</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="form-check d-flex justify-content-end">
+                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayRankedscore" checked>
+                                                                    <label class="form-check-label" for="settingsInputDisplayRankedscore"></label>
+                                                                </div>
+                                                            </th>
+                                                            <td>show ranked score</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="form-check d-flex justify-content-end">
+                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayWorldrank" checked>
+                                                                    <label class="form-check-label" for="settingsInputDisplayWorldrank"></label>
+                                                                </div>
+                                                            </th>
+                                                            <td>show world rank</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="form-check d-flex justify-content-end">
+                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayCountryrank" checked>
+                                                                    <label class="form-check-label" for="settingsInputDisplayCountryrank"></label>
+                                                                </div>
+                                                            </th>
+                                                            <td>show country rank</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="form-check d-flex justify-content-end">
+                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayPlaycount" checked>
+                                                                    <label class="form-check-label" for="settingsInputDisplayPlaycount"></label>
+                                                                </div>
+                                                            </th>
+                                                            <td>show playcount</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="form-check d-flex justify-content-end">
+                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayPlaytime" checked>
+                                                                    <label class="form-check-label" for="settingsInputDisplayPlaytime"></label>
+                                                                </div>
+                                                            </th>
+                                                            <td>show playtime</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="form-check d-flex justify-content-end">
+                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayAccuracy" checked>
+                                                                    <label class="form-check-label" for="settingsInputDisplayAccuracy"></label>
+                                                                </div>
+                                                            </th>
+                                                            <td>show accuracy</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="form-check d-flex justify-content-end">
+                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayPerformance" checked>
+                                                                    <label class="form-check-label" for="settingsInputDisplayPerformance"></label>
+                                                                </div>
+                                                            </th>
+                                                            <td>show performance points</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                             <br />
                                             <!-- <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a> -->
                                             <button id="settingsConfirmButton" class="btn btn-success btn-sm" onclick="cefOsuApp.buttonSaveSettings();">Save and apply</button>
@@ -490,21 +480,15 @@
                                     <div class="card bg-osu-dark">
                                         <div class="card-body">
                                             <h4 class="card-title"><i class="fas fa-exclamation-triangle text-warning"></i> Update available: <span id="updatemanagerVersionID">null</span></h4>
-                                            <div style="overflow: hidden;max-height: 100%;">
+                                            <div style="overflow: hidden;max-height: 100%;border-radius:10px;">
                                                 <div style="max-height: 300px;overflow-y: scroll;" id="updatemanagerVersionBody">
                                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-            
                                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                                                    
                                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                                                    
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                                                    
                                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
                                                 </div>
                                             </div>
-                                            <button id="updateButtonDownload" onclick="cefOsuApp.updateHandlerDownload()" type="button" class="btn btn-sm btn-primary">Download</button>
-                                            <button id="updateButtonInstall" onclick="cefOsuApp.updateHandlerInstall()" type="button" class="btn btn-sm btn-success">Install</button>
+                                            <button id="updateButtonCheck" onclick="cefOsuApp.updateHandlerVisit()" type="button" class="btn btn-sm btn-primary">Check out <i class="fas fa-external-link-alt"></i></button>
                                         </div>
                                     </div>
                                     <br />
