@@ -186,7 +186,8 @@ namespace OsuAchievedOverlay.Next.Managers
                         foreach (KeyData keyData in displayOptions)
                         {
                             string key = keyData.KeyName;
-                            bool state = await BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.IsChecked("#settingsInputDisplay" + (key.FirstCharToUpper()) + "");
+                            //bool state = await BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.IsChecked("#settingsInputDisplay" + (key.FirstCharToUpper()) + "");
+                            bool state = await BrowserViewModel.Instance.AttachedJavascriptWrapper.GetProp("#settingsInputDisplay" + (key.FirstCharToUpper()) + "", "selected");
                             SettingsManager.Instance.Settings["showingItems"][key] = state ? "true" : "false";
                         }
                     }

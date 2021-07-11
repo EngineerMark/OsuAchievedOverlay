@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace OsuAchievedOverlay.Next.Managers
 {
@@ -60,11 +61,20 @@ namespace OsuAchievedOverlay.Next.Managers
             BrowserViewModel.Instance.SettingsSetGamemode((OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
             
             KeyDataCollection displayOptions = SettingsManager.Instance.Settings["showingItems"];
+            List<string> selectedKeys = new List<string>();
             foreach (KeyData keyData in displayOptions)
             {
                 string key = keyData.KeyName;
-                BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.SetChecked("#settingsInputDisplay" + (key.FirstCharToUpper()) + "", keyData.Value == "true");
+                string id = "settingsInputDisplay" + key.FirstCharToUpper();
+                if (keyData.Value == "true")
+                    selectedKeys.Add(id);
+                //BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.SetChecked("#settingsInputDisplay" + (key.FirstCharToUpper()) + "", keyData.Value == "true");
+                //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetProp(id, "selected", keyData.Value=="true");
             }
+            string jsString = "" +
+                "var values = '" + (string.Join(",", selectedKeys)) + "';" +
+                "$('#settingsVisualSelectList').val(values.split(','));";
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded(jsString);
             SettingsManager.Instance.SettingsApply();
         }
     }

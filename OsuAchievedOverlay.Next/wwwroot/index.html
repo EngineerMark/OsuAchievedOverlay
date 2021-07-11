@@ -359,106 +359,23 @@
                                             
                                             <div class="seperator"></div>
                                             <div>
-                                                <table class="table table-sm table-borderless text-white">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <div class="form-check d-flex justify-content-end">
-                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayRanks" checked>
-                                                                    <label class="form-check-label" for="settingsInputDisplayRanks"></label>
-                                                                </div>
-                                                            </th>
-                                                            <td>show rank count</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <div class="form-check d-flex justify-content-end">
-                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayLevel" checked>
-                                                                    <label class="form-check-label" for="settingsInputDisplayLevel"></label>
-                                                                </div>
-                                                            </th>
-                                                            <td>show level</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <div class="form-check d-flex justify-content-end">
-                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayTotalscore" checked>
-                                                                    <label class="form-check-label" for="settingsInputDisplayTotalscore"></label>
-                                                                </div>
-                                                            </th>
-                                                            <td>show total score</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <div class="form-check d-flex justify-content-end">
-                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayRankedscore" checked>
-                                                                    <label class="form-check-label" for="settingsInputDisplayRankedscore"></label>
-                                                                </div>
-                                                            </th>
-                                                            <td>show ranked score</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <div class="form-check d-flex justify-content-end">
-                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayWorldrank" checked>
-                                                                    <label class="form-check-label" for="settingsInputDisplayWorldrank"></label>
-                                                                </div>
-                                                            </th>
-                                                            <td>show world rank</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <div class="form-check d-flex justify-content-end">
-                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayCountryrank" checked>
-                                                                    <label class="form-check-label" for="settingsInputDisplayCountryrank"></label>
-                                                                </div>
-                                                            </th>
-                                                            <td>show country rank</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <div class="form-check d-flex justify-content-end">
-                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayPlaycount" checked>
-                                                                    <label class="form-check-label" for="settingsInputDisplayPlaycount"></label>
-                                                                </div>
-                                                            </th>
-                                                            <td>show playcount</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <div class="form-check d-flex justify-content-end">
-                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayPlaytime" checked>
-                                                                    <label class="form-check-label" for="settingsInputDisplayPlaytime"></label>
-                                                                </div>
-                                                            </th>
-                                                            <td>show playtime</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <div class="form-check d-flex justify-content-end">
-                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayAccuracy" checked>
-                                                                    <label class="form-check-label" for="settingsInputDisplayAccuracy"></label>
-                                                                </div>
-                                                            </th>
-                                                            <td>show accuracy</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <div class="form-check d-flex justify-content-end">
-                                                                    <input type="checkbox" class="form-check-input" id="settingsInputDisplayPerformance" checked>
-                                                                    <label class="form-check-label" for="settingsInputDisplayPerformance"></label>
-                                                                </div>
-                                                            </th>
-                                                            <td>show performance points</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="row settings-item">
+                                                    <div class="col-sm-3 text-right align-self-center">toggle visual elements</div>
+                                                    <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                        <select id="settingsVisualSelectList" class="mdb-select validate md-form text-white" multiple>
+                                                            <option id="settingsInputDisplayRanks" value="settingsInputDisplayRanks" selected>show rank count</option>
+                                                            <option id="settingsInputDisplayLevel" value="settingsInputDisplayLevel" selected>show level</option>
+                                                            <option id="settingsInputDisplayTotalscore" value="settingsInputDisplayTotalscore" selected>show total score</option>
+                                                            <option id="settingsInputDisplayRankedscore" value="settingsInputDisplayRankedscore" selected>show ranked score</option>
+                                                            <option id="settingsInputDisplayWorldrank" value="settingsInputDisplayWorldrank" selected>show world rank</option>
+                                                            <option id="settingsInputDisplayCountryrank" value="settingsInputDisplayCountryrank" selected>show country rank</option>
+                                                            <option id="settingsInputDisplayPlaycount" value="settingsInputDisplayPlaycount" selected>show playcount</option>
+                                                            <option id="settingsInputDisplayPlaytime" value="settingsInputDisplayPlaytime" selected>show playtime</option>
+                                                            <option id="settingsInputDisplayAccuracy" value="settingsInputDisplayAccuracy" selected>show accuracy</option>
+                                                            <option id="settingsInputDisplayPerformance" value="settingsInputDisplayAccuracy" selected>show performance points</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <br />
                                             <!-- <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a> -->
