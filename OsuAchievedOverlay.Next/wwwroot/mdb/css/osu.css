@@ -10,6 +10,54 @@
     src: url("../../fonts/Torus Regular.otf") format("opentype");
 }
 
+.tooltip {
+    position:fixed;
+    z-index: 1070;
+    display: block;
+    margin: 0;
+    font-family: "Torus";
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+    text-align: start;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    word-break: normal;
+    word-spacing: normal;
+    white-space: normal;
+    line-break: auto;
+    font-size: 0.875rem;
+    word-wrap: break-word;
+    opacity: 0;
+}
+
+.beatmap-difficulty-easy{
+    background-color: #88B300;
+}
+
+.beatmap-difficulty-normal{
+    background-color: #66CCFF;
+}
+
+.beatmap-difficulty-hard{
+    background-color: #FFCC22;
+}
+
+.beatmap-difficulty-insane{
+    background-color: #FF66AA;
+}
+
+.beatmap-difficulty-expert{
+    background-color: #8866EE;
+}
+
+.beatmap-difficulty-expertplus{
+    background-color: #000000;
+}
+
 .stretched-link {
     transition: all 0.5s ease-in-out;
 }
@@ -413,4 +461,11 @@ html {
 
 .highlight {
     background-color: var(--osu-dark-hover);
+}
+
+.difficulty-badge{
+    border-radius: 50%;
+    background-color: var(--osu-dark);
+    min-width:5px;
+    min-height:10px;
 }

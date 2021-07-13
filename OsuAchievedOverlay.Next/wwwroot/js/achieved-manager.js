@@ -1,3 +1,254 @@
+const Gamemode = {
+    Standard: 0,
+    Taiko: 1,
+    CatchTheBeat: 2,
+    Mania: 3
+};
+
+function osuGetDifficultyColor(diff){
+    if(diff<2){
+        return "#88B300";
+    }
+    if(diff<2.7){
+        return "#66CCFF";
+    }
+    if(diff<4){
+        return "#FFCC22";
+    }
+    if(diff<5.3){
+        return "#FF66AA";
+    }
+    if(diff<6.5){
+        return "#8866EE";
+    }
+    return "#000000";
+}
+
+function osuGetDifficultyClass(diff){
+    if(diff<2){
+        return "beatmap-difficulty-easy";
+    }
+    if(diff<2.7){
+        return "beatmap-difficulty-normal";
+    }
+    if(diff<4){
+        return "beatmap-difficulty-hard";
+    }
+    if(diff<5.3){
+        return "beatmap-difficulty-insane";
+    }
+    if(diff<6.5){
+        return "beatmap-difficulty-expert";
+    }
+    return "beatmap-difficulty-expertplus";
+}
+
+class OsuBeatmap {
+    constructor(jsonData){
+        this.Artist = jsonData.Artist;
+        this.DiffStarRatingStandard = jsonData.DiffStarRatingStandard;
+        this.DiffStarRatingMania = jsonData.DiffStarRatingMania;
+        this.DiffStarRatingCtB = jsonData.DiffStarRatingCtB;
+        this.DiffStarRatingTaiko = jsonData.DiffStarRatingTaiko;
+        this.GameMode = jsonData.GameMode;
+        this.Version = jsonData.Version;
+    }
+
+    GetDefaultStarrating(){
+        if(this.GameMode==Gamemode.Standard){
+            return this.DiffStarRatingStandard.None;
+        }else if(this.GameMode==Gamemode.Mania){
+            return this.DiffStarRatingMania.None;
+        }else if(this.GameMode==Gamemode.CatchTheBeat){
+            return this.DiffStarRatingCtB.None;
+        }else if(this.GameMode==Gamemode.Taiko){
+            return this.DiffStarRatingTaiko.None;
+        }
+    }
+
+    get Html(){
+        return "";
+    }
+}
+
+class OsuBeatmapSet{
+    Beatmaps;
+
+    constructor(beatmapSetData, id){
+        this.ID = id;
+        this.BeatmapSetID = beatmapSetData.BeatmapSetID;
+        this.Title = beatmapSetData.Title;
+        this.Artist = beatmapSetData.Artist;
+        this.RankStatus = beatmapSetData.RankStatus;
+        this.SongTags = beatmapSetData.SongTags;
+        this.Creator = beatmapSetData.Creator;
+        const bgpath = beatmapSetData.BackgroundPath;
+        const bgu = new URL(`file:///${bgpath}`).href;
+        this.BackgroundPath = bgu;
+        this.Beatmaps = [];
+
+        this.maps_std = [];
+        this.maps_frt = [];
+        this.maps_man = [];
+        this.maps_tai = [];
+
+        this.StandardIndex = -1;
+        this.FruitsIndex = -1;
+        this.ManiaIndex = -1;
+        this.TaikoIndex = -1;
+
+        for(let i=0;i<beatmapSetData.Beatmaps.length;i++){
+            var beatmap = new OsuBeatmap(beatmapSetData.Beatmaps[i]);
+
+            if(beatmap.GameMode==Gamemode.Standard){
+                this.maps_std.push(beatmap);
+            }else if(beatmap.GameMode==Gamemode.Mania){
+                this.maps_man.push(beatmap);
+            }else if(beatmap.GameMode==Gamemode.CatchTheBeat){
+                this.maps_frt.push(beatmap);
+            }else if(beatmap.GameMode==Gamemode.Taiko){
+                this.maps_tai.push(beatmap);
+            }
+            // this.Beatmaps.push(beatmap);
+        }
+
+        if(this.maps_std.length>=2){
+            this.maps_std.sort((a,b)=>(a.DiffStarRatingStandard.None>b.DiffStarRatingStandard.None)?1:((b.DiffStarRatingStandard.None>a.DiffStarRatingStandard.None)?-1:0));
+        }
+        if(this.maps_man.length>=2){
+            this.maps_man.sort((a,b)=>(a.DiffStarRatingMania.None>b.DiffStarRatingMania.None)?1:((b.DiffStarRatingMania.None>a.DiffStarRatingMania.None)?-1:0));
+        }
+        if(this.maps_frt.length>=2){
+            this.maps_frt.sort((a,b)=>(a.DiffStarRatingCtB.None>b.DiffStarRatingCtB.None)?1:((b.DiffStarRatingCtB.None>a.DiffStarRatingCtB.None)?-1:0));
+        }
+        if(this.maps_tai.length>=2){
+            this.maps_tai.sort((a,b)=>(a.DiffStarRatingTaiko.None>b.DiffStarRatingTaiko.None)?1:((b.DiffStarRatingTaiko.None>a.DiffStarRatingTaiko.None)?-1:0));
+        }
+
+        if(this.maps_std.length>=1){
+            this.StandardIndex = 0;
+        }
+        if(this.maps_man.length>=1){
+            this.ManiaIndex = this.maps_std.length;
+        }
+        if(this.maps_frt.length>=1){
+            this.FruitsIndex = this.maps_std.length+this.maps_man.length;
+        }
+        if(this.maps_tai.length>=1){
+            this.TaikoIndex = this.maps_std.length+this.maps_man.length+this.maps_frt.length;
+        }
+
+        this.Beatmaps = this.maps_std.concat(this.maps_man, this.maps_frt, this.maps_tai);
+    }
+
+    Html(){
+        var difficultyData = "";
+
+        var truncatedVersion = (this.maps_std.length>9 || this.maps_man.length>9 || this.maps_frt.length>9 || this.maps_tai.length>9);
+        for(let i=0;i<this.Beatmaps.length;i++){
+            if(this.StandardIndex!=-1&&this.StandardIndex==i){
+                difficultyData+="<span data-toggle='tooltip' title='osu!' class='align-middle'><img style='height: 1.6em;' src='./img/gamemodes/osu_32.png' /></span> ";
+                if(truncatedVersion){
+                    difficultyData+="<span class='align-middle'>"+this.maps_std.length+"</span> ";
+                }
+            }
+
+            if(this.ManiaIndex!=-1&&this.ManiaIndex==i){
+                difficultyData+="<span data-toggle='tooltip' title='Mania' class='align-middle'><img style='height: 1.6em;' src='./img/gamemodes/mania_32.png' /></span> ";
+                if(truncatedVersion){
+                    difficultyData+=this.maps_man.length+" ";
+                }
+            }
+
+            if(this.FruitsIndex!=-1&&this.FruitsIndex==i){
+                difficultyData+="<span data-toggle='tooltip' title='Catch the Beat' class='align-middle'><img style='height: 1.6em;' src='./img/gamemodes/ctb_32.png' /></span> ";
+                if(truncatedVersion){
+                    difficultyData+=this.maps_frt.length+" ";
+                }
+            }
+
+            if(this.TaikoIndex!=-1&&this.TaikoIndex==i){
+                difficultyData+="<span data-toggle='tooltip' title='Taiko' class='align-middle'><img style='height: 1.6em;' src='./img/gamemodes/taiko_32.png' /></span> ";
+                if(truncatedVersion){
+                    difficultyData+=this.maps_tai.length+" ";
+                }
+            }
+            if(!truncatedVersion){
+                var sr = this.Beatmaps[i].GetDefaultStarrating();
+                //switch(this.Beatmaps.)
+                var color = osuGetDifficultyClass(sr);
+                var tooltip = "<span class=\"badge badge-pill "+color+"\">"+(Math.round(sr*100)/100)+"*</span> "+(this.Beatmaps[i].Version);
+                var badge = "<span data-toggle='tooltip' title='"+tooltip+"' data-html='true' class='badge badge-pill "+color+"' style='width:4px;height:16px;'>&nbsp;</span>";
+                difficultyData+=badge+" ";
+                // $("#beatmapsetTooltip_id"+tooltipID).tooltip();
+            }
+        }
+        $('[data-toggle="tooltip"]').tooltip();
+
+        return "<div style='max-height:200px;' class='mt-1 rounded' id='beatmapCard'>"+
+                "<div class='card card-image text-white rounded' style='background-image: url(\""+this.BackgroundPath+"\");'>"+
+                    "<div class='card-body rounded' style='background-color: rgba(0,0,0,0.7);'>"+
+                        "<h5 class='card-title'>"+this.Artist+" - "+this.Title+"</h5>"+
+                        "<p class='card-text'>Mapped by "+this.Creator+"</p>"+
+                        "<p class='card-text text-white' style='text-truncate'>"+
+                            "<small><strong>"+difficultyData+"</strong></small>"+
+                        "</p>"+
+                    "</div>"+
+                "</div>"+
+            "</div>";
+    }
+}
+
+var beatmapsets = [];
+var beatmapCardPrefab = "";
+var setsPerPage = 20;
+var pages = -1;
+var currentPageIndex = 0;
+var generatedPages = [];
+
+
+function processBeatmaps(encodedData){
+    asyncProcessBeatmaps(encodedData);
+}
+
+async function asyncProcessBeatmaps(encodedData){
+    $('#beatmapListGroup').empty();
+    data = JSON.parse(encodedData);
+    beatmapsets = [];
+
+    for(let i=0;i<data.length;i++){
+        var set = new OsuBeatmapSet(data[i], i);
+        beatmapsets.push(set);
+    }
+    resetBeatmapPagination();
+    generateBeatmapList(currentPageIndex);
+}
+
+function resetBeatmapPagination(){
+    currentPageIndex = 0;
+    pages = Math.ceil(beatmapsets.length/setsPerPage);
+    $('#beatmapPaginationGroup').empty();
+    for(let i=0;i<pages;i++){
+        $('#beatmapPaginationGroup').append('<li onclick="beatmapPaginationSet(\''+i+'\')" class="page-item '+(i==currentPageIndex?'active':'')+'"><a class="page-link text-white">'+(i+1)+'</a></li>')
+    }
+}
+
+function beatmapPaginationSet(index){
+    currentPageIndex = index;
+    generateBeatmapList(currentPageIndex);
+}
+
+function generateBeatmapList(index){
+    $('#beatmapListGroup').empty();
+    for(let i=0;i<setsPerPage;i++){
+        if(typeof beatmapsets[i+index] !== 'undefined') {
+            var setCard = beatmapsets[i+index].Html();
+            $('#beatmapListGroup').append(setCard);
+        }
+    }
+    generatedPages.push(index);
+}
+
 var settings = null;
 
 function FillSessionDataList(data){
@@ -11,7 +262,6 @@ function FillSessionDataList(data){
             '<th>'+time2TimeAgo(new Date(data[i]["FileDate"]))+'</th>'+
             '</tr>';
     }
-    console.log(html);
     $('#sessionListTable tbody').html(html);
 
     $('#sessionListTable tbody tr').click(function(){

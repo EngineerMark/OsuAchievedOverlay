@@ -59,14 +59,15 @@ namespace OsuAchievedOverlay.Next
         {
             if (Properties.Settings.Default.Top != -1)
             {
-                this.Top = Properties.Settings.Default.Top;
-                this.Left = Properties.Settings.Default.Left;
-                this.Height = Properties.Settings.Default.Height;
-                this.Width = Properties.Settings.Default.Width;
                 // Very quick and dirty - but it does the job
                 if (Properties.Settings.Default.Maximized)
                 {
                     WindowState = WindowState.Maximized;
+                }else{
+                    this.Top = Properties.Settings.Default.Top;
+                    this.Left = Properties.Settings.Default.Left;
+                    this.Height = Properties.Settings.Default.Height;
+                    this.Width = Properties.Settings.Default.Width;
                 }
             }
         }

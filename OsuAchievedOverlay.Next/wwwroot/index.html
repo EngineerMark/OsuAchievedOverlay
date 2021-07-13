@@ -200,8 +200,8 @@
                                         </a>
                                     </div>
 
-                                    <div id="inspectorCollectionCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
-                                        <a class="media bg-osu-dark z-depth-1 rounded stretched-link" data-toggle="modal" data-target="#inspectorCollectionModal">
+                                    <div onclick="inspectorOpenCollectionListing()" id="inspectorCollectionCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
+                                        <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
                                             <i class="fas fa-list-ul fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
                                             <div class="media-body p-1">
                                                 <p class="text-uppercase text-muted mb-1"><small>collections</small></p>
@@ -210,7 +210,7 @@
                                         </a>
                                     </div>
 
-                                    <div id="inspectorScoreCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
+                                    <div onclick="inspectorOpenScoreListing()" id="inspectorScoreCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
                                         <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
                                             <i class="fas fa-star fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
                                             <div class="media-body p-1">
@@ -260,7 +260,34 @@
                             </div>
                         </div>
                         <div id="inspectorviewBeatmapListing">
-                            <h2>Placeholder string</h2>
+                            <h2>Beatmaps</h2>
+                            <nav aria-label="Page navigation example">
+                                <ul id="beatmapPaginationGroup" class="pagination pg-green text-white">
+                                  <li class="page-item">
+                                    <a class="page-link" tabindex="-1">Previous</a>
+                                  </li>
+                                  <li class="page-item"><a class="page-link">1</a></li>
+                                  <li class="page-item active">
+                                    <a class="page-link">2 <span class="sr-only">(current)</span></a>
+                                  </li>
+                                  <li class="page-item"><a class="page-link">3</a></li>
+                                  <li class="page-item ">
+                                    <a class="page-link">Next</a>
+                                  </li>
+                                </ul>
+                            </nav>
+                            <div id="beatmapListGroup">
+                                
+                            </div>
+                        </div>
+                        <div id="inspectorviewScoreListing">
+                            <h2>Scores</h2>
+                        </div>
+                        <div id="inspectorviewCollectionListing">
+                            <h2>Collections</h2>
+                            <div id="inspectorCollectionList" class="container">
+                                <button type="button" class="btn btn-sm btn-block btn-dark btn-rounded" style="margin:10px auto;"><span class="float-left">Primary</span><span class="float-right"></span>2 maps</button>
+                            </div>
                         </div>
                         <script>
                             $(document).ready(function(){
@@ -270,11 +297,27 @@
                             function inspectorOpenMain(){
                                 $('#inspectorviewMain').show(500);
                                 $('#inspectorviewBeatmapListing').hide(500);
+                                $('#inspectorviewScoreListing').hide(500);
+                                $('#inspectorviewCollectionListing').hide(500);
                             }
 
                             function inspectorOpenBeatmapListing(){
                                 $('#inspectorviewMain').hide(500);
                                 $('#inspectorviewBeatmapListing').show(500);
+                                $('#inspectorviewScoreListing').hide(500);
+                            }
+
+                            function inspectorOpenScoreListing(){
+                                $('#inspectorviewMain').hide(500);
+                                $('#inspectorviewBeatmapListing').hide(500);
+                                $('#inspectorviewScoreListing').show(500);
+                            }
+
+                            function inspectorOpenCollectionListing(){
+                                $('#inspectorviewMain').hide(500);
+                                $('#inspectorviewBeatmapListing').hide(500);
+                                $('#inspectorviewScoreListing').hide(500);
+                                $('#inspectorviewCollectionListing').show(500);
                             }
                         </script>
                     </div>
@@ -427,19 +470,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="inspectorCollectionModal" tabindex="-1" role="dialog" aria-labelledby="inspectorCollectionModal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content bg-osu-regular">
-                        <div class="modal-body bg-osu-regular">
-                            <h4>osu! collections</h4>
-                            <div id="inspectorCollectionList" class="container">
-                                <button type="button" class="btn btn-sm btn-block btn-dark btn-rounded" style="margin:10px auto;"><span class="float-left">Primary</span><span class="float-right"></span>2 maps</button>
                             </div>
                         </div>
                     </div>

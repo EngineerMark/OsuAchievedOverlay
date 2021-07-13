@@ -19,13 +19,15 @@ namespace OsuAchievedOverlay.Next.Managers
 {
     public class UpdateManager : Singleton<UpdateManager>
     {
-        public const string version = "1.0.7";
+        public const string version = "2.0.0";
 
         public Release AvailableUpdate { get; set; } = null;
 
         public void Start(){
+        #if !DEBUG
             BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#updateButtonInstall");
             CheckAsync();
+        #endif
         }
 
         public void CheckAsync(){
