@@ -152,7 +152,7 @@ namespace OsuAchievedOverlay.Next
                     Title = "Select osu! installation folder"
                 };
                 CommonFileDialogResult result = dialog.ShowDialog();
-                JsExecuter.SetAttribute("#settingsInputOsuDir", "value", HttpUtility.JavaScriptStringEncode(dialog.FileName));
+                JsExecuter.GetBrowser().ExecuteScriptAsyncWhenPageLoaded("$('#settingsInputOsuDir').val('"+ HttpUtility.JavaScriptStringEncode(dialog.FileName) + "');");
                 JsExecuter.AddClass("#settingsInputOsuDirLabel", "active");
             });
         }
