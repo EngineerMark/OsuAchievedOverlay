@@ -148,7 +148,8 @@ namespace OsuAchievedOverlay.Next
             {
                 CommonOpenFileDialog dialog = new CommonOpenFileDialog
                 {
-                    IsFolderPicker = true
+                    IsFolderPicker = true,
+                    Title = "Select osu! installation folder"
                 };
                 CommonFileDialogResult result = dialog.ShowDialog();
                 JsExecuter.SetAttribute("#settingsInputOsuDir", "value", HttpUtility.JavaScriptStringEncode(dialog.FileName));
