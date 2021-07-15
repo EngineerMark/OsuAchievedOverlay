@@ -392,20 +392,20 @@
     <Resource Include="Assets\Images\Headers\placeholder_banner.jpeg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Headers\nekopara_lingerie.jpg" />
+    <Resource Include="Assets\Images\Headers\risuuna.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Icons\back_32.png" />
     <Resource Include="Assets\Images\Icons\back_64.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Headers\megumin_couch.jpg" />
+    <Resource Include="Assets\Images\Headers\Kyvrin.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Headers\taiga.jpg" />
+    <Resource Include="Assets\Images\Headers\Porukana.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Headers\karen.jpg" />
+    <Resource Include="Assets\Images\Headers\Tofumang.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Icons\Gamemodes\osu.png" />
@@ -420,7 +420,7 @@
     <Resource Include="Assets\Images\Icons\Gamemodes\ctb.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Headers\pecorine.jpg" />
+    <Resource Include="Assets\Images\Headers\Sjao.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">
@@ -500,22 +500,22 @@
     <None Update="wwwroot\fonts\Torus Thin.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="wwwroot\img\headers\karen.jpg">
+    <None Update="wwwroot\img\headers\Tofumang.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="wwwroot\img\headers\megumin_couch.jpg">
+    <None Update="wwwroot\img\headers\Kyvrin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="wwwroot\img\headers\nekopara_lingerie.jpg">
+    <None Update="wwwroot\img\headers\risuuna.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="wwwroot\img\headers\pecorine.jpg">
+    <None Update="wwwroot\img\headers\Sjao.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="wwwroot\img\headers\placeholder_banner.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="wwwroot\img\headers\taiga.jpg">
+    <None Update="wwwroot\img\headers\Porukana.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="wwwroot\index.html">

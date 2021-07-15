@@ -15,7 +15,7 @@
                     </LinearGradientBrush>
                 </Rectangle.OpacityMask>
                 <Rectangle.Fill>
-                    <ImageBrush RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/Headers/megumin_couch.jpg"/>
+                    <ImageBrush RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/Headers/Kyvrin.png"/>
                 </Rectangle.Fill>
             </Rectangle>
 

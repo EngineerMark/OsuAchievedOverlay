@@ -31,7 +31,7 @@
                         </LinearGradientBrush>
                     </Rectangle.OpacityMask>
                     <Rectangle.Fill>
-                        <ImageBrush RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/Headers/nekopara_lingerie.jpg"/>
+                        <ImageBrush RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/Headers/Kyvrin.png"/>
                     </Rectangle.Fill>
                 </Rectangle>
                 <ProgressBar Name="ProgressBarUpdater" IsIndeterminate="True" HorizontalAlignment="Left" Height="18" Margin="10,445,0,0" VerticalAlignment="Top" Width="546"/>

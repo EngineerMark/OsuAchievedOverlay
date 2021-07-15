@@ -16,7 +16,7 @@
                     </LinearGradientBrush>
                 </Rectangle.OpacityMask>
                 <Rectangle.Fill>
-                    <ImageBrush RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/Headers/taiga.jpg"/>
+                    <ImageBrush RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" x:Name="ImageProfileHeader" ImageSource="/OsuAchievedOverlay;component/Assets/Images/Headers/Porukana.png"/>
                 </Rectangle.Fill>
             </Rectangle>
         </Grid>

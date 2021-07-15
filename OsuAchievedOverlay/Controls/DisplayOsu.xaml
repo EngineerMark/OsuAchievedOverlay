@@ -8,7 +8,7 @@
              d:DesignHeight="682" d:DesignWidth="443" FontFamily="/OsuAchievedOverlay;component/Assets/Fonts/#Torus">
     <Grid Background="#3D2932">
         <Grid Margin="0,0,0,424">
-            <Image RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/Headers/karen.jpg">
+            <Image RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/Headers/tofumang.png">
                 <Image.OpacityMask>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.8">
                         <GradientStop Color="#55FFFFFF" Offset="0"/>
@@ -75,7 +75,7 @@
         </Grid>
         <Grid Visibility="Hidden" x:Name="GridViewCollections" Background="#3D2932">
             <Grid Margin="0,0,0,175">
-                <Image RenderOptions.BitmapScalingMode="HighQuality"  Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/Headers/pecorine.jpg">
+                <Image RenderOptions.BitmapScalingMode="HighQuality"  Stretch="UniformToFill" Source="/OsuAchievedOverlay;component/Assets/Images/Headers/Sjao.png">
                     <Image.OpacityMask>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.8">
                             <GradientStop Color="#55FFFFFF" Offset="0"/>
