@@ -115,3 +115,15 @@ Starting = value at start of the session
 # OBS Studio
 
 When capturing the window, set Window Match Priority to "Match title, otherwise find window of same executable", that way it automatically recaptures when you change settings.
+
+---
+
+# Header image creators
+
+- Kyvrin.png created by [Kyvrin](https://osu.ppy.sh/users/11589256)
+- placeholder_banner.jpeg by [ppy/osu!team](https://twitter.com/osugame/status/1127880443863289859)
+- Porukana.png created by [Porukana](https://osu.ppy.sh/users/12992775)
+- risuuna.png created by [risuuna](https://osu.ppy.sh/users/7266506)
+- Sjao.png created by [Sjao](https://osu.ppy.sh/users/7295733)
+- Tofumang.png created by [Tofumang](https://osu.ppy.sh/users/4817223)
+
