@@ -126,6 +126,7 @@
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\OsuWebHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="InspectorBeatmapListing.cs" />
     <Compile Include="JavaScript\JSCheckbox.cs" />
     <Compile Include="JavaScript\JSInput.cs" />
     <Compile Include="JavaScript\JSRangeInput.cs" />

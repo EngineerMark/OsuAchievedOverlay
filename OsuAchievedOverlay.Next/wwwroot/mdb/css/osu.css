@@ -3,11 +3,29 @@
     --osu-dark-hover: #22171b;
     --osu-regular: #3D2932;
     --osu-regular-hover: #312128;
+    --osu-light: #744d5e;
+    --osu-light-hover: #805266;
 }
 
 @font-face {
     font-family: "Torus";
     src: url("../../fonts/Torus Regular.otf") format("opentype");
+}
+
+.pagination.pg-osu .page-item.active .page-link {
+    background-color: var(--osu-light)
+}
+
+.pagination.pg-osu .page-item.active .page-link:hover {
+    background-color: var(--osu-light)
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: var(--osu-light-hover);
+    /* color:#000; */
+    border-radius: .125rem;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear
 }
 
 .tooltip {

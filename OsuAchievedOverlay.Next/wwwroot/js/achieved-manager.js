@@ -183,7 +183,6 @@ class OsuBeatmapSet{
                 // $("#beatmapsetTooltip_id"+tooltipID).tooltip();
             }
         }
-        $('[data-toggle="tooltip"]').tooltip();
 
         return "<div style='max-height:200px;' class='mt-1 rounded' id='beatmapCard'>"+
                 "<div class='card card-image text-white rounded' style='background-image: url(\""+this.BackgroundPath+"\");'>"+
@@ -206,47 +205,30 @@ var pages = -1;
 var currentPageIndex = 0;
 var generatedPages = [];
 
-
-function processBeatmaps(encodedData){
-    asyncProcessBeatmaps(encodedData);
-}
-
-async function asyncProcessBeatmaps(encodedData){
-    $('#beatmapListGroup').empty();
-    data = JSON.parse(encodedData);
+function clearBeatmaps(){
     beatmapsets = [];
-
-    for(let i=0;i<data.length;i++){
-        var set = new OsuBeatmapSet(data[i], i);
-        beatmapsets.push(set);
-    }
-    resetBeatmapPagination();
-    generateBeatmapList(currentPageIndex);
 }
 
-function resetBeatmapPagination(){
-    currentPageIndex = 0;
-    pages = Math.ceil(beatmapsets.length/setsPerPage);
-    $('#beatmapPaginationGroup').empty();
-    for(let i=0;i<pages;i++){
-        $('#beatmapPaginationGroup').append('<li onclick="beatmapPaginationSet(\''+i+'\')" class="page-item '+(i==currentPageIndex?'active':'')+'"><a class="page-link text-white">'+(i+1)+'</a></li>')
-    }
+function addBeatmapset(encodedSet, id){
+    var data = JSON.parse(encodedSet);
+    var set = new OsuBeatmapSet(data, id);
+    beatmapsets.push(set);
 }
 
-function beatmapPaginationSet(index){
-    currentPageIndex = index;
-    generateBeatmapList(currentPageIndex);
-}
-
-function generateBeatmapList(index){
-    $('#beatmapListGroup').empty();
-    for(let i=0;i<setsPerPage;i++){
-        if(typeof beatmapsets[i+index] !== 'undefined') {
-            var setCard = beatmapsets[i+index].Html();
+function generateBeatmapsetList(){
+    console.log(beatmapsets);
+    for(let i=0;i<beatmapsets.length;i++){
+        if(typeof beatmapsets[i] !== 'undefined') {
+            var setCard = beatmapsets[i].Html();
             $('#beatmapListGroup').append(setCard);
         }
     }
-    generatedPages.push(index);
+    $('[data-toggle="tooltip"]').tooltip();
+}
+
+function beatmapPaginationSet(index){
+    // currentPageIndex = index;
+    // generateBeatmapList(currentPageIndex);
 }
 
 var settings = null;

@@ -37,6 +37,14 @@ namespace OsuAchievedOverlay.Next
 
         public static Window GetWindow() => _internalWindow;
 
+        public void beatmapBrowserSetPage(int index){
+            InspectorManager.Instance.InspectorBeatmapListing.LoadPage(index);
+        }
+
+        public void beatmapBrowserSearch(string query){
+            InspectorManager.Instance.InspectorBeatmapListing.ApplySearchQuery(Encoding.UTF8.GetString(Convert.FromBase64String(query)));
+        }
+
         public void updateHandlerVisit(){
             System.Diagnostics.Process.Start(UpdateManager.Instance.AvailableUpdate.HTMLURL);
         }

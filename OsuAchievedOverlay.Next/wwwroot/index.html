@@ -180,41 +180,41 @@
                         <div id="inspectorviewMain">
                             <section>
                                 <div class="row">
-                                    <div id="inspectorBeatmapSetCountParent" class="col-lg-3 col-md-6 mb-4">
+                                    <div id="inspectorBeatmapSetCountParent" class="col-lg-3 col-md-6 mb-3" data-toggle="tooltip" title="Beatmap Sets">
                                         <a onclick="inspectorOpenBeatmapListing()" class="media bg-osu-dark z-depth-1 rounded stretched-link">
                                             <i class="fas fa-cubes fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
-                                            <div class="media-body p-1">
-                                                <p class="text-uppercase text-muted mb-1"><small>beatmap sets</small></p>
+                                            <div class="d-flex align-items-center justify-content-center" style="background-color: rgba(0,0,0,0.2);">
+                                                <!-- <p class="text-uppercase text-muted mb-1"><small>sets</small></p> -->
                                                 <h5 id="inspectorBeatmapSetCount" class="font-weight-bold mb-0">-</h5>
                                             </div>
                                         </a>
                                     </div>
 
-                                    <div onclick="inspectorOpenBeatmapListing()" id="inspectorBeatmapDiffCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
+                                    <div onclick="inspectorOpenBeatmapListing()" id="inspectorBeatmapDiffCountParent" class="col-lg-3 col-md-6 mb-4" data-toggle="tooltip" title="Beatmap Difficulties" hidden>
                                         <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
                                             <i class="fas fa-box-open fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
                                             <div class="media-body p-1">
-                                                <p class="text-uppercase text-muted mb-1"><small>difficulties</small></p>
+                                                <!-- <p class="text-uppercase text-muted mb-1"><small>maps</small></p> -->
                                                 <h5 id="inspectorBeatmapDiffCount" class="font-weight-bold mb-0">-</h5>
                                             </div>
                                         </a>
                                     </div>
 
-                                    <div onclick="inspectorOpenCollectionListing()" id="inspectorCollectionCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
+                                    <div onclick="inspectorOpenCollectionListing()" id="inspectorCollectionCountParent" class="col-lg-3 col-md-6 mb-4" data-toggle="tooltip" title="Beatmap Collections" hidden>
                                         <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
                                             <i class="fas fa-list-ul fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
                                             <div class="media-body p-1">
-                                                <p class="text-uppercase text-muted mb-1"><small>collections</small></p>
+                                                <!-- <p class="text-uppercase text-muted mb-1" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><small>collections</small></p> -->
                                                 <h5 id="inspectorCollectionCount" class="font-weight-bold mb-0">-</h5>
                                             </div>
                                         </a>
                                     </div>
 
-                                    <div onclick="inspectorOpenScoreListing()" id="inspectorScoreCountParent" class="col-lg-3 col-md-6 mb-4" hidden>
+                                    <div onclick="inspectorOpenScoreListing()" id="inspectorScoreCountParent" class="col-lg-3 col-md-6 mb-4" data-toggle="tooltip" title="Local Scores" hidden>
                                         <a class="media bg-osu-dark z-depth-1 rounded stretched-link">
                                             <i class="fas fa-star fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
                                             <div class="media-body p-1">
-                                                <p class="text-uppercase text-muted mb-1"><small>scores</small></p>
+                                                <!-- <p class="text-uppercase text-muted mb-1"><small>scores</small></p> -->
                                                 <h5 id="inspectorScoreCount" class="font-weight-bold mb-0">-</h5>
                                             </div>
                                         </a>
@@ -261,8 +261,8 @@
                         </div>
                         <div id="inspectorviewBeatmapListing">
                             <h2>Beatmaps</h2>
-                            <nav aria-label="Page navigation example">
-                                <ul id="beatmapPaginationGroup" class="pagination pg-green text-white">
+                            <nav>
+                                <ul id="beatmapPaginationGroup" class="pagination pagination-sm justify-content-center pg-osu text-white">
                                   <li class="page-item">
                                     <a class="page-link" tabindex="-1">Previous</a>
                                   </li>
@@ -276,6 +276,15 @@
                                   </li>
                                 </ul>
                             </nav>
+                            <div class="md-form form-row" style="width:100%;">
+                                <div class="col">
+                                    <input id="beatmapSearchInput" type="text" id="suffixInside" class="form-control">
+                                    <label for="suffixInside">Search...</label>
+                                </div>
+                                <div class="col">
+                                    <button onclick="cefOsuApp.beatmapBrowserSearch(btoa($('#beatmapSearchInput').val()));" type="submit" class="btn btn-primary btn-sm btn-md">Search</button>
+                                </div>
+                            </div>
                             <div id="beatmapListGroup">
                                 
                             </div>

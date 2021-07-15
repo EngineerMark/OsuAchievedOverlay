@@ -28,6 +28,8 @@ namespace OsuAchievedOverlay.Next.Managers
         public List<BeatmapSetEntry> BeatmapSets { get; set; }
         public string SongsPath { get; set; }
 
+        public InspectorBeatmapListing InspectorBeatmapListing { get; set; }
+
         public void ProcessOsu(Dispatcher dispatcher)
         {
             dispatcher.Invoke(() =>
@@ -35,7 +37,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 ThreadPool.QueueUserWorkItem((object stateInfo) =>
                 {
                     BrowserViewModel.Instance.AttachedJavascriptWrapper.SetElementDisabled("#settingsProcessOsu", true);
-                    BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#settingsProcessOsu", "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> processing");
+                    BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#settingsProcessOsu", "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> <span id=\"settingsProcessOsuButtonProcessText\">processing</span>");
                     if (!ApiHelper.IsValidOsuInstallation(SettingsManager.Instance.Settings["misc"]["osuFolder"]))
                     {
                         BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "There is no or invalid osu folder selected");
@@ -65,6 +67,7 @@ namespace OsuAchievedOverlay.Next.Managers
 
                         if (validConfig)
                         {
+                            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (loading beatmaps)');");
                             CurrentDatabase = OsuDb.Read(System.IO.Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "osu!.db"));
                             //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorBeatmapDiffCount", ""+CurrentDatabase.Beatmaps.Count);
                             BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#inspectorBeatmapDiffCountParent");
@@ -73,8 +76,13 @@ namespace OsuAchievedOverlay.Next.Managers
                             BeatmapSets?.Clear();
                             BeatmapSets = new List<BeatmapSetEntry>();
 
+                            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (creating sets 0/"+CurrentDatabase.Beatmaps.Count+")');");
+                            int i = 0;
                             foreach (BeatmapEntry difficulty in CurrentDatabase.Beatmaps)
                             {
+                                if(i%10==0)
+                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (creating sets "+ i + "/"+CurrentDatabase.Beatmaps.Count+")');");
+                                i++;
                                 BeatmapSetEntry set = BeatmapSets.Find(a => a.BeatmapSetID == difficulty.BeatmapSetId);
                                 if (set != null)
                                 {
@@ -92,16 +100,33 @@ namespace OsuAchievedOverlay.Next.Managers
                                     set.Title = difficulty.Title;
                                     set.Artist = difficulty.Artist;
                                     set.Creator = difficulty.Creator;
-                                    set.BeatmapFolder = difficulty.FolderName;
+                                    set.BeatmapFolder = difficulty.FolderName.Trim();
                                     set.RankStatus = difficulty.RankedStatus;
                                     set.Beatmaps.Add(difficulty);
                                     set.Difficulties = 1;
-                                    if (Directory.Exists(Path.Combine(SongsPath, set.BeatmapFolder)))
+                                    if (Directory.Exists(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], SongsPath, set.BeatmapFolder)))
                                     {
-                                        List<string> images = ApiHelper.GetImages(Path.Combine(SongsPath, set.BeatmapFolder));
-                                        images.Sort((a, b) => new FileInfo(a).Length.CompareTo(new FileInfo(b).Length));
-                                        images.Reverse();
-                                        string backgroundImage = images.FirstOrDefault();
+                                        Queue<string> images = new Queue<string>();
+                                        List<string> _imgs = ApiHelper.GetImages(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], SongsPath, set.BeatmapFolder));
+                                        _imgs.ForEach(a => images.Enqueue(a));
+                                        string backgroundImage = "";
+                                        if (images.Count > 0)
+                                        {
+                                            backgroundImage = images.Dequeue();
+                                            if (images.Count > 1)
+                                            {
+                                                //string nextImage = images.rem
+                                                while (images.Count > 0)
+                                                {
+                                                    string next = images.Dequeue();
+                                                    FileInfo thisFile = new FileInfo(next);
+                                                    FileInfo currentFile = new FileInfo(backgroundImage);
+
+                                                    if (next.Length > currentFile.Length)
+                                                        backgroundImage = next;
+                                                }
+                                            }
+                                        }
 
                                         set.SongSource = difficulty.SongSource;
                                         set.AudioFileName = difficulty.AudioFileName;
@@ -119,6 +144,7 @@ namespace OsuAchievedOverlay.Next.Managers
                             BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorBeatmapSetCountParent");
                             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorBeatmapSetCount').countTo({from: 0, to: " + BeatmapSets.Count + "});");
 
+                            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (reading collections)');");
                             CurrentCollections = CollectionDb.Read(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "collection.db"));
                             //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCollectionCount", "" + CurrentCollections.Collections.Count);
                             BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorCollectionCountParent");
@@ -130,11 +156,13 @@ namespace OsuAchievedOverlay.Next.Managers
                                 BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorCollectionList').append('<button type=\\\"button\\\" class=\\\"btn btn-block btn-sm btn-dark btn-rounded\\\" style=\\\"margin:10px auto;\\\"><span class=\\\"float-left\\\">" + coll.Name + "</span></button>')");
                             }
 
+                            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (reading scores)');");
                             CurrentScores = ScoresDb.Read(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "scores.db"));
                             //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorScoreCount", "" + CurrentScores.Scores.Count());
                             BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorScoreCountParent");
                             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorScoreCount').countTo({from: 0, to: " + CurrentScores.Scores.Count() + "});");
 
+                            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (finishing up)');");
                             int rankedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus == SubmissionStatus.Ranked || a.RankedStatus == SubmissionStatus.Approved);
                             int lovedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus == SubmissionStatus.Loved);
                             int unrankedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus != SubmissionStatus.Ranked && a.RankedStatus != SubmissionStatus.Approved && a.RankedStatus != SubmissionStatus.Loved);
@@ -149,8 +177,11 @@ namespace OsuAchievedOverlay.Next.Managers
                             BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellUsername", "" + CurrentDatabase.AccountName);
                             BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorRegularInfoParent");
 
-                            string beatmapDataJson = HttpUtility.JavaScriptStringEncode(JsonConvert.SerializeObject(BeatmapSets));
-                            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("processBeatmaps('"+ beatmapDataJson + "');");
+                            InspectorBeatmapListing = new InspectorBeatmapListing(BeatmapSets);
+                            InspectorBeatmapListing.PreGenerate();
+
+                            //string beatmapDataJson = HttpUtility.JavaScriptStringEncode(JsonConvert.SerializeObject(BeatmapSets));
+                            //BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("processBeatmaps('"+ beatmapDataJson + "');");
                             //cefOsuApp.JsExecuter.GetBrowser().ShowDevTools();
                         }
                     }
