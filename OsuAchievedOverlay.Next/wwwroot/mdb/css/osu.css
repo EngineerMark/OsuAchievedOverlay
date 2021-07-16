@@ -12,6 +12,91 @@
     src: url("../../fonts/Torus Regular.otf") format("opentype");
 }
 
+@font-face {
+    font-family: 'extra';
+    src:  url('../../fonts/extra.eot?j1snr4');
+    src:  url('../../fonts/extra.eot?j1snr4#iefix') format('embedded-opentype'),
+      url('../../fonts/extra.ttf?j1snr4') format('truetype'),
+      url('../../fonts/extra.woff?j1snr4') format('woff'),
+      url('../../fonts/extra.svg?j1snr4#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'extra' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-mode-osu:before {
+    content: "\e800";
+}
+
+.icon-mode-ctb:before {
+    content: "\e801";
+}
+
+.icon-mode-mania:before {
+    content: "\e802";
+}
+
+.icon-mode-taiko:before {
+    content: "\e803";
+}
+
+.icon-osu:before {
+    content: "\e805";
+}
+
+.modal-beatmap-header {
+    min-height:10rem;
+}
+
+.beatmapViewerDifficultyLink{
+    background-color: rgba(0,0,0,0);
+    border-radius: 5px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+         transition: all 0.3s;
+}
+
+.beatmapViewerDifficultyLink:hover{
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 5px;
+    -webkit-transition: all 0.3s;
+       -moz-transition: all 0.3s;
+         -o-transition: all 0.3s;
+            transition: all 0.3s;
+}
+
+.beatmapCardContent{
+    background-color: rgba(0,0,0,0.7);
+    -webkit-transition: all 0.3s;
+       -moz-transition: all 0.3s;
+         -o-transition: all 0.3s;
+            transition: all 0.3s;
+}
+
+.beatmapCardContent:hover{
+    background-color: rgba(0,0,0,0.85);
+    -webkit-transition: all 0.3s;
+       -moz-transition: all 0.3s;
+         -o-transition: all 0.3s;
+            transition: all 0.3s;
+}
+
 .pagination.pg-osu .page-item.active .page-link {
     background-color: var(--osu-light)
 }
@@ -29,7 +114,7 @@
 }
 
 .tooltip {
-    position:fixed;
+    position:absolute;
     z-index: 1070;
     display: block;
     margin: 0;
@@ -444,7 +529,7 @@ html {
 
 .modal-dialog .modal-content {
     border: 0;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
 }

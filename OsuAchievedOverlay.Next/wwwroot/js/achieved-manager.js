@@ -5,6 +5,15 @@ const Gamemode = {
     Mania: 3
 };
 
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
 function osuGetDifficultyColor(diff){
     if(diff<2){
         return "#88B300";
@@ -185,15 +194,15 @@ class OsuBeatmapSet{
         }
 
         return "<div style='max-height:200px;' class='mt-1 rounded' id='beatmapCard'>"+
-                "<div class='card card-image text-white rounded' style='background-image: url(\""+this.BackgroundPath+"\");'>"+
-                    "<div class='card-body rounded' style='background-color: rgba(0,0,0,0.7);'>"+
+                "<a class='card card-image text-white rounded' data-toggle='modal' data-target='#beatmapListingViewer' style='background-image: url(\""+this.BackgroundPath+"\");'>"+
+                    "<div class='card-body rounded beatmapCardContent'>"+
                         "<h5 class='card-title'>"+this.Artist+" - "+this.Title+"</h5>"+
                         "<p class='card-text'>Mapped by "+this.Creator+"</p>"+
                         "<p class='card-text text-white' style='text-truncate'>"+
                             "<small><strong>"+difficultyData+"</strong></small>"+
                         "</p>"+
                     "</div>"+
-                "</div>"+
+                "</a>"+
             "</div>";
     }
 }
@@ -219,11 +228,55 @@ function generateBeatmapsetList(){
     console.log(beatmapsets);
     for(let i=0;i<beatmapsets.length;i++){
         if(typeof beatmapsets[i] !== 'undefined') {
-            var setCard = beatmapsets[i].Html();
-            $('#beatmapListGroup').append(setCard);
+            var item = $(beatmapsets[i].Html()).hide();
+            $('#beatmapListGroup').append(item);
+            item.show(500);
+
+            item.click(function(){
+                beatmapViewerApply(beatmapsets[i]);
+            });
         }
     }
     $('[data-toggle="tooltip"]').tooltip();
+}
+
+var currentBeatmapSet = null;
+function beatmapViewerApply(set){
+    $('#beatmapListingViewerHeaderImage').css('background-image', 'url("'+set.BackgroundPath+'")');
+    $('#beatmapListingViewerHeaderImage').css('background-repeat', 'norepeat');
+    $('#beatmapListingViewerHeaderImage').css('background-attachment', 'fixed');
+    $('#beatmapListingViewerHeaderImage').css('background-position', 'center');
+    $('#beatmapListingViewerHeaderImage').css('background-size', 'cover');
+
+    currentBeatmapSet = set;
+    beatmapViewerApplyDiff(0);
+
+    $('#beatmapListingViewerDifficulties').empty();
+    for(let i=0;i<set.Beatmaps.length;i++){
+        var sr = set.Beatmaps[i].GetDefaultStarrating();
+        var color = osuGetDifficultyColor(sr);
+        var colorClass = osuGetDifficultyClass(sr);
+        var icon = "";
+        if(set.Beatmaps[i].GameMode==Gamemode.Standard){
+            icon = "icon-mode-osu";
+        }else if(set.Beatmaps[i].GameMode==Gamemode.Mania){
+            icon = "icon-mode-mania";
+        }else if(set.Beatmaps[i].GameMode==Gamemode.CatchTheBeat){
+            icon = "icon-mode-ctb";
+        }else if(set.Beatmaps[i].GameMode==Gamemode.Taiko){
+            icon = "icon-mode-taiko";
+        }
+
+        var tooltip = "<span class=\"badge badge-pill "+colorClass+"\">"+(Math.round(sr*100)/100)+"*</span> "+(set.Beatmaps[i].Version);
+        var item = "<a onclick='beatmapViewerApplyDiff("+i+");' data-toggle='tooltip' data-html='true' title='"+tooltip+"' class='"+icon+" beatmapViewerDifficultyLink' style='font-size:2rem;color: "+color+";'></a> ";
+        $('#beatmapListingViewerDifficulties').append(item);
+    }
+    $('[data-toggle="tooltip"]').tooltip({ boundary: 'window' });
+}
+
+function beatmapViewerApplyDiff(id){
+    var set = currentBeatmapSet;
+    $('#beatmapListingViewerTitle').html(set.Artist+" - "+set.Title+" ["+set.Beatmaps[id].Version+"]");
 }
 
 function beatmapPaginationSet(index){

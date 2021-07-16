@@ -59,7 +59,13 @@ namespace OsuAchievedOverlay.Next.Helpers
             using (WebClient client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (Compatible; Windows NT 5.1; MSIE 6.0) (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)");
-                string s = client.DownloadString(url);
+                string s = "";
+                try
+                {
+                    s = client.DownloadString(url);
+                }catch(Exception){
+                    s = string.Empty;
+                }
                 return s;
             }
         }
@@ -68,14 +74,18 @@ namespace OsuAchievedOverlay.Next.Helpers
         {
             string data = GetData(profileurl);
 
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(data);
+            if (data.Length > 30)
+            {
+                var htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(data);
 
-            string jsonData = htmlDoc.DocumentNode.Descendants("script").FirstOrDefault(a => a.Id == "json-user").InnerText;
+                string jsonData = htmlDoc.DocumentNode.Descendants("script").FirstOrDefault(a => a.Id == "json-user").InnerText;
 
-            ApiOsuProfile cv = JsonConvert.DeserializeObject<ApiOsuProfile>(jsonData);
+                ApiOsuProfile cv = JsonConvert.DeserializeObject<ApiOsuProfile>(jsonData);
 
-            return cv.CoverURL;
+                return cv.CoverURL;
+            }
+            return string.Empty;
         }
     }
 

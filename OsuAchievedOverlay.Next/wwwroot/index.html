@@ -285,8 +285,81 @@
                                     <button onclick="cefOsuApp.beatmapBrowserSearch(btoa($('#beatmapSearchInput').val()));" type="submit" class="btn btn-primary btn-sm btn-md">Search</button>
                                 </div>
                             </div>
-                            <div id="beatmapListGroup">
+                            <div id="beatmapListGroup" class="justify-content-center">
                                 
+                            </div>
+                            <div id="beatmapListingViewer" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" style="max-height: 80vh;overflow:hidden;" role="document">
+                                    <div class="modal-content" style="overflow-y: auto;max-height: 80vh;">
+                                        <div id="beatmapListingViewerHeaderImage" class="modal-content modal-beatmap-header bg-osu-dark">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true" class="white-text">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-content bg-osu-regular">
+                                            <div class="modal-body bg-osu-regular">
+                                                <h4 id="beatmapListingViewerTitle">TestValue</h4>
+                                                <br />
+                                                <div style="overflow: hidden;max-height: 15rem;border-radius:10px;background-color: rgba(0,0,0,0.2);">
+                                                    <div class="mightOverflow" style="overflow-y:auto;max-height: 15rem;" id="beatmapListingViewerDifficulties">
+        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body bg-osu-dark">
+                                                <table class="table table-sm table-borderless text-white">
+                                                    <tbody style="font-size:1rem;">
+                                                        <tr>
+                                                            <td style="width:20%"><span class="align-middle">Circle Size</span></td>
+                                                            <td style="width:10%"><span class="align-middle">0</span></td>
+                                                            <td style="width:70%">
+                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:1rem;background-color: #1C1719;border-radius:15px;">
+                                                                    <div id="beatmapListingViewerStatCS" class="progress-bar" role="progressbar" style="width: 25%;height:1rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:20%"><span class="align-middle">HP Drain</span></td>
+                                                            <td style="width:10%"><span class="align-middle">0</span></td>
+                                                            <td style="width:70%">
+                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:1rem;background-color: #1C1719;border-radius:15px;">
+                                                                    <div id="beatmapListingViewerStatHP" class="progress-bar" role="progressbar" style="width: 25%;height:1rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:20%"><span class="align-middle">Accuracy</span></td>
+                                                            <td style="width:10%"><span class="align-middle">0</span></td>
+                                                            <td style="width:70%">
+                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:1rem;background-color: #1C1719;border-radius:15px;">
+                                                                    <div id="beatmapListingViewerStatOD" class="progress-bar" role="progressbar" style="width: 25%;height:1rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:20%;text-overflow: ellipsis;white-space: nowrap;"><span class="align-middle">Approach Rate</span></td>
+                                                            <td style="width:10%"><span class="align-middle">0</span></td>
+                                                            <td style="width:70%">
+                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:1rem;background-color: #1C1719;border-radius:15px;">
+                                                                    <div id="beatmapListingViewerStatAR" class="progress-bar" role="progressbar" style="width: 25%;height:1rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:20%"><span class="align-middle">Star Difficulty</span></td>
+                                                            <td style="width:10%"><span class="align-middle">0</span></td>
+                                                            <td style="width:70%">
+                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:1rem;background-color: #1C1719;border-radius:15px;">
+                                                                    <div id="beatmapListingViewerStatSR" class="progress-bar" role="progressbar" style="width: 25%;height:1rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div id="inspectorviewScoreListing">
