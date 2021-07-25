@@ -39,7 +39,8 @@ namespace OsuAchievedOverlay.Next.Managers
                         ["osuFolder"] = "C:\\"
                     },
                     ["display"] = {
-                        ["roundingValue"] = "1"
+                        ["roundingValue"] = "1",
+                        ["nsfwMode"] = "false"
                     },
                     ["showingItems"] = {
                         ["ranks"] = "true",
@@ -207,8 +208,10 @@ namespace OsuAchievedOverlay.Next.Managers
                         SettingsManager.Instance.Settings["api"]["user"] = username;
                         SettingsManager.Instance.Settings["api"]["updateRate"] = updateRateInteger + "";
                         SettingsManager.Instance.Settings["api"]["gamemode"] = gamemode + "";
-                        SettingsManager.Instance.Settings["display"]["roundingValue"] = roundingDigit + "";
                         SettingsManager.Instance.Settings["misc"]["osuFolder"] = osudir;
+
+                        SettingsManager.Instance.Settings["display"]["roundingValue"] = roundingDigit + "";
+                        //SettingsManager.Instance.Settings["display"]["nsfwMode"] = await BrowserViewModel.Instance.AttachedJavascriptWrapper.Get;
 
                         // Save stuff
                         SettingsManager.Instance.SettingsSave();

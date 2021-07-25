@@ -4,13 +4,16 @@ using IniParser.Model;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
+using osu_database_reader.Components.Player;
 using OsuAchievedOverlay.Next.Helpers;
 using OsuAchievedOverlay.Next.JavaScript;
 using OsuAchievedOverlay.Next.Managers;
 using OsuApiHelper;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
@@ -43,6 +46,14 @@ namespace OsuAchievedOverlay.Next
 
         public void beatmapBrowserSearch(string query){
             InspectorManager.Instance.InspectorBeatmapListing.ApplySearchQuery(Encoding.UTF8.GetString(Convert.FromBase64String(query)));
+        }
+
+        public void requestBeatmapScores(string hash){
+            string encoded = "";
+            if(InspectorManager.Instance.CurrentScores.Beatmaps.ContainsKey(hash)){
+                encoded = JsonConvert.SerializeObject(InspectorManager.Instance.CurrentScores.Beatmaps[hash]);
+            }
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("beatmapViewerPopulateScores('"+ encoded +"');");
         }
 
         public void updateHandlerVisit(){

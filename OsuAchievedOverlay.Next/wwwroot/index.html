@@ -30,7 +30,7 @@
         <link rel="stylesheet" href="mdb/css/modules/megamenu.min.css">
         <link rel="stylesheet" href="mdb/css/modules/parallax.min.css">
     </head>
-    <body class="bg-osu-regular text-white osu-base" style="width: 100%;height: 100%;-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" unselectable="on" onselectstart="return false;">
+    <body class="bg-osu-regular text-white osu-base">
         <div id="viewApp">
             <nav class="navbar navbar-expand-sm bg-osu-dark text-white" style="padding-bottom: 0;height:2rem;">
                 <div id="navigationBar">
@@ -288,7 +288,7 @@
                             <div id="beatmapListGroup" class="justify-content-center">
                                 
                             </div>
-                            <div id="beatmapListingViewer" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div id="beatmapListingViewer" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" style="max-height: 80vh;overflow:hidden;" role="document">
                                     <div class="modal-content" style="overflow-y: auto;max-height: 80vh;">
                                         <div id="beatmapListingViewerHeaderImage" class="modal-content modal-beatmap-header bg-osu-dark">
@@ -298,7 +298,8 @@
                                         </div>
                                         <div class="modal-content bg-osu-regular">
                                             <div class="modal-body bg-osu-regular">
-                                                <h4 id="beatmapListingViewerTitle">TestValue</h4>
+                                                <h4 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;direction: rtl;text-align: left;" id="beatmapListingViewerTitle">TestValue</h4>
+                                                <p><small>mapped by <a id="beatmapListingViewerCreator">Amayakase</a></small></p>
                                                 <br />
                                                 <div style="overflow: hidden;max-height: 15rem;border-radius:10px;background-color: rgba(0,0,0,0.2);">
                                                     <div class="mightOverflow" style="overflow-y:auto;max-height: 15rem;" id="beatmapListingViewerDifficulties">
@@ -306,53 +307,109 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-body bg-osu-dark">
-                                                <table class="table table-sm table-borderless text-white">
-                                                    <tbody style="font-size:1rem;">
+                                            <div class="modal-body bg-osu-dark text-white">
+                                                <table class="table table-borderless table-sm text-white">
+                                                    <tbody>
                                                         <tr>
-                                                            <td style="width:20%"><span class="align-middle">Circle Size</span></td>
-                                                            <td style="width:10%"><span class="align-middle">0</span></td>
+                                                            <td style="width:20%"><span class="align-middle">circle size</span></td>
+                                                            <td style="width:10%"><span id="beatmapListingViewerStatCSLabel" class="align-middle">0</span></td>
                                                             <td style="width:70%">
-                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:1rem;background-color: #1C1719;border-radius:15px;">
-                                                                    <div id="beatmapListingViewerStatCS" class="progress-bar" role="progressbar" style="width: 25%;height:1rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div class="progress md-progress align-middle" style="margin-top:0.4rem;width:100%;height:0.75rem;background-color: #1C1719;border-radius:15px;">
+                                                                    <div id="beatmapListingViewerStatCS" class="progress-bar" role="progressbar" style="width: 25%;height:0.75rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:20%"><span class="align-middle">HP Drain</span></td>
-                                                            <td style="width:10%"><span class="align-middle">0</span></td>
+                                                            <td style="width:20%"><span class="align-middle">hp drain</span></td>
+                                                            <td style="width:10%"><span id="beatmapListingViewerStatHPLabel" class="align-middle">0</span></td>
                                                             <td style="width:70%">
-                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:1rem;background-color: #1C1719;border-radius:15px;">
-                                                                    <div id="beatmapListingViewerStatHP" class="progress-bar" role="progressbar" style="width: 25%;height:1rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:0.75rem;background-color: #1C1719;border-radius:15px;">
+                                                                    <div id="beatmapListingViewerStatHP" class="progress-bar" role="progressbar" style="width: 25%;height:0.75rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:20%"><span class="align-middle">Accuracy</span></td>
-                                                            <td style="width:10%"><span class="align-middle">0</span></td>
+                                                            <td style="width:20%"><span class="align-middle">accuracy</span></td>
+                                                            <td style="width:10%"><span id="beatmapListingViewerStatODLabel" class="align-middle">0</span></td>
                                                             <td style="width:70%">
-                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:1rem;background-color: #1C1719;border-radius:15px;">
-                                                                    <div id="beatmapListingViewerStatOD" class="progress-bar" role="progressbar" style="width: 25%;height:1rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:0.75rem;background-color: #1C1719;border-radius:15px;">
+                                                                    <div id="beatmapListingViewerStatOD" class="progress-bar" role="progressbar" style="width: 25%;height:0.75rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:20%;text-overflow: ellipsis;white-space: nowrap;"><span class="align-middle">Approach Rate</span></td>
-                                                            <td style="width:10%"><span class="align-middle">0</span></td>
+                                                            <td style="width:20%;text-overflow: ellipsis;white-space: nowrap;"><span class="align-middle">approach rate</span></td>
+                                                            <td style="width:10%"><span id="beatmapListingViewerStatARLabel" class="align-middle">0</span></td>
                                                             <td style="width:70%">
-                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:1rem;background-color: #1C1719;border-radius:15px;">
-                                                                    <div id="beatmapListingViewerStatAR" class="progress-bar" role="progressbar" style="width: 25%;height:1rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:0.75rem;background-color: #1C1719;border-radius:15px;">
+                                                                    <div id="beatmapListingViewerStatAR" class="progress-bar" role="progressbar" style="width: 25%;height:0.75rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:20%"><span class="align-middle">Star Difficulty</span></td>
-                                                            <td style="width:10%"><span class="align-middle">0</span></td>
+                                                            <td style="width:20%"><span class="align-middle">star difficulty</span></td>
+                                                            <td style="width:10%"><span id="beatmapListingViewerStatSRLabel" class="align-middle">0</span></td>
                                                             <td style="width:70%">
-                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:1rem;background-color: #1C1719;border-radius:15px;">
-                                                                    <div id="beatmapListingViewerStatSR" class="progress-bar" role="progressbar" style="width: 25%;height:1rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div class="progress md-progress align-middle" style="margin-top:0.3rem;width:100%;height:0.75rem;background-color: #1C1719;border-radius:15px;">
+                                                                    <div id="beatmapListingViewerStatSR" class="progress-bar" role="progressbar" style="width: 25%;height:0.75rem;background-color: #FF66AB;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-body bg-osu-regular">
+                                                <h4>information</h4>
+                                                <table class="table table-borderless table-sm text-white">
+                                                    <tbody>
+                                                        <!-- <th>
+                                                        </th> -->
+                                                        <tr>
+                                                            <td style="width:25%;" class="text-right">max combo</td>
+                                                            <td style="width:25%;" id="beatmapListingViewerMaxCombo">200x</td>
+                                                            <td style="width:25%;" class="text-right">total time</td>
+                                                            <td style="width:25%;" id="beatmapListingViewerTotalTime">4:00</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:25%;" class="text-right">bpm</td>
+                                                            <td style="width:25%;" id="beatmapListingViewerBPM">180</td>
+                                                            <td style="width:25%;" class="text-right">drain time</td>
+                                                            <td style="width:25%;" id="beatmapListingViewerDrainTime">3:00</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <br />
+                                                <h4>local scores</h4>
+                                                <table class="table table-borderless table-sm text-white">
+                                                    <tbody id="beatmapListingViewerScoreList">
+                                                        <!-- <th>
+                                                        </th> -->
+                                                        <tr>
+                                                            <td>#1 <img style="height: 1rem;" src="./img/ranks/SS.png"/></td>
+                                                            <td>1,234,567</td>
+                                                            <td>100%</td>
+                                                            <td>Amayakase</td>
+                                                            <td>567x</td>
+                                                            <td>100pp</td>
+                                                            <td>HDDT</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>#1 <img style="height: 1rem;" src="./img/ranks/SS.png"/></td>
+                                                            <td>1,234,567</td>
+                                                            <td>100%</td>
+                                                            <td>Amayakase</td>
+                                                            <td>567x</td>
+                                                            <td>100pp</td>
+                                                            <td>HDDT</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>#1 <img style="height: 1rem;" src="./img/ranks/SS.png"/></td>
+                                                            <td>1,234,567</td>
+                                                            <td>100%</td>
+                                                            <td>Amayakase</td>
+                                                            <td>567x</td>
+                                                            <td>100pp</td>
+                                                            <td>HDDT</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -502,6 +559,29 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="seperator"></div>
+                                            <div>
+                                                <div class="row settings-item">
+                                                    <div class="col-sm-3 text-right align-self-center">nsfw mode</div>
+                                                    <div class="col-sm-9 align-self-center" style="padding: 0;margin-top:0.5rem;">
+                                                        <div class="switch">
+                                                            <label>
+                                                            <input id="settingsNsfwMode" type="checkbox">
+                                                            <span class="lever"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row settings-item" id="settingsSectionThemes">
+                                                    <div class="col-sm-3 text-right align-self-center">app theme</div>
+                                                    <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                                        <select id="settingsThemeSelectList" class="mdb-select validate md-form text-white">
+                                                            <option selected>sayu ogiwara</option>
+                                                            <option>fujiwara chika</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <br />
                                             <!-- <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a> -->
                                             <button id="settingsConfirmButton" class="btn btn-success btn-sm" onclick="cefOsuApp.buttonSaveSettings();">Save and apply</button>
@@ -620,6 +700,13 @@
                 </div>
             </div>
         </div>
+
+        <div id="contextMenuParent">
+            <div class="contextMenuItem">Item 1</div>
+            <div class="contextMenuItem">Item 2</div>
+            <div class="contextMenuItem">Item 3</div>
+        </div>
+
         <script type="text/javascript" src="mdb/js/jquery.min.js"></script>
         <script type="text/javascript" src="mdb/js/popper.min.js"></script>
         <script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
@@ -662,6 +749,8 @@
         <script type="text/javascript" src="mdb/js/modules/treeview.min.js"></script>
         <script type="text/javascript" src="mdb/js/modules/wow.min.js"></script>
 
+        <script type="text/javascript" src="js/jquery.quickfit.js"></script>
+        <script type="text/javascript" src="js/jquery.number.min.js"></script>
         <script type="text/javascript" src="js/achieved-manager.js"></script>
         
         <script>

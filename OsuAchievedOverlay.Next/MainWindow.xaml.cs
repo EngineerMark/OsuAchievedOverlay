@@ -107,7 +107,7 @@ namespace OsuAchievedOverlay.Next
             Cef.Initialize(settings);
             chromiumBrowser = new ChromiumWebBrowser(start);
 
-            chromiumBrowser.MenuHandler = new cefOsuContextMenuHandler();
+            //chromiumBrowser.MenuHandler = new cefOsuContextMenuHandler();
 
             BrowserWrapper.Child = chromiumBrowser;
 

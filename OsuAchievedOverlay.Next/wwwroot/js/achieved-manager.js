@@ -5,6 +5,51 @@ const Gamemode = {
     Mania: 3
 };
 
+// $('#settingsNsfwMode input:checkbox').change(function(){
+//     console.log("wow");
+//     if ($(this).is(':checked')) {
+//         $('#settingsSectionThemes').show();
+//     }else{
+//         $('#settingsSectionThemes').hide();
+//     }
+// });
+$(document).ready(function(){
+    $('#settingsSectionThemes').hide();
+});
+
+$(document).on("change", "input[id='settingsNsfwMode']", function () {
+    if (this.checked) {
+        $('#settingsSectionThemes').show(500);
+        toastr.warning('You have enabled NSFW mode for theme usage. If you wish to see no anime material, turn it off!');
+    }else{
+        $('#settingsSectionThemes').hide(500);
+    }
+});
+
+const contextMenu = document.getElementById("contextMenuParent");
+const scope = document.querySelector("body");
+
+scope.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  
+    const { clientX: mouseX, clientY: mouseY } = event;
+  
+    contextMenu.style.top = `${mouseY}px`;
+    contextMenu.style.left = `${mouseX}px`;
+  
+    contextMenu.classList.remove("visible");
+  
+    setTimeout(() => {
+      contextMenu.classList.add("visible");
+    });
+  });
+
+scope.addEventListener("click", (e) => {
+    if (e.target.offsetParent != contextMenu) {
+      contextMenu.classList.remove("visible");
+    }
+});
+
 function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
@@ -61,6 +106,14 @@ class OsuBeatmap {
         this.DiffStarRatingTaiko = jsonData.DiffStarRatingTaiko;
         this.GameMode = jsonData.GameMode;
         this.Version = jsonData.Version;
+        this.CircleSize = jsonData.CircleSize;
+        this.ApproachRate = jsonData.ApproachRate;
+        this.HPDrainRate = jsonData.HPDrainRate;
+        this.OveralDifficulty = jsonData.OveralDifficulty;
+        this.TotalTime = jsonData.TotalTime;
+        this.DrainTimeSeconds = jsonData.DrainTimeSeconds;
+        this.TimingPoints = jsonData.TimingPoints;
+        this.BeatmapChecksum = jsonData.BeatmapChecksum;
     }
 
     GetDefaultStarrating(){
@@ -95,6 +148,7 @@ class OsuBeatmapSet{
         const bgu = new URL(`file:///${bgpath}`).href;
         this.BackgroundPath = bgu;
         this.Beatmaps = [];
+        this.Tags = beatmapSetData.SongTags;
 
         this.maps_std = [];
         this.maps_frt = [];
@@ -276,7 +330,55 @@ function beatmapViewerApply(set){
 
 function beatmapViewerApplyDiff(id){
     var set = currentBeatmapSet;
+    cefOsuApp.requestBeatmapScores(set.Beatmaps[id].BeatmapChecksum);
     $('#beatmapListingViewerTitle').html(set.Artist+" - "+set.Title+" ["+set.Beatmaps[id].Version+"]");
+
+    $('#beatmapListingViewerStatCSLabel').html(set.Beatmaps[id].CircleSize);
+    $('#beatmapListingViewerStatCS').css('width', (set.Beatmaps[id].CircleSize*10)+'%');
+
+    $('#beatmapListingViewerStatHPLabel').html(set.Beatmaps[id].HPDrainRate);
+    $('#beatmapListingViewerStatHP').css('width', (set.Beatmaps[id].HPDrainRate*10)+'%');
+    
+    $('#beatmapListingViewerStatODLabel').html(set.Beatmaps[id].OveralDifficulty);
+    $('#beatmapListingViewerStatOD').css('width', (set.Beatmaps[id].OveralDifficulty*10)+'%');
+
+    $('#beatmapListingViewerStatARLabel').html(set.Beatmaps[id].ApproachRate);
+    $('#beatmapListingViewerStatAR').css('width', (set.Beatmaps[id].ApproachRate*10)+'%');
+
+    $('#beatmapListingViewerStatSRLabel').html(Math.round(set.Beatmaps[id].GetDefaultStarrating()*10)/10);
+    $('#beatmapListingViewerStatSR').css('width', (set.Beatmaps[id].GetDefaultStarrating()*10)+'%');
+
+    var totalTime = new Date(set.Beatmaps[id].TotalTime);
+    var drainTime = new Date(set.Beatmaps[id].DrainTimeSeconds*1000);
+
+    $('#beatmapListingViewerTotalTime').html(totalTime.getMinutes+":"+totalTime.getSeconds);
+    $('#beatmapListingViewerDrainTime').html(drainTime.getMinutes+":"+drainTime.getSeconds);
+
+    $('#beatmapListingViewerBPM').html(0);
+    if(set.Beatmaps[id].TimingPoints!=null && set.Beatmaps[id].TimingPoints.length>0){
+        $('#beatmapListingViewerBPM').html(Math.round(60000/set.Beatmaps[id].TimingPoints[0].MsPerQuarter));
+    }
+    $('#beatmapListingViewerMaxCombo').html("0x");
+}
+
+function beatmapViewerPopulateScores(encodedScores){
+    $('#beatmapListingViewerScoreList').empty();
+    if(encodedScores.length>1){
+        var scores = JSON.parse(encodedScores);
+
+        console.log(scores);
+
+        if(scores.length>0){
+            for(let i=0;i<scores.length;i++){
+                var rank = "<td>#"+(i+1)+" </td>";
+                var score = "<td>"+$.number(scores[i].Score)+"</td>";
+                var user = "<td>"+scores[i].PlayerName+"</td>";
+                var combo = "<td>"+scores[i].Combo+"x</td>";
+                var field = "<tr>"+rank+score+user+combo+"</tr>";
+                $('#beatmapListingViewerScoreList').append(field);
+            }
+        }
+    }
 }
 
 function beatmapPaginationSet(index){
@@ -332,11 +434,11 @@ function ApplySession(session, rounding){
     $('#sessionTotalSCount').html(numberWithCommas(session["SessionDataCurrent"]["DataRankS"]));
     $('#sessionTotalACount').html(numberWithCommas(session["SessionDataCurrent"]["DataRankA"]));
 
-    $('#sessionDifferenceSSHCount').html((session["SessionDataDifference"]["DataRankSSH"]>=0?(session["SessionDataDifference"]["DataRankSSH"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataRankSSH"]));
-    $('#sessionDifferenceSSCount').html((session["SessionDataDifference"]["DataRankSS"]>=0?(session["SessionDataDifference"]["DataRankSS"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataRankSS"]));
-    $('#sessionDifferenceSHCount').html((session["SessionDataDifference"]["DataRankSH"]>=0?(session["SessionDataDifference"]["DataRankSH"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataRankSH"]));
-    $('#sessionDifferenceSCount').html((session["SessionDataDifference"]["DataRankS"]>=0?(session["SessionDataDifference"]["DataRankS"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataRankS"]));
-    $('#sessionDifferenceACount').html((session["SessionDataDifference"]["DataRankA"]>=0?(session["SessionDataDifference"]["DataRankA"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataRankA"]));
+    $('#sessionDifferenceSSHCount').html((session["SessionDataDifference"]["DataRankSSH"]>=0?(session["SessionDataDifference"]["DataRankSSH"]==0?nochange:positive):negative)+""+$.number(Math.abs(session["SessionDataDifference"]["DataRankSSH"])));
+    $('#sessionDifferenceSSCount').html((session["SessionDataDifference"]["DataRankSS"]>=0?(session["SessionDataDifference"]["DataRankSS"]==0?nochange:positive):negative)+""+$.number(Math.abs(session["SessionDataDifference"]["DataRankSS"])));
+    $('#sessionDifferenceSHCount').html((session["SessionDataDifference"]["DataRankSH"]>=0?(session["SessionDataDifference"]["DataRankSH"]==0?nochange:positive):negative)+""+$.number(Math.abs(session["SessionDataDifference"]["DataRankSH"])));
+    $('#sessionDifferenceSCount').html((session["SessionDataDifference"]["DataRankS"]>=0?(session["SessionDataDifference"]["DataRankS"]==0?nochange:positive):negative)+""+$.number(Math.abs(session["SessionDataDifference"]["DataRankS"])));
+    $('#sessionDifferenceACount').html((session["SessionDataDifference"]["DataRankA"]>=0?(session["SessionDataDifference"]["DataRankA"]==0?nochange:positive):negative)+""+$.number(Math.abs(session["SessionDataDifference"]["DataRankA"])));
 
     $('#sessionDifferenceSSHCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankSSH"]>=0?(session["SessionDataDifference"]["DataRankSSH"]==0?"grey":"green"):"red"));
     $('#sessionDifferenceSSCount').removeClass('green').removeClass('red').removeClass('grey').addClass((session["SessionDataDifference"]["DataRankSS"]>=0?(session["SessionDataDifference"]["DataRankSS"]==0?"grey":"green"):"red"));

@@ -110,6 +110,9 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="XmlSerializerHelper, Version=4.0.19096.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XmlSerializerHelper.4.0.19096.1\lib\net45\XmlSerializerHelper.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -138,11 +141,13 @@
     <Compile Include="Managers\NetworkManager.cs" />
     <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Managers\StartupManager.cs" />
+    <Compile Include="Managers\ThemeManager.cs" />
     <Compile Include="Managers\UpdateManager.cs" />
     <Compile Include="OsuWeb\WebUser.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SessionFileData.cs" />
     <Compile Include="Singleton.cs" />
+    <Compile Include="Theme.cs" />
     <Compile Include="Version.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -175,6 +180,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Themes\miyuki_chiba.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\default.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="wwwroot\fonts\extra.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -203,6 +214,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="wwwroot\js\achieved-manager.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\js\jquery.number.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\js\jquery.quickfit.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="wwwroot\launcher.html">
@@ -1439,7 +1456,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="wwwroot\themes\safe\" />
+    <Folder Include="wwwroot\themes\unsafe\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
