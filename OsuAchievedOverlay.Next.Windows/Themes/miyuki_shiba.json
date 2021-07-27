@@ -1,0 +1,11 @@
+﻿{
+  "PrettyName": "Miyuki Shiba",
+  "InternalName": "theme_MiyukiShiba",
+  "Safe": false,
+  "AppVersion": "2.0.0",
+  "Data": {
+    "Background": "https://mark-meijer.nl/anime/shiba_miyuki_underwear.png",
+    "BackgroundType": "remote_image",
+    "TextColor": "#FFFFFF"
+  }
+}

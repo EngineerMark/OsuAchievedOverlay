@@ -1,0 +1,11 @@
+﻿{
+  "PrettyName": "Default",
+  "InternalName": "theme_Default",
+  "Safe": true,
+  "AppVersion": "2.0.0",
+  "Data": {
+    "Background": "#3D2932",
+    "BackgroundType": "color",
+    "TextColor": "#FFFFFF"
+  }
+}

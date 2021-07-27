@@ -20,7 +20,7 @@ namespace OsuAchievedOverlay.Next.Managers
 
             //BrowserViewModel.Instance.SetAppVersionText("2.0.0dev");
             //BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
-            ThemeManager.Instance.Start();
+            //ThemeManager.Instance.Start();
 
             StartupManager.StartupFinished += (object sender, EventArgs e) => Prepare();
 
