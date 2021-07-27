@@ -97,9 +97,6 @@ body {
     background-color: var(--osu-dark-hover);
 }
 
-::selection {
-}
-
 .icon-mode-osu:before {
     content: "\e800";
 }
@@ -508,7 +505,7 @@ body {
 .range-field input[type="range"]::-webkit-slider-thumb {
     width: 14px;
     height: 14px;
-    margin: -5px 0 0 0;
+    margin: -5px 0 0;
     background-color: #ff65f7;
     border: none;
     border-radius: 50%;
@@ -585,7 +582,7 @@ body {
 
 .modal-dialog.cascading-modal .modal-header {
     padding: 1.5rem;
-    margin: -2rem 1rem 1rem 1rem;
+    margin: -2rem 1rem 1rem;
     text-align: center;
     border: none;
     border-radius: 20px;

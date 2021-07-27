@@ -191,7 +191,6 @@ namespace OsuAchievedOverlay.Next.Managers
                 StopProgressHandler();
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#sessionProgressTime");
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionProgressReadonly");
-
             }
             else
             {
@@ -206,7 +205,6 @@ namespace OsuAchievedOverlay.Next.Managers
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionProgressTime");
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#sessionProgressReadonly");
             }
-
         }
 
         public void Stop()

@@ -130,7 +130,6 @@ namespace OsuAchievedOverlay.Next.Managers
                     int updateRateInteger = -1;
                     int roundingDigit = -1;
 
-
                     bool processSettings = true;
                     if (checkApiMaterial)
                     {
@@ -182,7 +181,6 @@ namespace OsuAchievedOverlay.Next.Managers
 
                     if (processSettings)
                     {
-
                         KeyDataCollection displayOptions = SettingsManager.DefaultSettings["showingItems"];
                         foreach (KeyData keyData in displayOptions)
                         {
@@ -228,7 +226,6 @@ namespace OsuAchievedOverlay.Next.Managers
                     //MessageBox.Show(apiKey);
                     cefOsuApp.JsExecuter.SetElementDisabled("#settingsConfirmButton", false);
                     cefOsuApp.JsExecuter.SetHtml("#settingsConfirmButton", "Save and apply");
-
                 });
             });
         }
