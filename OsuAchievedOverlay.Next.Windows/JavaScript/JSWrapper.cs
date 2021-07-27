@@ -77,7 +77,6 @@ namespace OsuAchievedOverlay.Next.JavaScript
             return res.Result.ToString();
         }
 
-
         public void SetElementDisabled(string obj, bool state)
         {
             //_internalBrowser.ExecuteScriptAsyncWhenPageLoaded("$('" + obj + "').prop('disabled', "+(state?"true":"false")+")");

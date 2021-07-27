@@ -32,7 +32,6 @@ namespace OsuAchievedOverlay.Next
             //BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#beatmapSearchInput').val('');");
             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#beatmapPaginationGroup').empty();");
 
-
             if (totalPages > 0)
             {
                 BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("" +

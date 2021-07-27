@@ -49,7 +49,6 @@ namespace OsuAchievedOverlay.Next.Managers
                 BrowserViewModel.Instance.SendNotification(NotificationType.Warning, "You are not connected to the internet");
             SessionManager.Instance.PrepareSession();
             UpdateManager.Instance.Start();
-
         }
 
         private void PopulateSettings(){
