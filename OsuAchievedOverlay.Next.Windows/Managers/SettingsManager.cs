@@ -1,4 +1,5 @@
-﻿using IniParser;
+﻿using CefSharp;
+using IniParser;
 using IniParser.Model;
 using OsuAchievedOverlay.Next.Helpers;
 using OsuApiHelper;
@@ -40,7 +41,8 @@ namespace OsuAchievedOverlay.Next.Managers
                     },
                     ["display"] = {
                         ["roundingValue"] = "1",
-                        ["nsfwMode"] = "false"
+                        ["nsfwMode"] = "false",
+                        ["theme"] = "theme_Default"
                     },
                     ["showingItems"] = {
                         ["ranks"] = "true",
@@ -193,6 +195,23 @@ namespace OsuAchievedOverlay.Next.Managers
 
                     if (processSettings)
                     {
+                        bool state = await BrowserViewModel.Instance.AttachedJavascriptWrapper.GetProp("#settingsNsfwMode", "checked");
+                        SettingsManager.Instance.Settings["display"]["nsfwMode"] = state ? "true" : "false";
+
+                        //string task = "$('" + obj + "').prop('" + prop + "')";
+                        JavascriptResponse res = await BrowserViewModel.Instance.AttachedBrowser.EvaluateScriptAsync("$('input[name=groupRadioThemes]:checked').attr('theme_name');");
+                        string usedTheme = (string)res.Result;
+
+                        Theme theme = ThemeManager.Instance.GetThemeFromInternalName(usedTheme);
+                        if(theme != null){
+                            SettingsManager.Instance.Settings["display"]["theme"] = usedTheme;
+                        }else{
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Settings saved but selected theme could not be found. Did you delete the file?");
+                        }
+                    }
+
+                    if (processSettings)
+                    {
                         if (checkUsername)
                         {
                             if (SettingsManager.Instance.Settings["api"]["user"] != username)
@@ -252,13 +271,20 @@ namespace OsuAchievedOverlay.Next.Managers
             {
                 string key = keyData.KeyName;
                 bool state = keyData.Value == "true";
-                if(state){
+                if (state) {
                     BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionDisplay" + (key.FirstCharToUpper()) + "");
-                }else{
+                } else {
                     BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#sessionDisplay" + (key.FirstCharToUpper()) + "");
                 }
                 //BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.SetChecked("#settingsInputDisplay" + (key.FirstCharToUpper()) + "", keyData.Value == "true");
             }
+
+            if(Settings["display"]["nsfwMode"]=="true")
+                ThemeManager.Instance.ApplyTheme(ThemeManager.Instance.GetThemeFromInternalName(Settings["display"]["theme"]));
+
+            //JavascriptResponse res = await BrowserViewModel.Instance.AttachedBrowser.EvaluateScriptAsync("$('" + obj + "').val()");
+            //return res.Result.ToString();
+            //string apiKey = await BrowserViewModel.Instance.SettingsGetApiKey();
         }
 
         public void SettingsSave()

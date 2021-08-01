@@ -30,7 +30,7 @@
         <link rel="stylesheet" href="mdb/css/modules/megamenu.min.css">
         <link rel="stylesheet" href="mdb/css/modules/parallax.min.css">
     </head>
-    <body class="bg-osu-regular text-white osu-base">
+    <body id="appBody" class="bg-osu-regular text-white osu-base">
         <div id="viewApp">
             <nav class="navbar navbar-expand-sm bg-osu-dark text-white" style="padding-bottom: 0;height:2rem;">
                 <div id="navigationBar">
@@ -575,10 +575,11 @@
                                                 <div class="row settings-item" id="settingsSectionThemes">
                                                     <div class="col-sm-3 text-right align-self-center">app theme</div>
                                                     <div class="col-sm-9 align-self-center" style="padding: 0;">
-                                                        <select id="settingsThemeSelectList" class="mdb-select validate md-form text-white">
-                                                            <option selected>sayu ogiwara</option>
-                                                            <option>fujiwara chika</option>
-                                                        </select>
+                                                        <div style="overflow: hidden;max-height: 100%;border-radius:10px;">
+                                                            <div id="settingsThemeSelectList" style="max-height: 150px;overflow-y: scroll;">
+
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -594,10 +595,16 @@
                     <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="tab-about">
                         <div class="row">
                             <div class="col-lg-6">
-                                <h5>About osu!achieved</h5>
-                                <br />
-                                <p>Next is version 2+ of osu!achieved. It's a complete rewrite to convert the app to use CEF for web-based UI.</p>
-                                <br />
+                                <div class="card bg-osu-dark">
+                                    <div class="card-body">
+                                        <h5>About osu!achieved</h5>
+                                        <br />
+                                        <p>Next is version 2+ of osu!achieved. It's a complete rewrite to convert the app to use CEF for web-based UI.</p>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
                                 <div id="cardUpdateReady">
                                     <div class="card bg-osu-dark">
                                         <div class="card-body">
@@ -630,6 +637,17 @@
                                                 <p><a onclick="cefOsuApp.openUrl('https://github.com/EngineerMark/OsuAchievedOverlay')"><span id="aboutGitPage">Visit repository <i class="fas fa-external-link-alt"></i></span></a></p>
                                                 <p><a onclick="cefOsuApp.openUrl('https://trello.com/b/xKsLJYab/osuachieved')"><span id="aboutGitPage">Track development <i class="fas fa-external-link-alt"></i></span></a></p>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="card bg-osu-dark">
+                                    <div class="card-body">
+                                        <div class="list-group-flush">
+                                            <p>&copy; osu!Achieved 2021</p>
+                                            <small>osu!Achieved is not associated with "osu!".</small>
                                         </div>
                                     </div>
                                 </div>
@@ -703,9 +721,7 @@
         </div>
 
         <div id="contextMenuParent">
-            <div class="contextMenuItem">Item 1</div>
-            <div class="contextMenuItem">Item 2</div>
-            <div class="contextMenuItem">Item 3</div>
+            <div class="contextMenuItem" onclick="cefOsuApp.showDevTools();">Developer Tools</div>
         </div>
 
         <script type="text/javascript" src="mdb/js/jquery.min.js"></script>

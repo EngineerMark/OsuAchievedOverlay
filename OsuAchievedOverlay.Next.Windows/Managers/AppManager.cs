@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Forms;
 
 namespace OsuAchievedOverlay.Next.Managers
 {
@@ -20,7 +21,7 @@ namespace OsuAchievedOverlay.Next.Managers
 
             //BrowserViewModel.Instance.SetAppVersionText("2.0.0dev");
             //BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
-            //ThemeManager.Instance.Start();
+            ThemeManager.Instance.Start();
 
             StartupManager.StartupFinished += (object sender, EventArgs e) => Prepare();
 
@@ -29,7 +30,8 @@ namespace OsuAchievedOverlay.Next.Managers
             StartupManager.Instance.CheckSetup();
         }
 
-        public void Stop(){
+        public void Stop()
+        {
             SessionManager.Instance.Stop();
         }
 
@@ -51,7 +53,8 @@ namespace OsuAchievedOverlay.Next.Managers
             UpdateManager.Instance.Start();
         }
 
-        private void PopulateSettings(){
+        private void PopulateSettings()
+        {
             BrowserViewModel.Instance.SettingsSetApikey(SettingsManager.Instance.Settings["api"]["key"]);
             BrowserViewModel.Instance.SettingsSetUsername(SettingsManager.Instance.Settings["api"]["user"]);
             BrowserViewModel.Instance.SettingsSetUpdaterate(SettingsManager.Instance.Settings["api"]["updateRate"]);
@@ -59,7 +62,7 @@ namespace OsuAchievedOverlay.Next.Managers
             if (!string.IsNullOrEmpty(SettingsManager.Instance.Settings["misc"]["osuFolder"]))
                 BrowserViewModel.Instance.SettingsSetOsuDirectory(SettingsManager.Instance.Settings["misc"]["osuFolder"]);
             BrowserViewModel.Instance.SettingsSetGamemode((OsuApiHelper.OsuMode)Enum.Parse(typeof(OsuApiHelper.OsuMode), SettingsManager.Instance.Settings["api"]["gamemode"]));
-            
+
             KeyDataCollection displayOptions = SettingsManager.Instance.Settings["showingItems"];
             List<string> selectedKeys = new List<string>();
             foreach (KeyData keyData in displayOptions)
@@ -75,6 +78,21 @@ namespace OsuAchievedOverlay.Next.Managers
                 "var values = '" + (string.Join(",", selectedKeys)) + "';" +
                 "$('#settingsVisualSelectList').val(values.split(','));";
             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded(jsString);
+
+            if(SettingsManager.Instance.Settings["display"]["nsfwMode"]=="true"){
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsNsfwMode').click();");
+            }
+
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsThemeSelectList').empty();");
+            foreach (Theme theme in ThemeManager.Instance.Themes)
+            {
+                string option = "<div class='form-check'>" +
+                    "<input type='radio' class='form-check-input' theme_name='"+theme.InternalName+"' id='themeSelect_" + theme.InternalName + "' name='groupRadioThemes' "+(SettingsManager.Instance.Settings["display"]["theme"]==theme.InternalName ? "checked" : "")+">" +
+                    "<label class='form-check-label' for='themeSelect_" + theme.InternalName + "'>" + theme.PrettyName + "</label>" +
+                "</div>";
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsThemeSelectList').append('" + HttpUtility.JavaScriptStringEncode(option) + "');");
+            }
+
             SettingsManager.Instance.SettingsApply();
         }
     }

@@ -110,9 +110,6 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="XmlSerializerHelper, Version=4.0.19096.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XmlSerializerHelper.4.0.19096.1\lib\net45\XmlSerializerHelper.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
