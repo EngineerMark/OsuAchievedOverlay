@@ -1,3 +1,5 @@
+Abandoned, maybe I'll release the dev branch updates but don't count on it. Cya.
+
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/engineermark/osuachievedoverlay?include_prereleases)](https://github.com/EngineerMark/OsuAchievedOverlay/releases/latest)
 ![Total Downloads](https://img.shields.io/github/downloads/EngineerMark/OsuAchievedOverlay/total)
 ![Code Quality Dev Branch](https://img.shields.io/codefactor/grade/github/EngineerMark/OsuAchievedOverlay/dev)
