@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using CefSharp;
 using CefSharp.WinForms;
 
@@ -27,20 +28,25 @@ namespace OsuAchievedOverlay.Next.Managers
             return Themes.Find(t => t.InternalName.Equals(name));
         }
 
-        public void ApplyTheme(Theme theme){
-            if(theme.ThemeData!=null){
-                switch(theme.ThemeData.BackgroundType){
-                    default:    
+        public void ApplyTheme(Theme theme)
+        {
+            if (theme.ThemeData != null)
+            {
+                switch (theme.ThemeData.BackgroundType)
+                {
+                    default:
                     case "color":
                         BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#appBody').css('background-image', '');");
-                        BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#appBody').css('background-color', '"+theme.ThemeData.Background+"');");
-                        return;
+                        BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#appBody').css('background-color', '" + theme.ThemeData.Background + "');");
+                        break;
                     case "remote_image":
                         BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#appBody').css('background-color', '');");
                         BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#appBody').css('background-image', 'url(\\\'" + theme.ThemeData.Background + "\\\')');");
-                        return;
+                        break;
                 }
             }
+
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("applyTheme('" + HttpUtility.JavaScriptStringEncode(theme.CustomStyle) + "');");
         }
 
         public void RefreshList()

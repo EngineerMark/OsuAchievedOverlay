@@ -33,6 +33,9 @@ namespace OsuAchievedOverlay.Next
         /// </summary>
         [JsonProperty("Safe")]
         public bool Safe { get; set; }
+        
+        [JsonProperty("CustomStyle")]
+        public string CustomStyle { get; set; }
 
         [JsonProperty("Data")]
         public ThemeData ThemeData { get; set; }

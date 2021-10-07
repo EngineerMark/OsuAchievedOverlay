@@ -17,6 +17,11 @@ $(document).ready(function(){
     $('#settingsSectionThemes').hide();
 });
 
+function applyTheme(themeStyle){
+    $('#appCustomTheme').empty();
+    $('#appCustomTheme').text(themeStyle);
+}
+
 $(document).on("change", "input[id='settingsNsfwMode']", function () {
     if (this.checked) {
         $('#settingsSectionThemes').show(500);

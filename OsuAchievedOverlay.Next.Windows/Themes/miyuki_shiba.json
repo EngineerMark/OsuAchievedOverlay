@@ -7,5 +7,6 @@
     "Background": "https://mark-meijer.nl/anime/shiba_miyuki_underwear.png",
     "BackgroundType": "remote_image",
     "TextColor": "#FFFFFF"
-  }
+  },
+  "CustomStyle": "#navigationBar { background-color:red; }"
 }
