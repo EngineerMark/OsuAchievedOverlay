@@ -61,6 +61,8 @@ This will be fixed in the future.
 
 # Local API
 
+(Not implemented yet)
+
 Local API in this context means the seperate files for certain stat data.
 You can create your own formatting strings and files. It dumps it in pure text files ready to be read by other software.
 
