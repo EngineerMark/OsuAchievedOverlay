@@ -3,6 +3,7 @@
 ![Code Quality Dev Branch](https://img.shields.io/codefactor/grade/github/EngineerMark/OsuAchievedOverlay/dev)
 
 # Table of Contents
+
 1. [OsuAchievedOverlay](#OsuAchievedOverlay)
     1. [osu! API key](#osu!-API-key)
     2. [Release format](#release-format)
@@ -14,6 +15,7 @@
 5. [OBS Studio](#obs-studio)
 
 # OsuAchievedOverlay
+
 Stream Overlay for osu! containing information on your session achievements
 
 This is still very experimental. Crashes can and will occur. If not reported yet, throw it into Issues.
@@ -32,6 +34,7 @@ I don't know what causes this nor do I know a solution. Try with peppy maybe.
 ## Release format
 
 Releases are currently versioned as the following: 1.2.3.4
+
 1. Main version
 2. Beta version
 3. Release
@@ -42,8 +45,11 @@ This format will be standard here for the ease of the upcoming updater in the ap
 # Building
 
 To build osu!achieved for yourself, please make sure of the following things:
+
 - ILMerge is used to combine the resulting managed dlls into the .exe
 - 7zip is used to package the web resources into a single file
+
+If you get an error despite having 7zip installed, add it to the environment variables; I use the 7z command, not the path to the exe.
 
 These are both done after the initial build, but are still part of the build process in Visual Studio 2019 (and works in other IDEs most likely, but I did not test that).
 The first one does not happen if the target is set to Debug, the latter does.
@@ -54,6 +60,7 @@ This project makes use of my OsuHelper library: https://github.com/EngineerMark/
 It uses Newtonsoft for json parsing. Latest version should be safe, but in case of errors or crashes; check used version in NuGet package
 
 # Sessions
+
 You only need to save a session once, the current and difference data are calculated automatically when opened.
 
 Currently, incompatible session files (older versions for example), can still cause the program to crash instead of notify you.\

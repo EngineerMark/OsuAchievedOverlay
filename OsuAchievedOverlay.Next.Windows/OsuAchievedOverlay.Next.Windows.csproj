@@ -47,6 +47,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp, Version=91.1.230.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
       <HintPath>..\packages\CefSharp.Common.91.1.230\lib\net452\CefSharp.dll</HintPath>
@@ -1515,7 +1518,7 @@ del webdata.pak
 
 for /f "tokens=3,2,4 delims=/- " %25%25x in ("%25date%25") do set d=%25%25y%25%25x%25%25z
 Echo zipping web data...
-"C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetDir)webdata.pak" "$(TargetDir)wwwroot\*"
+7z a -tzip "$(TargetDir)webdata.pak" "$(TargetDir)wwwroot\*"
 echo Web data built!
 
 rd /Q /S "$(TargetDir)wwwroot"</PostBuildEvent>
