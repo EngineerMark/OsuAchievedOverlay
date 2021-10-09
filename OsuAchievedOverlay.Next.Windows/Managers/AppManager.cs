@@ -44,7 +44,7 @@ namespace OsuAchievedOverlay.Next.Managers
 
             PopulateSettings();
 
-            BrowserViewModel.Instance.SetAppVersionText(UpdateManager.version);
+            BrowserViewModel.Instance.SetAppVersionText(AppVersion.Version);
             BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
 
             if (!NetworkManager.Instance.HasConnection())

@@ -19,8 +19,6 @@ namespace OsuAchievedOverlay.Next.Managers
 {
     public class UpdateManager : Singleton<UpdateManager>
     {
-        public const string version = "2.0.0";
-
         public Release AvailableUpdate { get; set; } = null;
 
         public void Start(){
@@ -82,7 +80,7 @@ namespace OsuAchievedOverlay.Next.Managers
 
             List<Release> releases = JsonConvert.DeserializeObject<List<Release>>(data);
 
-            Version currentVersion = new Version(version);
+            Version currentVersion = new Version(AppVersion.Version);
             releases.RemoveAll(delegate (Release release)
             {
                 string _v = release.Version;
