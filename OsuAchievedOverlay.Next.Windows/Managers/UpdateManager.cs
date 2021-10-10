@@ -58,7 +58,7 @@ namespace OsuAchievedOverlay.Next.Managers
             BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#updatemanagerVersionID", update.Version);
 
             BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#navigationUpdateWarning");
-            BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#updatemanagerVersionBody", "No update info to show. Perhaps something went wrong?");
+            BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#updatemanagerVersionBody", StringStorage.Get("Text.NoUpdate"));
             Markdown md = new Markdown();
             string updateString = "<div style=\"-webkit-text-size-adjust: 50%;\">";
             updateString += md.Transform(update.Body);
@@ -71,7 +71,7 @@ namespace OsuAchievedOverlay.Next.Managers
             string data = "";
             try
             {
-                data = ApiHelper.GetData("https://api.github.com/repos/EngineerMark/OsuAchievedOverlay/releases");
+                data = ApiHelper.GetData(StringStorage.Get("URL.APIRepository")+"/releases");
             }
             catch (Exception)
             { 

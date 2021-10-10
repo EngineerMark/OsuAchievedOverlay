@@ -71,7 +71,7 @@ namespace OsuAchievedOverlay.Next
             }
             else
             {
-                BrowserViewModel.Instance.SendNotification(NotificationType.Warning, "No sets could be found!");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Warning, StringStorage.Get("Message.NoBeatmaps"));
                 BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#beatmapListGroup').html('No results found');");
             }
         }

@@ -83,7 +83,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 }
                 else
                 {
-                    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Tab content for '"+name+"' does not exist! Please reinstall the program.");
+                    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, String.Format(StringStorage.Get("Message.MissingTabContent"), name));
                 }
             });
             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("appReady();");
@@ -99,7 +99,7 @@ namespace OsuAchievedOverlay.Next.Managers
             BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);
 
             if (!NetworkManager.Instance.HasConnection())
-                BrowserViewModel.Instance.SendNotification(NotificationType.Warning, "You are not connected to the internet");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Warning, StringStorage.Get("Message.NoInternet"));
             SessionManager.Instance.PrepareSession();
             UpdateManager.Instance.Start();
         }

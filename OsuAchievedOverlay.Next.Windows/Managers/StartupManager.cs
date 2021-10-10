@@ -21,7 +21,7 @@ namespace OsuAchievedOverlay.Next.Managers
             {
                 if (exists && !validApiOrUser)
                 {
-                    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "API Key or username in settings is invalid");
+                    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.NoAPIorUsername"));
                 }
 
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Show("#generateSettingsModal");
@@ -37,7 +37,7 @@ namespace OsuAchievedOverlay.Next.Managers
                             Task task = ProcessSetup();
                             if (await Task.WhenAny(task, Task.Delay(5000)) != task)
                             {
-                                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Something went wrong. Please retry.");
+                                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.SomethingWrong"));
                             }
 
                             //MessageBox.Show(apiKey);
@@ -62,7 +62,7 @@ namespace OsuAchievedOverlay.Next.Managers
 
             if (!ApiHelper.IsUserValid(apiKey, username))
             {
-                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "API Key or username is invalid");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.NoAPIorUsername"));
                 processSettings = false;
             }
 
@@ -71,7 +71,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 SettingsManager.Instance.Settings["api"]["key"] = apiKey;
                 SettingsManager.Instance.Settings["api"]["user"] = username;
                 SettingsManager.Instance.SettingsSave();
-                BrowserViewModel.Instance.SendNotification(NotificationType.Success, "Saved settings");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Success, StringStorage.Get("Message.SettingsSaved"));
                 StartupFinished?.Invoke(null, null);
             }
         }

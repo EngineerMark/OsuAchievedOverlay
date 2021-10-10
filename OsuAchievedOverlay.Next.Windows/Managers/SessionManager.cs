@@ -30,7 +30,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 }
                 catch (Exception)
                 {
-                    BrowserViewModel.Instance.SendNotification(NotificationType.Warning, "Session list file is present, but unable to read it");
+                    BrowserViewModel.Instance.SendNotification(NotificationType.Warning, StringStorage.Get("Message.UnreadableSession"));
                 }
 
                 if (!string.IsNullOrEmpty(data))
@@ -42,7 +42,7 @@ namespace OsuAchievedOverlay.Next.Managers
                     }
                     catch (Exception)
                     {
-                        BrowserViewModel.Instance.SendNotification(NotificationType.Warning, "Session list file is present, but unable to read it");
+                        BrowserViewModel.Instance.SendNotification(NotificationType.Warning, StringStorage.Get("Message.UnreadableSession"));
                     }
                     if (storedSessions != null || storedSessions.Count > 0)
                     {
@@ -182,7 +182,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 }
                 catch (Exception)
                 {
-                    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Error retrieving user data");
+                    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.UserDataError"));
                     return;
                 }
                 BrowserViewModel.Instance.ApplySession(CurrentSession);
@@ -228,7 +228,7 @@ namespace OsuAchievedOverlay.Next.Managers
         {
             if (!NetworkManager.Instance.HasConnection())
             {
-                BrowserViewModel.Instance.SendNotification(NotificationType.Warning, "You are not connected to the internet");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Warning, StringStorage.Get("Message.NoInternet"));
                 return;
             }
 
@@ -240,7 +240,7 @@ namespace OsuAchievedOverlay.Next.Managers
             }
             catch (Exception)
             {
-                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Error retrieving user data");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.UserDataError"));
             }
 
             if (currentUserData != null)

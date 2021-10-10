@@ -63,7 +63,7 @@ namespace OsuAchievedOverlay.Next.Managers
                             bool validConfig = true;
                             if (string.IsNullOrEmpty(SongsPath))
                             {
-                                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "osu! directory is correct, but no configuration was found");
+                                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.Osu.NoConfig"));
                                 validConfig = false;
                             }
 
@@ -187,11 +187,11 @@ namespace OsuAchievedOverlay.Next.Managers
                                 //cefOsuApp.JsExecuter.GetBrowser().ShowDevTools();
                             }
                         }else{
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "The osu! config file of this system does not exist. Cancelling process.", 5000);
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.Osu.NoConfig"), 5000);
                         }
                     }
                     BrowserViewModel.Instance.AttachedJavascriptWrapper.SetElementDisabled("#settingsProcessOsu", false);
-                    BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#settingsProcessOsu", "Process osu");
+                    BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#settingsProcessOsu", StringStorage.Get("Message.Osu.Process"));
                 });
             });
         }

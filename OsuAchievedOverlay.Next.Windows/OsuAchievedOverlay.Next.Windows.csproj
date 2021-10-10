@@ -163,6 +163,7 @@
     <Compile Include="Session.cs" />
     <Compile Include="SessionFileData.cs" />
     <Compile Include="Singleton.cs" />
+    <Compile Include="StringStorage.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="Version.cs" />
     <Page Include="MainWindow.xaml">

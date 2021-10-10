@@ -141,7 +141,7 @@ namespace OsuAchievedOverlay.Next.Managers
                     {
                         if (!ApiHelper.IsUserValid(apiKey, username))
                         {
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "API Key or username is invalid");
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.NoAPIorUsername"));
                             processSettings = false;
                         }
 
@@ -149,7 +149,7 @@ namespace OsuAchievedOverlay.Next.Managers
                         {
                             if (!ApiHelper.IsValidOsuInstallation(osudir))
                             {
-                                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Selected osu directory is invalid");
+                                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.InvalidOsuInstall"));
                                 processSettings = false;
                             }
                         }
@@ -165,7 +165,7 @@ namespace OsuAchievedOverlay.Next.Managers
                         }
                         catch (Exception)
                         {
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Update rate value seems to be invalid");
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.InvalidUpdateRate"));
                             processSettings = false;
                         }
                     }
@@ -180,7 +180,7 @@ namespace OsuAchievedOverlay.Next.Managers
                         }
                         catch (Exception)
                         {
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Rounding value seems to be invalid");
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.InvalidRoundValue"));
                             processSettings = false;
                         }
                     }
@@ -210,7 +210,7 @@ namespace OsuAchievedOverlay.Next.Managers
                         if(theme != null){
                             SettingsManager.Instance.Settings["display"]["theme"] = usedTheme;
                         }else{
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Settings saved but selected theme could not be found. Did you delete the file?");
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.InvalidTheme"));
                         }
                     }
 
@@ -237,18 +237,18 @@ namespace OsuAchievedOverlay.Next.Managers
                         // Save stuff
                         SettingsManager.Instance.SettingsSave();
                         SettingsManager.Instance.SettingsApply();
-                        BrowserViewModel.Instance.SendNotification(NotificationType.Success, "Saved settings");
+                        BrowserViewModel.Instance.SendNotification(NotificationType.Success, StringStorage.Get("Message.SettingsSaved"));
 
                         if (newSession)
                         {
                             SessionManager.Instance.PrepareSession();
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Info, "Started new session");
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Info, StringStorage.Get("Message.NewSessionStart"));
                         }
                     }
 
                     //MessageBox.Show(apiKey);
                     cefOsuApp.JsExecuter.SetElementDisabled("#settingsConfirmButton", false);
-                    cefOsuApp.JsExecuter.SetHtml("#settingsConfirmButton", "Save and apply");
+                    cefOsuApp.JsExecuter.SetHtml("#settingsConfirmButton", StringStorage.Get("Button.SaveApply"));
                 });
             });
         }

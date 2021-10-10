@@ -64,7 +64,7 @@ namespace OsuAchievedOverlay.Next
         {
             SessionManager.Instance.PrepareSession();
             BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Hide("#modalNewSession");
-            BrowserViewModel.Instance.SendNotification(NotificationType.Info, "Started a new session");
+            BrowserViewModel.Instance.SendNotification(NotificationType.Info, StringStorage.Get("Message.NewSessionStart"));
         }
 
         public void sessionHandlerLoad(string id)
@@ -80,7 +80,7 @@ namespace OsuAchievedOverlay.Next
                 SessionLoadFromFile(Path.Combine(sessionData.FileLocation, sessionData.FileName + sessionData.FileExtension));
             }
             else
-                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Failed to load session information");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.LoadSessionFail"));
         }
 
         public void sessionHandlerLoadFromFile(){
@@ -102,7 +102,7 @@ namespace OsuAchievedOverlay.Next
             }
             catch (Exception)
             {
-                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Could not open that file");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.OpenFileFail"));
                 return;
             }
 
@@ -113,7 +113,7 @@ namespace OsuAchievedOverlay.Next
             }
             catch (Exception)
             {
-                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Unable to load that session");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.LoadSessionFail"));
                 return;
             }
 
@@ -124,7 +124,7 @@ namespace OsuAchievedOverlay.Next
             }
             else
             {
-                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Session file seemed fine, but unable to deserialize");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.LoadSessionDeserializeFail"));
             }
         }
 
@@ -142,12 +142,12 @@ namespace OsuAchievedOverlay.Next
                 {
                     FileManager.WriteAllText(saveFileDialog.FileName, json);
                     BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Hide("#modalSaveSession");
-                    BrowserViewModel.Instance.SendNotification(NotificationType.Success, "Saved session");
+                    BrowserViewModel.Instance.SendNotification(NotificationType.Success, StringStorage.Get("Message.SessionSaved"));
                     SessionManager.Instance.AddFile(saveFileDialog.FileName);
                 }
             }
             else{
-                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Something went wrong while saving, please retry");
+                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.SessionSaveFail"));
             }
         }
 
@@ -168,7 +168,7 @@ namespace OsuAchievedOverlay.Next
                 CommonOpenFileDialog dialog = new CommonOpenFileDialog
                 {
                     IsFolderPicker = true,
-                    Title = "Select osu! installation folder"
+                    Title = StringStorage.Get("Title.OsuSelector")
                 };
                 CommonFileDialogResult result = dialog.ShowDialog();
                 JsExecuter.GetBrowser().ExecuteScriptAsyncWhenPageLoaded("$('#settingsInputOsuDir').val('"+ HttpUtility.JavaScriptStringEncode(dialog.FileName) + "');");
