@@ -60,7 +60,8 @@ namespace OsuAchievedOverlay.Next.Managers
                     jsAttempts++;
                     JavascriptResponse res = await BrowserViewModel.Instance.AttachedBrowser.EvaluateScriptAsync(tabsDataTask);
                     result_data = res;
-                    break;
+                    if(res!=null && res.Result!=null)
+                        break;
                 }
                 catch(Exception e)
                 {

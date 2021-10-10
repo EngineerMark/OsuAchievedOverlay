@@ -542,6 +542,9 @@ function ApplySession(session, rounding){
     $('#sessionCurrentPlaytime').html(Math.round(totalPlayTime/60/60)+" hours");
     $('#sessionCurrentAccuracy').html(session["SessionDataCurrent"]["DataAccuracy"].toFixed(rounding)+"%");
     $('#sessionCurrentPerformance').html(numberWithCommas(session["SessionDataCurrent"]["DataPerformance"].toFixed(rounding))+"pp");
+    $('#sessionCurrent300x').html(numberWithCommas(session["SessionDataCurrent"]["Data300x"]));
+    $('#sessionCurrent100x').html(numberWithCommas(session["SessionDataCurrent"]["Data100x"]));
+    $('#sessionCurrent50x').html(numberWithCommas(session["SessionDataCurrent"]["Data50x"]));
 
     $('#sessionDifferenceLevel').html((session["SessionDataDifference"]["DataLevel"]>=0?(session["SessionDataDifference"]["DataLevel"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataLevel"].toFixed(rounding)));
     $('#sessionDifferenceTotalScore').html((session["SessionDataDifference"]["DataTotalScore"]>=0?(session["SessionDataDifference"]["DataTotalScore"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataTotalScore"]));
@@ -552,6 +555,9 @@ function ApplySession(session, rounding){
     $('#sessionDifferencePlaytime').html((differencePlayTime>=0?(differencePlayTime==0?nochange:positive):negative)+""+differencePlayTime+" "+diffType);
     $('#sessionDifferenceAccuracy').html((session["SessionDataDifference"]["DataAccuracy"]>=0?(session["SessionDataDifference"]["DataAccuracy"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataAccuracy"]).toFixed(rounding));
     $('#sessionDifferencePerformance').html((session["SessionDataDifference"]["DataPerformance"]>=0?(session["SessionDataDifference"]["DataPerformance"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataPerformance"].toFixed(rounding)));
+    $('#sessionDifference300x').html((session["SessionDataDifference"]["Data300x"] >= 0 ? (session["SessionDataDifference"]["Data300x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data300x"]));
+    $('#sessionDifference100x').html((session["SessionDataDifference"]["Data100x"] >= 0 ? (session["SessionDataDifference"]["Data100x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data100x"]));
+    $('#sessionDifference50x').html((session["SessionDataDifference"]["Data50x"] >= 0 ? (session["SessionDataDifference"]["Data50x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data50x"]));
 
     setTextColorToSign("#sessionDifferenceLevel", session["SessionDataDifference"]["DataLevel"]);
     setTextColorToSign("#sessionDifferenceTotalScore", session["SessionDataDifference"]["DataTotalScore"]);
@@ -562,6 +568,9 @@ function ApplySession(session, rounding){
     setTextColorToSign("#sessionDifferencePlaytime", differencePlayTime);
     setTextColorToSign("#sessionDifferenceAccuracy", session["SessionDataDifference"]["DataAccuracy"]);
     setTextColorToSign("#sessionDifferencePerformance", session["SessionDataDifference"]["DataPerformance"]);
+    setTextColorToSign("#sessionDifference300x", session["SessionDataDifference"]["Data300x"]);
+    setTextColorToSign("#sessionDifference100x", session["SessionDataDifference"]["Data100x"]);
+    setTextColorToSign("#sessionDifference50x", session["SessionDataDifference"]["Data50x"]);
 }
 
 function setTextColorToSign(element, valueToTest, invert = false){

@@ -55,6 +55,9 @@ namespace OsuAchievedOverlay.Next.Managers
                         ["playtime"] = "true",
                         ["accuracy"] = "true",
                         ["performance"] = "true",
+                        ["300x"] = "false",
+                        ["100x"] = "false",
+                        ["50x"] = "false",
                     }
                 };
             }

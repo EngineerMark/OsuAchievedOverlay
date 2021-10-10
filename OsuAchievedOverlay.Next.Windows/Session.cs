@@ -101,6 +101,12 @@ namespace OsuAchievedOverlay
         public float CountryRank;
         [JsonProperty("DataAccuracy")]
         public float Accuracy;
+        [JsonProperty("Data300x")]
+        public float Hits300;
+        [JsonProperty("Data100x")]
+        public float Hits100;
+        [JsonProperty("Data50x")]
+        public float Hits50;
 
         public static void FromUser(OsuApiHelper.OsuUser user, ref SessionData output)
         {
@@ -124,7 +130,10 @@ namespace OsuAchievedOverlay
                 Level = user.Level,
                 WorldRank = user.Globalrank,
                 CountryRank = user.Countryrank,
-                Accuracy = user.Accuracy
+                Accuracy = user.Accuracy,
+                Hits300 = user.Hits300,
+                Hits100 = user.Hits100,
+                Hits50 = user.Hits50,
             };
         }
 
@@ -145,7 +154,10 @@ namespace OsuAchievedOverlay
                 Level = a.Level - b.Level,
                 WorldRank = a.WorldRank-b.WorldRank,
                 CountryRank = a.CountryRank-b.CountryRank,
-                Accuracy = a.Accuracy - b.Accuracy
+                Accuracy = a.Accuracy - b.Accuracy,
+                Hits300 = a.Hits300 - b.Hits300,
+                Hits100 = a.Hits100 - b.Hits100,
+                Hits50 = a.Hits50 - b.Hits50,
             };
             return output;
         }
@@ -167,7 +179,10 @@ namespace OsuAchievedOverlay
                 Level = a.Level + b.Level,
                 WorldRank = a.WorldRank + b.WorldRank,
                 CountryRank = a.CountryRank + b.CountryRank,
-                Accuracy = a.Accuracy + b.Accuracy
+                Accuracy = a.Accuracy + b.Accuracy,
+                Hits300 = a.Hits300 + b.Hits300,
+                Hits100 = a.Hits100 + b.Hits100,
+                Hits50 = a.Hits50 + b.Hits50,
             };
             return output;
         }
@@ -194,7 +209,10 @@ namespace OsuAchievedOverlay
                 Level = Level,
                 WorldRank = WorldRank,
                 CountryRank = CountryRank,
-                Accuracy = Accuracy
+                Accuracy = Accuracy,
+                Hits300 = Hits300,
+                Hits100 = Hits100,
+                Hits50 = Hits50,
             };
         }
     }
