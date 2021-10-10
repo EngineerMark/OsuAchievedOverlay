@@ -241,6 +241,9 @@
     <Content Include="wwwroot\launcher.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="wwwroot\tabs\tab_session.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="wwwroot\updater.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

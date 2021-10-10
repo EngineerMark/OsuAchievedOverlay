@@ -42,7 +42,38 @@ namespace OsuAchievedOverlay.Next.Managers
             //Forced sleep to give browser time to load (maybe switch to event later)
             Thread.Sleep(3);
 
+
+            Task.Run(()=>PopulateTabData());
+            
+        }
+
+        private async void PopulateTabData()
+        {
+            await Task.Delay(1000);
+            string tabsDataTask = "getTabFields();";
+            JavascriptResponse res = await BrowserViewModel.Instance.AttachedBrowser.EvaluateScriptAsync(tabsDataTask);
+            List<object> data = (List<object>)res.Result;
+            data.ForEach(element =>
+            {
+                string name = (string)element;
+                string path = "wwwroot/tabs/tab_" + name + ".html";
+                if (File.Exists(path)){
+                    string file_data = FileManager.ReadAllText(path);
+                    string prepared_file = HttpUtility.JavaScriptStringEncode(file_data);
+                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("populateTab('"+name+"','"+prepared_file+"');");
+                }
+                else
+                {
+                    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Tab content for '"+name+"' does not exist! Please reinstall the program.");
+                }
+            });
+            Proceed();
+        }
+
+        private void Proceed(){
+            Thread.Sleep(100);
             PopulateSettings();
+
 
             BrowserViewModel.Instance.SetAppVersionText(AppVersion.Version);
             BrowserViewModel.Instance.SetChromiumVersionText("CEF: " + Cef.CefSharpVersion + ", Chromium: " + Cef.ChromiumVersion);

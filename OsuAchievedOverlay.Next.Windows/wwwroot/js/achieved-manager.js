@@ -5,6 +5,19 @@ const Gamemode = {
     Mania: 3
 };
 
+function getTabFields(){
+    var data = document.querySelectorAll('[data-tab]');
+    var namesOnly = [];
+    data.forEach(element => namesOnly.push(element.getAttribute("data-tab")));
+    return namesOnly;
+}
+
+function populateTab(tabname, tabdata) {
+    var data = tabdata;
+    var element = document.querySelector('[data-tab="' + tabname + '"]');
+    element.innerHTML = data;
+}
+
 // $('#settingsNsfwMode input:checkbox').change(function(){
 //     console.log("wow");
 //     if ($(this).is(':checked')) {

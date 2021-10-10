@@ -74,7 +74,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 data = ApiHelper.GetData("https://api.github.com/repos/EngineerMark/OsuAchievedOverlay/releases");
             }
             catch (Exception)
-            {
+            { 
                 data = "[]";
             }
 
