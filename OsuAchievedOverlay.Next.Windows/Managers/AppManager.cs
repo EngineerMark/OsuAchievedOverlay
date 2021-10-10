@@ -49,10 +49,28 @@ namespace OsuAchievedOverlay.Next.Managers
 
         private async void PopulateTabData()
         {
-            await Task.Delay(1000);
             string tabsDataTask = "getTabFields();";
-            JavascriptResponse res = await BrowserViewModel.Instance.AttachedBrowser.EvaluateScriptAsync(tabsDataTask);
-            List<object> data = (List<object>)res.Result;
+            JavascriptResponse result_data = null;
+
+            int jsAttempts = 0;
+            do
+            {
+                try
+                {
+                    jsAttempts++;
+                    JavascriptResponse res = await BrowserViewModel.Instance.AttachedBrowser.EvaluateScriptAsync(tabsDataTask);
+                    result_data = res;
+                    break;
+                }
+                catch(Exception _)
+                {
+                    if (jsAttempts == 5)
+                        throw;
+
+                    await Task.Delay(1000);
+                }
+            } while (true);
+            List<object> data = (List<object>)result_data.Result;
             data.ForEach(element =>
             {
                 string name = (string)element;
