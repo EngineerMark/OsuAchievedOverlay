@@ -62,10 +62,10 @@ namespace OsuAchievedOverlay.Next.Managers
                     result_data = res;
                     break;
                 }
-                catch(Exception _)
+                catch(Exception e)
                 {
                     if (jsAttempts == 5)
-                        throw;
+                        throw e;
 
                     await Task.Delay(1000);
                 }
