@@ -545,6 +545,7 @@ function ApplySession(session, rounding){
     $('#sessionCurrent300x').html(numberWithCommas(session["SessionDataCurrent"]["Data300x"]));
     $('#sessionCurrent100x').html(numberWithCommas(session["SessionDataCurrent"]["Data100x"]));
     $('#sessionCurrent50x').html(numberWithCommas(session["SessionDataCurrent"]["Data50x"]));
+    $('#sessionCurrentHitsPerPlay').html(numberWithCommas(Math.round(session["SessionDataCurrent"]["DataHitsPerPlay"]*100)/100));
 
     $('#sessionDifferenceLevel').html((session["SessionDataDifference"]["DataLevel"]>=0?(session["SessionDataDifference"]["DataLevel"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataLevel"].toFixed(rounding)));
     $('#sessionDifferenceTotalScore').html((session["SessionDataDifference"]["DataTotalScore"]>=0?(session["SessionDataDifference"]["DataTotalScore"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataTotalScore"]));
@@ -558,6 +559,7 @@ function ApplySession(session, rounding){
     $('#sessionDifference300x').html((session["SessionDataDifference"]["Data300x"] >= 0 ? (session["SessionDataDifference"]["Data300x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data300x"]));
     $('#sessionDifference100x').html((session["SessionDataDifference"]["Data100x"] >= 0 ? (session["SessionDataDifference"]["Data100x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data100x"]));
     $('#sessionDifference50x').html((session["SessionDataDifference"]["Data50x"] >= 0 ? (session["SessionDataDifference"]["Data50x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data50x"]));
+    $('#sessionDifferenceHitsPerPlay').html((session["SessionDataDifference"]["DataHitsPerPlay"] >= 0 ? (session["SessionDataDifference"]["DataHitsPerPlay"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(Math.round(session["SessionDataDifference"]["DataHitsPerPlay"]*100)/100));
 
     setTextColorToSign("#sessionDifferenceLevel", session["SessionDataDifference"]["DataLevel"]);
     setTextColorToSign("#sessionDifferenceTotalScore", session["SessionDataDifference"]["DataTotalScore"]);
@@ -571,6 +573,7 @@ function ApplySession(session, rounding){
     setTextColorToSign("#sessionDifference300x", session["SessionDataDifference"]["Data300x"]);
     setTextColorToSign("#sessionDifference100x", session["SessionDataDifference"]["Data100x"]);
     setTextColorToSign("#sessionDifference50x", session["SessionDataDifference"]["Data50x"]);
+    setTextColorToSign("#sessionDifferenceHitsPerPlay", Math.round(session["SessionDataDifference"]["DataHitsPerPlay"])*100)/100;
 }
 
 function setTextColorToSign(element, valueToTest, invert = false){
@@ -581,7 +584,7 @@ function setTextColorToSign(element, valueToTest, invert = false){
 }
 
 function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function time2TimeAgo(ts) {

@@ -107,6 +107,8 @@ namespace OsuAchievedOverlay
         public float Hits100;
         [JsonProperty("Data50x")]
         public float Hits50;
+        [JsonProperty("DataHitsPerPlay")]
+        public float HitsPerPlay;
 
         public static void FromUser(OsuApiHelper.OsuUser user, ref SessionData output)
         {
@@ -134,6 +136,7 @@ namespace OsuAchievedOverlay
                 Hits300 = user.Hits300,
                 Hits100 = user.Hits100,
                 Hits50 = user.Hits50,
+                HitsPerPlay = (user.Hits300 + user.Hits100 + user.Hits50) / user.Playcount,
             };
         }
 
@@ -158,6 +161,7 @@ namespace OsuAchievedOverlay
                 Hits300 = a.Hits300 - b.Hits300,
                 Hits100 = a.Hits100 - b.Hits100,
                 Hits50 = a.Hits50 - b.Hits50,
+                HitsPerPlay = a.HitsPerPlay-b.HitsPerPlay,
             };
             return output;
         }
@@ -183,6 +187,7 @@ namespace OsuAchievedOverlay
                 Hits300 = a.Hits300 + b.Hits300,
                 Hits100 = a.Hits100 + b.Hits100,
                 Hits50 = a.Hits50 + b.Hits50,
+                HitsPerPlay = a.HitsPerPlay - b.HitsPerPlay
             };
             return output;
         }
@@ -213,6 +218,7 @@ namespace OsuAchievedOverlay
                 Hits300 = Hits300,
                 Hits100 = Hits100,
                 Hits50 = Hits50,
+                HitsPerPlay = HitsPerPlay
             };
         }
     }

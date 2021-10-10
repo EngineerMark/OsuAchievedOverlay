@@ -58,6 +58,7 @@ namespace OsuAchievedOverlay.Next.Managers
                         ["300x"] = "false",
                         ["100x"] = "false",
                         ["50x"] = "false",
+                        ["hitsPerPlay"] = "false",
                     }
                 };
             }
