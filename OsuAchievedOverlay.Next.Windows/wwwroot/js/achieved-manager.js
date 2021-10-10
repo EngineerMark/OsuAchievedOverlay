@@ -5,6 +5,65 @@ const Gamemode = {
     Mania: 3
 };
 
+//Instead of document ready, we use this due to the tab load system
+function appReady() {
+    $('#settingsSectionThemes').hide();
+    $('.mdb-select').materialSelect();
+    inspectorOpenMain();
+
+    var ctxP = document.getElementById("inspectorMapRankChart").getContext('2d');
+    var mapChart = new Chart(ctxP, {
+        type: 'pie',
+        data: {
+            labels: ["Ranked", "Loved", "Unranked"],
+            datasets: [{
+                data: [0, 0, 0],
+                backgroundColor: ["#b3ff66", "#ff66ab", "#969696"],
+                hoverBackgroundColor: ["#caff94", "#ff8abf", "#bfbfbf"]
+            }]
+        },
+        options: {
+            responsive: true,
+            elements: {
+                arc: {
+                    borderWidth: 0
+                }
+            }
+        }
+    });
+}
+
+function updateMapChart(ranked, loved, unranked) {
+    mapChart.data.datasets[0].data = [ranked, loved, unranked];
+    mapChart.update();
+}
+
+function inspectorOpenMain() {
+    $('#inspectorviewMain').show(500);
+    $('#inspectorviewBeatmapListing').hide(500);
+    $('#inspectorviewScoreListing').hide(500);
+    $('#inspectorviewCollectionListing').hide(500);
+}
+
+function inspectorOpenBeatmapListing() {
+    $('#inspectorviewMain').hide(500);
+    $('#inspectorviewBeatmapListing').show(500);
+    $('#inspectorviewScoreListing').hide(500);
+}
+
+function inspectorOpenScoreListing() {
+    $('#inspectorviewMain').hide(500);
+    $('#inspectorviewBeatmapListing').hide(500);
+    $('#inspectorviewScoreListing').show(500);
+}
+
+function inspectorOpenCollectionListing() {
+    $('#inspectorviewMain').hide(500);
+    $('#inspectorviewBeatmapListing').hide(500);
+    $('#inspectorviewScoreListing').hide(500);
+    $('#inspectorviewCollectionListing').show(500);
+}
+
 function getTabFields(){
     var data = document.querySelectorAll('[data-tab]');
     var namesOnly = [];
@@ -26,9 +85,6 @@ function populateTab(tabname, tabdata) {
 //         $('#settingsSectionThemes').hide();
 //     }
 // });
-$(document).ready(function(){
-    $('#settingsSectionThemes').hide();
-});
 
 function applyTheme(themeStyle){
     $('#appCustomTheme').empty();
@@ -551,3 +607,140 @@ function time2TimeAgo(ts) {
     }
     return seconds + " seconds ago";
 }
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+});
+
+$('img').on('dragstart', function (event) { event.preventDefault(); });
+
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD
+        define(['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        // CommonJS
+        factory(require('jquery'));
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
+    var CountTo = function (element, options) {
+        this.$element = $(element);
+        this.options = $.extend({}, CountTo.DEFAULTS, this.dataOptions(), options);
+        this.init();
+    };
+
+    CountTo.DEFAULTS = {
+        from: 0,               // the number the element should start at
+        to: 0,                 // the number the element should end at
+        speed: 1000,           // how long it should take to count between the target numbers
+        refreshInterval: 100,  // how often the element should be updated
+        decimals: 0,           // the number of decimal places to show
+        formatter: formatter,  // handler for formatting the value before rendering
+        onUpdate: null,        // callback method for every time the element is updated
+        onComplete: null       // callback method for when the element finishes updating
+    };
+
+    CountTo.prototype.init = function () {
+        this.value = this.options.from;
+        this.loops = Math.ceil(this.options.speed / this.options.refreshInterval);
+        this.loopCount = 0;
+        this.increment = (this.options.to - this.options.from) / this.loops;
+    };
+
+    CountTo.prototype.dataOptions = function () {
+        var options = {
+            from: this.$element.data('from'),
+            to: this.$element.data('to'),
+            speed: this.$element.data('speed'),
+            refreshInterval: this.$element.data('refresh-interval'),
+            decimals: this.$element.data('decimals')
+        };
+
+        var keys = Object.keys(options);
+
+        for (var i in keys) {
+            var key = keys[i];
+
+            if (typeof (options[key]) === 'undefined') {
+                delete options[key];
+            }
+        }
+
+        return options;
+    };
+
+    CountTo.prototype.update = function () {
+        this.value += this.increment;
+        this.loopCount++;
+
+        this.render();
+
+        if (typeof (this.options.onUpdate) == 'function') {
+            this.options.onUpdate.call(this.$element, this.value);
+        }
+
+        if (this.loopCount >= this.loops) {
+            clearInterval(this.interval);
+            this.value = this.options.to;
+
+            if (typeof (this.options.onComplete) == 'function') {
+                this.options.onComplete.call(this.$element, this.value);
+            }
+        }
+    };
+
+    CountTo.prototype.render = function () {
+        var formattedValue = this.options.formatter.call(this.$element, this.value, this.options);
+        this.$element.text(formattedValue);
+    };
+
+    CountTo.prototype.restart = function () {
+        this.stop();
+        this.init();
+        this.start();
+    };
+
+    CountTo.prototype.start = function () {
+        this.stop();
+        this.render();
+        this.interval = setInterval(this.update.bind(this), this.options.refreshInterval);
+    };
+
+    CountTo.prototype.stop = function () {
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
+    };
+
+    CountTo.prototype.toggle = function () {
+        if (this.interval) {
+            this.stop();
+        } else {
+            this.start();
+        }
+    };
+
+    function formatter(value, options) {
+        return value.toFixed(options.decimals);
+    }
+
+    $.fn.countTo = function (option) {
+        return this.each(function () {
+            var $this = $(this);
+            var data = $this.data('countTo');
+            var init = !data || typeof (option) === 'object';
+            var options = typeof (option) === 'object' ? option : {};
+            var method = typeof (option) === 'string' ? option : 'start';
+
+            if (init) {
+                if (data) data.stop();
+                $this.data('countTo', data = new CountTo(this, options));
+            }
+
+            data[method].call(data);
+        });
+    };
+}));

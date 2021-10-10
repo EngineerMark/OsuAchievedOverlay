@@ -67,6 +67,7 @@ namespace OsuAchievedOverlay.Next.Managers
                     BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "Tab content for '"+name+"' does not exist! Please reinstall the program.");
                 }
             });
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("appReady();");
             Proceed();
         }
 

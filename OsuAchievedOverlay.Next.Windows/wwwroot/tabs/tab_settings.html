@@ -1,0 +1,130 @@
+﻿<div class="tab-content" id="settingstabcontent">
+    <div class="tab-pane fade" id="settingsApi" role="tabpanel" arial-labelledby="tab-settings-api">
+
+    </div>
+    <div class="tab-pane fade show active" id="settingsRegular" role="tabpanel" arial-labelledby="tab-settings-regular">
+        <div class="card bg-osu-dark">
+            <div class="card-body">
+                <div class="container">
+                    <div class="row settings-item">
+                        <div class="col-sm-3 text-right align-self-center">api key</div>
+                        <div class="col-sm-9" style="padding: 0;">
+                            <div class="md-form">
+                                <input max-length="80" type="password" id="settingsInputApikey" class="form-control form-extend-osu">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row settings-item">
+                        <div class="col-sm-3 text-right align-self-center">username</div>
+                        <div class="col-sm-9" style="padding: 0;">
+                            <div class="md-form">
+                                <input max-length="30" type="text" id="settingsInputUsername" class="form-control form-extend-osu">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row settings-item">
+                        <div class="col-sm-3 text-right align-self-center">gamemode</div>
+                        <div class="col-sm-9" style="padding: 0;">
+                            <div class="md-form">
+                                <select id="settingsInputGamemodeDropdown" class="mdb-select md-form form-extend-osu">
+                                    <option value="0" selected>Standard</option>
+                                    <option value="1">Taiko</option>
+                                    <option value="3">Mania</option>
+                                    <option value="2">Catch the Beat</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="seperator"></div>
+
+                    <div class="row settings-item">
+                        <div class="col-sm-3 text-right align-self-center">osu! directory</div>
+                        <div class="col-sm-9" style="padding: 0;">
+                            <div class="md-form">
+                                <div class="md-form form-sm input-group">
+                                    <input type="text" id="settingsInputOsuDir" class="form-control form-extend-osu" readonly>
+                                    <div class="input-group-append">
+                                        <button onclick="cefOsuApp.dirDialogOsuInstall();" class="btn btn-sm btn-osu-dark" type="button" id="settingsInputOsuDir_btn">Browse</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seperator"></div>
+
+                    <div class="row settings-item">
+                        <div class="col-sm-3 text-right align-self-center">refresh time</div>
+                        <div class="col-sm-9 align-self-center" style="padding: 0;">
+                            <div class="md-form">
+                                <form class="range-field">
+                                    <input id="settingsInputRefreshTime" type="range" min="5" max="120" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row settings-item">
+                        <div class="col-sm-3 text-right align-self-center">rounding digits</div>
+                        <div class="col-sm-9 align-self-center" style="padding: 0;">
+                            <div class="md-form">
+                                <form class="range-field">
+                                    <input id="settingsInputRoundDigit" type="range" min="0" max="10" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="seperator"></div>
+                    <div>
+                        <div class="row settings-item">
+                            <div class="col-sm-3 text-right align-self-center">toggle visual elements</div>
+                            <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                <select id="settingsVisualSelectList" class="mdb-select validate md-form text-white" multiple>
+                                    <option id="settingsInputDisplayRanks" value="settingsInputDisplayRanks" selected>show rank count</option>
+                                    <option id="settingsInputDisplayLevel" value="settingsInputDisplayLevel" selected>show level</option>
+                                    <option id="settingsInputDisplayTotalscore" value="settingsInputDisplayTotalscore" selected>show total score</option>
+                                    <option id="settingsInputDisplayRankedscore" value="settingsInputDisplayRankedscore" selected>show ranked score</option>
+                                    <option id="settingsInputDisplayWorldrank" value="settingsInputDisplayWorldrank" selected>show world rank</option>
+                                    <option id="settingsInputDisplayCountryrank" value="settingsInputDisplayCountryrank" selected>show country rank</option>
+                                    <option id="settingsInputDisplayPlaycount" value="settingsInputDisplayPlaycount" selected>show playcount</option>
+                                    <option id="settingsInputDisplayPlaytime" value="settingsInputDisplayPlaytime" selected>show playtime</option>
+                                    <option id="settingsInputDisplayAccuracy" value="settingsInputDisplayAccuracy" selected>show accuracy</option>
+                                    <option id="settingsInputDisplayPerformance" value="settingsInputDisplayAccuracy" selected>show performance points</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seperator"></div>
+                    <div>
+                        <div class="row settings-item">
+                            <div class="col-sm-3 text-right align-self-center">nsfw mode</div>
+                            <div class="col-sm-9 align-self-center" style="padding: 0;margin-top:0.5rem;">
+                                <div class="switch">
+                                    <label>
+                                        <input id="settingsNsfwMode" type="checkbox">
+                                        <span class="lever"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row settings-item" id="settingsSectionThemes">
+                            <div class="col-sm-3 text-right align-self-center">app theme</div>
+                            <div class="col-sm-9 align-self-center" style="padding: 0;">
+                                <div style="overflow: hidden;max-height: 100%;border-radius:10px;">
+                                    <div id="settingsThemeSelectList" style="max-height: 150px;overflow-y: scroll;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <!-- <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a> -->
+                    <button id="settingsConfirmButton" class="btn btn-success btn-sm" onclick="cefOsuApp.buttonSaveSettings();">Save and apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
