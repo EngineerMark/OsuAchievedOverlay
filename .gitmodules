@@ -1,0 +1,3 @@
+[submodule "OsuAchievedOverlay.Next.Windows/wwwroot/twemoji-flags"]
+	path = OsuAchievedOverlay.Next.Windows/wwwroot/twemoji-flags
+	url = https://github.com/range-of-motion/twemoji-flags.git

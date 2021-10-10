@@ -68,10 +68,12 @@ namespace OsuAchievedOverlay.Next
             RegionInfo countryInfo = new RegionInfo(user.CountryCode);
             string query = "" +
                 "$('#sessionUsername').html('" + user.Name + "');" +
-                "$('#sessionFlag').attr('src', './img/flags/" + user.CountryCode + ".png');" +
-                "$('#sessionFlag').attr('data-original-title', '" + (countryInfo.DisplayName) + "');" +
+                //"$('#sessionFlag').attr('src', './img/flags/" + user.CountryCode + ".png');" +
+                //"$('#sessionFlag').attr('data-original-title', '" + (countryInfo.DisplayName) + "');" +
+                "$('#sessionFlag').html('<i data-toggle=\"tooltip\" title=\""+countryInfo.DisplayName+ "\" class=\"material-tooltip-main twf twf-s twf-" + user.CountryCode.ToLower()+"\"></i>');" +
                 "$('#sessionProfileImage').attr('src', 'https://a.ppy.sh/" + user.ID + "');" +
                 "$('#sessionHeaderImage').attr('src', '" + ApiHelper.GetOsuUserHeaderUrl("https://osu.ppy.sh/users/" + user.ID) + "');" +
+                "$('[data-toggle=\"tooltip\"]').tooltip();" +
             "";
             AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded(query);
         }

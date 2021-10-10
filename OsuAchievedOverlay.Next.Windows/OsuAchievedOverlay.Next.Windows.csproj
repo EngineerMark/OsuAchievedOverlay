@@ -256,6 +256,11 @@
     <Content Include="wwwroot\tabs\tab_settings.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="wwwroot\twemoji-flags\.gitignore" />
+    <Content Include="wwwroot\twemoji-flags\build.php" />
+    <Content Include="wwwroot\twemoji-flags\twemoji-flags.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="wwwroot\updater.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -271,6 +276,11 @@
     <Content Include="wwwroot\fonts\extra.woff">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="wwwroot\twemoji-flags\.editorconfig" />
+    <None Include="wwwroot\twemoji-flags\.git" />
+    <None Include="wwwroot\twemoji-flags\composer.json" />
+    <None Include="wwwroot\twemoji-flags\composer.lock" />
+    <None Include="wwwroot\twemoji-flags\README.md" />
     <Resource Include="Assets\icon.ico" />
     <Content Include="wwwroot\img\headers\karenkujo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
