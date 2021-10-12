@@ -1,6 +1,7 @@
 ﻿using CefSharp;
 using Newtonsoft.Json;
 using OsuAchievedOverlay.Next.Managers;
+using OsuAchievedOverlay.Next.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,7 +85,7 @@ namespace OsuAchievedOverlay.Next
             string[] querySections = this.searchQuery.Split(' ');
             currentBeatmapSets = new List<BeatmapSetEntry>();
 
-            foreach (BeatmapSetEntry set in InspectorManager.Instance.BeatmapSets)
+            foreach (BeatmapSetEntry set in ToolInspector.Instance.BeatmapSets)
             {
                 foreach (string querySection in querySections)
                 {

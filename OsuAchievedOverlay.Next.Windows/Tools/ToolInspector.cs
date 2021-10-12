@@ -6,6 +6,7 @@ using osu.Shared;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
 using OsuAchievedOverlay.Next.Helpers;
+using OsuAchievedOverlay.Next.Managers;
 using OsuAchievedOverlay.Next.OsuWeb;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Threading;
 
-namespace OsuAchievedOverlay.Next.Managers
+namespace OsuAchievedOverlay.Next.Tools
 {
-    public class InspectorManager : Singleton<InspectorManager>
+    public class ToolInspector : Singleton<ToolInspector>
     {
         public bool IsUpdating { get; set; }
         public OsuDb CurrentDatabase { get; set; }

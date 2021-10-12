@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
+using OsuAchievedOverlay.Next.Tools;
 
 namespace OsuAchievedOverlay.Next
 {
@@ -41,17 +42,17 @@ namespace OsuAchievedOverlay.Next
         public static Window GetWindow() => _internalWindow;
 
         public void beatmapBrowserSetPage(int index){
-            InspectorManager.Instance.InspectorBeatmapListing.LoadPage(index);
+            ToolInspector.Instance.InspectorBeatmapListing.LoadPage(index);
         }
 
         public void beatmapBrowserSearch(string query){
-            InspectorManager.Instance.InspectorBeatmapListing.ApplySearchQuery(Encoding.UTF8.GetString(Convert.FromBase64String(query)));
+            ToolInspector.Instance.InspectorBeatmapListing.ApplySearchQuery(Encoding.UTF8.GetString(Convert.FromBase64String(query)));
         }
 
         public void requestBeatmapScores(string hash){
             string encoded = "";
-            if(InspectorManager.Instance.CurrentScores.Beatmaps.ContainsKey(hash)){
-                encoded = JsonConvert.SerializeObject(InspectorManager.Instance.CurrentScores.Beatmaps[hash]);
+            if(ToolInspector.Instance.CurrentScores.Beatmaps.ContainsKey(hash)){
+                encoded = JsonConvert.SerializeObject(ToolInspector.Instance.CurrentScores.Beatmaps[hash]);
             }
             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("beatmapViewerPopulateScores('"+ encoded +"');");
         }
@@ -188,7 +189,7 @@ namespace OsuAchievedOverlay.Next
 
         public void buttonProcessOsu()
         {
-            InspectorManager.Instance.ProcessOsu(_internalWindow.Dispatcher);
+            ToolInspector.Instance.ProcessOsu(_internalWindow.Dispatcher);
         }
     }
 }
