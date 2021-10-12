@@ -1,16 +1,23 @@
-﻿<!--<center><p>Tools will be implemented in a future update</p></center>-->
-<div id="tools-sidepanel" class="side-nav2 side special-color-dark">
-    <ul class="custom-scrollbar">
-        <li>
-            <ul class="collapsible collapsible-accordion">
-                <li><a class="collapsible-header waves-effect" data-toggle="inspector" data-type="addonLink" onclick="inspectorOpenMain()"><i class="fas fa-search"></i> Inspector</a></li>
-                <li><a class="collapsible-header waves-effect" data-toggle="localapi" data-type="addonLink"><i class="fas fa-file-export"></i> Local API</a></li>
-            </ul>
-        </li>
-    </ul>
-    <div class="sidenav-bg"></div>
+﻿<div class="modal fade" id="tools-modal" tabindex="-1" role="dialog" aria-labelledby="tools-model-label" aria-hidden="true">
+    <div class="modal-dialog modal-sm bg-osu-regular" role="document">
+        <div class="modal-content bg-osu-regular">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="tools-model-label">List of tools</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group list-group-flush">
+                    <a class="list-group-item waves-effect" data-toggle="inspector" data-type="addonLink" onclick="inspectorOpenMain()"><i class="fas fa-search"></i> Inspector</a>
+                    <a class="list-group-item waves-effect" data-toggle="localapi" data-type="addonLink"><i class="fas fa-file-export"></i> Local API</a>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
-<a role="button" href="#" data-activates="tools-sidepanel" class="btn btn-block btn-elegant button-collapse">Open a tool</a>
+<button type="button" data-toggle="modal" data-target="#tools-modal" class="btn btn-block btn-elegant button-collapse">Open a tool</button>
+<br />
 <div id="addonContentViewer">
     <div data-addon="inspector"></div>
     <div data-addon="localapi"></div>

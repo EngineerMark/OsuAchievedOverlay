@@ -35,16 +35,12 @@ function appReady() {
         }
     });
 
-    // SideNav Button Initialization
-    $(".button-collapse").sideNav2();
-    // SideNav Scrollbar Initialization
-    var sideNavScrollbar = document.querySelector('.custom-scrollbar');
-    var ps = new PerfectScrollbar(sideNavScrollbar);
-
     $("[data-addon]").hide();
     $("[data-type=\"addonLink\"]").click(function (e) {
         $("[data-addon]").hide();
-        $("[data-addon=\""+$(this).data("data-toggle")+"\"]").show();
+        var name = $(this).attr("data-toggle");
+        $("[data-addon=\"" + name + "\"]").show();
+        $("#tools-modal").modal("toggle");
     });
 }
 
