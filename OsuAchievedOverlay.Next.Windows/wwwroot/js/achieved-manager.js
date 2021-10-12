@@ -5,14 +5,17 @@ const Gamemode = {
     Mania: 3
 };
 
+var ctxP = null;
+var mapChart = null;
+
 //Instead of document ready, we use this due to the tab load system
 function appReady() {
     $('#settingsSectionThemes').hide();
     $('.mdb-select').materialSelect();
     inspectorOpenMain();
 
-    var ctxP = document.getElementById("inspectorMapRankChart").getContext('2d');
-    var mapChart = new Chart(ctxP, {
+    ctxP = document.getElementById("inspectorMapRankChart").getContext('2d');
+    mapChart = new Chart(ctxP, {
         type: 'pie',
         data: {
             labels: ["Ranked", "Loved", "Unranked"],
@@ -30,6 +33,18 @@ function appReady() {
                 }
             }
         }
+    });
+
+    // SideNav Button Initialization
+    $(".button-collapse").sideNav2();
+    // SideNav Scrollbar Initialization
+    var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+    var ps = new PerfectScrollbar(sideNavScrollbar);
+
+    $("[data-addon]").hide();
+    $("[data-type=\"addonLink\"]").click(function (e) {
+        $("[data-addon]").hide();
+        $("[data-addon=\""+$(this).data("data-toggle")+"\"]").show();
     });
 }
 
@@ -74,6 +89,19 @@ function getTabFields(){
 function populateTab(tabname, tabdata) {
     var data = tabdata;
     var element = document.querySelector('[data-tab="' + tabname + '"]');
+    element.innerHTML = data;
+}
+
+function getAddonFields() {
+    var data = document.querySelectorAll('[data-addon]');
+    var namesOnly = [];
+    data.forEach(element => namesOnly.push(element.getAttribute("data-addon")));
+    return namesOnly;
+}
+
+function populateAddon(addonname, addondata) {
+    var data = addondata;
+    var element = document.querySelector('[data-addon="' + addonname + '"]');
     element.innerHTML = data;
 }
 

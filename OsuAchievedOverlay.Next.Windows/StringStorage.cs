@@ -29,6 +29,7 @@ namespace OsuAchievedOverlay.Next
             ["Message.Osu.NoConfig"] = "osu! directory is correct, but no configuration was found",
             ["Message.Osu.Process"] = "Process osu",
             ["Message.MissingTabContent"] = "Tab content for %s does not exist! Please reinstall the program.",
+            ["Message.MissingAddonContent"] = "Tool content for %s does not exist! Please reinstall the program.",
             ["Button.SaveApply"] = "Save and apply",
             ["Title.OsuSelector"] = "Select osu! installation folder",
             ["Text.NoUpdate"] = "No update info to show. Perhaps something went wrong?",

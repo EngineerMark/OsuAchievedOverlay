@@ -86,11 +86,53 @@ namespace OsuAchievedOverlay.Next.Managers
                     BrowserViewModel.Instance.SendNotification(NotificationType.Danger, String.Format(StringStorage.Get("Message.MissingTabContent"), name));
                 }
             });
-            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("appReady();");
+            PopulateAddons();
+        }
+
+        private async void PopulateAddons(){
+            string tabsDataTask = "getAddonFields();";
+            JavascriptResponse result_data = null;
+
+            int jsAttempts = 0;
+            do
+            {
+                try
+                {
+                    jsAttempts++;
+                    JavascriptResponse res = await BrowserViewModel.Instance.AttachedBrowser.EvaluateScriptAsync(tabsDataTask);
+                    result_data = res;
+                    if (res != null && res.Result != null)
+                        break;
+                }
+                catch (Exception e)
+                {
+                    if (jsAttempts == 5)
+                        throw e;
+
+                    await Task.Delay(1000);
+                }
+            } while (true);
+            List<object> data = (List<object>)result_data.Result;
+            data.ForEach(element =>
+            {
+                string name = (string)element;
+                string path = "wwwroot/tools/tool_" + name + ".html";
+                if (File.Exists(path))
+                {
+                    string file_data = FileManager.ReadAllText(path);
+                    string prepared_file = HttpUtility.JavaScriptStringEncode(file_data);
+                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("populateAddon('" + name + "','" + prepared_file + "');");
+                }
+                else
+                {
+                    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, String.Format(StringStorage.Get("Message.MissingAddonContent"), name));
+                }
+            });
             Proceed();
         }
 
         private void Proceed(){
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("appReady();");
             Thread.Sleep(100);
             PopulateSettings();
 
