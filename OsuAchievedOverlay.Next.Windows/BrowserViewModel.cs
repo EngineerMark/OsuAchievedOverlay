@@ -65,6 +65,8 @@ namespace OsuAchievedOverlay.Next
 
         public void ApplyUser(OsuUser user)
         {
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_loader_view\").show();");
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_default_view\").hide();");
             RegionInfo countryInfo = new RegionInfo(user.CountryCode);
             string query = "" +
                 "$('#sessionUsername').html('" + user.Name + "');" +
@@ -76,6 +78,8 @@ namespace OsuAchievedOverlay.Next
                 "$('[data-toggle=\"tooltip\"]').tooltip();" +
             "";
             AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded(query);
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_loader_view\").hide();");
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_default_view\").show();");
         }
 
         public void ApplySession(Session session)

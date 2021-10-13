@@ -134,6 +134,8 @@ namespace OsuAchievedOverlay.Next.Managers
         }
 
         private void Proceed(){
+            //BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_default_view\").show();");
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_loader_view\").show();");
             Thread.Sleep(100);
             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("appReady();");
             Thread.Sleep(100);
