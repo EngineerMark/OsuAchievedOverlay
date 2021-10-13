@@ -24,6 +24,8 @@ namespace OsuAchievedOverlay.Next
         public ChromiumWebBrowser AttachedBrowser { get; set; }
         public JSWrapper AttachedJavascriptWrapper { get; set; }
 
+        private OsuUser displayedUser = null;
+
         public void LoadPage(string page)
         {
             AttachedBrowser.Load(string.Format(@"{0}\wwwroot\" + page, FileManager.GetExecutableDirectory()));
@@ -65,21 +67,25 @@ namespace OsuAchievedOverlay.Next
 
         public void ApplyUser(OsuUser user)
         {
-            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_loader_view\").show();");
-            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_default_view\").hide();");
-            RegionInfo countryInfo = new RegionInfo(user.CountryCode);
-            string query = "" +
-                "$('#sessionUsername').html('" + user.Name + "');" +
-                //"$('#sessionFlag').attr('src', './img/flags/" + user.CountryCode + ".png');" +
-                //"$('#sessionFlag').attr('data-original-title', '" + (countryInfo.DisplayName) + "');" +
-                "$('#sessionFlag').html('<i data-toggle=\"tooltip\" title=\""+countryInfo.DisplayName+ "\" class=\"material-tooltip-main twf twf-s twf-" + user.CountryCode.ToLower()+"\"></i>');" +
-                "$('#sessionProfileImage').attr('src', 'https://a.ppy.sh/" + user.ID + "');" +
-                "$('#sessionHeaderImage').attr('src', '" + ApiHelper.GetOsuUserHeaderUrl("https://osu.ppy.sh/users/" + user.ID) + "');" +
-                "$('[data-toggle=\"tooltip\"]').tooltip();" +
-            "";
-            AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded(query);
-            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_loader_view\").hide();");
-            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_default_view\").show();");
+            if (displayedUser == null || displayedUser.ID != user.ID)
+            {
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_loader_view\").show();");
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_default_view\").hide();");
+                RegionInfo countryInfo = new RegionInfo(user.CountryCode);
+                string query = "" +
+                    "$('#sessionUsername').html('" + user.Name + "');" +
+                    //"$('#sessionFlag').attr('src', './img/flags/" + user.CountryCode + ".png');" +
+                    //"$('#sessionFlag').attr('data-original-title', '" + (countryInfo.DisplayName) + "');" +
+                    "$('#sessionFlag').html('<i data-toggle=\"tooltip\" title=\"" + countryInfo.DisplayName + "\" class=\"material-tooltip-main twf twf-s twf-" + user.CountryCode.ToLower() + "\"></i>');" +
+                    "$('#sessionProfileImage').attr('src', 'https://a.ppy.sh/" + user.ID + "');" +
+                    "$('#sessionHeaderImage').attr('src', '" + ApiHelper.GetOsuUserHeaderUrl("https://osu.ppy.sh/users/" + user.ID) + "');" +
+                    "$('[data-toggle=\"tooltip\"]').tooltip();" +
+                "";
+                AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded(query);
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_loader_view\").hide();");
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_default_view\").show();");
+                displayedUser = user;
+            }
         }
 
         public void ApplySession(Session session)
