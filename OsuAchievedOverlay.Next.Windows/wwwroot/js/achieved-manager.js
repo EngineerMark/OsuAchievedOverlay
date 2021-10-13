@@ -466,34 +466,34 @@ function beatmapViewerApplyDiff(id){
     var totalTime = new Date(set.Beatmaps[id].TotalTime);
     var drainTime = new Date(set.Beatmaps[id].DrainTimeSeconds*1000);
 
-    $('#beatmapListingViewerTotalTime').html(totalTime.getMinutes+":"+totalTime.getSeconds);
-    $('#beatmapListingViewerDrainTime').html(drainTime.getMinutes+":"+drainTime.getSeconds);
+    //$('#beatmapListingViewerTotalTime').html(totalTime.getMinutes+":"+totalTime.getSeconds);
+    //$('#beatmapListingViewerDrainTime').html(drainTime.getMinutes+":"+drainTime.getSeconds);
 
-    $('#beatmapListingViewerBPM').html(0);
-    if(set.Beatmaps[id].TimingPoints!=null && set.Beatmaps[id].TimingPoints.length>0){
-        $('#beatmapListingViewerBPM').html(Math.round(60000/set.Beatmaps[id].TimingPoints[0].MsPerQuarter));
-    }
-    $('#beatmapListingViewerMaxCombo').html("0x");
+    //$('#beatmapListingViewerBPM').html(0);
+    //if(set.Beatmaps[id].TimingPoints!=null && set.Beatmaps[id].TimingPoints.length>0){
+    //    $('#beatmapListingViewerBPM').html(Math.round(60000/set.Beatmaps[id].TimingPoints[0].MsPerQuarter));
+    //}
+    //$('#beatmapListingViewerMaxCombo').html("0x");
 }
 
 function beatmapViewerPopulateScores(encodedScores){
     $('#beatmapListingViewerScoreList').empty();
-    if(encodedScores.length>1){
-        var scores = JSON.parse(encodedScores);
+    //if(encodedScores.length>1){
+    //    var scores = JSON.parse(encodedScores);
 
-        console.log(scores);
+    //    console.log(scores);
 
-        if(scores.length>0){
-            for(let i=0;i<scores.length;i++){
-                var rank = "<td>#"+(i+1)+" </td>";
-                var score = "<td>"+$.number(scores[i].Score)+"</td>";
-                var user = "<td>"+scores[i].PlayerName+"</td>";
-                var combo = "<td>"+scores[i].Combo+"x</td>";
-                var field = "<tr>"+rank+score+user+combo+"</tr>";
-                $('#beatmapListingViewerScoreList').append(field);
-            }
-        }
-    }
+    //    if(scores.length>0){
+    //        for(let i=0;i<scores.length;i++){
+    //            var rank = "<td>#"+(i+1)+" </td>";
+    //            var score = "<td>"+$.number(scores[i].Score)+"</td>";
+    //            var user = "<td>"+scores[i].PlayerName+"</td>";
+    //            var combo = "<td>"+scores[i].Combo+"x</td>";
+    //            var field = "<tr>"+rank+score+user+combo+"</tr>";
+    //            $('#beatmapListingViewerScoreList').append(field);
+    //        }
+    //    }
+    //}
 }
 
 function beatmapsGeneratePagination(length) {

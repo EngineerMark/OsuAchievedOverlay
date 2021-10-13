@@ -153,6 +153,7 @@
     <Compile Include="JavaScript\JSTextInput.cs" />
     <Compile Include="JavaScript\JSModal.cs" />
     <Compile Include="Managers\AppManager.cs" />
+    <Compile Include="Managers\AudioManager.cs" />
     <Compile Include="Tools\ToolInspector.cs" />
     <Compile Include="Managers\NetworkManager.cs" />
     <Compile Include="Managers\SessionManager.cs" />
