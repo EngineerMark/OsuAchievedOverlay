@@ -631,7 +631,7 @@ function ApplySession(session, rounding){
     setTextColorToSign("#sessionDifference300x", session["SessionDataDifference"]["Data300x"]);
     setTextColorToSign("#sessionDifference100x", session["SessionDataDifference"]["Data100x"]);
     setTextColorToSign("#sessionDifference50x", session["SessionDataDifference"]["Data50x"]);
-    setTextColorToSign("#sessionDifferenceHitsPerPlay", Math.round(session["SessionDataDifference"]["DataHitsPerPlay"])*100)/100;
+    setTextColorToSign("#sessionDifferenceHitsPerPlay", Math.round(session["SessionDataDifference"]["DataHitsPerPlay"]*100)/100);
 }
 
 function setTextColorToSign(element, valueToTest, invert = false){
