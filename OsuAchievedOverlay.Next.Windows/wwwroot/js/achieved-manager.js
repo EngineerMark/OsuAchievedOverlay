@@ -175,41 +175,51 @@ function hexToRgb(hex) {
 }
 
 function osuGetDifficultyColor(diff){
-    if(diff<2){
-        return "#88B300";
+    if (diff < 1.5) {
+        return "#4fc0ff";
     }
-    if(diff<2.7){
-        return "#66CCFF";
+    if (diff < 2.0) {
+        return "#4fffd5";
     }
-    if(diff<4){
-        return "#FFCC22";
+    if (diff < 2.5) {
+        return "#7cff4f";
     }
-    if(diff<5.3){
-        return "#FF66AA";
+    if (diff < 3.25) {
+        return "#f6f05c";
     }
-    if(diff<6.5){
-        return "#8866EE";
+    if (diff < 4.5) {
+        return "#ff8068";
+    }
+    if (diff < 6.0) {
+        return "#ff3c71";
+    }
+    if (diff < 7.0) {
+        return "#6563de";
+    }
+    if (diff < 8.0) {
+        return "#18158e";
     }
     return "#000000";
 }
 
-function osuGetDifficultyClass(diff){
-    if(diff<2){
-        return "beatmap-difficulty-easy";
-    }
-    if(diff<2.7){
-        return "beatmap-difficulty-normal";
-    }
-    if(diff<4){
-        return "beatmap-difficulty-hard";
-    }
-    if(diff<5.3){
-        return "beatmap-difficulty-insane";
-    }
-    if(diff<6.5){
-        return "beatmap-difficulty-expert";
-    }
-    return "beatmap-difficulty-expertplus";
+function osuGetDifficultyClass(diff) {
+    return "background-color: " + osuGetDifficultyColor(diff);
+    //if(diff<2){
+    //    return "beatmap-difficulty-easy";
+    //}
+    //if(diff<2.7){
+    //    return "beatmap-difficulty-normal";
+    //}
+    //if(diff<4){
+    //    return "beatmap-difficulty-hard";
+    //}
+    //if(diff<5.3){
+    //    return "beatmap-difficulty-insane";
+    //}
+    //if(diff<6.5){
+    //    return "beatmap-difficulty-expert";
+    //}
+    //return "beatmap-difficulty-expertplus";
 }
 
 class OsuBeatmap {
@@ -355,8 +365,8 @@ class OsuBeatmapSet{
                 var sr = this.Beatmaps[i].GetDefaultStarrating();
                 //switch(this.Beatmaps.)
                 var color = osuGetDifficultyClass(sr);
-                var tooltip = "<span class=\"badge badge-pill "+color+"\">"+(Math.round(sr*100)/100)+"*</span> "+(this.Beatmaps[i].Version);
-                var badge = "<span data-toggle='tooltip' title='"+tooltip+"' data-html='true' class='badge badge-pill "+color+"' style='width:4px;height:16px;'>&nbsp;</span>";
+                var tooltip = "<span style=\"" + color +" !important;\" class=\"badge badge-pill\">"+(Math.round(sr*100)/100)+"*</span> "+(this.Beatmaps[i].Version);
+                var badge = "<span data-toggle='tooltip' title='"+tooltip+"' data-html='true' class='badge badge-pill' style='width:4px;height:16px;"+color+"'>&nbsp;</span>";
                 difficultyData+=badge+" ";
                 // $("#beatmapsetTooltip_id"+tooltipID).tooltip();
             }
@@ -436,7 +446,7 @@ function beatmapViewerApply(set){
             icon = "icon-mode-taiko";
         }
 
-        var tooltip = "<span class=\"badge badge-pill "+colorClass+"\">"+(Math.round(sr*100)/100)+"*</span> "+(set.Beatmaps[i].Version);
+        var tooltip = "<span class=\"badge badge-pill\" style=\"" + colorClass+"\">"+(Math.round(sr*100)/100)+"*</span> "+(set.Beatmaps[i].Version);
         var item = "<a onclick='beatmapViewerApplyDiff("+i+");' data-toggle='tooltip' data-html='true' title='"+tooltip+"' class='"+icon+" beatmapViewerDifficultyLink' style='font-size:2rem;color: "+color+";'></a> ";
         $('#beatmapListingViewerDifficulties').append(item);
     }
