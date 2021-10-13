@@ -58,6 +58,7 @@ namespace OsuAchievedOverlay.Next.Managers
             ProgressThread = new ExtendedThread(() =>
             {
                 float perc = 0;
+                float seconds_left = 0;
 
                 if(nextIteration!=-1 && lastIteration!=-1)
                 {
@@ -76,6 +77,8 @@ namespace OsuAchievedOverlay.Next.Managers
                         perc = 0;
                     else
                         perc = (float)normalizedCurrent / (float)normalizedTime;
+
+                    seconds_left = normalizedCurrent+1;
                 }
 
                 int actualPerc = 100-Convert.ToInt32(Math.Round(perc * 100));
@@ -83,6 +86,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 actualPerc = Math.Min(100, Math.Max(0, actualPerc));
 
                 BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#progressbarSessionTimer').css('width', '" + actualPerc + "%');");
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#sessionProgressTimeText').html('"+ seconds_left + " seconds');");
             }, 1);
             ProgressThread.Start();
         }
