@@ -15,7 +15,7 @@ namespace OsuAchievedOverlay.Next
     {
         private int currentPageIndex = 0;
         private int totalPages = -1;
-        private const int setsPerPage = 20;
+        private const int setsPerPage = 100;
 
         private List<BeatmapSetEntry> currentBeatmapSets = new List<BeatmapSetEntry>();
         private string searchQuery = "";
@@ -35,10 +35,7 @@ namespace OsuAchievedOverlay.Next
 
             if (totalPages > 0)
             {
-                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("" +
-                "for(let i=0;i<" + totalPages + ";i++){" +
-                    "$('#beatmapPaginationGroup').append('<li onclick=\"cefOsuApp.beatmapBrowserSetPage('+i+')\" class=\"page-item\"><a class=\"page-link text-white\">'+(i+1)+'</a></li>')" +
-                "}");
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("beatmapsGeneratePagination("+totalPages+");");
 
                 BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("var pageItem = $('#beatmapPaginationGroup li');" +
                 "pageItem.click(function() {" +

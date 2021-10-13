@@ -81,22 +81,25 @@
     </div>
 </div>
 <div id="inspectorviewBeatmapListing">
+    <button class="btn btn-success btn-sm" onclick="inspectorOpenMain()">Go back</button>
     <h2>Beatmaps</h2>
-    <nav>
-        <ul id="beatmapPaginationGroup" class="pagination pagination-sm justify-content-center pg-osu text-white">
-            <li class="page-item">
-                <a class="page-link" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link">1</a></li>
-            <li class="page-item active">
-                <a class="page-link">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link">3</a></li>
-            <li class="page-item ">
-                <a class="page-link">Next</a>
-            </li>
-        </ul>
-    </nav>
+    <div style="overflow-x: auto;">
+        <nav>
+            <ul id="beatmapPaginationGroup" class="pagination pagination-sm pg-osu text-white">
+                <li class="page-item">
+                    <a class="page-link" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link">1</a></li>
+                <li class="page-item active">
+                    <a class="page-link">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-link">3</a></li>
+                <li class="page-item ">
+                    <a class="page-link">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     <div class="md-form form-row" style="width:100%;">
         <div class="col">
             <input id="beatmapSearchInput" type="text" id="suffixInside" class="form-control">
@@ -241,9 +244,11 @@
     </div>
 </div>
 <div id="inspectorviewScoreListing">
+    <button class="btn btn-success btn-sm" onclick="inspectorOpenMain()">Go back</button>
     <h2>Scores</h2>
 </div>
 <div id="inspectorviewCollectionListing">
+    <button class="btn btn-success btn-sm" onclick="inspectorOpenMain()">Go back</button>
     <h2>Collections</h2>
     <div id="inspectorCollectionList" class="container">
         <button type="button" class="btn btn-sm btn-block btn-dark btn-rounded" style="margin:10px auto;"><span class="float-left">Primary</span><span class="float-right"></span>2 maps</button>

@@ -165,6 +165,7 @@
     <Compile Include="Singleton.cs" />
     <Compile Include="StringStorage.cs" />
     <Compile Include="Theme.cs" />
+    <Compile Include="Tools\ToolLocalApi.cs" />
     <Compile Include="Version.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

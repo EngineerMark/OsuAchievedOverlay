@@ -1,6 +1,7 @@
 ﻿using CefSharp;
 using IniParser.Model;
 using OsuAchievedOverlay.Next.Helpers;
+using OsuAchievedOverlay.Next.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,6 +34,7 @@ namespace OsuAchievedOverlay.Next.Managers
         public void Stop()
         {
             SessionManager.Instance.Stop();
+            //ToolLocalApi.Instance.Stop();
         }
 
         public void Prepare()
@@ -132,6 +134,7 @@ namespace OsuAchievedOverlay.Next.Managers
         }
 
         private void Proceed(){
+            Thread.Sleep(100);
             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("appReady();");
             Thread.Sleep(100);
             PopulateSettings();
@@ -144,6 +147,7 @@ namespace OsuAchievedOverlay.Next.Managers
                 BrowserViewModel.Instance.SendNotification(NotificationType.Warning, StringStorage.Get("Message.NoInternet"));
             SessionManager.Instance.PrepareSession();
             UpdateManager.Instance.Start();
+            //ToolLocalApi.Instance.Start();
         }
 
         private void PopulateSettings()

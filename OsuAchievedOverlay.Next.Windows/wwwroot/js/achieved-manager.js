@@ -44,6 +44,23 @@ function appReady() {
     });
 }
 
+function addApiField(data, hash) {
+    var deserializedData = JSON.parse(data);
+    var htmlData = "<tr>";
+    htmlData += "<th class=\"align-middle\" scope=\"row\"><div class=\"form-check\"><input type=\"checkbox\" class=\"form-check-input\" id=\"api_check" + hash + "\" " + (deserializedData["Active"] == true ? "checked" : "") + "><label class=\"form-check-label\" for=\"api_check" + hash +"\"></label></div></th>";
+    htmlData += "<td class=\"align-middle\">" + deserializedData["DisplayName"] + "</td>";
+    htmlData += "<td class=\"float-right\">";
+    htmlData += "<a data-toggle=\"modal\" data-target=\"#api-editor-modal\" class=\"btn btn-sm btn-light\" id=\"api-editor-button-"+hash+"\" data-api-id=\"" + hash + "\"><i class=\"fas fa-edit\"></i></a>";
+    htmlData += "<a class=\"btn btn-sm btn-light\" data-api-id=\"" + hash +"\"><i class=\"fas fa-trash-alt\"></i></a>";
+    htmlData += "</td>";
+    $("#localApiList").append(htmlData);
+    $("#api-editor-update-button").attr("data-api-updateID", hash);
+
+    $("#api-editor-button-" + hash).click(function () {
+        $("#api-editor-title").html(deserializedData["DisplayName"]);
+    });
+}
+
 function updateMapChart(ranked, loved, unranked) {
     mapChart.data.datasets[0].data = [ranked, loved, unranked];
     mapChart.update();
@@ -477,6 +494,13 @@ function beatmapViewerPopulateScores(encodedScores){
             }
         }
     }
+}
+
+function beatmapsGeneratePagination(length) {
+    for (let i = 0; i < length; i++) {
+        $('#beatmapPaginationGroup').append('<li onclick="cefOsuApp.beatmapBrowserSetPage(' + i + ')\" class=\"page-item\"><a class=\"page-link text-white\">' + (i + 1) + '</a></li>');
+    }
+    var t;
 }
 
 function beatmapPaginationSet(index){
