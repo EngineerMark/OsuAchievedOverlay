@@ -132,3 +132,15 @@
         </div>
     </div>
 </div>
+
+<div id="modalSettingsUsernameChanged" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSettingsUsernameChanged" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-osu-regular">
+            <div class="modal-body bg-osu-regular text-center">
+                <p>You changed the username. Do you want to reset the session?</p>
+                <button type="button" class="btn btn-info btn-sm material-tooltip-main" onclick="cefOsuApp.buttonSaveSettings(false, true)">Yes</button>
+                <button type="button" class="btn btn-info btn-sm material-tooltip-main" onclick="cefOsuApp.buttonSaveSettings(false, false)">No</button>
+            </div>
+        </div>
+    </div>
+</div>

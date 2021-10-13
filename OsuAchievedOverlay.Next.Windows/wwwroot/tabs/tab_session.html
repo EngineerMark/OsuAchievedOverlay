@@ -176,3 +176,53 @@
         </div>
     </div>
 </div>
+
+<div id="modalNewSession" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNewSession" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-osu-regular">
+            <div class="modal-body bg-osu-regular text-center">
+                <p>Are you sure you want to start a new session?</p>
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success btn-sm" onclick="cefOsuApp.sessionHandlerStartNew()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalSaveSession" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSaveSession" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-osu-regular">
+            <div class="modal-body bg-osu-regular text-center">
+                <p>In what format do you want to save the session?</p>
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-info btn-sm material-tooltip-main" data-toggle="tooltip" title="Saves the session in a readonly state" onclick="cefOsuApp.sessionHandlerSave(true)">Read-only</button>
+                <button type="button" class="btn btn-info btn-sm material-tooltip-main" data-toggle="tooltip" title="Saves a session that can be continued later on" onclick="cefOsuApp.sessionHandlerSave()">Default</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalLoadSession" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLoadSession" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-osu-regular">
+            <div class="modal-body bg-osu-regular text-center">
+                <table class="table table-hover table-sm text-white" id="sessionListTable">
+                    <tbody>
+                        <tr class="highlight">
+                            <th>filename.json</th>
+                            <th>2 days ago</th>
+                        </tr>
+                        <tr>
+                            <th>filename2.json</th>
+                            <th>4 days ago</th>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-info btn-sm material-tooltip-main" onclick="loadSessionById()">Load selected</button>
+                <button type="button" class="btn btn-info btn-sm material-tooltip-main" onclick="cefOsuApp.sessionHandlerLoadFromFile()">Load from file</button>
+            </div>
+        </div>
+    </div>
+</div>
