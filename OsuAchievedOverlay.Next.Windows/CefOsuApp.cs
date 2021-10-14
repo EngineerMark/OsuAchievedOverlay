@@ -43,7 +43,6 @@ namespace OsuAchievedOverlay.Next
         public static Window GetWindow() => _internalWindow;
 
         public string requestBeatmapApiData(string hash, int mods, int mode){
-            return null;//test
             BeatmapEntry local_map = ToolInspector.Instance.CurrentDatabase.Beatmaps.Find(x=>x.BeatmapChecksum==hash);
             if(local_map == null){
                 return null;
@@ -54,6 +53,8 @@ namespace OsuAchievedOverlay.Next
             }
             map.MapStats.Beatmap = null; // loop fix
             OsuPlay simulatedPlay = new OsuPlay();
+            simulatedPlay.Mods = (OsuMods)mods;
+            simulatedPlay.Mode = (OsuMode)mode;
             OsuPerformance pp = new OsuPerformance(simulatedPlay, map);
             AccuracyDistribution acc95 = new AccuracyDistribution((int)map.ObjectCount, 0, 0.95f);
             AccuracyDistribution acc98 = new AccuracyDistribution((int)map.ObjectCount, 0, 0.98f);

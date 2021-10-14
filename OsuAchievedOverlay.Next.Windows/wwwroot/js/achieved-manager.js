@@ -472,11 +472,22 @@ function beatmapViewerApplyDiff(id){
     var apidata = cefOsuApp.requestBeatmapApiData(map.BeatmapChecksum, 0, map.GameMode);
     if (apidata != null) {
         var cvApiData = JSON.parse(apidata);
-        var apiMap = apidata["Item1"];
-        var pp95 = apidata["Item2"];
-        var pp98 = apidata["Item3"];
-        var pp99 = apidata["Item4"];
-        var pp100 = apidata["Item5"];
+        var apiMap = cvApiData["Item1"];
+        var pp95 = cvApiData["Item2"];
+        var pp98 = cvApiData["Item3"];
+        var pp99 = cvApiData["Item4"];
+        var pp100 = cvApiData["Item5"];
+        $("#beatmapViewerAPIError").hide();
+        $("#beatmapViewerPP95").html(Math.round(pp95*10)/10+"pp");
+        $("#beatmapViewerPP98").html(Math.round(pp98 * 10) / 10+"pp");
+        $("#beatmapViewerPP99").html(Math.round(pp99 * 10) / 10+"pp");
+        $("#beatmapViewerPP100").html(Math.round(pp100 * 10) / 10 + "pp");
+
+        $("#beatmapViewerPP").show();
+
+    } else {
+        $("#beatmapViewerAPIError").show();
+        $("#beatmapViewerPP").hide();
     }
     $('#beatmapListingViewerTitle').html(set.Artist+" - "+set.Title+" ["+set.Beatmaps[id].Version+"]");
 
