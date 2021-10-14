@@ -142,6 +142,7 @@
     <Compile Include="Github\Asset.cs" />
     <Compile Include="Github\Release.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\AccuracyDistribution.cs" />
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\OsuWebHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />

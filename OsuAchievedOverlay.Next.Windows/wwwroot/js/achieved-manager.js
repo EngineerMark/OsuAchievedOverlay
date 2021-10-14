@@ -470,6 +470,14 @@ function beatmapViewerApplyDiff(id){
     var map = set.Beatmaps[id];
     cefOsuApp.requestBeatmapScores(map.BeatmapChecksum);
     var apidata = cefOsuApp.requestBeatmapApiData(map.BeatmapChecksum, 0, map.GameMode);
+    if (apidata != null) {
+        var cvApiData = JSON.parse(apidata);
+        var apiMap = apidata["Item1"];
+        var pp95 = apidata["Item2"];
+        var pp98 = apidata["Item3"];
+        var pp99 = apidata["Item4"];
+        var pp100 = apidata["Item5"];
+    }
     $('#beatmapListingViewerTitle').html(set.Artist+" - "+set.Title+" ["+set.Beatmaps[id].Version+"]");
 
     $('#beatmapListingViewerStatCSLabel').html(set.Beatmaps[id].CircleSize);
