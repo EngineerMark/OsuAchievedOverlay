@@ -92,23 +92,23 @@ namespace OsuAchievedOverlay
         [JsonProperty("DataPlaytime")]
         public long Playtime;
         [JsonProperty("DataPerformance")]
-        public float Performance;
+        public double Performance;
         [JsonProperty("DataLevel")]
-        public float Level;
+        public double Level;
         [JsonProperty("DataPPRank")]
-        public float WorldRank;
+        public double WorldRank;
         [JsonProperty("DataCountryRank")]
-        public float CountryRank;
+        public double CountryRank;
         [JsonProperty("DataAccuracy")]
-        public float Accuracy;
+        public double Accuracy;
         [JsonProperty("Data300x")]
-        public float Hits300;
+        public double Hits300;
         [JsonProperty("Data100x")]
-        public float Hits100;
+        public double Hits100;
         [JsonProperty("Data50x")]
-        public float Hits50;
+        public double Hits50;
         [JsonProperty("DataHitsPerPlay")]
-        public float HitsPerPlay;
+        public double HitsPerPlay;
 
         public static void FromUser(OsuApiHelper.OsuUser user, ref SessionData output)
         {

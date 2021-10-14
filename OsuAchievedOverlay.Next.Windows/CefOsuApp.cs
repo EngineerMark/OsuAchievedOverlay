@@ -61,12 +61,12 @@ namespace OsuAchievedOverlay.Next
             AccuracyDistribution acc99 = new AccuracyDistribution((int)map.ObjectCount, 0, 0.99f);
             AccuracyDistribution acc100 = new AccuracyDistribution((int)map.ObjectCount, 0, 1f);
 
-            float pp95 = pp.CalculatePerformance((float)map.MaxCombo, acc95.Hits50, acc95.Hits100, acc95.Hits300, acc95.Misses);
-            float pp98 = pp.CalculatePerformance((float)map.MaxCombo, acc98.Hits50, acc98.Hits100, acc98.Hits300, acc98.Misses);
-            float pp99 = pp.CalculatePerformance((float)map.MaxCombo, acc99.Hits50, acc99.Hits100, acc99.Hits300, acc99.Misses);
-            float pp100 = pp.CalculatePerformance((float)map.MaxCombo, acc100.Hits50, acc100.Hits100, acc100.Hits300, acc100.Misses);
+            double pp95 = pp.CalculatePerformance((double)map.MaxCombo, acc95.Hits50, acc95.Hits100, acc95.Hits300, acc95.Misses);
+            double pp98 = pp.CalculatePerformance((double)map.MaxCombo, acc98.Hits50, acc98.Hits100, acc98.Hits300, acc98.Misses);
+            double pp99 = pp.CalculatePerformance((double)map.MaxCombo, acc99.Hits50, acc99.Hits100, acc99.Hits300, acc99.Misses);
+            double pp100 = pp.CalculatePerformance((double)map.MaxCombo, acc100.Hits50, acc100.Hits100, acc100.Hits300, acc100.Misses);
 
-            Tuple<OsuBeatmap, float, float, float, float> data = new Tuple<OsuBeatmap, float, float, float, float>(map, pp95, pp98, pp99, pp100);
+            Tuple<OsuBeatmap, double, double, double, double> data = new Tuple<OsuBeatmap, double, double, double, double>(map, pp95, pp98, pp99, pp100);
 
 
             return JsonConvert.SerializeObject(data);
