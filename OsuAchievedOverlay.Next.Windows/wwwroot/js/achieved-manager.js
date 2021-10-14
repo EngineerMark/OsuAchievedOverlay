@@ -423,7 +423,7 @@ function generateBeatmapsetList(){
             $('#beatmapListGroup').append(item);
             item.show(500);
 
-            item.click(function(){
+            item.click(function () {
                 beatmapViewerApply(beatmapsets[i]);
             });
         }
@@ -467,7 +467,9 @@ function beatmapViewerApply(set){
 
 function beatmapViewerApplyDiff(id){
     var set = currentBeatmapSet;
-    cefOsuApp.requestBeatmapScores(set.Beatmaps[id].BeatmapChecksum);
+    var map = set.Beatmaps[id];
+    cefOsuApp.requestBeatmapScores(map.BeatmapChecksum);
+    var apidata = cefOsuApp.requestBeatmapApiData(map.BeatmapChecksum, 0, map.GameMode);
     $('#beatmapListingViewerTitle').html(set.Artist+" - "+set.Title+" ["+set.Beatmaps[id].Version+"]");
 
     $('#beatmapListingViewerStatCSLabel').html(set.Beatmaps[id].CircleSize);

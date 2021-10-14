@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using OsuAchievedOverlay.Next.Tools;
+using osu_database_reader.Components.Beatmaps;
 
 namespace OsuAchievedOverlay.Next
 {
@@ -40,6 +41,23 @@ namespace OsuAchievedOverlay.Next
         }
 
         public static Window GetWindow() => _internalWindow;
+
+        public string requestBeatmapApiData(string hash, int mods, int mode){
+
+            BeatmapEntry local_map = ToolInspector.Instance.CurrentDatabase.Beatmaps.Find(x=>x.BeatmapChecksum==hash);
+            if(local_map == null){
+                return null;
+            }
+            OsuBeatmap map = OsuApi.GetBeatmap(local_map.BeatmapId.ToString(), (OsuMods)mods, (OsuMode)mode);
+            if(map==null){
+                return null;
+            }
+            map.MapStats.Beatmap = null; // loop fix
+            //OsuPlay simulatedPlay = new OsuPlay();
+            //OsuPerformance pp = new OsuPerformance(simulatedPlay, map);
+
+            return JsonConvert.SerializeObject(map);
+        }
 
         public void beatmapBrowserSetPage(int index){
             ToolInspector.Instance.InspectorBeatmapListing.LoadPage(index);
