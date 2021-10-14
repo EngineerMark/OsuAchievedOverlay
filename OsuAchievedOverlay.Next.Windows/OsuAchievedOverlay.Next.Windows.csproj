@@ -105,8 +105,8 @@
     <Reference Include="osu.Shared, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\osu.Shared.1.0.3\lib\net20\osu.Shared.dll</HintPath>
     </Reference>
-    <Reference Include="OsuHelper, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Amayakase.OsuHelper.1.0.8\lib\netstandard2.0\OsuHelper.dll</HintPath>
+    <Reference Include="OsuHelper, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Amayakase.OsuHelper.1.0.9\lib\netstandard2.0\OsuHelper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
