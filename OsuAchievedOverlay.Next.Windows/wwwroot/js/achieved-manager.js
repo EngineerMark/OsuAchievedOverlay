@@ -14,26 +14,38 @@ function appReady() {
     $('.mdb-select').materialSelect();
     inspectorOpenMain();
 
-    ctxP = document.getElementById("inspectorMapRankChart").getContext('2d');
-    mapChart = new Chart(ctxP, {
-        type: 'pie',
-        data: {
-            labels: ["Ranked", "Loved", "Unranked"],
-            datasets: [{
-                data: [0, 0, 0],
-                backgroundColor: ["#b3ff66", "#ff66ab", "#969696"],
-                hoverBackgroundColor: ["#caff94", "#ff8abf", "#bfbfbf"]
-            }]
-        },
-        options: {
-            responsive: true,
-            elements: {
-                arc: {
-                    borderWidth: 0
+    var observer = new MutationObserver(function (m, me) {
+        var elem = document.getElementById("inspectorMapRankChart");
+        if (elem) {
+            ctxP = elem.getContext('2d');
+            mapChart = new Chart(ctxP, {
+                type: 'pie',
+                data: {
+                    labels: ["Ranked", "Loved", "Unranked"],
+                    datasets: [{
+                        data: [0, 0, 0],
+                        backgroundColor: ["#b3ff66", "#ff66ab", "#969696"],
+                        hoverBackgroundColor: ["#caff94", "#ff8abf", "#bfbfbf"]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    elements: {
+                        arc: {
+                            borderWidth: 0
+                        }
+                    }
                 }
-            }
+            });
+            me.disconnect();
+            return;
         }
     });
+    observer.observe(document, {
+        childList: true,
+        subtree: true
+    });
+
 
     $("[data-addon]").hide();
     $("[data-type=\"addonLink\"]").click(function (e) {
