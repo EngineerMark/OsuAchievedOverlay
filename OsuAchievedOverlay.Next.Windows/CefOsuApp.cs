@@ -208,8 +208,10 @@ namespace OsuAchievedOverlay.Next
                     Title = StringStorage.Get("Title.OsuSelector")
                 };
                 CommonFileDialogResult result = dialog.ShowDialog();
-                JsExecuter.GetBrowser().ExecuteScriptAsyncWhenPageLoaded("$('#settingsInputOsuDir').val('"+ HttpUtility.JavaScriptStringEncode(dialog.FileName) + "');");
-                JsExecuter.AddClass("#settingsInputOsuDirLabel", "active");
+                if(result==CommonFileDialogResult.Ok){
+                    JsExecuter.GetBrowser().ExecuteScriptAsyncWhenPageLoaded("$('#settingsInputOsuDir').val('"+ HttpUtility.JavaScriptStringEncode(dialog.FileName) + "');");
+                    JsExecuter.AddClass("#settingsInputOsuDirLabel", "active");
+                }
             });
         }
 
