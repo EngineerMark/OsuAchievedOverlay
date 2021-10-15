@@ -9,7 +9,9 @@ using OsuAchievedOverlay.Next.Helpers;
 using OsuAchievedOverlay.Next.Managers;
 using OsuAchievedOverlay.Next.OsuWeb;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,6 +29,7 @@ namespace OsuAchievedOverlay.Next.Tools
         public CollectionDb CurrentCollections { get; set; }
         public ScoresDb CurrentScores { get; set; }
         public List<BeatmapSetEntry> BeatmapSets { get; set; }
+        private Object BeatmapSetLock = new Object();
         public string SongsPath { get; set; }
 
         public InspectorBeatmapListing InspectorBeatmapListing { get; set; }
@@ -46,6 +49,8 @@ namespace OsuAchievedOverlay.Next.Tools
             int mapsCompleted = 0;
             List<Thread> localThreads = new List<Thread>();
 
+            ConcurrentDictionary<int, BeatmapSetEntry> threadsafeBeatmapSets = new ConcurrentDictionary<int, BeatmapSetEntry>();
+
             for (int threadID = 0; threadID < threads; threadID++)
             {
                 int localThreadID = threadID;
@@ -53,7 +58,7 @@ namespace OsuAchievedOverlay.Next.Tools
                 Thread t = new Thread(new ThreadStart(()=>{
                     for (int i = 0; i < mapsPerThread; i++)
                     {
-                        bool state = ProcessBeatmap(localThreadID * mapsPerThread + i);
+                        bool state = ProcessBeatmap(ref threadsafeBeatmapSets, localThreadID * mapsPerThread + i);
                         if(state)
                             Interlocked.Increment(ref mapsCompleted);
                     }
@@ -66,21 +71,27 @@ namespace OsuAchievedOverlay.Next.Tools
                 BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (creating sets " + mapsCompleted + "/" + CurrentDatabase.Beatmaps.Count + ")');");
                 await Task.Delay(100);
             }
+
             localThreads.ForEach(t =>
             {
                 t.Join();
             });
+
+            BeatmapSets = new List<BeatmapSetEntry>(threadsafeBeatmapSets.Values);
         }
 
-        private bool ProcessBeatmap(int id){
+        private bool ProcessBeatmap(ref ConcurrentDictionary<int, BeatmapSetEntry> threadsafeBeatmapSets, int id){
             if (id >= CurrentDatabase.Beatmaps.Count)
                 return false;
 
             BeatmapEntry difficulty = CurrentDatabase.Beatmaps[id];
             BeatmapSetEntry set = null;
-            lock (BeatmapSets){
-                set = BeatmapSets.Find(a => a.BeatmapSetID == difficulty.BeatmapSetId);
-            }
+            //lock (BeatmapSetLock)
+            //{
+            //    set = BeatmapSets.Find(a => a.BeatmapSetID == difficulty.BeatmapSetId);
+            //}
+            if (threadsafeBeatmapSets.ContainsKey(difficulty.BeatmapSetId))
+                set = threadsafeBeatmapSets[difficulty.BeatmapSetId];
             if (set != null)
             {
                 set.Difficulties++;
@@ -133,10 +144,7 @@ namespace OsuAchievedOverlay.Next.Tools
                     if (tags.Length > 0)
                         foreach (string tag in tags)
                             set.SongTags.Add(tag);
-                    lock (BeatmapSets)
-                    {
-                        BeatmapSets.Add(set);
-                    }
+                    threadsafeBeatmapSets.TryAdd(set.BeatmapSetID, set);
                 }
             }
             return true;
@@ -150,6 +158,8 @@ namespace OsuAchievedOverlay.Next.Tools
                 {
                     Task.Run(async () =>
                     {
+                        Stopwatch stopwatch = Stopwatch.StartNew();
+                        BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#beatmapProcessTimeString");
                         BrowserViewModel.Instance.AttachedJavascriptWrapper.SetElementDisabled("#settingsProcessOsu", true);
                         BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#settingsProcessOsu", "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> <span id=\"settingsProcessOsuButtonProcessText\">processing</span>");
                         if (!ApiHelper.IsValidOsuInstallation(SettingsManager.Instance.Settings["misc"]["osuFolder"]))
@@ -248,6 +258,11 @@ namespace OsuAchievedOverlay.Next.Tools
                         }
                         BrowserViewModel.Instance.AttachedJavascriptWrapper.SetElementDisabled("#settingsProcessOsu", false);
                         BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#settingsProcessOsu", StringStorage.Get("Message.Osu.Process"));
+                        BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#beatmapProcessTimeString");
+                        stopwatch.Stop();
+                        TimeSpan ts = stopwatch.Elapsed;
+                        BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#beatmapProcessTimeString",string.Format("Process took {0} seconds", ""+Math.Round(ts.TotalSeconds, 2)));
+
                     });
                 });
             });

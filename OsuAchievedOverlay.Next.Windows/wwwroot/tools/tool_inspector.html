@@ -4,7 +4,7 @@
             <div id="inspectorBeatmapSetCountParent" class="col-lg-3 col-md-6 mb-3" data-toggle="tooltip" title="Beatmap Sets" hidden>
                 <a onclick="inspectorOpenBeatmapListing()" class="media bg-osu-dark z-depth-1 rounded stretched-link">
                     <i class="fas fa-cubes fa-lg pink accent-4 z-depth-1 p-4 rounded-left text-white mr-3"></i>
-                    <div class="d-flex align-items-center justify-content-center" style="background-color: rgba(0,0,0,0.2);">
+                    <div class="d-flex align-items-center justify-content-center">
                         <!-- <p class="text-uppercase text-muted mb-1"><small>sets</small></p> -->
                         <h5 id="inspectorBeatmapSetCount" class="font-weight-bold mb-0">-</h5>
                     </div>
@@ -77,6 +77,9 @@
                 </div>
             </div>
             <button id="settingsProcessOsu" class="btn btn-success btn-sm btn-block" onclick="cefOsuApp.buttonProcessOsu();">Process osu</button>
+            <div class="text-right">
+                <small id="beatmapProcessTimeString" hidden>Process took 5 seconds</small>
+            </div>
         </div>
     </div>
 </div>
@@ -184,11 +187,17 @@
                     </div>
                     <div class="modal-body bg-osu-regular">
                         <h4>pp for fc</h4>
-                        <div class="row text-center" id="beatmapViewerPP">
-                            <div class="col-lg-4">95%: <span id="beatmapViewerPP95">0pp</span></div>
-                            <div class="col-lg-4">98%: <span id="beatmapViewerPP98">0pp</span></div>
-                            <div class="col-lg-4">99%: <span id="beatmapViewerPP99">0pp</span></div>
-                            <div class="col-lg-4">100%: <span id="beatmapViewerPP100">0pp</span></div>
+                        <div id="beatmapViewerPP">
+                            <table class="table table-borderless table-sm text-white">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:25%;">95% <span data-toggle="tooltip" title="Values can be incorrect" class="badge badge-pill badge-dark" id="beatmapViewerPP95">0pp</span></td>
+                                        <td style="width:25%;">98% <span data-toggle="tooltip" title="Values can be incorrect" class="badge badge-pill badge-dark" id="beatmapViewerPP98">0pp</span></td>
+                                        <td style="width:25%;">99% <span data-toggle="tooltip" title="Values can be incorrect" class="badge badge-pill badge-dark" id="beatmapViewerPP99">0pp</span></td>
+                                        <td style="width:25%;">100% <span data-toggle="tooltip" title="Values can be incorrect" class="badge badge-pill badge-dark" id="beatmapViewerPP100">0pp</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="text-center" id="beatmapViewerAPIError">
                             <p>Could not reach osu! api for PP calculations</p>
