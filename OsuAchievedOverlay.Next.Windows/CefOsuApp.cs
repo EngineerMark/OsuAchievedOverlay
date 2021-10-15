@@ -55,6 +55,7 @@ namespace OsuAchievedOverlay.Next
             OsuPlay simulatedPlay = new OsuPlay();
             simulatedPlay.Mods = (OsuMods)mods;
             simulatedPlay.Mode = (OsuMode)mode;
+            simulatedPlay.MaxCombo = (double)(map.MaxCombo ?? 0);
             OsuPerformance pp = new OsuPerformance(simulatedPlay, map);
             AccuracyDistribution acc95 = new AccuracyDistribution((int)(local_map.CountHitCircles+ local_map.CountSliders+ local_map.CountSpinners), 0, 0.95f);
             AccuracyDistribution acc98 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 0.98f);
