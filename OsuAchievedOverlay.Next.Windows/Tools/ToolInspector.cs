@@ -77,7 +77,10 @@ namespace OsuAchievedOverlay.Next.Tools
                 return false;
 
             BeatmapEntry difficulty = CurrentDatabase.Beatmaps[id];
-            BeatmapSetEntry set = BeatmapSets.Find(a => a.BeatmapSetID == difficulty.BeatmapSetId);
+            BeatmapSetEntry set = null;
+            lock (BeatmapSets){
+                set = BeatmapSets.Find(a => a.BeatmapSetID == difficulty.BeatmapSetId);
+            }
             if (set != null)
             {
                 set.Difficulties++;
