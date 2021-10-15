@@ -42,7 +42,7 @@ namespace OsuAchievedOverlay.Next.Tools
             //}
 
             int threads = 5;
-            int mapsPerThread = (int)System.Math.Round((double)CurrentDatabase.Beatmaps.Count / threads);
+            int mapsPerThread = (int)System.Math.Ceiling((double)CurrentDatabase.Beatmaps.Count / threads);
             int mapsCompleted = 0;
             List<Thread> localThreads = new List<Thread>();
 
