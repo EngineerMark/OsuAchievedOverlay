@@ -61,9 +61,13 @@ namespace OsuAchievedOverlay.Next
             AccuracyDistribution acc99 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 0.99f);
             AccuracyDistribution acc100 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 1f);
 
+            simulatedPlay.Score = 995000; // mania fix?
             double pp95 = pp.CalculatePerformance((double)(map.MaxCombo??0), acc95.Hits50, acc95.Hits100, acc95.Hits300, acc95.Misses);
+            simulatedPlay.Score = 998000; // mania fix?
             double pp98 = pp.CalculatePerformance((double)(map.MaxCombo ?? 0), acc98.Hits50, acc98.Hits100, acc98.Hits300, acc98.Misses);
+            simulatedPlay.Score = 999000; // mania fix?
             double pp99 = pp.CalculatePerformance((double)(map.MaxCombo ?? 0), acc99.Hits50, acc99.Hits100, acc99.Hits300, acc99.Misses);
+            simulatedPlay.Score = 1000000; // mania fix?
             double pp100 = pp.CalculatePerformance((double)(map.MaxCombo ?? 0), acc100.Hits50, acc100.Hits100, acc100.Hits300, acc100.Misses);
 
             Tuple<OsuBeatmap, double, double, double, double> data = new Tuple<OsuBeatmap, double, double, double, double>(map, pp95, pp98, pp99, pp100);
