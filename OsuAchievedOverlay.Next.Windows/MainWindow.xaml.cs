@@ -102,7 +102,9 @@ namespace OsuAchievedOverlay.Next
         public void InitializeChromium()
         {
             CefSettings settings = new CefSettings();
+            #if !DEBUG
             settings.BrowserSubprocessPath = Path.Combine(FileManager.GetExecutableDirectory(), "cef", "CefSharp.BrowserSubprocess.exe");
+            #endif
 
             string start = string.Format(@"{0}\wwwroot\launcher.html", FileManager.GetExecutableDirectory());
 

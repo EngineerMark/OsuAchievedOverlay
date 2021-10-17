@@ -72,7 +72,9 @@ namespace OsuAchievedOverlay.Next.Managers
                 SettingsManager.Instance.Settings["api"]["user"] = username;
                 SettingsManager.Instance.SettingsSave();
                 BrowserViewModel.Instance.SendNotification(NotificationType.Success, StringStorage.Get("Message.SettingsSaved"));
-                StartupFinished?.Invoke(null, null);
+                //StartupFinished?.Invoke(null, null);
+                System.Diagnostics.Process.Start(FileManager.GetExecutablePath());
+                Environment.Exit(0);
             }
         }
     }
