@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CefSharp.WinForms;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -21,6 +22,7 @@ namespace OsuAchievedOverlay.Next
             if (!Debugger.IsAttached)
                 Debugger.Launch();
 #endif
+
             mainWin = new MainWindow(e);
             mainWin.Show();
         }

@@ -491,6 +491,8 @@ function beatmapViewerApplyDiff(id){
     }
     $('#beatmapListingViewerTitle').html(set.Artist+" - "+set.Title+" ["+set.Beatmaps[id].Version+"]");
 
+    $('#beatmapListingViewerCreator').html(set.Creator);
+
     $('#beatmapListingViewerStatCSLabel').html(set.Beatmaps[id].CircleSize);
     $('#beatmapListingViewerStatCS').css('width', (set.Beatmaps[id].CircleSize*10)+'%');
 

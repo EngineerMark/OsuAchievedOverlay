@@ -878,6 +878,29 @@
     <Message Text="ILMerge @(MergeAsm) -&gt; $(MergedAssembly)" Importance="high" />
     <ILMerge InputAssemblies="@(MergeAsm)" OutputFile="$(MergedAssembly)" TargetKind="SameAsPrimaryAssembly" />
     <ItemGroup>
+      <FilesToMove Include="$(OutputPath)libcef.dll" />
+      <FilesToMove Include="$(OutputPath)libEGL.dll" />
+      <FilesToMove Include="$(OutputPath)libGLESv2.dll" />
+      <FilesToMove Include="$(OutputPath)resources.pak" />
+      <FilesToMove Include="$(OutputPath)snapshot_blob.bin" />
+      <FilesToMove Include="$(OutputPath)v8_context_snapshot.bin" />
+      <FilesToMove Include="$(OutputPath)vk_swiftshader.dll" />
+      <FilesToMove Include="$(OutputPath)vk_swiftshader_icd.json" />
+      <FilesToMove Include="$(OutputPath)vulkan-1.dll" />
+      <FilesToMove Include="$(OutputPath)CefSharp.BrowserSubprocess.Core.dll" />
+      <FilesToMove Include="$(OutputPath)CefSharp.BrowserSubprocess.exe" />
+      <FilesToMove Include="$(OutputPath)CefSharp.Core.dll" />
+      <FilesToMove Include="$(OutputPath)CefSharp.Core.Runtime.dll" />
+      <FilesToMove Include="$(OutputPath)CefSharp.dll" />
+      <FilesToMove Include="$(OutputPath)CefSharp.WinForms.dll" />
+      <FilesToMove Include="$(OutputPath)chrome_100_percent.pak" />
+      <FilesToMove Include="$(OutputPath)chrome_200_percent.pak" />
+      <FilesToMove Include="$(OutputPath)chrome_elf.dll" />
+      <FilesToMove Include="$(OutputPath)d3dcompiler_47.dll" />
+      <FilesToMove Include="$(OutputPath)icudtl.dat" />
+    </ItemGroup>
+    <Move SourceFiles="@(FilesToMove)" DestinationFolder="$(OutputPath)cef" />
+    <ItemGroup>
       <FilesToDelete Include="$(OutputPath)osu-database-reader.dll" />
       <FilesToDelete Include="$(OutputPath)Newtonsoft.Json.dll" />
       <FilesToDelete Include="$(OutputPath)Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
@@ -889,6 +912,26 @@
       <FilesToDelete Include="$(OutputPath)HtmlAgilityPack.dll" />
       <FilesToDelete Include="$(OutputPath)osu.Shared.dll" />
       <FilesToDelete Include="$(OutputPath)MarkdownSharp.dll" />
+      <FilesToDelete Include="$(OutputPath)libcef.dll" />
+      <FilesToDelete Include="$(OutputPath)libEGL.dll" />
+      <FilesToDelete Include="$(OutputPath)libGLESv2.dll" />
+      <FilesToDelete Include="$(OutputPath)resources.pak" />
+      <FilesToDelete Include="$(OutputPath)snapshot_blob.bin" />
+      <FilesToDelete Include="$(OutputPath)v8_context_snapshot.bin" />
+      <FilesToDelete Include="$(OutputPath)vk_swiftshader.dll" />
+      <FilesToDelete Include="$(OutputPath)vk_swiftshader_icd.json" />
+      <FilesToDelete Include="$(OutputPath)vulkan-1.dll" />
+      <FilesToDelete Include="$(OutputPath)CefSharp.BrowserSubprocess.Core.dll" />
+      <FilesToDelete Include="$(OutputPath)CefSharp.BrowserSubprocess.exe" />
+      <FilesToDelete Include="$(OutputPath)CefSharp.Core.dll" />
+      <FilesToDelete Include="$(OutputPath)CefSharp.Core.Runtime.dll" />
+      <FilesToDelete Include="$(OutputPath)CefSharp.dll" />
+      <FilesToDelete Include="$(OutputPath)CefSharp.WinForms.dll" />
+      <FilesToDelete Include="$(OutputPath)chrome_100_percent.pak" />
+      <FilesToDelete Include="$(OutputPath)chrome_200_percent.pak" />
+      <FilesToDelete Include="$(OutputPath)chrome_elf.dll" />
+      <FilesToDelete Include="$(OutputPath)d3dcompiler_47.dll" />
+      <FilesToDelete Include="$(OutputPath)icudtl.dat" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
   </Target>
@@ -906,7 +949,9 @@ Echo zipping web data...
 7z a -tzip "$(TargetDir)webdata.pak" "$(TargetDir)wwwroot\*"
 echo Web data built!
 
-rd /Q /S "$(TargetDir)wwwroot"</PostBuildEvent>
+rd /Q /S "$(TargetDir)wwwroot"
+
+if not exist "$(TargetDir)cef" mkdir "$(TargetDir)cef"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\CefSharp.Common.94.4.50\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.94.4.50\build\CefSharp.Common.targets')" />
 </Project>
