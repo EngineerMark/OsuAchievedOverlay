@@ -55,7 +55,7 @@ namespace OsuAchievedOverlay.Next.Tools
                 fs.Close();
                 File.WriteAllText(APILocation, JsonConvert.SerializeObject(apiDataList));
             }
-            catch(Exception e){
+            catch(Exception){
                 BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.SomethingWrong"));
             }
         }

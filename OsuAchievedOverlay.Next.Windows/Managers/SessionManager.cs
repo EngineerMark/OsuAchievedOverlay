@@ -53,14 +53,15 @@ namespace OsuAchievedOverlay.Next.Managers
             }
         }
 
-        public void StartProgressHandler(){
+        public void StartProgressHandler()
+        {
             StopProgressHandler();
             ProgressThread = new ExtendedThread(() =>
             {
                 float perc = 0;
                 float seconds_left = 0;
 
-                if(nextIteration!=-1 && lastIteration!=-1)
+                if (nextIteration != -1 && lastIteration != -1)
                 {
                     long currentTime = DateTimeOffset.Now.ToUnixTimeSeconds();
 
@@ -78,20 +79,21 @@ namespace OsuAchievedOverlay.Next.Managers
                     else
                         perc = (float)normalizedCurrent / (float)normalizedTime;
 
-                    seconds_left = normalizedCurrent+1;
+                    seconds_left = normalizedCurrent + 1;
                 }
 
-                int actualPerc = 100-Convert.ToInt32(Math.Round(perc * 100));
+                int actualPerc = 100 - Convert.ToInt32(Math.Round(perc * 100));
 
                 actualPerc = Math.Min(100, Math.Max(0, actualPerc));
 
                 BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#progressbarSessionTimer').css('width', '" + actualPerc + "%');");
-                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#sessionProgressTimeText').html('"+ seconds_left + " seconds');");
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#sessionProgressTimeText').html('" + seconds_left + " seconds');");
             }, 1);
             ProgressThread.Start();
         }
 
-        public void StopProgressHandler(){
+        public void StopProgressHandler()
+        {
             ProgressThread?.Join();
         }
 
@@ -195,6 +197,11 @@ namespace OsuAchievedOverlay.Next.Managers
                 StopProgressHandler();
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#sessionProgressTime");
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionProgressReadonly");
+
+                string startDate = DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionDate).ToString("MMMM dd yyyy HH:mm:ss");
+                string endDate = DateTimeOffset.FromUnixTimeSeconds(CurrentSession.SessionEndDate).ToString("MMMM dd yyyy HH:mm:ss");
+
+                BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#sessionProgressReadonlyText", startDate + " to " + endDate);
             }
             else
             {
