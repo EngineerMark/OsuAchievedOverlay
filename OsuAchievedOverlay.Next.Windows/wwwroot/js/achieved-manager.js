@@ -46,6 +46,7 @@ function appReady() {
         subtree: true
     });
 
+    populateToolUserGraphs();
 
     $("[data-addon]").hide();
     $("[data-type=\"addonLink\"]").click(function (e) {
@@ -54,6 +55,8 @@ function appReady() {
         $("[data-addon=\"" + name + "\"]").show();
         $("#tools-modal").modal("toggle");
     });
+
+    $('#playerViewer').hide();
 }
 
 function addApiField(data, hash) {
@@ -849,3 +852,137 @@ $('img').on('dragstart', function (event) { event.preventDefault(); });
         });
     };
 }));
+
+var toolUsersData = [];
+toolUsersData["playcountChart"] = null;
+toolUsersData["replaycountChart"] = null;
+
+function populateToolUserGraphs() {
+    var ctxL = document.getElementById("playerViewerChartPlaycount").getContext('2d');
+    toolUsersData["playcountChart"] = new Chart(ctxL, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: "Playcount",
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, .2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, .7)',
+                    ],
+                    borderWidth: 2
+                }
+            ]
+        }
+    });
+
+    ctxL = document.getElementById("playerViewerChartReplays").getContext('2d');
+    toolUsersData["replaycountChart"] = new Chart(ctxL, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: "Replaycount",
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, .2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, .7)',
+                    ],
+                    borderWidth: 2
+                }
+            ]
+        }
+    });
+}
+
+function toolUsersRequestSearchResults() {
+    $('#playerViewer').hide();
+    var query = $('#playerSearchInput').val();
+
+    var user = cefOsuApp.toolUsersSearch(query);
+    if (user == "null") {
+        toastr.error('This player was not found', '');
+    } else {
+        var deserializedUser = JSON.parse(user);
+        var profile = cefOsuApp.getOsuUserProfile(deserializedUser["user_id"]);
+        if (profile == "null") {
+            toastr.error('This player was not found', '');
+        } else {
+            //var header = cefOsuApp.osuUserGetHeader(deserializedUser["user_id"]);
+            var deserializedProfile = JSON.parse(profile);
+
+            // header image
+            $('#playerViewerHeaderImage').attr('src', deserializedProfile["cover_url"]);
+            $('#playerViewerHeaderLink').click(function () {
+                cefOsuApp.openUrl('https://osu.ppy.sh/users/' + deserializedUser["user_id"]);
+            });
+
+            // username
+            $('#playerViewerName').text(deserializedUser["username"]);
+
+            // avatar
+            $('#playerViewerAvatar').attr("src", "https://a.ppy.sh/" + deserializedUser["user_id"]);
+
+            // player groups
+            $('#playerViewerGroups').html('');
+            for (var i = 0; i < deserializedProfile["groups"].length; i++) {
+                $('#playerViewerGroups').append('<span data-toggle="tooltip" title="' + deserializedProfile["groups"][i]["name"]+'" class="badge" style="background-color:' + deserializedProfile["groups"][i]["colour"]+';">' + deserializedProfile["groups"][i]["short_name"]+'</span> ');
+            }
+
+            // country
+            let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+            var countryName = regionNames.of(deserializedUser["country"]);
+            $('#playerViewerCountry').html('<i data-toggle=\"tooltip\" title=\"' + countryName + '\" class=\"material-tooltip-main twf twf-s twf-' + deserializedUser["country"].toLowerCase() + '"></i> ' + countryName);
+
+            // playcount data
+            var playcountData = deserializedProfile["monthly_playcounts"];
+
+            toolUsersData["playcountChart"].data.labels = [];
+            toolUsersData["playcountChart"].data.datasets[0].data = [];
+
+            // replaycount data
+            var replaycountData = deserializedProfile["replays_watched_counts"];
+
+            toolUsersData["replaycountChart"].data.labels = [];
+            toolUsersData["replaycountChart"].data.datasets[0].data = [];
+
+            // populate playcount graph
+            playcountData = populateEmptyness(playcountData);
+            for (var i = 0; i < playcountData.length; i++) {
+                var date = playcountData[i]["start_date"];
+                var value = playcountData[i]["count"];
+
+                toolUsersData["playcountChart"].data.labels.push(date);
+                toolUsersData["playcountChart"].data.datasets[0].data.push(value);
+            }
+
+            toolUsersData["playcountChart"].update();
+
+            // populate replaycount graph
+            replaycountData = populateEmptyness(replaycountData);
+            for (var i = 0; i < playcountData.length; i++) {
+                var date = replaycountData[i]["start_date"];
+                var value = replaycountData[i]["count"];
+
+                toolUsersData["replaycountChart"].data.labels.push(date);
+                toolUsersData["replaycountChart"].data.datasets[0].data.push(value);
+            }
+
+            toolUsersData["replaycountChart"].update();
+
+
+            // rebuild tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // lets show it
+            $('#playerViewer').show();
+        }
+    }
+    //console.log(user);
+}

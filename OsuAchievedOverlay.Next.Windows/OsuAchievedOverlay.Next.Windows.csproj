@@ -168,6 +168,7 @@
     <Compile Include="StringStorage.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="Tools\ToolLocalApi.cs" />
+    <Compile Include="Tools\ToolUsers.cs" />
     <Compile Include="Version.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -261,6 +262,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="wwwroot\tools\tool_localapi.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\tools\tool_users.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="wwwroot\twemoji-flags\.gitignore" />

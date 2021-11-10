@@ -88,6 +88,7 @@ namespace OsuAchievedOverlay.Next.Managers
                     BrowserViewModel.Instance.SendNotification(NotificationType.Danger, String.Format(StringStorage.Get("Message.MissingTabContent"), name));
                 }
             });
+            Thread.Sleep(1000);
             PopulateAddons();
         }
 
@@ -136,7 +137,7 @@ namespace OsuAchievedOverlay.Next.Managers
         private void Proceed(){
             //BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_default_view\").show();");
             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$(\"#tab_session_loader_view\").show();");
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("appReady();");
             Thread.Sleep(100);
             PopulateSettings();

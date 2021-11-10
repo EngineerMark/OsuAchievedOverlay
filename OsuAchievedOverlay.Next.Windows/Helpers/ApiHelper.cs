@@ -72,6 +72,12 @@ namespace OsuAchievedOverlay.Next.Helpers
 
         public static string GetOsuUserHeaderUrl(string profileurl)
         {
+            ApiOsuProfile cv = GetOsuUserProfile(profileurl);
+            return cv!=null?cv.CoverURL:string.Empty;
+        }
+
+        public static ApiOsuProfile GetOsuUserProfile(string profileurl)
+        {
             string data = GetData(profileurl);
 
             if (data.Length > 30)
@@ -82,16 +88,80 @@ namespace OsuAchievedOverlay.Next.Helpers
                 string jsonData = htmlDoc.DocumentNode.Descendants("script").FirstOrDefault(a => a.Id == "json-user").InnerText;
 
                 ApiOsuProfile cv = JsonConvert.DeserializeObject<ApiOsuProfile>(jsonData);
-
-                return cv.CoverURL;
+                return cv;
             }
-            return string.Empty;
+            return null;
         }
     }
 
-    public struct ApiOsuProfile
+    public class ApiOsuProfile
     {
         [JsonProperty("cover_url")]
         public string CoverURL { get; set; }
+
+        [JsonProperty("is_admin")]
+        public bool IsAdmin { get; set; }
+
+        [JsonProperty("is_bng")]
+        public bool IsBNG { get; set; }
+
+        [JsonProperty("is_full_bn")]
+        public bool IsFullBN { get; set; }
+
+        [JsonProperty("is_gmt")]
+        public bool IsGMT { get; set; }
+
+        [JsonProperty("is_limited_bn")]
+        public bool IsLimitedBN { get; set; }
+
+        [JsonProperty("is_moderator")]
+        public bool IsModerator { get; set; }
+
+        [JsonProperty("is_nat")]
+        public bool IsNAT { get; set; }
+
+        [JsonProperty("is_restricted")]
+        public bool IsRestricted { get; set; }
+
+        [JsonProperty("is_silenced")]
+        public bool IsSilenced { get; set; }
+
+        [JsonProperty("groups")]
+        public List<ApiOsuProfileGroup> Groups { get; set; }
+
+        [JsonProperty("monthly_playcounts")]
+        public List<ApiOsuMonthlyCount> PlaycountData { get; set; }
+
+        [JsonProperty("replays_watched_counts")]
+        public List<ApiOsuMonthlyCount> ReplaycountData { get; set; }
+    }
+
+    public class ApiOsuMonthlyCount {
+        [JsonProperty("start_date")]
+        public string Date { get; set; }
+
+        [JsonProperty("count")]
+        public int Value { get; set; }
+    }
+
+    public class ApiOsuProfileGroup
+    {
+        [JsonProperty("colour")]
+        public string Color { get; set; }
+
+        [JsonProperty("has_listing")]
+        public bool HasListing { get; set; }
+
+        [JsonProperty("has_playmodes")]
+        public bool HasPlaymodes { get; set; }
+
+        [JsonProperty("id")]
+        public bool ID { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("short_name")]
+        public string ShortName { get; set; }
     }
 }

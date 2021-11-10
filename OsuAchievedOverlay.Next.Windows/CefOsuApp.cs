@@ -42,13 +42,16 @@ namespace OsuAchievedOverlay.Next
 
         public static Window GetWindow() => _internalWindow;
 
-        public string requestBeatmapApiData(string hash, int mods, int mode){
-            BeatmapEntry local_map = ToolInspector.Instance.CurrentDatabase.Beatmaps.Find(x=>x.BeatmapChecksum==hash);
-            if(local_map == null){
+        public string requestBeatmapApiData(string hash, int mods, int mode)
+        {
+            BeatmapEntry local_map = ToolInspector.Instance.CurrentDatabase.Beatmaps.Find(x => x.BeatmapChecksum == hash);
+            if (local_map == null)
+            {
                 return null;
             }
             OsuBeatmap map = OsuApi.GetBeatmap(local_map.BeatmapId.ToString(), (OsuMods)mods, (OsuMode)mode);
-            if(map==null){
+            if (map == null)
+            {
                 return null;
             }
             map.MapStats.Beatmap = null; // loop fix
@@ -57,13 +60,13 @@ namespace OsuAchievedOverlay.Next
             simulatedPlay.Mode = (OsuMode)mode;
             simulatedPlay.MaxCombo = (double)(map.MaxCombo ?? 0);
             OsuPerformance pp = new OsuPerformance(simulatedPlay, map);
-            AccuracyDistribution acc95 = new AccuracyDistribution((int)(local_map.CountHitCircles+ local_map.CountSliders+ local_map.CountSpinners), 0, 0.95f);
+            AccuracyDistribution acc95 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 0.95f);
             AccuracyDistribution acc98 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 0.98f);
             AccuracyDistribution acc99 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 0.99f);
             AccuracyDistribution acc100 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 1f);
 
             simulatedPlay.Score = 995000; // mania fix?
-            double pp95 = pp.CalculatePerformance((double)(map.MaxCombo??0), acc95.Hits50, acc95.Hits100, acc95.Hits300, acc95.Misses);
+            double pp95 = pp.CalculatePerformance((double)(map.MaxCombo ?? 0), acc95.Hits50, acc95.Hits100, acc95.Hits300, acc95.Misses);
             simulatedPlay.Score = 998000; // mania fix?
             double pp98 = pp.CalculatePerformance((double)(map.MaxCombo ?? 0), acc98.Hits50, acc98.Hits100, acc98.Hits300, acc98.Misses);
             simulatedPlay.Score = 999000; // mania fix?
@@ -77,23 +80,28 @@ namespace OsuAchievedOverlay.Next
             return JsonConvert.SerializeObject(data);
         }
 
-        public void beatmapBrowserSetPage(int index){
+        public void beatmapBrowserSetPage(int index)
+        {
             ToolInspector.Instance.InspectorBeatmapListing.LoadPage(index);
         }
 
-        public void beatmapBrowserSearch(string query){
+        public void beatmapBrowserSearch(string query)
+        {
             ToolInspector.Instance.InspectorBeatmapListing.ApplySearchQuery(Encoding.UTF8.GetString(Convert.FromBase64String(query)));
         }
 
-        public void requestBeatmapScores(string hash){
+        public void requestBeatmapScores(string hash)
+        {
             string encoded = "";
-            if(ToolInspector.Instance.CurrentScores.Beatmaps.ContainsKey(hash)){
+            if (ToolInspector.Instance.CurrentScores.Beatmaps.ContainsKey(hash))
+            {
                 encoded = JsonConvert.SerializeObject(ToolInspector.Instance.CurrentScores.Beatmaps[hash]);
             }
-            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("beatmapViewerPopulateScores('"+ encoded +"');");
+            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("beatmapViewerPopulateScores('" + encoded + "');");
         }
 
-        public void updateHandlerVisit(){
+        public void updateHandlerVisit()
+        {
             System.Diagnostics.Process.Start(UpdateManager.Instance.AvailableUpdate.HTMLURL);
         }
 
@@ -120,18 +128,21 @@ namespace OsuAchievedOverlay.Next
                 BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.LoadSessionFail"));
         }
 
-        public void sessionHandlerLoadFromFile(){
+        public void sessionHandlerLoadFromFile()
+        {
             BrowserViewModel.Instance.AttachedJavascriptWrapper.Modal.Hide("#modalLoadSession");
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt"
             };
-            if (openFileDialog.ShowDialog()==true){
+            if (openFileDialog.ShowDialog() == true)
+            {
                 SessionLoadFromFile(openFileDialog.FileName);
             }
         }
 
-        private void SessionLoadFromFile(string path){
+        private void SessionLoadFromFile(string path)
+        {
             string data;
             try
             {
@@ -167,7 +178,8 @@ namespace OsuAchievedOverlay.Next
 
         public void sessionHandlerSave(bool _readonly = false)
         {
-            if(SessionManager.Instance!=null && SessionManager.Instance.CurrentSession!=null){
+            if (SessionManager.Instance != null && SessionManager.Instance.CurrentSession != null)
+            {
                 Session clonedSession = (Session)SessionManager.Instance.CurrentSession.Clone();
                 clonedSession.ReadOnly = _readonly;
                 string json = clonedSession.ConvertToJson();
@@ -183,7 +195,8 @@ namespace OsuAchievedOverlay.Next
                     SessionManager.Instance.AddFile(saveFileDialog.FileName);
                 }
             }
-            else{
+            else
+            {
                 BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.SessionSaveFail"));
             }
         }
@@ -193,7 +206,7 @@ namespace OsuAchievedOverlay.Next
             _internalBrowser.ShowDevTools();
         }
 
-        public void OpenUrl(string url)
+        public void openUrl(string url)
         {
             System.Diagnostics.Process.Start(url);
         }
@@ -208,8 +221,9 @@ namespace OsuAchievedOverlay.Next
                     Title = StringStorage.Get("Title.OsuSelector")
                 };
                 CommonFileDialogResult result = dialog.ShowDialog();
-                if(result==CommonFileDialogResult.Ok){
-                    JsExecuter.GetBrowser().ExecuteScriptAsyncWhenPageLoaded("$('#settingsInputOsuDir').val('"+ HttpUtility.JavaScriptStringEncode(dialog.FileName) + "');");
+                if (result == CommonFileDialogResult.Ok)
+                {
+                    JsExecuter.GetBrowser().ExecuteScriptAsyncWhenPageLoaded("$('#settingsInputOsuDir').val('" + HttpUtility.JavaScriptStringEncode(dialog.FileName) + "');");
                     JsExecuter.AddClass("#settingsInputOsuDirLabel", "active");
                 }
             });
@@ -228,6 +242,21 @@ namespace OsuAchievedOverlay.Next
         public void buttonProcessOsu()
         {
             ToolInspector.Instance.ProcessOsu(_internalWindow.Dispatcher);
+        }
+
+        public string toolUsersSearch(string input)
+        {
+            return JsonConvert.SerializeObject(ToolUsers.Instance.FindUser(input));
+        }
+
+        public string getOsuUserProfile(int userid)
+        {
+            return JsonConvert.SerializeObject(ApiHelper.GetOsuUserProfile("https://osu.ppy.sh/users/" + userid));
+        }
+
+        public string osuUserGetHeader(int userid)
+        {
+            return ApiHelper.GetOsuUserHeaderUrl("https://osu.ppy.sh/users/" + userid);
         }
     }
 }
