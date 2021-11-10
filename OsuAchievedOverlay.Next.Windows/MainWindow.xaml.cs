@@ -104,7 +104,9 @@ namespace OsuAchievedOverlay.Next
             CefSettings settings = new CefSettings();
             #if !DEBUG
             settings.BrowserSubprocessPath = Path.Combine(FileManager.GetExecutableDirectory(), "cef", "CefSharp.BrowserSubprocess.exe");
-            #endif
+#endif
+
+            settings.CefCommandLineArgs.Add("allow-universal-access-from-files", "1");
 
             string start = string.Format(@"{0}\wwwroot\launcher.html", FileManager.GetExecutableDirectory());
 
@@ -116,8 +118,8 @@ namespace OsuAchievedOverlay.Next
             BrowserWrapper.Child = chromiumBrowser;
 
             BrowserSettings browserSettings = new BrowserSettings();
-            browserSettings.FileAccessFromFileUrls = CefState.Enabled;
-            browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
+            //browserSettings.FileAccessFromFileUrls = CefState.Enabled;
+            //browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
             chromiumBrowser.BrowserSettings = browserSettings;
         }
     }
