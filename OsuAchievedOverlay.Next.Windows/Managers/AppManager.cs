@@ -179,19 +179,25 @@ namespace OsuAchievedOverlay.Next.Managers
                 "$('#settingsVisualSelectList').val(values.split(','));";
             BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded(jsString);
 
-            if(SettingsManager.Instance.Settings["display"]["nsfwMode"]=="true"){
-                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsNsfwMode').click();");
+
+            if (SettingsManager.Instance.Settings["display"]["showTimer"] == "true")
+            {
+                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsTimerDisplay').click();");
             }
 
-            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsThemeSelectList').empty();");
-            foreach (Theme theme in ThemeManager.Instance.Themes)
-            {
-                string option = "<div class='form-check'>" +
-                    "<input type='radio' class='form-check-input' theme_name='"+theme.InternalName+"' id='themeSelect_" + theme.InternalName + "' name='groupRadioThemes' "+(SettingsManager.Instance.Settings["display"]["theme"]==theme.InternalName ? "checked" : "")+">" +
-                    "<label class='form-check-label' for='themeSelect_" + theme.InternalName + "'>" + theme.PrettyName + "</label>" +
-                "</div>";
-                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsThemeSelectList').append('" + HttpUtility.JavaScriptStringEncode(option) + "');");
-            }
+            //if(SettingsManager.Instance.Settings["display"]["nsfwMode"]=="true"){
+            //    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsNsfwMode').click();");
+            //}
+
+            //BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsThemeSelectList').empty();");
+            //foreach (Theme theme in ThemeManager.Instance.Themes)
+            //{
+            //    string option = "<div class='form-check'>" +
+            //        "<input type='radio' class='form-check-input' theme_name='"+theme.InternalName+"' id='themeSelect_" + theme.InternalName + "' name='groupRadioThemes' "+(SettingsManager.Instance.Settings["display"]["theme"]==theme.InternalName ? "checked" : "")+">" +
+            //        "<label class='form-check-label' for='themeSelect_" + theme.InternalName + "'>" + theme.PrettyName + "</label>" +
+            //    "</div>";
+            //    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsThemeSelectList').append('" + HttpUtility.JavaScriptStringEncode(option) + "');");
+            //}
 
             SettingsManager.Instance.SettingsApply();
         }

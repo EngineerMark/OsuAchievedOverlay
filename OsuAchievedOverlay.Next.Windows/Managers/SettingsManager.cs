@@ -42,7 +42,8 @@ namespace OsuAchievedOverlay.Next.Managers
                     ["display"] = {
                         ["roundingValue"] = "1",
                         ["nsfwMode"] = "false",
-                        ["theme"] = "theme_Default"
+                        ["theme"] = "theme_Default",
+                        ["showTimer"] = "true"
                     },
                     ["showingItems"] = {
                         ["ranks"] = "true",
@@ -201,19 +202,21 @@ namespace OsuAchievedOverlay.Next.Managers
 
                     if (processSettings)
                     {
-                        bool state = await BrowserViewModel.Instance.AttachedJavascriptWrapper.GetProp("#settingsNsfwMode", "checked");
-                        SettingsManager.Instance.Settings["display"]["nsfwMode"] = state ? "true" : "false";
+                        //bool state = await BrowserViewModel.Instance.AttachedJavascriptWrapper.GetProp("#settingsNsfwMode", "checked");
+                        //SettingsManager.Instance.Settings["display"]["nsfwMode"] = state ? "true" : "false";
 
-                        //string task = "$('" + obj + "').prop('" + prop + "')";
-                        JavascriptResponse res = await BrowserViewModel.Instance.AttachedBrowser.EvaluateScriptAsync("$('input[name=groupRadioThemes]:checked').attr('theme_name');");
-                        string usedTheme = (string)res.Result;
+                        ////string task = "$('" + obj + "').prop('" + prop + "')";
+                        //JavascriptResponse res = await BrowserViewModel.Instance.AttachedBrowser.EvaluateScriptAsync("$('input[name=groupRadioThemes]:checked').attr('theme_name');");
+                        //string usedTheme = (string)res.Result;
 
-                        Theme theme = ThemeManager.Instance.GetThemeFromInternalName(usedTheme);
-                        if(theme != null){
-                            SettingsManager.Instance.Settings["display"]["theme"] = usedTheme;
-                        }else{
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.InvalidTheme"));
-                        }
+                        //Theme theme = ThemeManager.Instance.GetThemeFromInternalName(usedTheme);
+                        //if(theme != null){
+                        //    SettingsManager.Instance.Settings["display"]["theme"] = usedTheme;
+                        //}else{
+                        //    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.InvalidTheme"));
+                        //}
+                        bool state = await BrowserViewModel.Instance.AttachedJavascriptWrapper.GetProp("#settingsTimerDisplay", "checked");
+                        SettingsManager.Instance.Settings["display"]["showTimer"] = state ? "true" : "false";
                     }
 
                     if (processSettings)
@@ -285,8 +288,15 @@ namespace OsuAchievedOverlay.Next.Managers
                 //BrowserViewModel.Instance.AttachedJavascriptWrapper.Checkbox.SetChecked("#settingsInputDisplay" + (key.FirstCharToUpper()) + "", keyData.Value == "true");
             }
 
-            if(Settings["display"]["nsfwMode"]=="true")
-                ThemeManager.Instance.ApplyTheme(ThemeManager.Instance.GetThemeFromInternalName(Settings["display"]["theme"]));
+            //if(Settings["display"]["nsfwMode"]=="true")
+            //    ThemeManager.Instance.ApplyTheme(ThemeManager.Instance.GetThemeFromInternalName(Settings["display"]["theme"]));
+
+            if (Settings["display"]["showTimer"] == "true")
+            {
+                BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionProgressTime");
+            }else{
+                BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#sessionProgressTime");
+            }
 
             //JavascriptResponse res = await BrowserViewModel.Instance.AttachedBrowser.EvaluateScriptAsync("$('" + obj + "').val()");
             //return res.Result.ToString();
