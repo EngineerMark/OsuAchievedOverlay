@@ -55,6 +55,8 @@ namespace OsuAchievedOverlay.Next.Managers
                         ["playtime"] = "true",
                         ["accuracy"] = "true",
                         ["performance"] = "true",
+                        ["clears"] = "true",
+                        ["totalhits"] = "false",
                         ["300x"] = "false",
                         ["100x"] = "false",
                         ["50x"] = "false",

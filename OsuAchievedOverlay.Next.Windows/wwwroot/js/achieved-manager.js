@@ -629,6 +629,25 @@ function ApplySession(session, rounding){
     }
     differencePlayTime = Math.round(differencePlayTime);
 
+    var currentClears = session["SessionDataCurrent"]["DataRankSSH"] +
+        session["SessionDataCurrent"]["DataRankSH"] +
+        session["SessionDataCurrent"]["DataRankSS"] +
+        session["SessionDataCurrent"]["DataRankS"] +
+        session["SessionDataCurrent"]["DataRankA"];
+    var differenceClears = session["SessionDataDifference"]["DataRankSSH"] +
+        session["SessionDataDifference"]["DataRankSH"] +
+        session["SessionDataDifference"]["DataRankSS"] +
+        session["SessionDataDifference"]["DataRankS"] +
+        session["SessionDataDifference"]["DataRankA"];
+
+    var currentTotalhits = session["SessionDataCurrent"]["Data300x"] +
+        session["SessionDataCurrent"]["Data100x"] +
+        session["SessionDataCurrent"]["Data50x"];
+
+    var differenceTotalhits = session["SessionDataDifference"]["Data300x"] +
+        session["SessionDataDifference"]["Data100x"] +
+        session["SessionDataDifference"]["Data50x"];
+
     $('#sessionCurrentLevel').html(numberWithCommas(session["SessionDataCurrent"]["DataLevel"].toFixed(rounding)));
     $('#sessionCurrentTotalScore').html(numberWithCommas(session["SessionDataCurrent"]["DataTotalScore"]));
     $('#sessionCurrentRankedScore').html(numberWithCommas(session["SessionDataCurrent"]["DataRankedScore"]));
@@ -636,6 +655,8 @@ function ApplySession(session, rounding){
     $('#sessionCurrentCountryRank').html("#"+numberWithCommas(session["SessionDataCurrent"]["DataCountryRank"]));
     $('#sessionCurrentPlaycount').html(numberWithCommas(session["SessionDataCurrent"]["DataPlaycount"]));
     $('#sessionCurrentPlaytime').html(Math.round(totalPlayTime/60/60)+" hours");
+    $('#sessionCurrentClears').html(numberWithCommas(currentClears));
+    $('#sessionCurrentTotalhits').html(numberWithCommas(currentTotalhits));
     $('#sessionCurrentAccuracy').html(session["SessionDataCurrent"]["DataAccuracy"].toFixed(rounding)+"%");
     $('#sessionCurrentPerformance').html(numberWithCommas(session["SessionDataCurrent"]["DataPerformance"].toFixed(rounding))+"pp");
     $('#sessionCurrent300x').html(numberWithCommas(session["SessionDataCurrent"]["Data300x"]));
@@ -650,8 +671,10 @@ function ApplySession(session, rounding){
     $('#sessionDifferenceCountryRank').html((session["SessionDataDifference"]["DataCountryRank"]>=0?(session["SessionDataDifference"]["DataCountryRank"]==0?nochange:negative):positive)+""+numberWithCommas(Math.abs(session["SessionDataDifference"]["DataCountryRank"])));
     $('#sessionDifferencePlaycount').html((session["SessionDataDifference"]["DataPlaycount"]>=0?(session["SessionDataDifference"]["DataPlaycount"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataPlaycount"]));
     $('#sessionDifferencePlaytime').html((differencePlayTime>=0?(differencePlayTime==0?nochange:positive):negative)+""+differencePlayTime+" "+diffType);
-    $('#sessionDifferenceAccuracy').html((session["SessionDataDifference"]["DataAccuracy"]>=0?(session["SessionDataDifference"]["DataAccuracy"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataAccuracy"]).toFixed(rounding));
-    $('#sessionDifferencePerformance').html((session["SessionDataDifference"]["DataPerformance"]>=0?(session["SessionDataDifference"]["DataPerformance"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataPerformance"].toFixed(rounding)));
+    $('#sessionDifferenceClears').html((differenceClears >= 0 ? (differenceClears == 0 ? nochange : positive) : negative) + "" + numberWithCommas(differenceClears));
+    $('#sessionDifferenceAccuracy').html((session["SessionDataDifference"]["DataAccuracy"] >= 0 ? (session["SessionDataDifference"]["DataAccuracy"] == 0 ? nochange : positive) : negative) + "" + Math.abs(session["SessionDataDifference"]["DataAccuracy"]).toFixed(rounding));
+    $('#sessionDifferencePerformance').html((session["SessionDataDifference"]["DataPerformance"] >= 0 ? (session["SessionDataDifference"]["DataPerformance"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["DataPerformance"].toFixed(rounding)));
+    $('#sessionDifferenceTotalhits').html((differenceTotalhits >= 0 ? (differenceTotalhits == 0 ? nochange : positive) : negative) + "" + numberWithCommas(differenceTotalhits));
     $('#sessionDifference300x').html((session["SessionDataDifference"]["Data300x"] >= 0 ? (session["SessionDataDifference"]["Data300x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data300x"]));
     $('#sessionDifference100x').html((session["SessionDataDifference"]["Data100x"] >= 0 ? (session["SessionDataDifference"]["Data100x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data100x"]));
     $('#sessionDifference50x').html((session["SessionDataDifference"]["Data50x"] >= 0 ? (session["SessionDataDifference"]["Data50x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data50x"]));
@@ -664,8 +687,11 @@ function ApplySession(session, rounding){
     setTextColorToSign("#sessionDifferenceCountryRank", session["SessionDataDifference"]["DataCountryRank"], true);
     setTextColorToSign("#sessionDifferencePlaycount", session["SessionDataDifference"]["DataPlaycount"]);
     setTextColorToSign("#sessionDifferencePlaytime", differencePlayTime);
+    setTextColorToSign("#sessionDifferenceClears", differenceClears);
     setTextColorToSign("#sessionDifferenceAccuracy", session["SessionDataDifference"]["DataAccuracy"]);
     setTextColorToSign("#sessionDifferencePerformance", session["SessionDataDifference"]["DataPerformance"]);
+
+    setTextColorToSign("#sessionDifferenceTotalhits", differenceTotalhits);
     setTextColorToSign("#sessionDifference300x", session["SessionDataDifference"]["Data300x"]);
     setTextColorToSign("#sessionDifference100x", session["SessionDataDifference"]["Data100x"]);
     setTextColorToSign("#sessionDifference50x", session["SessionDataDifference"]["Data50x"]);
