@@ -85,10 +85,17 @@ namespace OsuAchievedOverlay.Next.Helpers
                 var htmlDoc = new HtmlDocument();
                 htmlDoc.LoadHtml(data);
 
-                string jsonData = htmlDoc.DocumentNode.Descendants("script").FirstOrDefault(a => a.Id == "json-user").InnerText;
+                try
+                {
+                    string jsonData = htmlDoc.DocumentNode.Descendants("script").FirstOrDefault(a => a.HasClass("js-current-user")).InnerText;
 
-                ApiOsuProfile cv = JsonConvert.DeserializeObject<ApiOsuProfile>(jsonData);
-                return cv;
+                    ApiOsuProfile cv = JsonConvert.DeserializeObject<ApiOsuProfile>(jsonData);
+                    return cv;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
             return null;
         }
