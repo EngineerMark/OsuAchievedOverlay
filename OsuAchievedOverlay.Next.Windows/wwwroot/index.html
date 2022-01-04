@@ -33,14 +33,13 @@
     <link rel="stylesheet" href="mdb/css/modules/parallax.min.css">
 
 </head>
-    <body id="appBody" class="bg-osu-regular text-white osu-base">
+    <body id="appBody" class="bg-osu-regular text-white osu-base" style="overflow: scroll;">
         <div id="viewApp">
             <nav class="navbar navbar-expand-sm bg-osu-dark text-white" style="padding-bottom: 0;height:2rem;">
                 <div id="navigationBar">
                     <ul class="nav tabs-osu-regular" id="contentTabList" role="tablist">
                         <li class="nav-item"><a href="#session" aria-controls="session" aria-selected="true" role="tab" class="nav-link text-white active" data-toggle="tab" data-target="#session"><i class="fas fa-home"></i> session</a></li>
                         <li class="nav-item"><a href="#settings" aria-controls="settings" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#settings"><i class="fas fa-cog"></i> settings</a></li>
-                        <li class="nav-item"><a href="#addons" aria-controls="addons" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#addons"><i class="fas fa-tools"></i> tools</a></li>
                         <li class="nav-item"><a href="#about" aria-controls="about" aria-selected="false" role="tab" class="nav-link text-white" data-toggle="tab" data-target="#about"><i class="fas fa-info-circle"></i> about <span id="navigationUpdateWarning" class="text-warning text-muted" hidden><i class="fas fa-exclamation-triangle"></i></span></a></li>
                     </ul>
                 </div>
@@ -55,9 +54,6 @@
                     </div>
                     <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="tab-about">
                         <div data-tab="about"></div>
-                    </div>
-                    <div class="tab-pane fade" id="addons" role="tabpanel" aria-labelledby="tab-addons">
-                        <div data-tab="addons"></div>
                     </div>
                 </div>
             </div>

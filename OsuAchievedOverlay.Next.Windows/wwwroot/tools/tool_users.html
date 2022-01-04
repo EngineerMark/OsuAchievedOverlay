@@ -1,0 +1,71 @@
+﻿<div>
+    <div class="md-form form-row justify-content-center" style="width:100%;">
+        <div class="col">
+            <input id="playerSearchInput" type="text" class="form-control">
+            <label for="playerSearchInput">Search user...</label>
+        </div>
+        <div class="col">
+            <button onclick="toolUsersRequestSearchResults()" type="submit" class="btn btn-primary btn-sm btn-md">Search</button>
+        </div>
+    </div>
+    <br/>
+    <div class="card bg-osu-dark" id="playerViewer">
+        <div class="card-up">
+            <img class="card-img-top" id="playerViewerHeaderImage" src="">
+            <a id="playerViewerHeaderLink"> <div class="mask rgba-white-slight"></div></a>
+        </div>
+        <div class="card-body text-white" style="margin-top: -100px;">
+            <div class="avatar mx-auto" style="max-width:35%;">
+                <img id="playerViewerAvatar" src="" class="img-fluid rounded-circle z-depth-1">
+            </div>
+            <div class="text-center">
+                <h4 id="playerViewerName">Amayakase</h4>
+                <div id="playerViewerGroups">
+                    <span class="badge badge-default">Default</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-body text-white bg-osu-regular">
+            <div class="row">
+                <div class="col-lg-4" id="playerViewerCountry"></div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4"></div>
+            </div>
+        </div>
+        <!--Accordion wrapper-->
+        <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+            <div class="card bg-osu-dark" style="border-bottom: 1px solid var(--osu-regular); ">
+                <div class="card-header" role="tab" id="playerViewerCollapsePlaycountHeading">
+                    <a data-toggle="collapse" data-parent="#accordionEx" href="#playerViewerCollapsePlaycount" aria-expanded="true"
+                        aria-controls="playerViewerCollapsePlaycount">
+                        <h5 class="mb-0">
+                            Playcount History <i class="fas fa-angle-down rotate-icon"></i>
+                        </h5>
+                    </a>
+                </div>
+                <div id="playerViewerCollapsePlaycount" class="collapse show" role="tabpanel" aria-labelledby="playerViewerCollapsePlaycountHeading" data-parent="#accordionEx">
+                    <div class="card-body text-white">
+                        <canvas id="playerViewerChartPlaycount"></canvas>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card bg-osu-dark" style="border-bottom: 1px solid var(--osu-regular); ">
+                <div class="card-header" role="tab" id="playerViewerCollapseReplaycountHeading">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#playerViewerCollapseReplaycount"
+                        aria-expanded="false" aria-controls="playerViewerCollapseReplaycount">
+                        <h5 class="mb-0">
+                            Replay History <i class="fas fa-angle-down rotate-icon"></i>
+                        </h5>
+                    </a>
+                </div>
+                <div id="playerViewerCollapseReplaycount" class="collapse" role="tabpanel" aria-labelledby="playerViewerCollapseReplaycountHeading" data-parent="#accordionEx">
+                    <div class="card-body text-white">
+                        <canvas id="playerViewerChartReplays"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

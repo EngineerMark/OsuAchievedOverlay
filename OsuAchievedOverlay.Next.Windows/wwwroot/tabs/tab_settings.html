@@ -41,21 +41,6 @@
                     <div class="seperator"></div>
 
                     <div class="row settings-item">
-                        <div class="col-sm-3 text-right align-self-center">osu! directory</div>
-                        <div class="col-sm-9" style="padding: 0;">
-                            <div class="md-form">
-                                <div class="md-form form-sm input-group">
-                                    <input type="text" id="settingsInputOsuDir" class="form-control form-extend-osu" readonly>
-                                    <div class="input-group-append">
-                                        <button onclick="cefOsuApp.dirDialogOsuInstall();" class="btn btn-sm btn-osu-dark" type="button" id="settingsInputOsuDir_btn">Browse</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="seperator"></div>
-
-                    <div class="row settings-item">
                         <div class="col-sm-3 text-right align-self-center">refresh time</div>
                         <div class="col-sm-9 align-self-center" style="padding: 0;">
                             <div class="md-form">
@@ -90,8 +75,10 @@
                                     <option id="settingsInputDisplayCountryrank" value="settingsInputDisplayCountryrank" selected>show country rank</option>
                                     <option id="settingsInputDisplayPlaycount" value="settingsInputDisplayPlaycount" selected>show playcount</option>
                                     <option id="settingsInputDisplayPlaytime" value="settingsInputDisplayPlaytime" selected>show playtime</option>
+                                    <option id="settingsInputDisplayClears" value="settingsInputDisplayClears" selected>show clears</option>
                                     <option id="settingsInputDisplayAccuracy" value="settingsInputDisplayAccuracy" selected>show accuracy</option>
                                     <option id="settingsInputDisplayPerformance" value="settingsInputDisplayAccuracy" selected>show performance points</option>
+                                    <option id="settingsInputDisplayTotalhits" value="settingsInputDisplayTotalhits" selected>show total hits</option>
                                     <option id="settingsInputDisplay300x" value="settingsInputDisplay300x" selected>show 300x hits</option>
                                     <option id="settingsInputDisplay100x" value="settingsInputDisplay100x" selected>show 100x hits</option>
                                     <option id="settingsInputDisplay50x" value="settingsInputDisplay50x" selected>show 50x hits</option>
@@ -103,6 +90,17 @@
                     <div class="seperator"></div>
                     <div>
                         <div class="row settings-item">
+                            <div class="col-sm-3 text-right align-self-center">show timer</div>
+                            <div class="col-sm-9 align-self-center" style="padding: 0;margin-top:0.5rem;">
+                                <div class="switch">
+                                    <label>
+                                        <input id="settingsTimerDisplay" type="checkbox">
+                                        <span class="lever"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row settings-item">
                             <div class="col-sm-3 text-right align-self-center">nsfw mode</div>
                             <div class="col-sm-9 align-self-center" style="padding: 0;margin-top:0.5rem;">
                                 <div class="switch">
@@ -122,7 +120,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <br />
                     <!-- <a class="btn btn-success btn-sm" onclick="toastr.error('Invalid API key');">Save and apply</a> -->

@@ -8,6 +8,6 @@ namespace OsuAchievedOverlay.Next
 {
     public static class AppVersion
     {
-        public const string Version = "2.0.1";
+        public const string Version = "2.0.2";
     }
 }

@@ -213,8 +213,12 @@ namespace OsuAchievedOverlay.Next.Managers
                 StartProgressHandler();
                 SessionThread.Start();
 
-                BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionProgressTime");
                 BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#sessionProgressReadonly");
+
+                if (SettingsManager.Instance.Settings["display"]["showTimer"] == "true")
+                {
+                    BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#sessionProgressTime");
+                }
             }
         }
 

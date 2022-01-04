@@ -46,6 +46,7 @@ function appReady() {
         subtree: true
     });
 
+    populateToolUserGraphs();
 
     $("[data-addon]").hide();
     $("[data-type=\"addonLink\"]").click(function (e) {
@@ -54,6 +55,8 @@ function appReady() {
         $("[data-addon=\"" + name + "\"]").show();
         $("#tools-modal").modal("toggle");
     });
+
+    $('#playerViewer').hide();
 }
 
 function addApiField(data, hash) {
@@ -626,6 +629,25 @@ function ApplySession(session, rounding){
     }
     differencePlayTime = Math.round(differencePlayTime);
 
+    var currentClears = session["SessionDataCurrent"]["DataRankSSH"] +
+        session["SessionDataCurrent"]["DataRankSH"] +
+        session["SessionDataCurrent"]["DataRankSS"] +
+        session["SessionDataCurrent"]["DataRankS"] +
+        session["SessionDataCurrent"]["DataRankA"];
+    var differenceClears = session["SessionDataDifference"]["DataRankSSH"] +
+        session["SessionDataDifference"]["DataRankSH"] +
+        session["SessionDataDifference"]["DataRankSS"] +
+        session["SessionDataDifference"]["DataRankS"] +
+        session["SessionDataDifference"]["DataRankA"];
+
+    var currentTotalhits = session["SessionDataCurrent"]["Data300x"] +
+        session["SessionDataCurrent"]["Data100x"] +
+        session["SessionDataCurrent"]["Data50x"];
+
+    var differenceTotalhits = session["SessionDataDifference"]["Data300x"] +
+        session["SessionDataDifference"]["Data100x"] +
+        session["SessionDataDifference"]["Data50x"];
+
     $('#sessionCurrentLevel').html(numberWithCommas(session["SessionDataCurrent"]["DataLevel"].toFixed(rounding)));
     $('#sessionCurrentTotalScore').html(numberWithCommas(session["SessionDataCurrent"]["DataTotalScore"]));
     $('#sessionCurrentRankedScore').html(numberWithCommas(session["SessionDataCurrent"]["DataRankedScore"]));
@@ -633,6 +655,8 @@ function ApplySession(session, rounding){
     $('#sessionCurrentCountryRank').html("#"+numberWithCommas(session["SessionDataCurrent"]["DataCountryRank"]));
     $('#sessionCurrentPlaycount').html(numberWithCommas(session["SessionDataCurrent"]["DataPlaycount"]));
     $('#sessionCurrentPlaytime').html(Math.round(totalPlayTime/60/60)+" hours");
+    $('#sessionCurrentClears').html(numberWithCommas(currentClears));
+    $('#sessionCurrentTotalhits').html(numberWithCommas(currentTotalhits));
     $('#sessionCurrentAccuracy').html(session["SessionDataCurrent"]["DataAccuracy"].toFixed(rounding)+"%");
     $('#sessionCurrentPerformance').html(numberWithCommas(session["SessionDataCurrent"]["DataPerformance"].toFixed(rounding))+"pp");
     $('#sessionCurrent300x').html(numberWithCommas(session["SessionDataCurrent"]["Data300x"]));
@@ -647,8 +671,10 @@ function ApplySession(session, rounding){
     $('#sessionDifferenceCountryRank').html((session["SessionDataDifference"]["DataCountryRank"]>=0?(session["SessionDataDifference"]["DataCountryRank"]==0?nochange:negative):positive)+""+numberWithCommas(Math.abs(session["SessionDataDifference"]["DataCountryRank"])));
     $('#sessionDifferencePlaycount').html((session["SessionDataDifference"]["DataPlaycount"]>=0?(session["SessionDataDifference"]["DataPlaycount"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataPlaycount"]));
     $('#sessionDifferencePlaytime').html((differencePlayTime>=0?(differencePlayTime==0?nochange:positive):negative)+""+differencePlayTime+" "+diffType);
-    $('#sessionDifferenceAccuracy').html((session["SessionDataDifference"]["DataAccuracy"]>=0?(session["SessionDataDifference"]["DataAccuracy"]==0?nochange:positive):negative)+""+Math.abs(session["SessionDataDifference"]["DataAccuracy"]).toFixed(rounding));
-    $('#sessionDifferencePerformance').html((session["SessionDataDifference"]["DataPerformance"]>=0?(session["SessionDataDifference"]["DataPerformance"]==0?nochange:positive):negative)+""+numberWithCommas(session["SessionDataDifference"]["DataPerformance"].toFixed(rounding)));
+    $('#sessionDifferenceClears').html((differenceClears >= 0 ? (differenceClears == 0 ? nochange : positive) : negative) + "" + numberWithCommas(differenceClears));
+    $('#sessionDifferenceAccuracy').html((session["SessionDataDifference"]["DataAccuracy"] >= 0 ? (session["SessionDataDifference"]["DataAccuracy"] == 0 ? nochange : positive) : negative) + "" + Math.abs(session["SessionDataDifference"]["DataAccuracy"]).toFixed(rounding));
+    $('#sessionDifferencePerformance').html((session["SessionDataDifference"]["DataPerformance"] >= 0 ? (session["SessionDataDifference"]["DataPerformance"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["DataPerformance"].toFixed(rounding)));
+    $('#sessionDifferenceTotalhits').html((differenceTotalhits >= 0 ? (differenceTotalhits == 0 ? nochange : positive) : negative) + "" + numberWithCommas(differenceTotalhits));
     $('#sessionDifference300x').html((session["SessionDataDifference"]["Data300x"] >= 0 ? (session["SessionDataDifference"]["Data300x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data300x"]));
     $('#sessionDifference100x').html((session["SessionDataDifference"]["Data100x"] >= 0 ? (session["SessionDataDifference"]["Data100x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data100x"]));
     $('#sessionDifference50x').html((session["SessionDataDifference"]["Data50x"] >= 0 ? (session["SessionDataDifference"]["Data50x"] == 0 ? nochange : positive) : negative) + "" + numberWithCommas(session["SessionDataDifference"]["Data50x"]));
@@ -661,8 +687,11 @@ function ApplySession(session, rounding){
     setTextColorToSign("#sessionDifferenceCountryRank", session["SessionDataDifference"]["DataCountryRank"], true);
     setTextColorToSign("#sessionDifferencePlaycount", session["SessionDataDifference"]["DataPlaycount"]);
     setTextColorToSign("#sessionDifferencePlaytime", differencePlayTime);
+    setTextColorToSign("#sessionDifferenceClears", differenceClears);
     setTextColorToSign("#sessionDifferenceAccuracy", session["SessionDataDifference"]["DataAccuracy"]);
     setTextColorToSign("#sessionDifferencePerformance", session["SessionDataDifference"]["DataPerformance"]);
+
+    setTextColorToSign("#sessionDifferenceTotalhits", differenceTotalhits);
     setTextColorToSign("#sessionDifference300x", session["SessionDataDifference"]["Data300x"]);
     setTextColorToSign("#sessionDifference100x", session["SessionDataDifference"]["Data100x"]);
     setTextColorToSign("#sessionDifference50x", session["SessionDataDifference"]["Data50x"]);
@@ -849,3 +878,137 @@ $('img').on('dragstart', function (event) { event.preventDefault(); });
         });
     };
 }));
+
+var toolUsersData = [];
+toolUsersData["playcountChart"] = null;
+toolUsersData["replaycountChart"] = null;
+
+function populateToolUserGraphs() {
+    var ctxL = document.getElementById("playerViewerChartPlaycount").getContext('2d');
+    toolUsersData["playcountChart"] = new Chart(ctxL, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: "Playcount",
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, .2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, .7)',
+                    ],
+                    borderWidth: 2
+                }
+            ]
+        }
+    });
+
+    ctxL = document.getElementById("playerViewerChartReplays").getContext('2d');
+    toolUsersData["replaycountChart"] = new Chart(ctxL, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: "Replaycount",
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, .2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, .7)',
+                    ],
+                    borderWidth: 2
+                }
+            ]
+        }
+    });
+}
+
+function toolUsersRequestSearchResults() {
+    $('#playerViewer').hide();
+    var query = $('#playerSearchInput').val();
+
+    var user = cefOsuApp.toolUsersSearch(query);
+    if (user == "null") {
+        toastr.error('This player was not found', '');
+    } else {
+        var deserializedUser = JSON.parse(user);
+        var profile = cefOsuApp.getOsuUserProfile(deserializedUser["user_id"]);
+        if (profile == "null") {
+            toastr.error('This player was not found', '');
+        } else {
+            //var header = cefOsuApp.osuUserGetHeader(deserializedUser["user_id"]);
+            var deserializedProfile = JSON.parse(profile);
+
+            // header image
+            $('#playerViewerHeaderImage').attr('src', deserializedProfile["cover_url"]);
+            $('#playerViewerHeaderLink').click(function () {
+                cefOsuApp.openUrl('https://osu.ppy.sh/users/' + deserializedUser["user_id"]);
+            });
+
+            // username
+            $('#playerViewerName').text(deserializedUser["username"]);
+
+            // avatar
+            $('#playerViewerAvatar').attr("src", "https://a.ppy.sh/" + deserializedUser["user_id"]);
+
+            // player groups
+            $('#playerViewerGroups').html('');
+            for (var i = 0; i < deserializedProfile["groups"].length; i++) {
+                $('#playerViewerGroups').append('<span data-toggle="tooltip" title="' + deserializedProfile["groups"][i]["name"]+'" class="badge" style="background-color:' + deserializedProfile["groups"][i]["colour"]+';">' + deserializedProfile["groups"][i]["short_name"]+'</span> ');
+            }
+
+            // country
+            let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+            var countryName = regionNames.of(deserializedUser["country"]);
+            $('#playerViewerCountry').html('<i data-toggle=\"tooltip\" title=\"' + countryName + '\" class=\"material-tooltip-main twf twf-s twf-' + deserializedUser["country"].toLowerCase() + '"></i> ' + countryName);
+
+            // playcount data
+            var playcountData = deserializedProfile["monthly_playcounts"];
+
+            toolUsersData["playcountChart"].data.labels = [];
+            toolUsersData["playcountChart"].data.datasets[0].data = [];
+
+            // replaycount data
+            var replaycountData = deserializedProfile["replays_watched_counts"];
+
+            toolUsersData["replaycountChart"].data.labels = [];
+            toolUsersData["replaycountChart"].data.datasets[0].data = [];
+
+            // populate playcount graph
+            playcountData = populateEmptyness(playcountData);
+            for (var i = 0; i < playcountData.length; i++) {
+                var date = playcountData[i]["start_date"];
+                var value = playcountData[i]["count"];
+
+                toolUsersData["playcountChart"].data.labels.push(date);
+                toolUsersData["playcountChart"].data.datasets[0].data.push(value);
+            }
+
+            toolUsersData["playcountChart"].update();
+
+            // populate replaycount graph
+            replaycountData = populateEmptyness(replaycountData);
+            for (var i = 0; i < playcountData.length; i++) {
+                var date = replaycountData[i]["start_date"];
+                var value = replaycountData[i]["count"];
+
+                toolUsersData["replaycountChart"].data.labels.push(date);
+                toolUsersData["replaycountChart"].data.datasets[0].data.push(value);
+            }
+
+            toolUsersData["replaycountChart"].update();
+
+
+            // rebuild tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // lets show it
+            $('#playerViewer').show();
+        }
+    }
+    //console.log(user);
+}
