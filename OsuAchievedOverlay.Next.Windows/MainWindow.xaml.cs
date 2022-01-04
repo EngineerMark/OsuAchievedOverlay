@@ -116,8 +116,8 @@ namespace OsuAchievedOverlay.Next
             BrowserWrapper.Child = chromiumBrowser;
 
             BrowserSettings browserSettings = new BrowserSettings();
-            browserSettings.FileAccessFromFileUrls = CefState.Enabled;
-            browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
+            //browserSettings.FileAccessFromFileUrls = CefState.Enabled;
+            //browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
             chromiumBrowser.BrowserSettings = browserSettings;
         }
     }
