@@ -49,7 +49,13 @@ namespace OsuAchievedOverlay.Controls
 
                 ThreadPool.QueueUserWorkItem((Object stateInfo) =>
                 {
-                    BitmapImage img = InterfaceManager.Instance.LoadImage(ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/" + user.ID));
+                    string img_path = ApiHelper.GetOsuUserHeaderUrl(@"https://osu.ppy.sh/users/" + user.ID);
+                    BitmapImage img = null;
+                    if (img_path != string.Empty){
+                        img = InterfaceManager.Instance.LoadImage(img_path);
+                    }else{
+                        img = InterfaceManager.Instance.LoadImage("https://osu.ppy.sh/images/headers/profile-covers/c2.jpg");
+                    }
                     Dispatcher.Invoke(new Action(() =>
                     {
                         ImageProfileHeader.ImageSource = img;

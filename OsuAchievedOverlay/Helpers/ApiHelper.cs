@@ -51,11 +51,17 @@ namespace OsuAchievedOverlay.Helpers
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(data);
 
-            string jsonData = htmlDoc.DocumentNode.Descendants("script").FirstOrDefault(a => a.Id == "json-user").InnerText;
+            string res = string.Empty;
 
-            ApiOsuProfile cv = JsonConvert.DeserializeObject<ApiOsuProfile>(jsonData);
+            HtmlNode node = htmlDoc.DocumentNode.Descendants("script").FirstOrDefault(a => a.Id == "json-user");
 
-            return cv.CoverURL;
+            if (node != null)
+            {
+                string jsonData = node.InnerText;
+                ApiOsuProfile cv = JsonConvert.DeserializeObject<ApiOsuProfile>(jsonData);
+                res = cv.CoverURL;
+            }
+            return res;
         }
     }
 
