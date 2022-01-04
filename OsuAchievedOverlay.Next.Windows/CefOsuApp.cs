@@ -4,7 +4,6 @@ using IniParser.Model;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
-using osu_database_reader.Components.Player;
 using OsuAchievedOverlay.Next.Helpers;
 using OsuAchievedOverlay.Next.JavaScript;
 using OsuAchievedOverlay.Next.Managers;
@@ -18,7 +17,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using OsuAchievedOverlay.Next.Tools;
-using osu_database_reader.Components.Beatmaps;
 
 namespace OsuAchievedOverlay.Next
 {
@@ -41,64 +39,6 @@ namespace OsuAchievedOverlay.Next
         }
 
         public static Window GetWindow() => _internalWindow;
-
-        public string requestBeatmapApiData(string hash, int mods, int mode)
-        {
-            BeatmapEntry local_map = ToolInspector.Instance.CurrentDatabase.Beatmaps.Find(x => x.BeatmapChecksum == hash);
-            if (local_map == null)
-            {
-                return null;
-            }
-            OsuBeatmap map = OsuApi.GetBeatmap(local_map.BeatmapId.ToString(), (OsuMods)mods, (OsuMode)mode);
-            if (map == null)
-            {
-                return null;
-            }
-            map.MapStats.Beatmap = null; // loop fix
-            OsuPlay simulatedPlay = new OsuPlay();
-            simulatedPlay.Mods = (OsuMods)mods;
-            simulatedPlay.Mode = (OsuMode)mode;
-            simulatedPlay.MaxCombo = (double)(map.MaxCombo ?? 0);
-            OsuPerformance pp = new OsuPerformance(simulatedPlay, map);
-            AccuracyDistribution acc95 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 0.95f);
-            AccuracyDistribution acc98 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 0.98f);
-            AccuracyDistribution acc99 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 0.99f);
-            AccuracyDistribution acc100 = new AccuracyDistribution((int)(local_map.CountHitCircles + local_map.CountSliders + local_map.CountSpinners), 0, 1f);
-
-            simulatedPlay.Score = 995000; // mania fix?
-            double pp95 = pp.CalculatePerformance((double)(map.MaxCombo ?? 0), acc95.Hits50, acc95.Hits100, acc95.Hits300, acc95.Misses);
-            simulatedPlay.Score = 998000; // mania fix?
-            double pp98 = pp.CalculatePerformance((double)(map.MaxCombo ?? 0), acc98.Hits50, acc98.Hits100, acc98.Hits300, acc98.Misses);
-            simulatedPlay.Score = 999000; // mania fix?
-            double pp99 = pp.CalculatePerformance((double)(map.MaxCombo ?? 0), acc99.Hits50, acc99.Hits100, acc99.Hits300, acc99.Misses);
-            simulatedPlay.Score = 1000000; // mania fix?
-            double pp100 = pp.CalculatePerformance((double)(map.MaxCombo ?? 0), acc100.Hits50, acc100.Hits100, acc100.Hits300, acc100.Misses);
-
-            Tuple<OsuBeatmap, double, double, double, double> data = new Tuple<OsuBeatmap, double, double, double, double>(map, pp95, pp98, pp99, pp100);
-
-
-            return JsonConvert.SerializeObject(data);
-        }
-
-        public void beatmapBrowserSetPage(int index)
-        {
-            ToolInspector.Instance.InspectorBeatmapListing.LoadPage(index);
-        }
-
-        public void beatmapBrowserSearch(string query)
-        {
-            ToolInspector.Instance.InspectorBeatmapListing.ApplySearchQuery(Encoding.UTF8.GetString(Convert.FromBase64String(query)));
-        }
-
-        public void requestBeatmapScores(string hash)
-        {
-            string encoded = "";
-            if (ToolInspector.Instance.CurrentScores.Beatmaps.ContainsKey(hash))
-            {
-                encoded = JsonConvert.SerializeObject(ToolInspector.Instance.CurrentScores.Beatmaps[hash]);
-            }
-            BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("beatmapViewerPopulateScores('" + encoded + "');");
-        }
 
         public void updateHandlerVisit()
         {
@@ -237,11 +177,6 @@ namespace OsuAchievedOverlay.Next
         public void finishSetup()
         {
             SetupFinished?.Invoke(null, null);
-        }
-
-        public void buttonProcessOsu()
-        {
-            ToolInspector.Instance.ProcessOsu(_internalWindow.Dispatcher);
         }
 
         public string toolUsersSearch(string input)

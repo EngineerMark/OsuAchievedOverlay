@@ -102,12 +102,6 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="osu-database-reader, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HoLLy.osu.DatabaseReader.3.1.0-alpha1\lib\netstandard2.0\osu-database-reader.dll</HintPath>
-    </Reference>
-    <Reference Include="osu.Shared, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\osu.Shared.1.0.3\lib\net20\osu.Shared.dll</HintPath>
-    </Reference>
     <Reference Include="OsuHelper, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Amayakase.OsuHelper.1.1.3\lib\netstandard2.0\OsuHelper.dll</HintPath>
     </Reference>
@@ -138,7 +132,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppVersion.cs" />
-    <Compile Include="BeatmapSetEntry.cs" />
     <Compile Include="BrowserViewModel.cs" />
     <Compile Include="CefOsuApp.cs" />
     <Compile Include="ExtendedThread.cs" />
@@ -149,7 +142,6 @@
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\OsuWebHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="InspectorBeatmapListing.cs" />
     <Compile Include="JavaScript\JSCheckbox.cs" />
     <Compile Include="JavaScript\JSInput.cs" />
     <Compile Include="JavaScript\JSRangeInput.cs" />
@@ -158,7 +150,6 @@
     <Compile Include="JavaScript\JSModal.cs" />
     <Compile Include="Managers\AppManager.cs" />
     <Compile Include="Managers\AudioManager.cs" />
-    <Compile Include="Tools\ToolInspector.cs" />
     <Compile Include="Managers\NetworkManager.cs" />
     <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Managers\StartupManager.cs" />
@@ -867,7 +858,6 @@
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
     <ItemGroup>
       <MergeAsm Include="$(OutputPath)$(TargetFileName)" />
-      <MergeAsm Include="$(OutputPath)osu-database-reader.dll" />
       <MergeAsm Include="$(OutputPath)Newtonsoft.Json.dll" />
       <MergeAsm Include="$(OutputPath)Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
       <MergeAsm Include="$(OutputPath)Microsoft.WindowsAPICodePack.Shell.dll" />
@@ -876,7 +866,6 @@
       <MergeAsm Include="$(OutputPath)INIFileParser.dll" />
       <MergeAsm Include="$(OutputPath)Humanizer.dll" />
       <MergeAsm Include="$(OutputPath)HtmlAgilityPack.dll" />
-      <MergeAsm Include="$(OutputPath)osu.Shared.dll" />
       <MergeAsm Include="$(OutputPath)MarkdownSharp.dll" />
     </ItemGroup>
     <PropertyGroup>
@@ -908,7 +897,6 @@
     </ItemGroup>
     <Move SourceFiles="@(FilesToMove)" DestinationFolder="$(OutputPath)cef" />
     <ItemGroup>
-      <FilesToDelete Include="$(OutputPath)osu-database-reader.dll" />
       <FilesToDelete Include="$(OutputPath)Newtonsoft.Json.dll" />
       <FilesToDelete Include="$(OutputPath)Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
       <FilesToDelete Include="$(OutputPath)Microsoft.WindowsAPICodePack.Shell.dll" />
@@ -917,7 +905,6 @@
       <FilesToDelete Include="$(OutputPath)INIFileParser.dll" />
       <FilesToDelete Include="$(OutputPath)Humanizer.dll" />
       <FilesToDelete Include="$(OutputPath)HtmlAgilityPack.dll" />
-      <FilesToDelete Include="$(OutputPath)osu.Shared.dll" />
       <FilesToDelete Include="$(OutputPath)MarkdownSharp.dll" />
       <FilesToDelete Include="$(OutputPath)libcef.dll" />
       <FilesToDelete Include="$(OutputPath)libEGL.dll" />

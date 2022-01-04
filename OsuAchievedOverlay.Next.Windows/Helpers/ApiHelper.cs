@@ -1,6 +1,5 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
-using osu_database_reader.Components.Beatmaps;
 using System;
 using System.Collections.Generic;
 using System.IO;
