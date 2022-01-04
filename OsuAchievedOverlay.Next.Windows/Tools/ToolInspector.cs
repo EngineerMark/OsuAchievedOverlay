@@ -162,99 +162,92 @@ namespace OsuAchievedOverlay.Next.Tools
                         BrowserViewModel.Instance.AttachedJavascriptWrapper.Hide("#beatmapProcessTimeString");
                         BrowserViewModel.Instance.AttachedJavascriptWrapper.SetElementDisabled("#settingsProcessOsu", true);
                         BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#settingsProcessOsu", "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> <span id=\"settingsProcessOsuButtonProcessText\">processing</span>");
-                        if (!ApiHelper.IsValidOsuInstallation(SettingsManager.Instance.Settings["misc"]["osuFolder"]))
+                        IsUpdating = true;
+
+                        if (CurrentDatabase != null)
+                            CurrentDatabase.Beatmaps.Clear();
+
+                        string configPath = Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "osu!." + Environment.UserName + ".cfg");
+                        if (File.Exists(configPath))
                         {
-                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, "There is no or invalid osu folder selected");
+                            string[] configLines = File.ReadAllLines(configPath);
+                            SongsPath = string.Empty;
+                            foreach (string s in configLines)
+                            {
+                                if (s.Contains("BeatmapDirectory = "))
+                                    SongsPath = s.Replace("BeatmapDirectory = ", "");
+                            }
+
+                            bool validConfig = true;
+                            if (string.IsNullOrEmpty(SongsPath))
+                            {
+                                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.Osu.NoConfig"));
+                                validConfig = false;
+                            }
+
+                            if (validConfig)
+                            {
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (loading beatmaps)');");
+                                CurrentDatabase = OsuDb.Read(System.IO.Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "osu!.db"));
+                                //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorBeatmapDiffCount", ""+CurrentDatabase.Beatmaps.Count);
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#inspectorBeatmapDiffCountParent");
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorBeatmapDiffCount').countTo({from: 0, to: " + CurrentDatabase.Beatmaps.Count + "});");
+
+                                BeatmapSets?.Clear();
+                                BeatmapSets = new List<BeatmapSetEntry>();
+
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (creating sets 0/" + CurrentDatabase.Beatmaps.Count + ")');");
+
+                                await ProcessBeatmaps();
+
+                                //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorBeatmapSetCount", "" + BeatmapSets.Count);
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorBeatmapSetCountParent");
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorBeatmapSetCount').countTo({from: 0, to: " + BeatmapSets.Count + "});");
+
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (reading collections)');");
+                                CurrentCollections = CollectionDb.Read(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "collection.db"));
+                                //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCollectionCount", "" + CurrentCollections.Collections.Count);
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorCollectionCountParent");
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorCollectionCount').countTo({from: 0, to: " + CurrentCollections.Collections.Count + "});");
+
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorCollectionList').html('')");
+                                foreach (Collection coll in CurrentCollections.Collections)
+                                {
+                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorCollectionList').append('<button type=\\\"button\\\" class=\\\"btn btn-block btn-sm btn-dark btn-rounded\\\" style=\\\"margin:10px auto;\\\"><span class=\\\"float-left\\\">" + coll.Name + "</span></button>')");
+                                }
+
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (reading scores)');");
+                                CurrentScores = ScoresDb.Read(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "scores.db"));
+                                //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorScoreCount", "" + CurrentScores.Scores.Count());
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorScoreCountParent");
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorScoreCount').countTo({from: 0, to: " + CurrentScores.Scores.Count() + "});");
+
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (finishing up)');");
+                                int rankedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus == SubmissionStatus.Ranked || a.RankedStatus == SubmissionStatus.Approved);
+                                int lovedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus == SubmissionStatus.Loved);
+                                int unrankedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus != SubmissionStatus.Ranked && a.RankedStatus != SubmissionStatus.Approved && a.RankedStatus != SubmissionStatus.Loved);
+
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellRankedMaps", "" + rankedCount);
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellLovedMaps", "" + lovedCount);
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellUnrankedMaps", "" + unrankedCount);
+
+                                BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("updateMapChart(" + rankedCount + "," + lovedCount + "," + unrankedCount + ");");
+
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellVersion", "" + CurrentDatabase.OsuVersion);
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellUsername", "" + CurrentDatabase.AccountName);
+                                BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorRegularInfoParent");
+
+                                InspectorBeatmapListing = new InspectorBeatmapListing(BeatmapSets);
+                                InspectorBeatmapListing.PreGenerate();
+
+                                //string beatmapDataJson = HttpUtility.JavaScriptStringEncode(JsonConvert.SerializeObject(BeatmapSets));
+                                //BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("processBeatmaps('"+ beatmapDataJson + "');");
+                                //cefOsuApp.JsExecuter.GetBrowser().ShowDevTools();
+                            }
                         }
                         else
                         {
-                            IsUpdating = true;
-
-                            if (CurrentDatabase != null)
-                                CurrentDatabase.Beatmaps.Clear();
-
-                            string configPath = Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "osu!." + Environment.UserName + ".cfg");
-                            if (File.Exists(configPath))
-                            {
-                                string[] configLines = File.ReadAllLines(configPath);
-                                SongsPath = string.Empty;
-                                foreach (string s in configLines)
-                                {
-                                    if (s.Contains("BeatmapDirectory = "))
-                                        SongsPath = s.Replace("BeatmapDirectory = ", "");
-                                }
-
-                                bool validConfig = true;
-                                if (string.IsNullOrEmpty(SongsPath))
-                                {
-                                    BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.Osu.NoConfig"));
-                                    validConfig = false;
-                                }
-
-                                if (validConfig)
-                                {
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (loading beatmaps)');");
-                                    CurrentDatabase = OsuDb.Read(System.IO.Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "osu!.db"));
-                                    //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorBeatmapDiffCount", ""+CurrentDatabase.Beatmaps.Count);
-                                    BrowserViewModel.Instance.AttachedJavascriptWrapper.Show("#inspectorBeatmapDiffCountParent");
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorBeatmapDiffCount').countTo({from: 0, to: " + CurrentDatabase.Beatmaps.Count + "});");
-
-                                    BeatmapSets?.Clear();
-                                    BeatmapSets = new List<BeatmapSetEntry>();
-
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (creating sets 0/" + CurrentDatabase.Beatmaps.Count + ")');");
-
-                                    await ProcessBeatmaps();
-
-                                    //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorBeatmapSetCount", "" + BeatmapSets.Count);
-                                    BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorBeatmapSetCountParent");
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorBeatmapSetCount').countTo({from: 0, to: " + BeatmapSets.Count + "});");
-
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (reading collections)');");
-                                    CurrentCollections = CollectionDb.Read(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "collection.db"));
-                                    //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCollectionCount", "" + CurrentCollections.Collections.Count);
-                                    BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorCollectionCountParent");
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorCollectionCount').countTo({from: 0, to: " + CurrentCollections.Collections.Count + "});");
-
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorCollectionList').html('')");
-                                    foreach (Collection coll in CurrentCollections.Collections)
-                                    {
-                                        BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorCollectionList').append('<button type=\\\"button\\\" class=\\\"btn btn-block btn-sm btn-dark btn-rounded\\\" style=\\\"margin:10px auto;\\\"><span class=\\\"float-left\\\">" + coll.Name + "</span></button>')");
-                                    }
-
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (reading scores)');");
-                                    CurrentScores = ScoresDb.Read(Path.Combine(SettingsManager.Instance.Settings["misc"]["osuFolder"], "scores.db"));
-                                    //BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorScoreCount", "" + CurrentScores.Scores.Count());
-                                    BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorScoreCountParent");
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#inspectorScoreCount').countTo({from: 0, to: " + CurrentScores.Scores.Count() + "});");
-
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("$('#settingsProcessOsuButtonProcessText').html('processing (finishing up)');");
-                                    int rankedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus == SubmissionStatus.Ranked || a.RankedStatus == SubmissionStatus.Approved);
-                                    int lovedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus == SubmissionStatus.Loved);
-                                    int unrankedCount = CurrentDatabase.Beatmaps.Count(a => a.RankedStatus != SubmissionStatus.Ranked && a.RankedStatus != SubmissionStatus.Approved && a.RankedStatus != SubmissionStatus.Loved);
-
-                                    BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellRankedMaps", "" + rankedCount);
-                                    BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellLovedMaps", "" + lovedCount);
-                                    BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellUnrankedMaps", "" + unrankedCount);
-
-                                    BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("updateMapChart(" + rankedCount + "," + lovedCount + "," + unrankedCount + ");");
-
-                                    BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellVersion", "" + CurrentDatabase.OsuVersion);
-                                    BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#inspectorCellUsername", "" + CurrentDatabase.AccountName);
-                                    BrowserViewModel.Instance.AttachedJavascriptWrapper.FadeIn("#inspectorRegularInfoParent");
-
-                                    InspectorBeatmapListing = new InspectorBeatmapListing(BeatmapSets);
-                                    InspectorBeatmapListing.PreGenerate();
-
-                                    //string beatmapDataJson = HttpUtility.JavaScriptStringEncode(JsonConvert.SerializeObject(BeatmapSets));
-                                    //BrowserViewModel.Instance.AttachedBrowser.ExecuteScriptAsyncWhenPageLoaded("processBeatmaps('"+ beatmapDataJson + "');");
-                                    //cefOsuApp.JsExecuter.GetBrowser().ShowDevTools();
-                                }
-                            }
-                            else
-                            {
-                                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.Osu.NoConfig"), 5000);
-                            }
+                            BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.Osu.NoConfig"), 5000);
                         }
                         BrowserViewModel.Instance.AttachedJavascriptWrapper.SetElementDisabled("#settingsProcessOsu", false);
                         BrowserViewModel.Instance.AttachedJavascriptWrapper.SetHtml("#settingsProcessOsu", StringStorage.Get("Message.Osu.Process"));
