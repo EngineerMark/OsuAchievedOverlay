@@ -36,9 +36,6 @@ namespace OsuAchievedOverlay.Next.Managers
                         ["updateRate"] = "60",
                         ["gamemode"] = ""+OsuApiHelper.OsuMode.Standard
                     },
-                    ["misc"] = {
-                        ["osuFolder"] = "C:\\"
-                    },
                     ["display"] = {
                         ["roundingValue"] = "1",
                         ["nsfwMode"] = "false",
@@ -134,7 +131,6 @@ namespace OsuAchievedOverlay.Next.Managers
 
                     string apiKey = await BrowserViewModel.Instance.SettingsGetApiKey();
                     string username = await BrowserViewModel.Instance.SettingsGetUsername();
-                    string osudir = await BrowserViewModel.Instance.SettingsGetOsuDirectory();
                     OsuMode gamemode = await BrowserViewModel.Instance.SettingsGetGamemode();
                     int updateRateInteger = -1;
                     int roundingDigit = -1;
@@ -146,15 +142,6 @@ namespace OsuAchievedOverlay.Next.Managers
                         {
                             BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.NoAPIorUsername"));
                             processSettings = false;
-                        }
-
-                        if (!string.IsNullOrEmpty(osudir) && processSettings)
-                        {
-                            if (!ApiHelper.IsValidOsuInstallation(osudir))
-                            {
-                                BrowserViewModel.Instance.SendNotification(NotificationType.Danger, StringStorage.Get("Message.InvalidOsuInstall"));
-                                processSettings = false;
-                            }
                         }
                     }
 
@@ -234,7 +221,6 @@ namespace OsuAchievedOverlay.Next.Managers
                         SettingsManager.Instance.Settings["api"]["user"] = username;
                         SettingsManager.Instance.Settings["api"]["updateRate"] = updateRateInteger + "";
                         SettingsManager.Instance.Settings["api"]["gamemode"] = gamemode + "";
-                        SettingsManager.Instance.Settings["misc"]["osuFolder"] = osudir;
 
                         SettingsManager.Instance.Settings["display"]["roundingValue"] = roundingDigit + "";
                         //SettingsManager.Instance.Settings["display"]["nsfwMode"] = await BrowserViewModel.Instance.AttachedJavascriptWrapper.Get;
